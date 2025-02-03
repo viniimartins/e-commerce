@@ -1,0 +1,20 @@
+{
+  "name": "@e-commerce/api",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "tsx watch src/server.ts"
+  },
+  "devDependencies": {
+    "@e-commerce/eslint-config": "workspace:*",
+    "@e-commerce/prettier": "workspace:*",
+    "@e-commerce/tsconfig": "workspace:*",
+    "@types/node": "^20",
+    "tsx": "^4.19.2"
+  },
+  "prettier": "@saas/prettier",
+  "eslintConfig": {
+    "extends": [
+      "@saas/eslint-config/node"
+    ]
+  }
+}
