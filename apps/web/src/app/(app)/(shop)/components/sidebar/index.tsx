@@ -1,5 +1,7 @@
 'use client'
 
+import Link from 'next/link'
+
 const categories = [
   'Woman’s Fashion',
   'Men’s Fashion',
@@ -14,15 +16,16 @@ const categories = [
 
 export default function Sidebar() {
   return (
-    <aside className="w-56 border-r border-black/30 pt-6">
-      <ul className="space-y-2">
+    <aside className="border-r border-black/30 pt-6">
+      <ul className="space-y-4 p-4">
         {categories.map((category) => (
-          <li
+          <Link
             key={category}
-            className="decoration-underline flex cursor-pointer items-center justify-between rounded-lg p-2 decoration-[1px] underline-offset-4 hover:underline"
+            href="/"
+            className="decoration-underline my-0 flex justify-between decoration-[1px] underline-offset-4 hover:underline"
           >
             {category}
-          </li>
+          </Link>
         ))}
       </ul>
     </aside>

@@ -1,9 +1,5 @@
-import Sidebar from './components/sidebar'
+import { Content } from './content'
 
 export default function Home() {
-  return (
-    <>
-      <Sidebar />
-    </>
-  )
+  return <Content />
 }
