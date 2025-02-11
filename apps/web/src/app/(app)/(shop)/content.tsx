@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 import { Carrousel } from './components/carrousel'
+import { CategoryCard } from './components/category-card'
 import { ProductCard } from './components/product-card'
 import { SectionHeader } from './components/section-header'
 import Sidebar from './components/sidebar'
@@ -21,7 +22,7 @@ export function Content() {
         </div>
       </section>
 
-      <section className="space-y-10">
+      <section className="space-y-12">
         <SectionHeader title="This Month" subtitle="Best Selling Products" />
 
         <div className="flex gap-6">
@@ -40,15 +41,21 @@ export function Content() {
 
       <Separator />
 
-      <section className="space-y-10">
+      <section className="space-y-12">
         <div className="space-y-5">
           <SectionHeader title="Categories" subtitle="Browse By Category" />
         </div>
 
-        <div className="flex gap-6">
-          <ProductCard />
+        <div className="flex justify-between">
+          <CategoryCard />
+          <CategoryCard />
+          <CategoryCard />
+          <CategoryCard />
+          <CategoryCard />
         </div>
       </section>
+
+      <Separator />
     </>
   )
 }
