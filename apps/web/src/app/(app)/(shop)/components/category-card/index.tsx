@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 export function CategoryCard() {
   return (
     <Link href="">
-      <Card className="group flex h-[10.063rem] w-[11.625rem] items-center justify-center rounded border-black/30 shadow-none hover:bg-red-500">
+      <Card className="group flex h-[9.063rem] w-[10.625rem] items-center justify-center rounded border-black/30 shadow-none hover:bg-red-500">
         <CardContent className="flex flex-col items-center justify-center gap-1 p-6">
           <Gamepad2
             width={56}

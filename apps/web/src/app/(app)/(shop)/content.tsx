@@ -20,6 +20,7 @@ import Sidebar from './components/sidebar'
 
 export function Content() {
   const [api, setApi] = useState<CarouselApi>()
+  const [apiCategory, setApiCategory] = useState<CarouselApi>()
 
   return (
     <>
@@ -46,7 +47,7 @@ export function Content() {
               align: 'start',
             }}
             setApi={setApi}
-            className="w-full max-w-6xl"
+            className="w-full"
           >
             <CarouselContent>
               {Array.from({ length: 50 }).map((_, index) => (
@@ -68,12 +69,28 @@ export function Content() {
       <Separator />
 
       <section className="space-y-12">
-        <div className="space-y-5">
+        <div className="flex justify-between">
           <SectionHeader title="Categories" subtitle="Browse By Category" />
+
+          <CarouselControls api={apiCategory} />
         </div>
 
-        <div className="flex justify-between">
-          <CategoryCard />
+        <div className="flex gap-6">
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            setApi={setApiCategory}
+            className="w-full"
+          >
+            <CarouselContent>
+              {Array.from({ length: 50 }).map((_, index) => (
+                <CarouselItem key={index} className="basis-1/6">
+                  <CategoryCard />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
       </section>
 
