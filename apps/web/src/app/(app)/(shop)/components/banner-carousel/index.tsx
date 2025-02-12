@@ -9,7 +9,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel'
 
-export function Carrousel() {
+export function BannerCarousel() {
   const plugin = useRef(Autoplay({ delay: 2000, stopOnInteraction: true }))
   const [api, setApi] = useState<CarouselApi>()
   const [current, setCurrent] = useState(0)

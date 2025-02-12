@@ -1,15 +1,26 @@
 'use client'
 
+import { useState } from 'react'
+
 import { Button } from '@/components/ui/button'
+import {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+} from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
-import { Carrousel } from './components/carrousel'
+import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
+import { CarouselControls } from './components/controls-carousel'
 import { ProductCard } from './components/product-card'
 import { SectionHeader } from './components/section-header'
 import Sidebar from './components/sidebar'
 
 export function Content() {
+  const [api, setApi] = useState<CarouselApi>()
+
   return (
     <>
       <section className="grid grid-cols-[14rem_auto]">
@@ -18,18 +29,33 @@ export function Content() {
         </div>
 
         <div className="flex h-full w-full max-w-[50.75rem] items-center justify-center p-10">
-          <Carrousel />
+          <BannerCarousel />
         </div>
       </section>
 
       <section className="space-y-12">
-        <SectionHeader title="This Month" subtitle="Best Selling Products" />
+        <div className="flex justify-between">
+          <SectionHeader title="This Month" subtitle="Best Selling Products" />
+
+          <CarouselControls api={api} />
+        </div>
 
         <div className="flex gap-6">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            setApi={setApi}
+            className="w-full max-w-6xl"
+          >
+            <CarouselContent>
+              {Array.from({ length: 50 }).map((_, index) => (
+                <CarouselItem key={index} className="basis-1/4">
+                  <ProductCard />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
         </div>
 
         <div className="flex justify-center">
@@ -47,10 +73,6 @@ export function Content() {
         </div>
 
         <div className="flex justify-between">
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
-          <CategoryCard />
           <CategoryCard />
         </div>
       </section>

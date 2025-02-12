@@ -7,8 +7,8 @@ import { Card, CardContent, CardFooter } from '@/components/ui/card'
 
 export function ProductCard() {
   return (
-    <Card className="relative w-[16.875rem] space-y-3 rounded-none border-none shadow-none">
-      <CardContent className="group relative flex h-[15.625rem] items-center justify-center rounded-[2px] bg-neutral-100 p-0">
+    <Card className="relative w-[15.875rem] space-y-3 rounded-none border-none shadow-none">
+      <CardContent className="group relative flex h-[14.625rem] items-center justify-center rounded-[2px] bg-neutral-100 p-0">
         <Image src={gamepad} alt="Product" width={172} height={152} />
         <div className="absolute right-2 top-2">
           <Button
