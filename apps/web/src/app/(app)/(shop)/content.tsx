@@ -95,6 +95,62 @@ export function Content() {
       </section>
 
       <Separator />
+
+      <section className="space-y-12">
+        <div className="flex justify-between">
+          <SectionHeader title="This Month" subtitle="Best Selling Products" />
+
+          <div className="flex items-end">
+            <Button variant="destructive" size="lg">
+              View ALL
+            </Button>
+          </div>
+        </div>
+
+        <div className="flex gap-6">
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </div>
+      </section>
+
+      <div>BANNER</div>
+
+      <section className="space-y-12">
+        <div className="flex justify-between">
+          <SectionHeader title="Our Products" subtitle="Explore Our Products" />
+
+          <CarouselControls api={api} />
+        </div>
+
+        <div className="flex gap-6">
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            setApi={setApi}
+            className="w-full"
+          >
+            <CarouselContent>
+              {Array.from({ length: 50 }).map((_, index) => (
+                <CarouselItem key={index} className="basis-1/4">
+                  <div className="space-y-6">
+                    <ProductCard />
+                    <ProductCard />
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </div>
+
+        <div className="flex justify-center">
+          <Button variant="destructive" size="lg">
+            View All Products
+          </Button>
+        </div>
+      </section>
     </>
   )
 }
