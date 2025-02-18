@@ -3,8 +3,6 @@ import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 
-import { Providers } from '@/providers'
-
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
@@ -31,7 +29,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" suppressHydrationWarning>
       <body className={`${inter.variable} ${poppions.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        {children}
       </body>
     </html>
   )
