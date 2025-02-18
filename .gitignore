@@ -36,3 +36,7 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+# Ignore package manager lockfiles de outros gerenciadores
+package-lock.json
+yarn.lock
