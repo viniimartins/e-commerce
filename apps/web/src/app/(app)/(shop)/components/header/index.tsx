@@ -4,11 +4,13 @@ import { Heart, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
+import { ModeToggle } from '../toggle-theme'
+
 export function Header() {
   const pathname = usePathname()
 
   return (
-    <header className="flex w-full items-center justify-center border-b border-black/30 p-6 dark:border-white">
+    <header className="text-m flex w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-6xl items-center justify-between">
         <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
         <nav className="flex gap-10">
@@ -32,6 +34,7 @@ export function Header() {
           </Link>
         </nav>
         <div className="flex items-center gap-6">
+          <ModeToggle />
           <Link href="/">
             <Heart className="size-6" />
           </Link>

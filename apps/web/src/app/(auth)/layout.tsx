@@ -18,7 +18,7 @@ export default async function AuthenticationLayout({
 }) {
   return (
     <main className="h-[100vh] w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
-      <div className="hidden bg-muted lg:block">
+      <div className="hidden lg:block">
         <Image
           src={bgEcommerce}
           alt="Image"
