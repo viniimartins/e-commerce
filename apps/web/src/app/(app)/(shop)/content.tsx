@@ -60,9 +60,7 @@ export function Content() {
         </div>
 
         <div className="flex justify-center">
-          <Button variant="destructive" size="lg">
-            View All Products
-          </Button>
+          <Button size="lg">View All Products</Button>
         </div>
       </section>
 
@@ -101,9 +99,7 @@ export function Content() {
           <SectionHeader title="This Month" subtitle="Best Selling Products" />
 
           <div className="flex items-end">
-            <Button variant="destructive" size="lg">
-              View ALL
-            </Button>
+            <Button size="lg">View ALL</Button>
           </div>
         </div>
 
@@ -146,9 +142,7 @@ export function Content() {
         </div>
 
         <div className="flex justify-center">
-          <Button variant="destructive" size="lg">
-            View All Products
-          </Button>
+          <Button size="lg">View All Products</Button>
         </div>
       </section>
     </>

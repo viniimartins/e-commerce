@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator'
 
 export function Footer() {
   return (
-    <footer className="border-t text-primary">
+    <footer className="border-t">
       <div className="flex justify-center gap-20 p-10 align-top">
         <div className="flex flex-col gap-3">
           <h3 className="text-xl font-bold">Exclusive</h3>
@@ -42,8 +42,8 @@ export function Footer() {
       <div>
         <Separator />
         <div className="m-3 flex flex-row items-center justify-center gap-2">
-          <Copyright className="size-4 text-primary/40" />
-          <p className="text-base text-primary/40">
+          <Copyright className="size-4 text-muted-foreground" />
+          <p className="text-base text-muted-foreground">
             Todos os direitos reservados, Exclusive 2025.
           </p>
         </div>
