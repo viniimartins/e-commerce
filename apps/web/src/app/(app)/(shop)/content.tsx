@@ -103,7 +103,7 @@ export function Content() {
           </div>
         </div>
 
-        <div className="flex gap-6">
+        <div className="grid grid-cols-4 gap-6">
           <ProductCard />
           <ProductCard />
           <ProductCard />

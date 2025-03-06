@@ -4,7 +4,7 @@ import { Separator } from '@/components/ui/separator'
 
 export function Footer() {
   return (
-    <footer className="border-t">
+    <footer className="h-72 border-t">
       <div className="flex justify-center gap-20 p-10 align-top">
         <div className="flex flex-col gap-3">
           <h3 className="text-xl font-bold">Exclusive</h3>
