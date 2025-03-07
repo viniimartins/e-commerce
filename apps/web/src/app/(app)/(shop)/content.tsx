@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
+import { AnnounceCard } from './components/announced-card'
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
@@ -150,6 +151,14 @@ export function Content() {
             View All Products
           </Button>
         </div>
+      </section>
+
+      <section>
+        <div>
+          <SectionHeader title="Featured" subtitle="New Arrival" />
+        </div>
+
+        <AnnounceCard />
       </section>
     </>
   )
