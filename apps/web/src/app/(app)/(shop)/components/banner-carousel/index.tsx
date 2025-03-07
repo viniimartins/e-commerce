@@ -39,8 +39,8 @@ export function BannerCarousel() {
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index} className="h-full">
-            <Card className="relative h-[21.5rem] w-full rounded-none border-black/30">
-              <CardContent className="flex h-full items-center justify-center bg-gray-200 p-6">
+            <Card className="relative h-[21.5rem] w-full rounded-none border-muted-foreground/30">
+              <CardContent className="flex h-full items-center justify-center p-6">
                 <span className="text-4xl font-semibold">
                   Slide {current} of {count}
                 </span>
@@ -51,7 +51,7 @@ export function BannerCarousel() {
                   i + 1 === current ? (
                     <div
                       key={i}
-                      className="h-4 w-4 rounded-full border-2 border-white bg-red-500"
+                      className="red-500 h-4 w-4 rounded-full border-2 border-black dark:border-white"
                     />
                   ) : (
                     <div

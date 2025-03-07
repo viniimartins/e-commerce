@@ -20,7 +20,9 @@ export function AnnounceCard() {
           </p>
 
           <div className="mr-auto">
-            <Button variant="link">Shop now</Button>
+            <Button variant="link" className="px-0 text-muted">
+              Shop now
+            </Button>
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ const categories = [
 
 export default function Sidebar() {
   return (
-    <aside className="border-r border-black/30 pt-6">
+    <aside className="border-r border-border pt-6">
       <ul className="space-y-4 p-4">
         {categories.map((category) => (
           <Link
