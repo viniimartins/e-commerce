@@ -1,4 +1,4 @@
-import { Heart, ShoppingCart, Trash } from 'lucide-react'
+import { Eye, Heart, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 
 import gamepad from '@/assets/gamepad.png'
@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 
 interface IProductCardProps {
-  variant?: 'default' | 'wishlist'
+  variant?: 'default' | 'wishlist' | 'viewImages'
 }
 
 export function ProductCard({ variant = 'default' }: IProductCardProps) {
@@ -20,23 +20,37 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
           height={150}
           className="mb-4"
         />
-        <div className="absolute right-2 top-2">
+        <div className="absolute right-2 top-2 flex flex-col gap-2">
           <Button
             variant="outline"
             className="rounded-full border-none"
             size="icon"
           >
-            {variant === 'wishlist' ? <Trash /> : <Heart />}
+            {variant === 'wishlist' && <Trash />}
+
+            {variant === 'default' && <Heart />}
+
+            {variant === 'viewImages' && <Eye />}
           </Button>
+
+          {variant === 'default' && (
+            <Button
+              variant="outline"
+              className="rounded-full border-none"
+              size="icon"
+            >
+              <Eye />
+            </Button>
+          )}
         </div>
 
-        {variant === 'default' && (
+        {variant !== 'wishlist' && (
           <Button className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100">
             Add To Cart
           </Button>
         )}
 
-        {variant === 'wishlist' && (
+        {variant !== 'default' && (
           <Button
             variant="outline"
             className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
