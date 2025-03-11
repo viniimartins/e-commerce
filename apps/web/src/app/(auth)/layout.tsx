@@ -4,8 +4,8 @@ import type { ReactNode } from 'react'
 
 import bgEcommerce from '@/assets/bg-ecommerce.jpg'
 
-import { Footer } from '../(app)/(shop)/components/footer'
-import { Header } from '../(app)/(shop)/components/header'
+import { Footer } from '../../components/footer'
+import { Header } from '../../components/header'
 
 export const metadata: Metadata = {
   title: {

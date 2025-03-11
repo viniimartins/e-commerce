@@ -59,7 +59,7 @@ export function Header() {
             </Button>
           </Link>
 
-          <Link href="/">
+          <Link href="/cart">
             <Button size="icon" variant="ghost">
               <ShoppingCart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
             </Button>

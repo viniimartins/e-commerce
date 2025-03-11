@@ -1,11 +1,31 @@
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 
-import { ProductCard } from '../components/product-card'
+import { ProductCard } from '../_components/product-card'
 
 export default function Wishlist() {
   return (
     <>
-      <section className="mt-14 flex items-center justify-between">
+      <Breadcrumb className="mt-14">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>Wishlist</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+
+      <section className="flex items-center justify-between">
         <span className="text-base font-medium">Wishlist (4)</span>
         <Button variant="outline" size="lg">
           Move All To Bag

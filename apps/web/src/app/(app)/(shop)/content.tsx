@@ -11,12 +11,12 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
-import { BannerCarousel } from './components/banner-carousel'
-import { CategoryCard } from './components/category-card'
-import { CarouselControls } from './components/controls-carousel'
-import { ProductCard } from './components/product-card'
-import { SectionHeader } from './components/section-header'
-import Sidebar from './components/sidebar'
+import { BannerCarousel } from './_components/banner-carousel'
+import { CategoryCard } from './_components/category-card'
+import { CarouselControls } from './_components/controls-carousel'
+import { ProductCard } from './_components/product-card'
+import { SectionHeader } from './_components/section-header'
+import Sidebar from './_components/sidebar'
 
 export function Content() {
   const [api, setApi] = useState<CarouselApi>()
