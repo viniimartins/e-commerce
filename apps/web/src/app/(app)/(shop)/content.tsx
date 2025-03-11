@@ -147,9 +147,9 @@ export function Content() {
         </div>
       </section>
 
-      <section>
+      <section className="space-y-12">
         <div>
-          <SectionHeader title="Featured" subtitle="New Arrival" />
+          <SectionHeader title="Destaques" subtitle="Novos Produtos" />
         </div>
 
         <AnnounceCard />
