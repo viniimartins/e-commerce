@@ -47,10 +47,9 @@ export default function Wishlist() {
 
       <section className="mt-10 space-y-12">
         <div className="flex justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-4 rounded-[4px] bg-primary" />
-            <span className="text-lg font-semibold">Just For You</span>
-          </div>
+          <span className="text-2xl font-medium text-primary">
+            Just For You
+          </span>
 
           <div className="flex items-end">
             <Button size="lg" variant="outline">

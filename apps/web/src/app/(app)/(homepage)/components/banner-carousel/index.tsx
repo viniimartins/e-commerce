@@ -7,6 +7,8 @@ import {
   CarouselApi,
   CarouselContent,
   CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
 } from '@/components/ui/carousel'
 
 export function BannerCarousel() {
@@ -39,8 +41,8 @@ export function BannerCarousel() {
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index} className="h-full">
-            <Card className="relative h-[21.5rem] w-full rounded-none border-muted-foreground/30">
-              <CardContent className="flex h-full items-center justify-center p-6">
+            <Card className="relative h-[21.5rem] w-full rounded-none border-none bg-muted/40">
+              <CardContent className="flex h-full items-center justify-center">
                 <span className="text-4xl font-semibold">
                   Slide {current} of {count}
                 </span>
@@ -51,16 +53,20 @@ export function BannerCarousel() {
                   i + 1 === current ? (
                     <div
                       key={i}
-                      className="red-500 h-4 w-4 rounded-full border-2 border-black dark:border-white"
+                      className="h-2 w-8 rounded-full bg-background"
                     />
                   ) : (
                     <div
                       key={i}
-                      className="h-4 w-4 rounded-full border-none bg-gray-400"
+                      className="h-2 w-2 rounded-full bg-background"
                     />
                   ),
                 )}
               </div>
+
+              <CarouselPrevious className="left-10" />
+
+              <CarouselNext className="right-10" />
             </Card>
           </CarouselItem>
         ))}
