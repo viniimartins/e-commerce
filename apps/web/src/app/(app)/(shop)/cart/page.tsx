@@ -100,7 +100,9 @@ export default function Cart() {
                 />
                 {product.name}
               </TableCell>
-              <TableCell className="py-6">{product.price}</TableCell>
+              <TableCell className="py-6 text-sm text-muted-foreground">
+                {product.price}
+              </TableCell>
               <TableCell className="py-6">
                 <Input type="number" className="w-20" min={1} placeholder="2" />
               </TableCell>
@@ -146,7 +148,9 @@ export default function Cart() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button className="ml-auto">Process to checkout</Button>
+            <Link href="/cart/checkout" className="ml-auto">
+              <Button>Process to checkout</Button>
+            </Link>
           </CardFooter>
         </Card>
       </div>
