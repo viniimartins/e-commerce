@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import Image from 'next/image'
 
 import gamepadSmall from '@/assets/g92-2-500x500 1.png'
@@ -13,6 +14,10 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 import { CheckoutForm } from './form'
+
+export const metadata: Metadata = {
+  title: 'Checkout',
+}
 
 export default function Checkout() {
   return (

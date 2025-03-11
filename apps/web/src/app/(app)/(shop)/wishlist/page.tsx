@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -9,6 +11,10 @@ import {
 import { Button } from '@/components/ui/button'
 
 import { ProductCard } from '../_components/product-card'
+
+export const metadata: Metadata = {
+  title: 'Wishlist',
+}
 
 export default function Wishlist() {
   return (

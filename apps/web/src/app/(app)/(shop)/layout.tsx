@@ -6,9 +6,11 @@ import { Header } from '@/components/header'
 import { Footer } from '../../../components/footer'
 
 export const metadata: Metadata = {
-  title: 'Shop',
+  title: {
+    template: 'Univinte | %s',
+    default: 'Shop',
+  },
 }
-
 export default async function ShoppLayout({
   children,
 }: {
