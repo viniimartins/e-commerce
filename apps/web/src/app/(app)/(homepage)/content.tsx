@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link'
 import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -11,12 +12,12 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
-import { BannerCarousel } from './_components/banner-carousel'
-import { CategoryCard } from './_components/category-card'
-import { CarouselControls } from './_components/controls-carousel'
-import { ProductCard } from './_components/product-card'
-import { SectionHeader } from './_components/section-header'
-import Sidebar from './_components/sidebar'
+import { BannerCarousel } from './components/banner-carousel'
+import { CategoryCard } from './components/category-card'
+import { CarouselControls } from './components/controls-carousel'
+import { ProductCard } from './components/product-card'
+import { SectionHeader } from './components/section-header'
+import Sidebar from './components/sidebar'
 
 export function Content() {
   const [api, setApi] = useState<CarouselApi>()
@@ -60,7 +61,9 @@ export function Content() {
         </div>
 
         <div className="flex justify-center">
-          <Button size="lg">View All Products</Button>
+          <Link href="/shop">
+            <Button size="lg">View All Products</Button>
+          </Link>
         </div>
       </section>
 
@@ -142,7 +145,9 @@ export function Content() {
         </div>
 
         <div className="flex justify-center">
-          <Button size="lg">View All Products</Button>
+          <Link href="/shop">
+            <Button size="lg">View All Products</Button>
+          </Link>
         </div>
       </section>
     </>

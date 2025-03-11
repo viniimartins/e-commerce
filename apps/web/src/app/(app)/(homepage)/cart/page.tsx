@@ -41,19 +41,19 @@ export default function Cart() {
       name: 'H1 Gamepad',
       price: '$550.00',
       quantity: '2',
-      subtotal: '1200',
+      subtotal: '$1200',
     },
     {
       name: 'H1 Gamepad',
       price: '$550.00',
       quantity: '2',
-      subtotal: '1200',
+      subtotal: '$1200',
     },
     {
       name: 'H1 Gamepad',
       price: '$550.00',
       quantity: '2',
-      subtotal: '1200',
+      subtotal: '$1200',
     },
   ]
 
@@ -111,7 +111,7 @@ export default function Cart() {
               <TableCell className="py-6">
                 <Input type="number" className="w-20" min={1} placeholder="2" />
               </TableCell>
-              <TableCell className="p-6 text-center">
+              <TableCell className="p-6 text-center text-sm text-muted-foreground">
                 {product.subtotal}
               </TableCell>
             </TableRow>

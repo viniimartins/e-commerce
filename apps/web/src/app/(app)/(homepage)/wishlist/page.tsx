@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Button } from '@/components/ui/button'
 
-import { ProductCard } from '../_components/product-card'
+import { ProductCard } from '../components/product-card'
 
 export const metadata: Metadata = {
   title: 'Wishlist',
