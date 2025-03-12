@@ -87,12 +87,15 @@ export default function Cart() {
             <TableRow key={index} className="shadow-sm">
               <TableCell className="group relative flex items-center gap-4 p-6">
                 <div className="absolute left-4 top-5 hidden group-hover:block">
-                  <Button size="icon" className="h-4 w-4 rounded-full">
+                  <Button
+                    size="icon"
+                    variant="destructive"
+                    className="h-4 w-4 rounded-full"
+                  >
                     <Image
                       src={x}
                       width={8}
                       height={8}
-                      className="h-2 w-2"
                       alt="Vector X remove item"
                     />
                   </Button>

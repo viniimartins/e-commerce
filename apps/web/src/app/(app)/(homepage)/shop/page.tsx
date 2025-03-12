@@ -1,5 +1,7 @@
-import { Columns2, FilterIcon, Grid2x2, Grid3x3, Rows2 } from 'lucide-react'
+import { Columns2, Grid2x2, Grid3x3, Rows2 } from 'lucide-react'
+import Image from 'next/image'
 
+import filter from '@/assets/filter.svg'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -41,7 +43,13 @@ export default function CategoryPage() {
       <section className="grid grid-cols-4 gap-10">
         <div className="col-span-1 space-y-10">
           <h2 className="flex items-center gap-2 text-xl font-semibold">
-            <FilterIcon className="h-[1.2rem] w-[1.2rem]" />
+            <Image
+              src={filter}
+              width={24}
+              height={24}
+              className="h-[1.5rem] w-[1.5rem] dark:invert"
+              alt="Filter icon"
+            />
             Filter
           </h2>
 
