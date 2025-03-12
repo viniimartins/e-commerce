@@ -51,15 +51,9 @@ export function BannerCarousel() {
               <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
                 {Array.from({ length: 5 }).map((_, i) =>
                   i + 1 === current ? (
-                    <div
-                      key={i}
-                      className="h-2 w-8 rounded-full bg-background"
-                    />
+                    <div key={i} className="h-2 w-8 rounded-full bg-white" />
                   ) : (
-                    <div
-                      key={i}
-                      className="h-2 w-2 rounded-full bg-background"
-                    />
+                    <div key={i} className="h-2 w-2 rounded-full bg-white" />
                   ),
                 )}
               </div>

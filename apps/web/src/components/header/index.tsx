@@ -4,6 +4,7 @@ import {
   Heart,
   LogOut,
   MoonIcon,
+  Search,
   ShoppingCart,
   SunIcon,
   User2,
@@ -20,10 +21,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils' // Certifique-se de que a função cn está corretamente importada
+
+import { Input } from '../ui/input'
 
 export function Header() {
   const pathname = usePathname()
-
   const { setTheme, theme } = useTheme()
 
   return (
@@ -32,49 +35,75 @@ export function Header() {
         <Link href="/">
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
         </Link>
-        <nav className="flex gap-10">
+        <nav className="flex gap-8">
           <Link
             href="/"
-            className={`${pathname === '/' ? 'underline decoration-1 underline-offset-4' : ''} decoration-1 underline-offset-4 transition-all duration-300 hover:underline`}
+            className={cn(
+              'text-muted-foreground hover:text-foreground',
+              pathname === '/' && 'text-foreground',
+            )}
           >
             Home
           </Link>
           <Link
+            href="/shop"
+            className={cn(
+              'text-muted-foreground hover:text-foreground',
+              pathname === '/shop' && 'text-foreground',
+            )}
+          >
+            Shop
+          </Link>
+          <Link
+            href="/contact"
+            className={cn(
+              'text-muted-foreground hover:text-foreground',
+              pathname === '/contact' && 'text-foreground',
+            )}
+          >
+            Contact
+          </Link>
+          <Link
             href="/about"
-            className={`${pathname === '/about' ? 'underline decoration-1 underline-offset-4' : ''} decoration-1 underline-offset-4 transition-all duration-300 hover:underline`}
+            className={cn(
+              'text-muted-foreground hover:text-foreground',
+              pathname === '/about' && 'text-foreground',
+            )}
           >
             About
           </Link>
-          <Link
-            href="/sign-in"
-            className={`${pathname === '/sign-in' ? 'underline decoration-1 underline-offset-4' : ''} decoration-1 underline-offset-4 transition-all duration-300 hover:underline`}
-          >
-            Sign In
-          </Link>
         </nav>
-        <div className="gap- flex items-center gap-2">
+        <div className="flex items-center gap-2">
+          <div className="relative w-full">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="What are you looking for?"
+              className="w-full pl-8"
+            />
+          </div>
+
           <Link href="/wishlist">
             <Button size="icon" variant="ghost">
-              <Heart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <Heart className="h-[1.2rem] w-[1.2rem] transition-all" />
             </Button>
           </Link>
 
           <Link href="/cart">
             <Button size="icon" variant="ghost">
-              <ShoppingCart className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+              <ShoppingCart className="h-[1.2rem] w-[1.2rem] transition-all" />
             </Button>
           </Link>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon">
+              <Button variant="ghost" size="icon" className="w-[3.336rem]">
                 <span className="sr-only">Toggle user menu</span>
-                <User2 className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all" />
+                <User2 className="h-[1.5rem] w-[1.5rem] transition-all" />
               </Button>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="center" className="w-72 py-3">
-              <div className="flex flex-col items-center justify-center space-y-2">
+              <div className="flex flex-col items-center space-y-2">
                 <Button
                   variant="secondary"
                   size="icon"
@@ -82,16 +111,13 @@ export function Header() {
                 >
                   V<span className="sr-only">Toggle user menu</span>
                 </Button>
-
-                <div className="flex flex-col items-center justify-center gap-3 pb-2">
-                  <div className="flex flex-col items-center gap-1">
-                    <span className="text-base font-medium">
-                      Vinicius Martins Ribeiro
-                    </span>
-                    <span className="text-sm text-muted-foreground">
-                      vinimribeiro2004@gmail.com
-                    </span>
-                  </div>
+                <div className="flex flex-col items-center gap-1 pb-2">
+                  <span className="text-base font-medium">
+                    Vinicius Martins Ribeiro
+                  </span>
+                  <span className="text-sm text-muted-foreground">
+                    vinimribeiro2004@gmail.com
+                  </span>
                 </div>
               </div>
 
@@ -103,10 +129,9 @@ export function Header() {
                     variant="outline"
                     className="flex w-full justify-start gap-2 border-none p-2"
                   >
-                    <SunIcon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:hidden dark:-rotate-90 dark:scale-0" />
-                    <MoonIcon className="hidden h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:flex dark:rotate-0 dark:scale-100" />
+                    <SunIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
+                    <MoonIcon className="hidden h-[1.2rem] w-[1.2rem] transition-all dark:flex" />
                     {theme === 'dark' ? 'Escuro' : 'Claro'}
-                    <span className="sr-only">Toggle theme</span>
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">

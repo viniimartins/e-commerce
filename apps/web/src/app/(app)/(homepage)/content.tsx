@@ -18,6 +18,7 @@ import { CarouselControls } from './components/controls-carousel'
 import { ProductCard } from './components/product-card'
 
 export function Content() {
+  const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [api, setApi] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
 
@@ -27,12 +28,12 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-4xl font-medium text-primary">
+          <span className="text-3xl font-medium text-primary">
             New
             <br />
             Arrivals
           </span>
-          <CarouselControls api={api} />
+          <CarouselControls api={apiBestSelling} />
         </div>
 
         <div className="flex gap-6">
@@ -40,7 +41,7 @@ export function Content() {
             opts={{
               align: 'start',
             }}
-            setApi={setApi}
+            setApi={setApiBestSelling}
             className="w-full"
           >
             <CarouselContent>
@@ -64,7 +65,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-4xl font-medium text-primary">Category</span>
+          <span className="text-3xl font-medium text-primary">Category</span>
 
           <CarouselControls api={apiCategory} />
         </div>
@@ -94,7 +95,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-4xl font-medium text-primary">
+          <span className="text-3xl font-medium text-primary">
             New
             <br />
             Arrivals
