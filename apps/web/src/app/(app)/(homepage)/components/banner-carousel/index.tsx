@@ -41,7 +41,7 @@ export function BannerCarousel() {
       <CarouselContent>
         {Array.from({ length: 5 }).map((_, index) => (
           <CarouselItem key={index} className="h-full">
-            <Card className="relative h-[21.5rem] w-full rounded-none border-none bg-muted/40">
+            <Card className="bg-muted/40 relative h-[21.5rem] w-full rounded-none border-none">
               <CardContent className="flex h-full items-center justify-center">
                 <span className="text-4xl font-semibold">
                   Slide {current} of {count}

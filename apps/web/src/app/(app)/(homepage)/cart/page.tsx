@@ -73,20 +73,20 @@ export default function Cart() {
 
       <Table className="border-spacing-y-4">
         <TableHeader>
-          <TableRow className="shadow-sm">
-            <TableHead className="p-6 text-foreground">Product</TableHead>
+          <TableRow className="shadow-xs">
+            <TableHead className="text-foreground p-6">Product</TableHead>
             <TableHead className="text-foreground">Price</TableHead>
             <TableHead className="text-foreground">Quantity</TableHead>
-            <TableHead className="text-center text-foreground">
+            <TableHead className="text-foreground text-center">
               Subtotal
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {products.map((product, index) => (
-            <TableRow key={index} className="shadow-sm">
+            <TableRow key={index} className="shadow-xs">
               <TableCell className="group relative flex items-center gap-4 p-6">
-                <div className="absolute left-4 top-5 hidden group-hover:block">
+                <div className="absolute top-5 left-4 hidden group-hover:block">
                   <Button
                     size="icon"
                     variant="destructive"
@@ -108,13 +108,13 @@ export default function Cart() {
                 />
                 {product.name}
               </TableCell>
-              <TableCell className="py-6 text-sm text-muted-foreground">
+              <TableCell className="text-muted-foreground py-6 text-sm">
                 {product.price}
               </TableCell>
               <TableCell className="py-6">
                 <Input type="number" className="w-20" min={1} placeholder="2" />
               </TableCell>
-              <TableCell className="p-6 text-center text-sm text-muted-foreground">
+              <TableCell className="text-muted-foreground p-6 text-center text-sm">
                 {product.subtotal}
               </TableCell>
             </TableRow>
@@ -137,14 +137,14 @@ export default function Cart() {
             <div className="flex items-center justify-between text-base font-medium">
               <span className="text-base">Subtotal:</span>
 
-              <span className="text-sm text-muted-foreground">$1750</span>
+              <span className="text-muted-foreground text-sm">$1750</span>
             </div>
 
             <Separator />
             <div className="flex items-center justify-between text-base font-medium">
               <span className="text-base">Shipping:</span>
 
-              <span className="text-sm text-muted-foreground">Free</span>
+              <span className="text-muted-foreground text-sm">Free</span>
             </div>
 
             <Separator />
@@ -152,7 +152,7 @@ export default function Cart() {
             <div className="flex items-center justify-between text-base font-medium">
               <span className="text-base">Total:</span>
 
-              <span className="text-sm text-muted-foreground">$1750</span>
+              <span className="text-muted-foreground text-sm">$1750</span>
             </div>
           </CardContent>
           <CardFooter>

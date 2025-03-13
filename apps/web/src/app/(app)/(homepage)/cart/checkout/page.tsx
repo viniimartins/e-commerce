@@ -57,7 +57,7 @@ export default function Checkout() {
               <span className="text-base font-medium">LCD Monitor</span>
             </div>
 
-            <span className="text-sm text-muted-foreground">$650</span>
+            <span className="text-muted-foreground text-sm">$650</span>
           </div>
 
           <div className="flex items-center justify-between">
@@ -72,7 +72,7 @@ export default function Checkout() {
               <span className="text-base font-medium">LCD Monitor</span>
             </div>
 
-            <span className="text-sm text-muted-foreground">$650</span>
+            <span className="text-muted-foreground text-sm">$650</span>
           </div>
 
           <div className="flex items-center justify-between">
@@ -87,13 +87,13 @@ export default function Checkout() {
               <span className="text-base font-medium">LCD Monitor</span>
             </div>
 
-            <span className="text-sm text-muted-foreground">$650</span>
+            <span className="text-muted-foreground text-sm">$650</span>
           </div>
 
           <div className="space-y-3">
             <div className="flex justify-between">
               <span className="text-base">Subtotal:</span>
-              <span className="text-sm text-muted-foreground">$1750</span>
+              <span className="text-muted-foreground text-sm">$1750</span>
             </div>
 
             <Separator />
@@ -107,7 +107,7 @@ export default function Checkout() {
 
             <div className="flex justify-between">
               <span className="text-base">Total:</span>
-              <span className="text-sm text-muted-foreground">$1750</span>
+              <span className="text-muted-foreground text-sm">$1750</span>
             </div>
           </div>
 

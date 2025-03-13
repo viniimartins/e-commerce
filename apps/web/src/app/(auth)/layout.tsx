@@ -33,7 +33,7 @@ export default async function AuthenticationLayout({
             className="h-full w-full object-cover"
           />
         </div>
-        <div className="mx-auto flex h-full min-w-[27.5rem] max-w-[27.5rem] flex-col items-center justify-center space-y-6 px-4 py-8">
+        <div className="mx-auto flex h-full max-w-[27.5rem] min-w-[27.5rem] flex-col items-center justify-center space-y-6 px-4 py-8">
           {children}
         </div>
       </main>

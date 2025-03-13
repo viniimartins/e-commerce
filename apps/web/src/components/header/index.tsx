@@ -31,7 +31,7 @@ export function Header() {
 
   return (
     <header className="text-m flex w-full items-center justify-center border-b p-6">
-      <div className="flex h-10 w-full max-w-6xl items-center justify-between">
+      <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
         <Link href="/">
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
         </Link>
@@ -75,7 +75,7 @@ export function Header() {
         </nav>
         <div className="flex items-center gap-2">
           <div className="relative w-full">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
             <Input
               placeholder="What are you looking for?"
               className="w-full pl-8"
@@ -96,7 +96,7 @@ export function Header() {
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" className="w-[3.336rem]">
+              <Button variant="ghost" size="icon">
                 <span className="sr-only">Toggle user menu</span>
                 <User2 className="h-[1.5rem] w-[1.5rem] transition-all" />
               </Button>
@@ -115,7 +115,7 @@ export function Header() {
                   <span className="text-base font-medium">
                     Vinicius Martins Ribeiro
                   </span>
-                  <span className="text-sm text-muted-foreground">
+                  <span className="text-muted-foreground text-sm">
                     vinimribeiro2004@gmail.com
                   </span>
                 </div>

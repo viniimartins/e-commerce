@@ -42,20 +42,20 @@ export default async function ProductPage() {
       <section className="flex grid-cols-5 gap-8">
         <div className="col-span-3 flex gap-4">
           <div className="flex flex-col gap-4">
-            <div className="flex h-36 w-44 items-center justify-center bg-muted-foreground bg-neutral-100 p-0 dark:border dark:bg-muted-foreground/10">
+            <div className="dark:bg-muted-foreground/10 flex h-36 w-44 items-center justify-center bg-neutral-100 p-0 dark:border">
               <Image src={control1} alt="Controls" />
             </div>
-            <div className="flex h-36 w-44 items-center justify-center bg-muted-foreground bg-neutral-100 p-0 dark:border dark:bg-muted-foreground/10">
+            <div className="dark:bg-muted-foreground/10 flex h-36 w-44 items-center justify-center bg-neutral-100 p-0 dark:border">
               <Image src={control2} alt="Controls" />
             </div>
-            <div className="flex h-36 w-44 items-center justify-center bg-muted-foreground bg-neutral-100 p-0 dark:border dark:bg-muted-foreground/10">
+            <div className="dark:bg-muted-foreground/10 flex h-36 w-44 items-center justify-center bg-neutral-100 p-0 dark:border">
               <Image src={control3} alt="Controls" />
             </div>
-            <div className="flex h-36 w-44 items-center justify-center bg-muted-foreground bg-neutral-100 p-0 dark:border dark:bg-muted-foreground/10">
+            <div className="dark:bg-muted-foreground/10 flex h-36 w-44 items-center justify-center bg-neutral-100 p-0 dark:border">
               <Image src={control4} alt="Controls" />
             </div>
           </div>
-          <div className="flex h-full w-[31.5rem] items-center justify-center bg-neutral-100 p-0 dark:border dark:bg-muted-foreground/10">
+          <div className="dark:bg-muted-foreground/10 flex h-full w-[31.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
             <Image src={control} alt="Controls" width={445} height={315} />
           </div>
         </div>
@@ -64,7 +64,7 @@ export default async function ProductPage() {
           <div className="flex flex-1 flex-col gap-3">
             <div className="text-2xl font-bold">Havic HV G-92 Gamepad</div>
             <span className="text-xl font-medium">$ 192.00</span>
-            <p className="line-clamp-[9] overflow-auto pr-2 text-base text-muted-foreground">
+            <p className="text-muted-foreground line-clamp-9 overflow-auto pr-2 text-base">
               PlayStation 5 Controller Skin High quality vinyl with air channel
               adhesive for easy bubble free install & mess free removal Pressure
               sensitive.
@@ -74,7 +74,7 @@ export default async function ProductPage() {
 
           <div className="flex justify-between gap-4">
             <Counter />
-            <Button className="w-full">Buy Noy</Button>
+            <Button className="flex-1">Buy Noy</Button>
             <Button>
               <Heart />
             </Button>
@@ -111,9 +111,9 @@ export default async function ProductPage() {
       <Separator />
 
       <section className="space-y-12">
-        <span className="text-3xl font-medium text-primary">Related Item</span>
+        <span className="text-primary text-3xl font-medium">Related Item</span>
 
-        <div className="flex gap-6">
+        <div className="grid grid-cols-4 gap-4">
           {Array.from({ length: 4 }).map((_, index) => (
             <ProductCard key={index} />
           ))}

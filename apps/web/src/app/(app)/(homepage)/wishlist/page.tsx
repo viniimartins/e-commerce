@@ -33,12 +33,12 @@ export default function Wishlist() {
 
       <section className="flex items-center justify-between">
         <span className="text-base font-medium">Wishlist (4)</span>
-        <Button variant="outline" size="lg">
+        <Button variant="outline" size="lg" className="">
           Move All To Bag
         </Button>
       </section>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-4 gap-4">
         <ProductCard variant="wishlist" />
         <ProductCard variant="wishlist" />
         <ProductCard variant="wishlist" />
@@ -47,7 +47,7 @@ export default function Wishlist() {
 
       <section className="mt-10 space-y-12">
         <div className="flex justify-between">
-          <span className="text-2xl font-medium text-primary">
+          <span className="text-primary text-2xl font-medium">
             Just For You
           </span>
 
@@ -58,7 +58,7 @@ export default function Wishlist() {
           </div>
         </div>
 
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-4">
           <ProductCard variant="viewImages" />
           <ProductCard variant="viewImages" />
           <ProductCard variant="viewImages" />

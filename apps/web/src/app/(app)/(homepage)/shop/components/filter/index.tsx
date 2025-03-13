@@ -11,7 +11,7 @@ export function Filter() {
             return (
               <a
                 key={index}
-                className="text-sm font-medium text-muted-foreground hover:cursor-pointer hover:text-foreground hover:underline"
+                className="text-muted-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
               >
                 All Rooms
               </a>
@@ -27,7 +27,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="allprice"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               All price
             </label>
@@ -37,7 +37,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="1"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               $0.00 - 99.99
             </label>
@@ -47,7 +47,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="2"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               $100.00 - 199.99
             </label>
@@ -57,7 +57,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="1"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               $200.00 - 299.99
             </label>
@@ -67,7 +67,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="1"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               $300.00 - 399.99
             </label>
@@ -77,7 +77,7 @@ export function Filter() {
           <div className="flex w-full items-center justify-between">
             <label
               htmlFor="1"
-              className="text-sm font-medium text-muted-foreground"
+              className="text-muted-foreground text-sm font-medium"
             >
               $400.00+
             </label>

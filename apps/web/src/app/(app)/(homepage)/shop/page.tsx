@@ -19,10 +19,10 @@ import { Filter } from './components/filter'
 export default function CategoryPage() {
   return (
     <>
-      <section className="relative h-96 bg-muted-foreground/10">
+      <section className="bg-muted-foreground/10 relative h-96">
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
           <h1 className="text-4xl font-medium">Shop Page</h1>
-          <p className="text-base text-muted-foreground">
+          <p className="text-muted-foreground text-base">
             Let’s design the place you always imagined.
           </p>
         </div>
@@ -40,8 +40,8 @@ export default function CategoryPage() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <section className="grid grid-cols-4 gap-10">
-        <div className="col-span-1 space-y-10">
+      <section className="grid grid-cols-4 gap-8">
+        <div className="col-span-1 space-y-8">
           <h2 className="flex items-center gap-2 text-xl font-semibold">
             <Image
               src={filter}
@@ -55,7 +55,7 @@ export default function CategoryPage() {
 
           <Filter />
         </div>
-        <div className="col-span-3 space-y-10">
+        <div className="col-span-3 space-y-8">
           <div>
             <h2 className="text-xl font-semibold">Living Room</h2>
 
@@ -83,10 +83,10 @@ export default function CategoryPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-3">
+          <div className="grid grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, index) => {
               return (
-                <div className="pb-6" key={index}>
+                <div key={index}>
                   <ProductCard />
                 </div>
               )

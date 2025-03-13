@@ -1,5 +1,6 @@
 'use client'
 
+import { ArrowUp } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -28,7 +29,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-3xl font-medium text-primary">
+          <span className="text-primary text-3xl font-medium">
             New
             <br />
             Arrivals
@@ -36,23 +37,21 @@ export function Content() {
           <CarouselControls api={apiBestSelling} />
         </div>
 
-        <div className="flex gap-6">
-          <Carousel
-            opts={{
-              align: 'start',
-            }}
-            setApi={setApiBestSelling}
-            className="w-full"
-          >
-            <CarouselContent>
-              {Array.from({ length: 50 }).map((_, index) => (
-                <CarouselItem key={index} className="basis-1/4">
-                  <ProductCard />
-                </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
+        <Carousel
+          opts={{
+            align: 'start',
+          }}
+          setApi={setApiBestSelling}
+          className="w-full"
+        >
+          <CarouselContent>
+            {Array.from({ length: 50 }).map((_, index) => (
+              <CarouselItem key={index} className="basis-1/4">
+                <ProductCard />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
 
         <div className="flex justify-center">
           <Link href="/shop">
@@ -65,7 +64,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-3xl font-medium text-primary">Category</span>
+          <span className="text-primary text-3xl font-medium">Category</span>
 
           <CarouselControls api={apiCategory} />
         </div>
@@ -95,7 +94,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-3xl font-medium text-primary">
+          <span className="text-primary text-3xl font-medium">
             New
             <br />
             Arrivals
@@ -114,7 +113,7 @@ export function Content() {
             <CarouselContent>
               {Array.from({ length: 50 }).map((_, index) => (
                 <CarouselItem key={index} className="basis-1/4">
-                  <div className="space-y-6">
+                  <div className="flex flex-col gap-4">
                     <ProductCard />
                     <ProductCard />
                   </div>
@@ -130,6 +129,16 @@ export function Content() {
           </Link>
         </div>
       </section>
+
+      <div className="ml-auto">
+        <Button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          size="icon"
+          variant="default"
+        >
+          <ArrowUp className="h-[1.5rem] w-[1.5rem]" />
+        </Button>
+      </div>
     </>
   )
 }
