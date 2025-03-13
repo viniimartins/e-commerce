@@ -33,7 +33,10 @@ export default function Cart() {
                   </div>
                   <div className="flex items-center justify-between">
                     <Counter />
-                    <X />
+                    <Button variant="outline" size="icon">
+                      <X />
+                      <span className="sr-only">Remove product</span>
+                    </Button>
                   </div>
                 </div>
               </div>

@@ -49,16 +49,18 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
               className="mb-1"
             />
             <div className="absolute top-2 right-2 flex cursor-pointer flex-col gap-2">
-              <Button
-                variant="outline"
-                className="cursor-pointer rounded-full border-none"
-                size="icon"
-              >
-                {variant === 'wishlist' && <Trash />}
-                {variant === 'default' && <Heart />}
-              </Button>
+              {variant !== 'viewImages' && (
+                <Button
+                  variant="outline"
+                  className="cursor-pointer rounded-full border-none"
+                  size="icon"
+                >
+                  {variant === 'wishlist' && <Trash />}
+                  {variant === 'default' && <Heart />}
+                </Button>
+              )}
 
-              {variant === 'default' && (
+              {variant !== 'wishlist' && (
                 <Button
                   variant="outline"
                   className="rounded-full border-none"
@@ -96,7 +98,7 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
       </Link>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="dialog-content grid grid-cols-5 gap-6">
+        <DialogContent className="grid max-h-[70vh]! max-w-[50vw]! grid-cols-5 gap-6">
           <div className="dark:bg-muted-foreground/10 relative col-span-3 bg-neutral-100 dark:border">
             <Carousel>
               <CarouselContent>
