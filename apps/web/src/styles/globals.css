@@ -67,7 +67,7 @@
 
 @layer utilities {
   body {
-    font-family: Poppions, Inter, sans-serif;
+    font-family: Poppins, Inter, sans-serif;
   }
 }
 
@@ -181,5 +181,10 @@
     html {
       font-size: 100%;
     }
+  }
+
+  .dialog-content {
+    max-width: 50vw !important; 
+    max-height: 90vh !important;
   }
 }

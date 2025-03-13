@@ -60,7 +60,7 @@ export default async function ProductPage() {
           </div>
         </div>
 
-        <div className="row-span-2 flex flex-col gap-6">
+        <div className="col-span-2 flex flex-col gap-6">
           <div className="flex flex-1 flex-col gap-3">
             <div className="text-2xl font-bold">Havic HV G-92 Gamepad</div>
             <span className="text-xl font-medium">$ 192.00</span>
@@ -113,7 +113,7 @@ export default async function ProductPage() {
       <section className="space-y-12">
         <span className="text-primary text-3xl font-medium">Related Item</span>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, index) => (
             <ProductCard key={index} />
           ))}
