@@ -17,8 +17,8 @@ import {
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
+import Counter from '../../components/counter'
 import { ProductCard } from '../../components/product-card'
-import Counter from './components/counter'
 
 export default async function ProductPage() {
   return (

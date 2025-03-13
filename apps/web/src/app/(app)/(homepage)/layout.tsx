@@ -13,8 +13,10 @@ export const metadata: Metadata = {
 }
 export default async function ShoppLayout({
   children,
+  sheet,
 }: {
   children: ReactNode
+  sheet: ReactNode
 }) {
   return (
     <main className="flex min-h-screen">
@@ -22,6 +24,7 @@ export default async function ShoppLayout({
         <Header />
         <div className="mx-auto flex min-h-min w-full max-w-[73.125rem] flex-1 flex-col gap-10 overflow-auto px-8 pb-24">
           {children}
+          {sheet}
         </div>
         <Footer />
       </section>

@@ -19,7 +19,7 @@ export default function Counter() {
       <Input
         value={count}
         onChange={(e) => setCount(Number(e.target.value))}
-        className="z-10 w-16 text-center"
+        className="z-10 w-12 text-center"
       />
       <Button variant="outline" size="icon" onClick={increase}>
         +
