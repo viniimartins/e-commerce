@@ -81,19 +81,57 @@ export function AnnounceCard() {
         </div>
       </div>
 
-      <div className="row flex">
-        <div>
-          <div className="inline-block rounded-full bg-gray-400">
+      <div className="grid grid-cols-3 gap-4">
+        <div className="col-span-1 flex flex-col items-center justify-center gap-2">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-400">
             <Image
               src={entrega}
               alt="Vantages"
-              width={65}
-              height={65}
+              width={60}
+              height={60}
               className="m-3 rounded-full bg-black p-3"
             />
           </div>
-          <p>ENTREGA RÁPIDA E GRATUITA</p>
-          <p>Frete grátis para todas as compras acima de R$200!</p>
+          <div className="space-y-2 text-center">
+            <p className="text-xl font-semibold">ENTREGA RÁPIDA E GRATUITA</p>
+            <p className="text-base font-medium">
+              Frete grátis para todas as compras acima de R$200!
+            </p>
+          </div>
+        </div>
+        <div className="col-span-1 flex flex-col items-center justify-center gap-2">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-400">
+            <Image
+              src={entrega}
+              alt="Vantages"
+              width={60}
+              height={60}
+              className="m-3 rounded-full bg-black p-3"
+            />
+          </div>
+          <div className="space-y-2 text-center">
+            <p className="text-xl font-semibold">ENTREGA RÁPIDA E GRATUITA</p>
+            <p className="text-base font-medium">
+              Frete grátis para todas as compras acima de R$200!
+            </p>
+          </div>
+        </div>
+        <div className="col-span-1 flex flex-col items-center justify-center gap-2">
+          <div className="flex h-20 w-20 items-center justify-center rounded-full bg-gray-400">
+            <Image
+              src={entrega}
+              alt="Vantages"
+              width={60}
+              height={60}
+              className="m-3 rounded-full bg-black p-3"
+            />
+          </div>
+          <div className="space-y-2 text-center">
+            <p className="text-xl font-semibold">ENTREGA RÁPIDA E GRATUITA</p>
+            <p className="text-base font-medium">
+              Frete grátis para todas as compras acima de R$200!
+            </p>
+          </div>
         </div>
       </div>
     </>
