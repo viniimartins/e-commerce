@@ -21,7 +21,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { cn } from '@/lib/utils' // Certifique-se de que a função cn está corretamente importada
+import { cn } from '@/lib/utils'
 
 import { Input } from '../ui/input'
 
@@ -109,14 +109,26 @@ export function Header() {
                   size="icon"
                   className="h-14 w-14 rounded-full"
                 >
-                  V<span className="sr-only">Toggle user menu</span>
+                  {/* {session?.user.avatarUrl && (
+                    <Image
+                      src={session?.user.avatarUrl ?? ''}
+                      alt="Image user"
+                      width={50}
+                      className="rounded-full"
+                      height={50}
+                    />
+                  )} */}
+
+                  <span className="sr-only">Toggle user menu</span>
                 </Button>
                 <div className="flex flex-col items-center gap-1 pb-2">
                   <span className="text-base font-medium">
-                    Vinicius Martins Ribeiro
+                    {/* {session?.user?.name} */}
+                    name
                   </span>
                   <span className="text-muted-foreground text-sm">
-                    vinimribeiro2004@gmail.com
+                    {/* {session?.user?.email} */}
+                    email
                   </span>
                 </div>
               </div>

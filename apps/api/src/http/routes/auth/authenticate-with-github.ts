@@ -1,7 +1,7 @@
 import { env } from '@e-commerce/env'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import z from 'zod'
+import { z } from 'zod'
 
 import { prisma } from '@/lib/prisma'
 
@@ -9,7 +9,7 @@ import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function authenticateWithGithub(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/session/github',
+    '/sessions/github',
     {
       schema: {
         tags: ['Auth'],
