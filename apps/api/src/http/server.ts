@@ -1,4 +1,5 @@
 import { env } from '@e-commerce/env'
+import fastifyJwt from '@fastify/jwt'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import fastify from 'fastify'
@@ -38,6 +39,10 @@ app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUI, {
   routePrefix: '/docs',
+})
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
 })
 
 app.register(authenticateWithGithub)
