@@ -1,3 +1,4 @@
+import { env } from '@e-commerce/env'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
 import fastify from 'fastify'
@@ -41,6 +42,6 @@ app.register(fastifySwaggerUI, {
 
 app.register(authenticateWithGithub)
 
-app.listen({ port: 3333 }).then(() => {
+app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')
 })
