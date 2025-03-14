@@ -2,14 +2,19 @@
   "name": "@e-commerce/api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "tsx watch src/http/server.ts"
+    "pnpm env:load dev": "tsx watch src/http/server.ts",
+    "db:migrate": "pnpm env:load prisma migrate dev",
+    "db:studio": "pnpm env:load prisma studio",
+    "env:load": "dotenv -e ../../.env --"
   },
   "dependencies": {
+    "@e-commerce/env": "workspace:*",
     "@fastify/swagger": "^9.4.2",
     "@fastify/swagger-ui": "^5.2.2",
+    "@prisma/client": "^6.5.0",
     "fastify": "^5.2.1",
-    "@e-commerce/env": "workspace:*",
     "fastify-type-provider-zod": "^4.0.2",
+    "prisma": "^6.5.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -17,6 +22,7 @@
     "@e-commerce/prettier": "workspace:*",
     "@e-commerce/tsconfig": "workspace:*",
     "@types/node": "^20",
+    "dotenv-cli": "^8.0.0",
     "tsx": "^4.19.2"
   },
   "prettier": "@e-commerce/prettier",
