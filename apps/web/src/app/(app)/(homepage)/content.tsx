@@ -3,7 +3,7 @@
 import { ArrowUp } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import entrega from '@/assets/homepage/delivery.svg'
 import mulher from '@/assets/homepage/mulher.png'
@@ -18,7 +18,6 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
-import { api } from '@/service/api'
 
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
@@ -29,23 +28,6 @@ export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
-
-  const [data, setData] = useState(null)
-
-  console.log(data)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await api.get('/sessions/github/teste')
-        setData(response.data)
-      } catch (err) {
-        console.log('a')
-      }
-    }
-
-    fetchData()
-  }, [])
 
   return (
     <>
