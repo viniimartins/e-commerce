@@ -42,3 +42,29 @@ model Account {
   @@unique([provider, userId])
   @@map("accounts")
 }
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String
+  description String
+  price       Decimal
+  quantity    Int
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  images ProductImage[]
+
+  @@map("products")
+}
+
+model ProductImage {
+  id        String  @id @default(uuid())
+  url       String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("images")
+}
