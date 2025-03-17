@@ -13,6 +13,8 @@ import {
 
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { getCategories } from './routes/category/get-categories'
+import { getProducts } from './routes/products/get-products'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -52,6 +54,10 @@ app.register(fastifyJwt, {
 app.register(fastifyCors)
 
 app.register(authenticateWithGithub)
+
+app.register(getCategories)
+
+app.register(getProducts)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')

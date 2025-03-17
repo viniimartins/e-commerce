@@ -43,6 +43,18 @@ model Account {
   @@map("accounts")
 }
 
+model Category {
+  id   String @id @default(uuid())
+  name String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  products Product[]
+
+  @@map("categories")
+}
+
 model Product {
   id          String  @id @default(uuid())
   name        String
@@ -53,7 +65,10 @@ model Product {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  images ProductImage[]
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+
+  productImage ProductImage[]
 
   @@map("products")
 }
