@@ -2,6 +2,7 @@
 
 import { type PropsWithChildren } from 'react'
 
+import { ReactQueryProvider } from './react-query'
 import { ThemeProvider } from './theme-provider'
 
 export function Providers({ children }: PropsWithChildren) {
@@ -12,7 +13,7 @@ export function Providers({ children }: PropsWithChildren) {
       enableSystem
       disableTransitionOnChange
     >
-      {children}
+      <ReactQueryProvider>{children}</ReactQueryProvider>
     </ThemeProvider>
   )
 }
