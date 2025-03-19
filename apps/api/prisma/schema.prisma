@@ -19,10 +19,11 @@ model User {
   email     String  @unique
   avatarUrl String? @map("avatar_url")
 
+  accounts Account[]
+  wishlist Wishlist[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
-  accounts Account[]
 
   @@map("users")
 }
@@ -47,10 +48,10 @@ model Category {
   id   String @id @default(uuid())
   name String
 
+  products Product[]
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
-
-  products Product[]
 
   @@map("categories")
 }
@@ -62,24 +63,41 @@ model Product {
   price       Decimal
   quantity    Int
 
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String
 
   productImage ProductImage[]
 
+  wishlist   Wishlist? @relation(fields: [wishlistId], references: [id])
+  wishlistId String?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   @@map("products")
 }
 
 model ProductImage {
-  id        String  @id @default(uuid())
-  url       String
+  id  String @id @default(uuid())
+  url String
+
   productId String
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
 
   @@map("images")
+}
+
+model Wishlist {
+  id String @id @default(uuid())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  products Product[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("wishlist")
 }

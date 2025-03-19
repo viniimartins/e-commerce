@@ -15,6 +15,7 @@ import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getCategories } from './routes/category/get-categories'
 import { getProducts } from './routes/products/get-products'
+import { getWishlist } from './routes/wishlist/get-wishlist'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -58,6 +59,8 @@ app.register(authenticateWithGithub)
 app.register(getCategories)
 
 app.register(getProducts)
+
+app.register(getWishlist)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')
