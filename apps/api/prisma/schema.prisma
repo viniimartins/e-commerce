@@ -67,9 +67,7 @@ model Product {
   categoryId String
 
   productImage ProductImage[]
-
-  wishlist   Wishlist? @relation(fields: [wishlistId], references: [id])
-  wishlistId String?
+  wishlist     Wishlist[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -90,14 +88,14 @@ model ProductImage {
 }
 
 model Wishlist {
-  id String @id @default(uuid())
-
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  products Product[]
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  @@id([userId, productId])
   @@map("wishlist")
 }

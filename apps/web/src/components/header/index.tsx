@@ -32,7 +32,7 @@ export function Header() {
   const { setTheme, theme } = useTheme()
 
   return (
-    <header className="text-m bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
+    <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
         <Link href="/">
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>

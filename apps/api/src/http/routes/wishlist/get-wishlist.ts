@@ -24,9 +24,8 @@ export function getWishlist(app: FastifyInstance) {
             200: z.object({
               data: z.array(
                 z.object({
-                  id: z.string(),
                   createdAt: z.date(),
-                  products: z.array(
+                  product: z.array(
                     z.object({
                       id: z.string(),
                       name: z.string(),
@@ -66,7 +65,7 @@ export function getWishlist(app: FastifyInstance) {
               userId,
             },
             include: {
-              products: {
+              product: {
                 include: {
                   productImage: true,
                 },
@@ -85,10 +84,12 @@ export function getWishlist(app: FastifyInstance) {
         return reply.status(200).send({
           data: wishlist.map((item) => ({
             ...item,
-            products: item.products.map((product) => ({
-              ...product,
-              price: Number(product.price),
-            })),
+            product: [
+              {
+                ...item.product,
+                price: Number(item.product.price),
+              },
+            ],
           })),
           meta: {
             pageIndex: page,
