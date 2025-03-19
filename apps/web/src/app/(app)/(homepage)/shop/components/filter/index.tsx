@@ -1,26 +1,51 @@
+'use client'
+
+import { useSearchParams } from 'next/navigation'
+
+import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
 
 export function Filter() {
+  const searchParams = useSearchParams()
+  const categoryActiveId = searchParams.get('category')
+
+  const { data: categories } = useGetCategories({
+    page: 1,
+    perPage: 15,
+  })
+
   return (
     <aside className="space-y-10">
-      <div className="space-y-4">
+      <div className="flex flex-col gap-1">
         <span className="text-xl font-medium">CATEGORIES</span>
 
         <div className="flex h-56 flex-col items-start gap-2 overflow-auto">
-          {Array.from({ length: 10 }).map((_, index) => {
+          <a
+            data-active={!categoryActiveId}
+            href="/shop"
+            className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+          >
+            All
+          </a>
+
+          {categories?.data.map((category) => {
+            const { id, name } = category
+
             return (
               <a
-                key={index}
-                className="text-muted-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+                data-active={categoryActiveId === id}
+                key={id}
+                href={`/shop/?category=${id}`}
+                className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
               >
-                All Rooms
+                {name}
               </a>
             )
           })}
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className="flex flex-col gap-1">
         <span className="text-xl font-medium">PRICE</span>
 
         <div className="flex flex-col items-start gap-2">

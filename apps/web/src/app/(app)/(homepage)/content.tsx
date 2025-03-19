@@ -68,7 +68,7 @@ export function Content() {
 
               return (
                 <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard {...product} href={`/product/${id}`} />
+                  <ProductCard {...product} href={`/shop/${id}`} />
                 </CarouselItem>
               )
             })}
@@ -152,7 +152,7 @@ export function Content() {
 
               return (
                 <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard {...product} href={`/product/${id}`} />
+                  <ProductCard {...product} href={`/shop/${id}`} />
                 </CarouselItem>
               )
             })}
@@ -163,36 +163,6 @@ export function Content() {
           <Link href="/shop">
             <Button size="lg">View All Products</Button>
           </Link>
-        </div>
-      </section>
-
-      <section className="space-y-12">
-        <div className="flex justify-between">
-          <span className="text-primary text-3xl font-medium">Category</span>
-
-          <CarouselControls api={apiCarrousel} />
-        </div>
-
-        <div className="flex gap-6">
-          <Carousel
-            opts={{
-              align: 'start',
-            }}
-            setApi={setApiCarrousel}
-            className="w-full"
-          >
-            <CarouselContent>
-              {products?.data.map((product) => {
-                const { id } = product
-
-                return (
-                  <CarouselItem key={id} className="basis-1/6">
-                    <ProductCard {...product} href={`/product/${id}`} />
-                  </CarouselItem>
-                )
-              })}
-            </CarouselContent>
-          </Carousel>
         </div>
       </section>
 

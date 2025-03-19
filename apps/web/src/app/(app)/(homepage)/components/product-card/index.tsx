@@ -48,10 +48,10 @@ export function ProductCard(props: Props) {
 
   return (
     <>
-      <Link href={href}>
+      <Link href={href ?? '/shop'}>
         <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
           <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-            {productImage[0].url && (
+            {productImage && (
               <Image
                 src={productImage[0].url}
                 alt={name}
@@ -116,7 +116,7 @@ export function ProductCard(props: Props) {
           <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
             <Carousel>
               <CarouselContent>
-                {productImage.map((image) => {
+                {productImage?.map((image) => {
                   const { id, url } = image
 
                   return (
