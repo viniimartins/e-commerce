@@ -23,6 +23,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { formatPrice } from '@/utils/formatPrice'
 
 interface Props extends IProduct {
   href: string
@@ -105,7 +106,7 @@ export function ProductCard(props: Props) {
           <CardFooter className="flex flex-col items-start p-0">
             <h3 className="text-base font-medium">{name}</h3>
             <p className="text-muted-foreground mt-1 text-base font-medium">
-              $ {price}
+              {formatPrice(price)}
             </p>
           </CardFooter>
         </Card>
@@ -144,7 +145,7 @@ export function ProductCard(props: Props) {
           <div className="col-span-2 flex flex-col gap-6">
             <DialogHeader className="flex flex-1 flex-col gap-3">
               <DialogTitle className="text-2xl font-bold">{name}</DialogTitle>
-              <span className="text-xl font-medium">$ {price}</span>
+              <span className="text-xl font-medium">{formatPrice(price)}</span>
               <DialogDescription className="text-muted-foreground line-clamp-12 overflow-auto pr-2 text-base">
                 {description}
               </DialogDescription>
