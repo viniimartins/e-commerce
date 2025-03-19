@@ -2,6 +2,7 @@
 
 import { type PropsWithChildren } from 'react'
 
+import { CartProvider } from './cart-provider'
 import { ReactQueryProvider } from './react-query'
 import { ThemeProvider } from './theme-provider'
 
@@ -13,7 +14,9 @@ export function Providers({ children }: PropsWithChildren) {
       enableSystem
       disableTransitionOnChange
     >
-      <ReactQueryProvider>{children}</ReactQueryProvider>
+      <ReactQueryProvider>
+        <CartProvider>{children}</CartProvider>
+      </ReactQueryProvider>
     </ThemeProvider>
   )
 }

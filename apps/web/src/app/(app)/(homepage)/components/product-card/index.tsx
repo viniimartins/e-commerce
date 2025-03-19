@@ -3,7 +3,7 @@
 import { Eye, Heart, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { type MouseEvent, useState } from 'react'
 
 import type { IProduct } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,7 @@ import { formatPrice } from '@/utils/formatPrice'
 
 interface Props extends IProduct {
   href: string
+  onClick: () => void
   variant?: 'default' | 'wishlist' | 'viewImages'
 }
 
@@ -37,14 +38,20 @@ export function ProductCard(props: Props) {
     name,
     productImage,
     description,
+    onClick,
     variant = 'default',
   } = props
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleOpenDialog = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleOpenDialog = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     setIsOpen(true)
+  }
+
+  const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    onClick()
   }
 
   return (
@@ -88,7 +95,10 @@ export function ProductCard(props: Props) {
             </div>
 
             {variant === 'default' && (
-              <Button className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100">
+              <Button
+                onClick={handleAddToCart}
+                className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
+              >
                 Add To Cart
               </Button>
             )}
@@ -96,6 +106,7 @@ export function ProductCard(props: Props) {
             {variant !== 'default' && (
               <Button
                 variant="outline"
+                onClick={handleAddToCart}
                 className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
               >
                 <ShoppingCart />

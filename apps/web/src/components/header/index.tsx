@@ -22,15 +22,17 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { cn } from '@/lib/utils'
+import { useCart } from '@/providers/cart-provider'
 
 import { Input } from '../ui/input'
 
 export function Header() {
+  const { cart } = useCart()
   const pathname = usePathname()
   const { setTheme, theme } = useTheme()
 
   return (
-    <header className="text-m flex w-full items-center justify-center border-b p-6">
+    <header className="text-m bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
         <Link href="/">
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
@@ -89,8 +91,13 @@ export function Header() {
           </Link>
 
           <Link href="/cart">
-            <Button size="icon" variant="ghost">
+            <Button size="icon" variant="ghost" className="relative">
               <ShoppingCart className="h-[1.2rem] w-[1.2rem] transition-all" />
+              {cart.length > 0 && (
+                <span className="bg-accent absolute top-0 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[0.7rem]">
+                  {cart.length}
+                </span>
+              )}
             </Button>
           </Link>
 

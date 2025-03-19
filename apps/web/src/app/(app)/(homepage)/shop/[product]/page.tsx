@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
 import Counter from '../../components/counter'
-import { ProductCard } from '../../components/product-card'
+// import { ProductCard } from '../../components/product-card'
 
 export default async function ProductPage() {
   return (
@@ -110,7 +110,7 @@ export default async function ProductPage() {
 
       <Separator />
 
-      <section className="space-y-12">
+      {/* <section className="space-y-12">
         <span className="text-primary text-3xl font-medium">Related Item</span>
 
         <div className="grid grid-cols-4 gap-3">
@@ -118,7 +118,7 @@ export default async function ProductPage() {
             <ProductCard key={index} />
           ))}
         </div>
-      </section>
+      </section> */}
     </>
   )
 }
