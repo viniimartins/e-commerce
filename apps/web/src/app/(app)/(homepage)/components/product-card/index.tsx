@@ -23,24 +23,32 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
-interface Props extends IProduct {
-  href: string
-  onClick: () => void
+import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
+import { useProductInWishlist } from '../../wishlist/hooks/use-product-in-wishlist'
+
+interface Props {
   variant?: 'default' | 'wishlist' | 'viewImages'
+  data: IProduct
 }
 
 export function ProductCard(props: Props) {
-  const {
-    price,
-    href,
-    name,
-    productImage,
-    description,
-    onClick,
-    variant = 'default',
-  } = props
+  const { data, variant = 'default' } = props
+
+  const { description, id, name, price, productImage } = data
+
+  const { addToCart } = useCart()
+
+  const { mutate: addToWishlist } = useProductInWishlist()
+
+  const { data: wishlist } = useGetWishlist({
+    page: 1,
+  })
+
+  const isProductInWishlist = wishlist?.data.some((item) => item.id === data.id)
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -48,15 +56,9 @@ export function ProductCard(props: Props) {
     event.preventDefault()
     setIsOpen(true)
   }
-
-  const handleAddToCart = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-    onClick()
-  }
-
   return (
     <>
-      <Link href={href ?? '/shop'}>
+      <Link href={`/shop/${id}`}>
         <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
           <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
             {productImage && (
@@ -71,20 +73,48 @@ export function ProductCard(props: Props) {
               />
             )}
             <div className="absolute top-2 right-2 flex cursor-pointer flex-col gap-2">
-              {variant !== 'viewImages' && (
+              {variant === 'default' && (
+                <>
+                  <Button
+                    variant="secondary"
+                    className="cursor-pointer rounded-full border-none disabled:opacity-80"
+                    size="icon"
+                    disabled={isProductInWishlist}
+                    onClick={(event) => {
+                      event.preventDefault()
+
+                      addToWishlist({ product: data })
+                    }}
+                  >
+                    <Heart
+                      className={cn(isProductInWishlist && 'fill-current')}
+                    />
+                  </Button>
+
+                  <Button
+                    variant="secondary"
+                    className="rounded-full border-none"
+                    size="icon"
+                    onClick={handleOpenDialog}
+                  >
+                    <Eye />
+                  </Button>
+                </>
+              )}
+
+              {variant === 'wishlist' && (
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   className="cursor-pointer rounded-full border-none"
                   size="icon"
                 >
-                  {variant === 'wishlist' && <Trash />}
-                  {variant === 'default' && <Heart />}
+                  <Trash />
                 </Button>
               )}
 
-              {variant !== 'wishlist' && (
+              {variant === 'viewImages' && (
                 <Button
-                  variant="outline"
+                  variant="secondary"
                   className="rounded-full border-none"
                   size="icon"
                   onClick={handleOpenDialog}
@@ -96,7 +126,10 @@ export function ProductCard(props: Props) {
 
             {variant === 'default' && (
               <Button
-                onClick={handleAddToCart}
+                onClick={(event) => {
+                  event.preventDefault()
+                  addToCart(data)
+                }}
                 className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
               >
                 Add To Cart
@@ -105,8 +138,11 @@ export function ProductCard(props: Props) {
 
             {variant !== 'default' && (
               <Button
-                variant="outline"
-                onClick={handleAddToCart}
+                variant="secondary"
+                onClick={(event) => {
+                  event.preventDefault()
+                  addToCart(data)
+                }}
                 className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
               >
                 <ShoppingCart />

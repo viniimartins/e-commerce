@@ -29,6 +29,8 @@ export function addProjectInWishlist(app: FastifyInstance) {
 
         const { productId } = request.body
 
+        console.log(productId)
+
         const wishlist = await prisma.wishlist.create({
           data: {
             userId,

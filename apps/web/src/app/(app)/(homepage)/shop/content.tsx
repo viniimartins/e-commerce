@@ -72,7 +72,7 @@ export function Content() {
           {products?.data.map((product) => {
             const { id } = product
 
-            return <ProductCard key={id} {...product} href={`/shop/${id}`} />
+            return <ProductCard key={id} data={product} />
           })}
         </div>
 

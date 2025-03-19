@@ -24,22 +24,17 @@ export function getWishlist(app: FastifyInstance) {
             200: z.object({
               data: z.array(
                 z.object({
-                  createdAt: z.date(),
-                  product: z.array(
+                  id: z.string(),
+                  name: z.string(),
+                  description: z.string(),
+                  price: z.number(),
+                  quantity: z.number(),
+                  productImage: z.array(
                     z.object({
                       id: z.string(),
-                      name: z.string(),
-                      description: z.string(),
-                      price: z.number(),
-                      quantity: z.number(),
-                      productImage: z.array(
-                        z.object({
-                          id: z.string(),
-                          createdAt: z.date(),
-                          url: z.string(),
-                          productId: z.string(),
-                        }),
-                      ),
+                      createdAt: z.date(),
+                      url: z.string(),
+                      productId: z.string(),
                     }),
                   ),
                 }),
@@ -83,13 +78,8 @@ export function getWishlist(app: FastifyInstance) {
 
         return reply.status(200).send({
           data: wishlist.map((item) => ({
-            ...item,
-            product: [
-              {
-                ...item.product,
-                price: Number(item.product.price),
-              },
-            ],
+            ...item.product,
+            price: Number(item.product.price),
           })),
           meta: {
             pageIndex: page,

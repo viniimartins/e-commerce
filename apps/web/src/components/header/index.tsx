@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
+import { useGetWishlist } from '@/app/(app)/(homepage)/wishlist/hooks/use-get-wishlist'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -30,6 +31,10 @@ export function Header() {
   const { cart } = useCart()
   const pathname = usePathname()
   const { setTheme, theme } = useTheme()
+
+  const { data: wishlist } = useGetWishlist({
+    page: 1,
+  })
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -86,7 +91,12 @@ export function Header() {
 
           <Link href="/wishlist">
             <Button size="icon" variant="ghost">
-              <Heart className="h-[1.2rem] w-[1.2rem] transition-all" />
+              <Heart
+                className={cn(
+                  'h-[1.2rem] w-[1.2rem] transition-all',
+                  wishlist?.data && 'fill-current',
+                )}
+              />
             </Button>
           </Link>
 

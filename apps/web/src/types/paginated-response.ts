@@ -1,5 +1,5 @@
 export interface PaginatedResponse<T> {
-  metadata: {
+  meta: {
     pageIndex: number
     perPage: number
     total: number

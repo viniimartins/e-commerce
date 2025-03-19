@@ -18,7 +18,6 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
-import { useCart } from '@/providers/cart-provider'
 
 import { useGetCategories } from '../hooks/use-get-category'
 import { useGetProducts } from '../hooks/use-get-products'
@@ -28,8 +27,6 @@ import { CarouselControls } from './components/controls-carousel'
 import { ProductCard } from './components/product-card'
 
 export function Content() {
-  const { addToCart } = useCart()
-
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
@@ -71,11 +68,7 @@ export function Content() {
 
               return (
                 <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard
-                    {...product}
-                    href={`/shop/${id}`}
-                    onClick={() => addToCart(product)}
-                  />
+                  <ProductCard data={product} />
                 </CarouselItem>
               )
             })}
@@ -159,11 +152,7 @@ export function Content() {
 
               return (
                 <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard
-                    {...product}
-                    href={`/shop/${id}`}
-                    onClick={() => addToCart(product)}
-                  />
+                  <ProductCard data={product} />
                 </CarouselItem>
               )
             })}
