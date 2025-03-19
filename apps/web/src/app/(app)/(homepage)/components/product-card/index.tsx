@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import gamepad from '@/assets/gamepad.png'
+import type { IProduct } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import {
@@ -24,11 +24,21 @@ import {
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
 
-interface IProductCardProps {
+interface Props extends IProduct {
+  href: string
   variant?: 'default' | 'wishlist' | 'viewImages'
 }
 
-export function ProductCard({ variant = 'default' }: IProductCardProps) {
+export function ProductCard(props: Props) {
+  const {
+    price,
+    href,
+    name,
+    productImage,
+    description,
+    variant = 'default',
+  } = props
+
   const [isOpen, setIsOpen] = useState(false)
 
   const handleOpenDialog = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -38,16 +48,20 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
 
   return (
     <>
-      <Link href="/shop/123">
+      <Link href={href}>
         <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
           <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-            <Image
-              src={gamepad}
-              alt="Product"
-              width={170}
-              height={150}
-              className="mb-1"
-            />
+            {productImage[0].url && (
+              <Image
+                src={productImage[0].url}
+                alt={name}
+                fill
+                quality={100}
+                priority
+                className="object-cover p-2"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            )}
             <div className="absolute top-2 right-2 flex cursor-pointer flex-col gap-2">
               {variant !== 'viewImages' && (
                 <Button
@@ -89,9 +103,9 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
             )}
           </CardContent>
           <CardFooter className="flex flex-col items-start p-0">
-            <h3 className="text-base font-medium">HAVIT HV-G92 Gamepad</h3>
+            <h3 className="text-base font-medium">{name}</h3>
             <p className="text-muted-foreground mt-1 text-base font-medium">
-              $160
+              $ {price}
             </p>
           </CardFooter>
         </Card>
@@ -99,17 +113,28 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="grid max-h-[70vh]! max-w-[50vw]! grid-cols-5 gap-6">
-          <div className="dark:bg-muted-foreground/10 relative col-span-3 bg-neutral-100 dark:border">
+          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
             <Carousel>
               <CarouselContent>
-                <CarouselItem>
-                  <Image
-                    src={gamepad}
-                    alt="Imagem 1"
-                    width={1920}
-                    height={1080}
-                  />
-                </CarouselItem>
+                {productImage.map((image) => {
+                  const { id, url } = image
+
+                  return (
+                    <CarouselItem
+                      key={id}
+                      className="relative h-[35rem] w-full"
+                    >
+                      <Image
+                        src={url}
+                        alt={name}
+                        fill
+                        quality={100}
+                        className="absolute object-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
+                    </CarouselItem>
+                  )
+                })}
               </CarouselContent>
               <CarouselPrevious className="left-2" variant="default" />
               <CarouselNext className="right-2" variant="default" />
@@ -118,14 +143,10 @@ export function ProductCard({ variant = 'default' }: IProductCardProps) {
 
           <div className="col-span-2 flex flex-col gap-6">
             <DialogHeader className="flex flex-1 flex-col gap-3">
-              <DialogTitle className="text-2xl font-bold">
-                Havic HV G-92 Gamepad
-              </DialogTitle>
-              <span className="text-xl font-medium">$ 192.00</span>
+              <DialogTitle className="text-2xl font-bold">{name}</DialogTitle>
+              <span className="text-xl font-medium">$ {price}</span>
               <DialogDescription className="text-muted-foreground line-clamp-12 overflow-auto pr-2 text-base">
-                PlayStation 5 Controller Skin High quality vinyl with air
-                channel adhesive for easy bubble free install & mess free
-                removal Pressure sensitive.
+                {description}
               </DialogDescription>
             </DialogHeader>
             <Separator />

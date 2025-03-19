@@ -6,6 +6,12 @@ const nextConfig: NextConfig = {
       {
         hostname: 'avatars.githubusercontent.com',
       },
+      {
+        hostname: 'picsum.photos',
+      },
+      {
+        hostname: 'loremflickr.com',
+      },
     ],
   },
 }

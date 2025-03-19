@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUp } from 'lucide-react'
+import { ArrowUp, Gamepad2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -19,6 +19,8 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 
+import { useGetCategories } from '../hooks/use-get-category'
+import { useGetProducts } from '../hooks/use-get-products'
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
@@ -28,6 +30,16 @@ export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
+
+  const { data: categories } = useGetCategories({
+    page: 1,
+    perPage: 15,
+  })
+
+  const { data: products } = useGetProducts({
+    page: 1,
+    perPage: 10,
+  })
 
   return (
     <>
@@ -51,11 +63,15 @@ export function Content() {
           className="w-full"
         >
           <CarouselContent>
-            {Array.from({ length: 50 }).map((_, index) => (
-              <CarouselItem key={index} className="basis-1/4">
-                <ProductCard />
-              </CarouselItem>
-            ))}
+            {products?.data.map((product) => {
+              const { id } = product
+
+              return (
+                <CarouselItem key={id} className="basis-1/4">
+                  <ProductCard {...product} href={`/product/${id}`} />
+                </CarouselItem>
+              )
+            })}
           </CarouselContent>
         </Carousel>
 
@@ -84,11 +100,26 @@ export function Content() {
             className="w-full"
           >
             <CarouselContent>
-              {Array.from({ length: 50 }).map((_, index) => (
-                <CarouselItem key={index} className="basis-1/6">
-                  <CategoryCard />
-                </CarouselItem>
-              ))}
+              {categories?.data.map((category) => {
+                const { id } = category
+
+                return (
+                  <CarouselItem key={id} className="basis-1/6">
+                    <CategoryCard
+                      {...category}
+                      icon={
+                        <Gamepad2
+                          width={56}
+                          height={56}
+                          strokeWidth={1}
+                          className="group-hover:text-primary dark:group-hover:text-primary"
+                        />
+                      }
+                      href={`/shop?category=${id}`}
+                    />
+                  </CarouselItem>
+                )
+              })}
             </CarouselContent>
           </Carousel>
         </div>
@@ -108,26 +139,25 @@ export function Content() {
           <CarouselControls api={apiCarrousel} />
         </div>
 
-        <div className="flex gap-6">
-          <Carousel
-            opts={{
-              align: 'start',
-            }}
-            setApi={setApiCarrousel}
-            className="w-full"
-          >
-            <CarouselContent>
-              {Array.from({ length: 50 }).map((_, index) => (
-                <CarouselItem key={index} className="basis-1/4">
-                  <div className="flex flex-col gap-4">
-                    <ProductCard />
-                    <ProductCard />
-                  </div>
+        <Carousel
+          opts={{
+            align: 'start',
+          }}
+          setApi={setApiCarrousel}
+          className="w-full"
+        >
+          <CarouselContent>
+            {products?.data.map((product) => {
+              const { id } = product
+
+              return (
+                <CarouselItem key={id} className="basis-1/4">
+                  <ProductCard {...product} href={`/product/${id}`} />
                 </CarouselItem>
-              ))}
-            </CarouselContent>
-          </Carousel>
-        </div>
+              )
+            })}
+          </CarouselContent>
+        </Carousel>
 
         <div className="flex justify-center">
           <Link href="/shop">
@@ -137,9 +167,43 @@ export function Content() {
       </section>
 
       <section className="space-y-12">
+        <div className="flex justify-between">
+          <span className="text-primary text-3xl font-medium">Category</span>
+
+          <CarouselControls api={apiCarrousel} />
+        </div>
+
+        <div className="flex gap-6">
+          <Carousel
+            opts={{
+              align: 'start',
+            }}
+            setApi={setApiCarrousel}
+            className="w-full"
+          >
+            <CarouselContent>
+              {products?.data.map((product) => {
+                const { id } = product
+
+                return (
+                  <CarouselItem key={id} className="basis-1/6">
+                    <ProductCard {...product} href={`/product/${id}`} />
+                  </CarouselItem>
+                )
+              })}
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </section>
+
+      <section className="space-y-12">
         <div className="grid grid-cols-4 grid-rows-2 gap-6 text-white">
           <div className="col relative col-span-2 row-span-2 flex justify-center bg-black">
-            <Image src={ps5slim} alt="Product" className="object-cover" />
+            <Image
+              src={ps5slim}
+              alt="Product"
+              className="h-auto w-auto object-cover"
+            />
             <div className="absolute bottom-3 flex w-full flex-col space-y-1 px-6">
               <span className="font-inter text-2xl font-semibold">
                 PlayStation 5
@@ -172,7 +236,13 @@ export function Content() {
                 </Button>
               </div>
             </div>
-            <Image src={mulher} alt="Product" width={400} height={150} />
+            <Image
+              src={mulher}
+              alt="Product"
+              width={400}
+              height={400}
+              className="h-auto w-auto"
+            />
           </div>
 
           <div className="relative col-span-1 flex items-center justify-center bg-black">
@@ -189,7 +259,13 @@ export function Content() {
                 </Button>
               </div>
             </div>
-            <Image src={speakers} alt="Product" width={200} height={150} />
+            <Image
+              src={speakers}
+              alt="Product"
+              width={200}
+              height={200}
+              className="h-auto w-auto"
+            />
           </div>
 
           <div className="relative col-span-1 flex items-center justify-center bg-black">
@@ -206,7 +282,13 @@ export function Content() {
                 </Button>
               </div>
             </div>
-            <Image src={perfume} alt="Product" width={200} height={150} />
+            <Image
+              src={perfume}
+              alt="Product"
+              width={200}
+              height={200}
+              className="h-auto w-auto"
+            />
           </div>
         </div>
 

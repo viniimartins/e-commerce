@@ -15,6 +15,8 @@ export function CarouselControls({ api }: CarouselControlsProps) {
   useEffect(() => {
     if (!api) return
 
+    console.log(api.canScrollNext())
+
     const updateControls = () => {
       setCanScrollPrev(api.canScrollPrev())
       setCanScrollNext(api.canScrollNext())

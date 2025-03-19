@@ -27,6 +27,14 @@ export async function getProducts(app: FastifyInstance) {
                 description: z.string(),
                 price: z.number(),
                 quantity: z.number(),
+                productImage: z.array(
+                  z.object({
+                    id: z.string(),
+                    createdAt: z.date(),
+                    url: z.string(),
+                    productId: z.string(),
+                  }),
+                ),
               }),
             ),
             meta: z.object({
@@ -58,6 +66,9 @@ export async function getProducts(app: FastifyInstance) {
         prisma.product.findMany({
           where: {
             categoryId,
+          },
+          include: {
+            productImage: true,
           },
           take: perPage,
           skip: (page - 1) * perPage,
