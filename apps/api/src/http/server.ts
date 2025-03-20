@@ -14,6 +14,7 @@ import {
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getCategories } from './routes/category/get-categories'
+import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
@@ -65,6 +66,7 @@ app.register(authenticateWithGithub)
 app.register(getCategories)
 
 app.register(getProducts)
+app.register(getProduct)
 
 app.register(getWishlist)
 app.register(addToWishlist)
