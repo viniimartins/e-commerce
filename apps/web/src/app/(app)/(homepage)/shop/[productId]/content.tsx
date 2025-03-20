@@ -4,6 +4,7 @@ import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 import { useParams } from 'next/navigation'
 
+import { useGetProducts } from '@/app/(app)/hooks/use-get-products'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -18,12 +19,19 @@ import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/utils/formatPrice'
 
 import Counter from '../../components/counter'
+import { ProductCard } from '../../components/product-card'
 import { useGetProduct } from './hooks/use-get-product'
 
 export function Content() {
   const { productId } = useParams<{ productId: string }>()
 
   const { data: product } = useGetProduct({ product: { id: productId } })
+
+  const { data: products } = useGetProducts({
+    categoryId: product?.category.id,
+    perPage: 4,
+    page: 1,
+  })
 
   const isInStock = product?.quantity && product.quantity > 0
   const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
@@ -172,17 +180,21 @@ export function Content() {
         </div>
       </section>
 
-      <Separator />
+      <Separator className="my-10" />
 
-      {/* <section className="space-y-12">
-        <span className="text-primary text-3xl font-medium">Related Item</span>
+      <section className="flex flex-col gap-12">
+        <span className="text-primary text-3xl font-medium">
+          Mais de {product?.category.name}
+        </span>
 
-        <div className="grid grid-cols-4 gap-3">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <ProductCard key={index} />
-          ))}
+        <div className="grid grid-cols-4 gap-4">
+          {products?.data.map((product) => {
+            const { id } = product
+
+            return <ProductCard key={id} data={product} />
+          })}
         </div>
-      </section> */}
+      </section>
     </>
   )
 }
