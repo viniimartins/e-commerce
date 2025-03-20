@@ -23,6 +23,10 @@ export async function getProduct(app: FastifyInstance) {
             description: z.string(),
             price: z.number(),
             quantity: z.number(),
+            category: z.object({
+              id: z.string(),
+              name: z.string(),
+            }),
             productImage: z.array(
               z.object({
                 id: z.string(),
@@ -44,6 +48,12 @@ export async function getProduct(app: FastifyInstance) {
         },
         include: {
           productImage: true,
+          category: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
         },
       })
 
