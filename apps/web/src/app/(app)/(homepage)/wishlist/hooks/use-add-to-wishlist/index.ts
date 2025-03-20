@@ -1,7 +1,8 @@
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import type { QueryKeyProps } from '@/types/queryKeyProps'
 
 type Product = Pick<IProduct, 'id'>
 
@@ -17,9 +18,14 @@ async function create({ product }: Params) {
   return data
 }
 
-export function useProductInWishlist() {
+export function useAddToWishlist({ queryKey }: QueryKeyProps) {
+  const queryClient = useQueryClient()
+
   return useMutation({
-    mutationKey: ['add-product-in-wishlist'],
+    mutationKey: ['add-product-to-wishlist'],
     mutationFn: create,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey })
+    },
   })
 }

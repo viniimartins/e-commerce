@@ -9,7 +9,11 @@ interface Params {
   perPage?: number
 }
 
-async function getWishlist(params: Params) {
+interface Props {
+  params: Params
+}
+
+async function get(params: Params) {
   const { data } = await api.get<PaginatedResponse<IProduct>>('/wishlist', {
     params,
   })
@@ -17,12 +21,12 @@ async function getWishlist(params: Params) {
   return data
 }
 
-export function useGetWishlist(params: Params) {
+export function useGetWishlist({ params }: Props) {
   const queryKey = ['get-wishlist', params]
 
   const query = useQuery({
     queryKey,
-    queryFn: () => getWishlist(params),
+    queryFn: () => get(params),
   })
 
   return { ...query, queryKey }

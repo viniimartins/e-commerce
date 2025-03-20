@@ -94,7 +94,7 @@ export function Header() {
               <Heart
                 className={cn(
                   'h-[1.2rem] w-[1.2rem] transition-all',
-                  wishlist?.data && 'fill-current',
+                  wishlist && wishlist.data.length > 0 && 'fill-current',
                 )}
               />
             </Button>

@@ -12,7 +12,7 @@ export async function getProducts(app: FastifyInstance) {
     {
       schema: {
         tags: ['Products'],
-        summary: 'List products',
+        summary: 'List product',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
           perPage: z.coerce.number().min(1).max(20).default(10),
@@ -27,6 +27,10 @@ export async function getProducts(app: FastifyInstance) {
                 description: z.string(),
                 price: z.number(),
                 quantity: z.number(),
+                category: z.object({
+                  id: z.string(),
+                  name: z.string(),
+                }),
                 productImage: z.array(
                   z.object({
                     id: z.string(),
@@ -69,6 +73,12 @@ export async function getProducts(app: FastifyInstance) {
           },
           include: {
             productImage: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
           take: perPage,
           skip: (page - 1) * perPage,
