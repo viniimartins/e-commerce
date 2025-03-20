@@ -18,6 +18,7 @@ import {
   CarouselItem,
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
 
 import { useGetCategories } from '../hooks/use-get-category'
 import { useGetProducts } from '../hooks/use-get-products'
@@ -25,18 +26,19 @@ import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
 import { ProductCard } from './components/product-card'
+import { ProductCardSkeleton } from './components/product-card/skeleton'
 
 export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
 
-  const { data: categories } = useGetCategories({
+  const { data: categories, isLoading: isLoadingCategory } = useGetCategories({
     page: 1,
     perPage: 15,
   })
 
-  const { data: products } = useGetProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     page: 1,
     perPage: 10,
   })
@@ -72,6 +74,15 @@ export function Content() {
                 </CarouselItem>
               )
             })}
+
+            {isLoadingProducts &&
+              Array.from({ length: 4 }).map((_, index) => {
+                return (
+                  <CarouselItem key={index} className="basis-1/4">
+                    <ProductCardSkeleton />
+                  </CarouselItem>
+                )
+              })}
           </CarouselContent>
         </Carousel>
 
@@ -120,6 +131,15 @@ export function Content() {
                   </CarouselItem>
                 )
               })}
+
+              {isLoadingCategory &&
+                Array.from({ length: 10 }).map((_, index) => {
+                  return (
+                    <CarouselItem key={index} className="basis-1/6">
+                      <Skeleton className="h-[9.063rem] w-[10.625rem]" />
+                    </CarouselItem>
+                  )
+                })}
             </CarouselContent>
           </Carousel>
         </div>
@@ -156,6 +176,15 @@ export function Content() {
                 </CarouselItem>
               )
             })}
+
+            {isLoadingProducts &&
+              Array.from({ length: 4 }).map((_, index) => {
+                return (
+                  <CarouselItem key={index} className="basis-1/4">
+                    <ProductCardSkeleton />
+                  </CarouselItem>
+                )
+              })}
           </CarouselContent>
         </Carousel>
 
