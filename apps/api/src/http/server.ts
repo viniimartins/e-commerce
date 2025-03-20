@@ -14,6 +14,7 @@ import {
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getCategories } from './routes/category/get-categories'
+import { getCategory } from './routes/category/get-category'
 import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
@@ -64,6 +65,7 @@ app.register(fastifyCors, {
 app.register(authenticateWithGithub)
 
 app.register(getCategories)
+app.register(getCategory)
 
 app.register(getProducts)
 app.register(getProduct)

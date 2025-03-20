@@ -36,8 +36,6 @@ export function Content() {
   const isInStock = product?.quantity && product.quantity > 0
   const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
 
-  console.log(product)
-
   return (
     <>
       <section className="flex grid-cols-5 gap-8">

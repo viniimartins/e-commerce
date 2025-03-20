@@ -4,15 +4,20 @@ import { useSearchParams } from 'next/navigation'
 
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Skeleton } from '@/components/ui/skeleton'
 
 export function Filter() {
   const searchParams = useSearchParams()
   const categoryActiveId = searchParams.get('category')
 
-  const { data: categories } = useGetCategories({
-    page: 1,
-    perPage: 15,
-  })
+  const { data: categories, isLoading: isLoadingCategories } = useGetCategories(
+    {
+      page: 1,
+      perPage: 15,
+    },
+  )
+
+  const isLoading = isLoadingCategories
 
   return (
     <aside className="space-y-10">
@@ -42,6 +47,11 @@ export function Filter() {
               </a>
             )
           })}
+
+          {isLoading &&
+            Array.from({ length: 12 }).map((_, index) => {
+              return <Skeleton key={index} className="h-4 w-full" />
+            })}
         </div>
       </div>
 

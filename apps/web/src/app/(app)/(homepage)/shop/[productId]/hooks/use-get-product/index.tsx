@@ -16,7 +16,7 @@ async function get(productId: Props['product']['id']) {
 }
 
 export function useGetProduct({ product }: Props) {
-  const queryKey = ['get-product']
+  const queryKey = ['get-product', product]
 
   const query = useQuery({
     queryKey,

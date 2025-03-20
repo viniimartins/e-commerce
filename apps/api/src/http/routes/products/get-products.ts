@@ -12,7 +12,7 @@ export async function getProducts(app: FastifyInstance) {
     {
       schema: {
         tags: ['Products'],
-        summary: 'List products',
+        summary: 'List product',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
           perPage: z.coerce.number().min(1).max(20).default(10),

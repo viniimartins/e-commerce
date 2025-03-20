@@ -6,21 +6,30 @@ import { useSearchParams } from 'next/navigation'
 
 import filter from '@/assets/filter.svg'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 
 import { useGetProducts } from '../../hooks/use-get-products'
 import { ProductCard } from '../components/product-card'
+import { ProductCardSkeleton } from '../components/product-card/skeleton'
 import { Filter } from './components/filter'
+import { useGetCategory } from './hooks/use-get-category'
 
 export function Content() {
   const searchParams = useSearchParams()
   const categoryActiveId = searchParams.get('category')
 
-  const { data: products } = useGetProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     page: 1,
     perPage: 15,
     categoryId: categoryActiveId,
   })
+
+  const { data: category, isLoading: isLoadingCategory } = useGetCategory({
+    category: { id: categoryActiveId! },
+  })
+
+  const isLoading = isLoadingProducts || isLoadingCategory
 
   return (
     <section className="grid grid-cols-4 gap-8">
@@ -40,8 +49,10 @@ export function Content() {
       </div>
       <div className="col-span-3 space-y-8">
         <div>
+          {isLoading && <Skeleton className="h-5 w-56" />}
+
           <h2 className="text-xl font-semibold">
-            {categoryActiveId ?? 'Home'}
+            {!isLoading && category?.name}
           </h2>
 
           <div className="flex items-center justify-end">
@@ -74,6 +85,11 @@ export function Content() {
 
             return <ProductCard key={id} data={product} />
           })}
+
+          {isLoading &&
+            Array.from({ length: 12 }).map((_, index) => {
+              return <ProductCardSkeleton key={index} />
+            })}
         </div>
 
         <div className="flex justify-center">
