@@ -3,6 +3,7 @@ export interface IProduct {
   name: string
   price: number
   description: string
+  quantity: number
   productImage: {
     id: string
     createdAt: Date

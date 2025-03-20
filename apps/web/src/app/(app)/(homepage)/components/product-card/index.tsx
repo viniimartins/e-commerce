@@ -42,7 +42,7 @@ export function ProductCard(props: Props) {
 
   const { addToCart } = useCart()
 
-  const { data: wishlist, queryKey } = useGetWishlist({})
+  const { data: wishlist, queryKey } = useGetWishlist({ params: {} })
 
   const { mutate: addToWishlist } = useAddToWishlist({ queryKey })
 

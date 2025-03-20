@@ -18,21 +18,19 @@ export async function getProduct(app: FastifyInstance) {
         }),
         response: {
           200: z.object({
-            data: z.object({
-              id: z.string(),
-              name: z.string(),
-              description: z.string(),
-              price: z.number(),
-              quantity: z.number(),
-              productImage: z.array(
-                z.object({
-                  id: z.string(),
-                  createdAt: z.date(),
-                  url: z.string(),
-                  productId: z.string(),
-                }),
-              ),
-            }),
+            id: z.string(),
+            name: z.string(),
+            description: z.string(),
+            price: z.number(),
+            quantity: z.number(),
+            productImage: z.array(
+              z.object({
+                id: z.string(),
+                createdAt: z.date(),
+                url: z.string(),
+                productId: z.string(),
+              }),
+            ),
           }),
         },
       },
@@ -54,10 +52,8 @@ export async function getProduct(app: FastifyInstance) {
       }
 
       return reply.status(200).send({
-        data: {
-          ...product,
-          price: Number(product.price),
-        },
+        ...product,
+        price: Number(product.price),
       })
     },
   )
