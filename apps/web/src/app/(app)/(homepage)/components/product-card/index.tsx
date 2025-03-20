@@ -27,9 +27,8 @@ import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
+import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
 import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
-import { useProductInWishlist } from '../../wishlist/hooks/use-product-in-wishlist'
-
 interface Props {
   variant?: 'default' | 'wishlist' | 'viewImages'
   data: IProduct
@@ -42,7 +41,7 @@ export function ProductCard(props: Props) {
 
   const { addToCart } = useCart()
 
-  const { mutate: addToWishlist } = useProductInWishlist()
+  const { mutate: addToWishlist } = useAddToWishlist()
 
   const { data: wishlist } = useGetWishlist({
     page: 1,
@@ -72,7 +71,7 @@ export function ProductCard(props: Props) {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             )}
-            <div className="absolute top-2 right-2 flex cursor-pointer flex-col gap-2">
+            <div className="absolute top-4 right-4 flex cursor-pointer flex-col gap-2">
               {variant === 'default' && (
                 <>
                   <Button

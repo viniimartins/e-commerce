@@ -5,7 +5,9 @@ import z from 'zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
-export function addProjectInWishlist(app: FastifyInstance) {
+import { BadRequestError } from '../_errors/bad-request-error'
+
+export function addToWishlist(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
@@ -14,6 +16,7 @@ export function addProjectInWishlist(app: FastifyInstance) {
       {
         schema: {
           tags: ['Wishlist'],
+          summary: 'Add a product to the wishlist',
           body: z.object({
             productId: z.string(),
           }),
@@ -29,7 +32,15 @@ export function addProjectInWishlist(app: FastifyInstance) {
 
         const { productId } = request.body
 
-        console.log(productId)
+        const product = await prisma.product.findUnique({
+          where: {
+            id: productId,
+          },
+        })
+
+        if (!product) {
+          throw new BadRequestError('Product not found')
+        }
 
         const wishlist = await prisma.wishlist.create({
           data: {

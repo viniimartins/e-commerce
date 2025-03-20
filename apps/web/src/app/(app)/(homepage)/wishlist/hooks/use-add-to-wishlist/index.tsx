@@ -17,9 +17,9 @@ async function create({ product }: Params) {
   return data
 }
 
-export function useProductInWishlist() {
+export function useAddToWishlist() {
   return useMutation({
-    mutationKey: ['add-product-in-wishlist'],
+    mutationKey: ['add-product-to-wishlist'],
     mutationFn: create,
   })
 }
