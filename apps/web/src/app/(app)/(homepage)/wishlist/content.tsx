@@ -22,7 +22,7 @@ export function Content() {
       </section>
 
       <div className="grid grid-cols-4 gap-4">
-        {!products?.data && (
+        {products?.data.length === 0 && (
           <span className="text-muted-foreground text-center text-sm">
             Nenhum item adicionado na wishlist!
           </span>

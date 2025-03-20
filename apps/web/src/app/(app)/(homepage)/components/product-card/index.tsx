@@ -29,6 +29,7 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
 import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
+import { useRemoveFromWishlist } from '../../wishlist/hooks/use-remove-from-wishlist'
 interface Props {
   variant?: 'default' | 'wishlist' | 'viewImages'
   data: IProduct
@@ -41,11 +42,11 @@ export function ProductCard(props: Props) {
 
   const { addToCart } = useCart()
 
-  const { mutate: addToWishlist } = useAddToWishlist()
+  const { data: wishlist, queryKey } = useGetWishlist({})
 
-  const { data: wishlist } = useGetWishlist({
-    page: 1,
-  })
+  const { mutate: addToWishlist } = useAddToWishlist({ queryKey })
+
+  const { mutate: removeFromWishlist } = useRemoveFromWishlist({ queryKey })
 
   const isProductInWishlist = wishlist?.data.some((item) => item.id === data.id)
 
@@ -106,6 +107,10 @@ export function ProductCard(props: Props) {
                   variant="secondary"
                   className="cursor-pointer rounded-full border-none"
                   size="icon"
+                  onClick={(event) => {
+                    event.preventDefault()
+                    removeFromWishlist({ product: data })
+                  }}
                 >
                   <Trash />
                 </Button>
