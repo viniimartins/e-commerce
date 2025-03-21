@@ -17,5 +17,8 @@ export interface CartContextData {
   incrementCartQuantity: (productId: string) => void
   decrementCartQuantity: (productId: string) => void
 
+  total: number
+  subTotal: number
+
   cart: ICartProduct[]
 }

@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 
 import type { IProduct } from '@/app/(app)/types'
 
@@ -8,6 +8,19 @@ const CartContext = createContext({} as CartContextData)
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<ICartProduct[]>([])
+
+  useEffect(() => {
+    const storedCart = localStorage.getItem('cart')
+    if (storedCart) {
+      setCart(JSON.parse(storedCart))
+    }
+  }, [])
+
+  useEffect(() => {
+    if (cart.length > 0) {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    }
+  }, [cart])
 
   function addToCart(product: IProduct) {
     setCart((prevCart) => {
@@ -21,6 +34,12 @@ export function CartProvider({ children }: CartProviderProps) {
 
       return [...prevCart, { ...product, cartQuantity: 1 }]
     })
+  }
+
+  function removeToCart(productId: string) {
+    setCart((prevCart) =>
+      prevCart.filter((product) => product.id !== productId),
+    )
   }
 
   function incrementCartQuantity(productId: string) {
@@ -42,11 +61,14 @@ export function CartProvider({ children }: CartProviderProps) {
       ),
     )
   }
-  function removeToCart(productId: string) {
-    setCart((prevCart) =>
-      prevCart.filter((product) => product.id !== productId),
-    )
-  }
+
+  const total = cart.reduce((acc, product) => {
+    return acc + product.price * product.cartQuantity
+  }, 0)
+
+  const subTotal = cart.reduce((acc, product) => {
+    return acc + product.price
+  }, 0)
 
   return (
     <CartContext.Provider
@@ -56,6 +78,8 @@ export function CartProvider({ children }: CartProviderProps) {
         removeToCart,
         incrementCartQuantity,
         decrementCartQuantity,
+        total,
+        subTotal,
       }}
     >
       {children}

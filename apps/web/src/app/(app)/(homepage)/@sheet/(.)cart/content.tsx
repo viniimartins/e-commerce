@@ -12,8 +12,14 @@ import { formatPrice } from '@/utils/formatPrice'
 import Counter from '../../components/counter'
 
 export function Content() {
-  const { cart, decrementCartQuantity, incrementCartQuantity, removeToCart } =
-    useCart()
+  const {
+    cart,
+    decrementCartQuantity,
+    incrementCartQuantity,
+    removeToCart,
+    subTotal,
+    total,
+  } = useCart()
 
   return (
     <div className="flex h-full flex-col pb-8 pl-4">
@@ -72,14 +78,16 @@ export function Content() {
       <div className="mt-auto flex flex-col gap-2 pr-4">
         <div className="flex justify-between">
           <span className="text-base font-medium">SubTotal</span>
-          <span className="text-base font-semibold">{formatPrice(99)}</span>
+          <span className="text-base font-semibold">
+            {formatPrice(subTotal)}
+          </span>
         </div>
 
         <Separator />
 
         <div className="flex justify-between">
           <span className="text-xl font-medium">Total</span>
-          <span className="text-xl font-semibold">{formatPrice(234)}</span>
+          <span className="text-xl font-semibold">{formatPrice(total)}</span>
         </div>
 
         <Button size="lg">Checkout</Button>
