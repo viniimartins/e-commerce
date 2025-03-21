@@ -12,13 +12,14 @@ import { formatPrice } from '@/utils/formatPrice'
 import Counter from '../../components/counter'
 
 export function Content() {
-  const { cart } = useCart()
+  const { cart, decrementCartQuantity, incrementCartQuantity, removeToCart } =
+    useCart()
 
   return (
     <div className="flex h-full flex-col pb-8 pl-4">
       <div className="h-[65vh] space-y-4 overflow-y-auto pr-2">
         {cart.map((product) => {
-          const { id, name, price, productImage } = product
+          const { id, name, price, cartQuantity, productImage } = product
 
           return (
             <div key={id} className="flex gap-4 border-b pb-6">
@@ -41,8 +42,17 @@ export function Content() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <Counter />
-                  <Button variant="outline" size="icon">
+                  <Counter
+                    value={cartQuantity}
+                    increment={() => incrementCartQuantity(id)}
+                    decrement={() => decrementCartQuantity(id)}
+                  />
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeToCart(id)}
+                  >
                     <X />
                     <span className="sr-only">Remove product</span>
                   </Button>
@@ -51,6 +61,12 @@ export function Content() {
             </div>
           )
         })}
+
+        {cart.length === 0 && (
+          <p className="text-muted-foreground text-sm">
+            Seu carrinho está vazio. Adicione alguns produtos ao seu carrinho.
+          </p>
+        )}
       </div>
 
       <div className="mt-auto flex flex-col gap-2 pr-4">

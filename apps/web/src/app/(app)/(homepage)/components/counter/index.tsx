@@ -1,27 +1,23 @@
 'use client'
 
-import { useState } from 'react'
+import { type ComponentProps } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-export default function Counter() {
-  const [count, setCount] = useState(0)
+interface Props extends ComponentProps<typeof Input> {
+  increment: () => void
+  decrement: () => void
+}
 
-  const increase = () => setCount((prev) => prev + 1)
-  const decrease = () => setCount((prev) => Math.max(0, prev - 1))
-
+export default function Counter({ increment, decrement, ...props }: Props) {
   return (
     <div className="flex items-center">
-      <Button variant="outline" size="icon" onClick={decrease}>
+      <Button variant="outline" size="icon" onClick={decrement}>
         -
       </Button>
-      <Input
-        value={count}
-        onChange={(e) => setCount(Number(e.target.value))}
-        className="z-10 w-12 text-center"
-      />
-      <Button variant="outline" size="icon" onClick={increase}>
+      <Input {...props} className="z-10 w-12 text-center" readOnly />
+      <Button variant="outline" size="icon" onClick={increment}>
         +
       </Button>
     </div>

@@ -44,8 +44,6 @@ export function ProductCard(props: Props) {
 
   const { data: wishlist, queryKey } = useGetWishlist({ params: {} })
 
-  console.log(queryKey)
-
   const { mutate: addToWishlist } = useAddToWishlist({ queryKey })
 
   const { mutate: removeFromWishlist } = useRemoveFromWishlist({ queryKey })
