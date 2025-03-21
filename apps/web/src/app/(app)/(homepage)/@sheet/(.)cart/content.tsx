@@ -60,7 +60,7 @@ export function Content() {
                     onClick={() => removeToCart(id)}
                   >
                     <X />
-                    <span className="sr-only">Remove product</span>
+                    <span className="sr-only">Remover produto</span>
                   </Button>
                 </div>
               </div>
@@ -90,11 +90,11 @@ export function Content() {
           <span className="text-xl font-semibold">{formatPrice(total)}</span>
         </div>
 
-        <Button size="lg">Checkout</Button>
+        <Button size="lg">Finalizar a compra</Button>
 
         <Link href="/cart" target="_top" className="m-auto">
           <Button variant="link" className="underline">
-            View cart
+            Ver carrinho
           </Button>
         </Link>
       </div>

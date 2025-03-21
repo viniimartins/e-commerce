@@ -22,7 +22,7 @@ export function useAddToWishlist({ queryKey }: QueryKeyProps) {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationKey: ['add-product-to-wishlist'],
+    mutationKey: ['add-to-wishlist'],
     mutationFn: create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey })

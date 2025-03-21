@@ -1,9 +1,5 @@
 import type { Metadata } from 'next'
-import Image from 'next/image'
-import Link from 'next/link'
 
-import gamepadSmall from '@/assets/g92-2-500x500 1.png'
-import x from '@/assets/Vector.svg'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,51 +8,14 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { Input } from '@/components/ui/input'
-import { Separator } from '@/components/ui/separator'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+
+import { Content } from './content'
 
 export const metadata: Metadata = {
   title: 'Cart',
 }
 
 export default function Cart() {
-  const products = [
-    {
-      name: 'H1 Gamepad',
-      price: '$550.00',
-      quantity: '2',
-      subtotal: '$1200',
-    },
-    {
-      name: 'H1 Gamepad',
-      price: '$550.00',
-      quantity: '2',
-      subtotal: '$1200',
-    },
-    {
-      name: 'H1 Gamepad',
-      price: '$550.00',
-      quantity: '2',
-      subtotal: '$1200',
-    },
-  ]
-
   return (
     <>
       <Breadcrumb className="mt-14">
@@ -66,102 +25,12 @@ export default function Cart() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Cart</BreadcrumbPage>
+            <BreadcrumbPage>Carrinho</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Table className="border-spacing-y-4">
-        <TableHeader>
-          <TableRow className="shadow-xs">
-            <TableHead className="text-foreground p-6">Product</TableHead>
-            <TableHead className="text-foreground">Price</TableHead>
-            <TableHead className="text-foreground">Quantity</TableHead>
-            <TableHead className="text-foreground text-center">
-              Subtotal
-            </TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {products.map((product, index) => (
-            <TableRow key={index} className="shadow-xs">
-              <TableCell className="group relative flex items-center gap-4 p-6">
-                <div className="absolute top-5 left-4 hidden group-hover:block">
-                  <Button
-                    size="icon"
-                    variant="destructive"
-                    className="h-4 w-4 rounded-full"
-                  >
-                    <Image
-                      src={x}
-                      width={8}
-                      height={8}
-                      alt="Vector X remove item"
-                    />
-                  </Button>
-                </div>
-                <Image
-                  src={gamepadSmall}
-                  width={50}
-                  height={50}
-                  alt="Image cart small"
-                />
-                {product.name}
-              </TableCell>
-              <TableCell className="text-muted-foreground py-6 text-sm">
-                {product.price}
-              </TableCell>
-              <TableCell className="py-6">
-                <Input type="number" className="w-20" min={1} placeholder="2" />
-              </TableCell>
-              <TableCell className="text-muted-foreground p-6 text-center text-sm">
-                {product.subtotal}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-
-      <div className="flex justify-between">
-        <Link href="/">
-          <Button size="lg" variant="outline">
-            Return To Shop
-          </Button>
-        </Link>
-
-        <Card className="w-96 rounded-none">
-          <CardHeader>
-            <CardTitle className="text-lg font-medium">Cart Total</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="flex items-center justify-between text-base font-medium">
-              <span className="text-base">Subtotal:</span>
-
-              <span className="text-muted-foreground text-sm">$1750</span>
-            </div>
-
-            <Separator />
-            <div className="flex items-center justify-between text-base font-medium">
-              <span className="text-base">Shipping:</span>
-
-              <span className="text-muted-foreground text-sm">Free</span>
-            </div>
-
-            <Separator />
-
-            <div className="flex items-center justify-between text-base font-medium">
-              <span className="text-base">Total:</span>
-
-              <span className="text-muted-foreground text-sm">$1750</span>
-            </div>
-          </CardContent>
-          <CardFooter>
-            <Link href="/cart/checkout" className="ml-auto">
-              <Button>Process to checkout</Button>
-            </Link>
-          </CardFooter>
-        </Card>
-      </div>
+      <Content />
     </>
   )
 }

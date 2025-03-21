@@ -25,7 +25,7 @@ export default function Wishlist() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Wishlist</BreadcrumbPage>
+            <BreadcrumbPage>Lista de desejos</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

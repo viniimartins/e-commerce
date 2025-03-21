@@ -13,7 +13,7 @@ export default function Cart() {
     <Sheet defaultOpen>
       <InterceptedSheetContent>
         <SheetHeader>
-          <SheetTitle className="text-3xl">Cart</SheetTitle>
+          <SheetTitle className="text-3xl">Carrinho</SheetTitle>
           <SheetDescription className="hidden" />
         </SheetHeader>
 

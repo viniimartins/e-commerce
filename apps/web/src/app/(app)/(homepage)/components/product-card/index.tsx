@@ -31,7 +31,7 @@ import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
 import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
 import { useRemoveFromWishlist } from '../../wishlist/hooks/use-remove-from-wishlist'
 interface Props {
-  variant?: 'default' | 'wishlist' | 'viewImages'
+  variant?: 'default' | 'wishlist'
   data: IProduct
 }
 
@@ -40,7 +40,7 @@ export function ProductCard(props: Props) {
 
   const { description, id, name, price, productImage } = data
 
-  const { addToCart } = useCart()
+  const { cart, addToCart } = useCart()
 
   const { data: wishlist, queryKey } = useGetWishlist({ params: {} })
 
@@ -56,6 +56,9 @@ export function ProductCard(props: Props) {
     event.preventDefault()
     setIsOpen(true)
   }
+
+  const isProductInCart = cart.some((item) => item.id === data.id)
+
   return (
     <>
       <Link href={`/shop/${id}`}>
@@ -115,17 +118,6 @@ export function ProductCard(props: Props) {
                   <Trash />
                 </Button>
               )}
-
-              {variant === 'viewImages' && (
-                <Button
-                  variant="secondary"
-                  className="rounded-full border-none"
-                  size="icon"
-                  onClick={handleOpenDialog}
-                >
-                  <Eye />
-                </Button>
-              )}
             </div>
 
             {variant === 'default' && (
@@ -134,15 +126,19 @@ export function ProductCard(props: Props) {
                   event.preventDefault()
                   addToCart(data)
                 }}
-                className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
+                disabled={isProductInCart}
+                className="absolute bottom-0 left-1/2 z-10 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
               >
-                Add To Cart
+                {isProductInCart
+                  ? 'Produto adicionado ao carrinho'
+                  : 'Adicionar ao carrinho'}
               </Button>
             )}
 
             {variant !== 'default' && (
               <Button
                 variant="secondary"
+                disabled={isProductInCart}
                 onClick={(event) => {
                   event.preventDefault()
                   addToCart(data)
@@ -150,7 +146,7 @@ export function ProductCard(props: Props) {
                 className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
               >
                 <ShoppingCart />
-                Add To Cart
+                Adicionar ao carrinho
               </Button>
             )}
           </CardContent>

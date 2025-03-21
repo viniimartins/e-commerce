@@ -55,8 +55,19 @@ export function CartProvider({ children }: CartProviderProps) {
   function decrementCartQuantity(productId: string) {
     setCart((prevCart) =>
       prevCart.map((product) =>
-        product.id === productId
+        product.id === productId && product.cartQuantity > 1
           ? { ...product, cartQuantity: product.cartQuantity - 1 }
+          : product,
+      ),
+    )
+  }
+
+  const handleQuantityChange = (productId: string, newQuantity: number) => {
+    if (newQuantity < 1) return
+    setCart((prevCart) =>
+      prevCart.map((product) =>
+        product.id === productId
+          ? { ...product, cartQuantity: newQuantity }
           : product,
       ),
     )
@@ -80,6 +91,7 @@ export function CartProvider({ children }: CartProviderProps) {
         decrementCartQuantity,
         total,
         subTotal,
+        handleQuantityChange,
       }}
     >
       {children}
