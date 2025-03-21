@@ -2,11 +2,12 @@
 
 import {
   Heart,
+  LogIn,
   LogOut,
   MoonIcon,
   Search,
   ShoppingCart,
-  SunIcon,
+  Sun,
   User2,
 } from 'lucide-react'
 import Link from 'next/link'
@@ -14,6 +15,8 @@ import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
 import { useGetWishlist } from '@/app/(app)/(homepage)/wishlist/hooks/use-get-wishlist'
+import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
+import { isAuthenticated } from '@/auth/client-auth'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -25,14 +28,21 @@ import {
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import { Input } from '../ui/input'
+import { Skeleton } from '../ui/skeleton'
 
 export function Header() {
-  const { cart } = useCart()
+  const isUserAuthenticated = isAuthenticated()
+
   const pathname = usePathname()
+
+  const { cart } = useCart()
   const { setTheme, theme } = useTheme()
 
   const { data: wishlist } = useGetWishlist({ params: {} })
+
+  const { data: profile, isLoading: isLoadingProfile } = useGetProfile()
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -118,65 +128,84 @@ export function Header() {
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="center" className="w-72 py-3">
-              <div className="flex flex-col items-center space-y-2">
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className="h-14 w-14 rounded-full"
-                >
-                  {/* {session?.user.avatarUrl && (
-                    <Image
-                      src={session?.user.avatarUrl ?? ''}
-                      alt="Image user"
-                      width={50}
-                      className="rounded-full"
-                      height={50}
-                    />
-                  )} */}
-
-                  <span className="sr-only">Toggle user menu</span>
-                </Button>
-                <div className="flex flex-col items-center gap-1 pb-2">
-                  <span className="text-base font-medium">
-                    {/* {session?.user?.name} */}
-                    name
-                  </span>
-                  <span className="text-muted-foreground text-sm">
-                    {/* {session?.user?.email} */}
-                    email
-                  </span>
-                </div>
-              </div>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+              {isUserAuthenticated && (
+                <div className="flex flex-col items-center space-y-2">
                   <Button
-                    variant="outline"
-                    className="flex w-full justify-start gap-2 border-none p-2"
+                    variant="secondary"
+                    size="icon"
+                    className="h-14 w-14 rounded-full"
                   >
-                    <SunIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
-                    <MoonIcon className="hidden h-[1.2rem] w-[1.2rem] transition-all dark:flex" />
-                    {theme === 'dark' ? 'Escuro' : 'Claro'}
+                    {profile?.avatarUrl && (
+                      <Avatar className="h-full w-full">
+                        <AvatarImage
+                          src={profile.avatarUrl}
+                          alt={`Avatar ${profile.name}`}
+                        />
+                        <AvatarFallback>
+                          {profile.name?.slice(0, 2)}
+                        </AvatarFallback>
+                      </Avatar>
+                    )}
+
+                    <span className="sr-only">Toggle user menu</span>
                   </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setTheme('light')}>
-                    Claro
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => setTheme('dark')}>
-                    Escuro
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+                  <div className="flex w-full flex-col items-center gap-1 pb-2">
+                    {profile && (
+                      <>
+                        <span className="text-base font-medium">
+                          {profile?.name}
+                        </span>
+                        <span className="text-muted-foreground text-sm">
+                          {profile?.email}
+                        </span>
+                      </>
+                    )}
+
+                    {isLoadingProfile && (
+                      <div className="flex w-full flex-col gap-1 px-10">
+                        <Skeleton className="h-4 w-full rounded-full" />
+                        <Skeleton className="mt-1 h-3.5 w-full rounded-full" />
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <Button
+                variant="outline"
+                className="flex w-full justify-start gap-2 border-none p-2"
+                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+              >
+                <MoonIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
+                <Sun className="hidden h-[1.2rem] w-[1.2rem] transition-all dark:flex" />
+                {theme === 'dark' ? 'Claro' : 'Escuro'}
+              </Button>
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem className="flex items-center gap-2 p-2 font-normal">
-                <LogOut size={20} />
-                Sair
-              </DropdownMenuItem>
+              {isUserAuthenticated && (
+                <DropdownMenuItem
+                  className="flex items-center gap-2 p-2 font-normal"
+                  asChild
+                >
+                  <a href="/api/auth/sign-out">
+                    <LogOut size={20} />
+                    Sair
+                  </a>
+                </DropdownMenuItem>
+              )}
+
+              {!isUserAuthenticated && (
+                <DropdownMenuItem
+                  className="flex items-center gap-2 p-2 font-normal"
+                  asChild
+                >
+                  <Link href="/login">
+                    <LogIn size={20} />
+                    Entrar
+                  </Link>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

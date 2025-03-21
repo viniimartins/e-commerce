@@ -1,3 +1,10 @@
+export interface IUser {
+  id: string
+  name: string
+  email: string
+  avatarUrl: string
+}
+
 export interface ICategory {
   id: string
   name: string

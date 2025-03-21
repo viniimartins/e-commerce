@@ -13,7 +13,7 @@ interface Params {
   categoryId?: string | null
 }
 
-async function getProducts(params: Params) {
+async function get(params: Params) {
   const { data } = await api.get<PaginatedResponse<IProduct>>('/products', {
     params,
   })
@@ -26,7 +26,7 @@ export function useGetProducts(params: Params) {
 
   const query = useQuery({
     queryKey,
-    queryFn: () => getProducts(params),
+    queryFn: () => get(params),
   })
 
   const { isError } = query

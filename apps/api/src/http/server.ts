@@ -13,6 +13,7 @@ import {
 
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { getProfile } from './routes/auth/get-profile'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
 import { getProduct } from './routes/products/get-product'
@@ -64,6 +65,7 @@ app.register(fastifyCors, {
 })
 
 app.register(authenticateWithGithub)
+app.register(getProfile)
 
 app.register(getCategories)
 app.register(getCategory)

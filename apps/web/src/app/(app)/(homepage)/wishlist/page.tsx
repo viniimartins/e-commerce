@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
+import { isAuthenticated } from '@/auth/server-auth'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,10 +14,16 @@ import {
 import { Content } from './content'
 
 export const metadata: Metadata = {
-  title: 'Wishlist',
+  title: 'Lista de desejos',
 }
 
-export default function Wishlist() {
+export default async function Wishlist() {
+  const isUserAuthenticated = await isAuthenticated()
+
+  if (!isUserAuthenticated) {
+    redirect('/login')
+  }
+
   return (
     <>
       <Breadcrumb className="mt-14">
