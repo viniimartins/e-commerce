@@ -1,4 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
@@ -26,6 +27,10 @@ export function useAddToWishlist({ queryKey }: QueryKeyProps) {
     mutationFn: create,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey })
+      toast.success('Produto adicionado à lista de desejos')
+    },
+    onError: () => {
+      toast.error('Erro ao adicionar o produto à lista de desejos')
     },
   })
 }

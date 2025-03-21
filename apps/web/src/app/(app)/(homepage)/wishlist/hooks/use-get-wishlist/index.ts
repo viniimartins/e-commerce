@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
@@ -28,6 +30,14 @@ export function useGetWishlist({ params }: Props) {
     queryKey,
     queryFn: () => get(params),
   })
+
+  const { isError } = query
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Erro ao buscar lista de desejos')
+    }
+  }, [isError])
 
   return { ...query, queryKey }
 }

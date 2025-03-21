@@ -1,6 +1,7 @@
 'use client'
 
 import { type PropsWithChildren } from 'react'
+import { Toaster } from 'sonner'
 
 import { CartProvider } from './cart-provider'
 import { ReactQueryProvider } from './react-query'
@@ -15,7 +16,10 @@ export function Providers({ children }: PropsWithChildren) {
       disableTransitionOnChange
     >
       <ReactQueryProvider>
-        <CartProvider>{children}</CartProvider>
+        <CartProvider>
+          <Toaster />
+          {children}
+        </CartProvider>
       </ReactQueryProvider>
     </ThemeProvider>
   )

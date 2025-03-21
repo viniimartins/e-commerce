@@ -19,6 +19,7 @@ import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
+import { removeAllFromWishlist } from './routes/wishlist/remove-all-wishlist'
 import { removeFromWishlist } from './routes/wishlist/remove-from-wishlist'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -73,6 +74,7 @@ app.register(getProduct)
 app.register(getWishlist)
 app.register(addToWishlist)
 app.register(removeFromWishlist)
+app.register(removeAllFromWishlist)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')

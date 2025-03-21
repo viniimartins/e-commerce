@@ -4,13 +4,14 @@ import { Button } from '@/components/ui/button'
 import { useCart } from '@/providers/cart-provider'
 
 import { ProductCard } from '../components/product-card'
+import { ProductCardSkeleton } from '../components/product-card/skeleton'
 import { useGetWishlist } from './hooks/use-get-wishlist'
 import { useRemoveAllWishlist } from './hooks/use-remove-all-wishlist'
 
 export function Content() {
   const { addToCart } = useCart()
 
-  const { data: products, queryKey } = useGetWishlist({ params: {} })
+  const { data: products, isLoading, queryKey } = useGetWishlist({ params: {} })
 
   const { mutate: removeAll } = useRemoveAllWishlist({ queryKey })
 
@@ -48,6 +49,11 @@ export function Content() {
 
           return <ProductCard variant="wishlist" key={id} data={product} />
         })}
+
+        {isLoading &&
+          Array.from({ length: 4 }).map((_, index) => (
+            <ProductCardSkeleton key={index} />
+          ))}
       </div>
     </>
   )

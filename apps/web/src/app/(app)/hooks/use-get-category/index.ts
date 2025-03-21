@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import { api } from '@/service/api'
 import type { PaginatedResponse } from '@/types/paginated-response'
@@ -25,6 +27,14 @@ export function useGetCategories(params: Params) {
     queryKey,
     queryFn: () => getCategories(params),
   })
+
+  const { isError } = query
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Erro ao buscar as categorias')
+    }
+  }, [isError])
 
   return { ...query, queryKey }
 }
