@@ -32,9 +32,7 @@ export function Header() {
   const pathname = usePathname()
   const { setTheme, theme } = useTheme()
 
-  const { data: wishlist } = useGetWishlist({
-    page: 1,
-  })
+  const { data: wishlist } = useGetWishlist({ params: {} })
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">

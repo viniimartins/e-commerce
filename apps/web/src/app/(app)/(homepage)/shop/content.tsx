@@ -52,7 +52,7 @@ export function Content() {
           {isLoading && <Skeleton className="h-5 w-56" />}
 
           <h2 className="text-xl font-semibold">
-            {!isLoading && category?.name}
+            {(!isLoading && category?.name) ?? 'All'}
           </h2>
 
           <div className="flex items-center justify-end">

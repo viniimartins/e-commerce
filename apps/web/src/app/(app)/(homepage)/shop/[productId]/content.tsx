@@ -16,22 +16,28 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
 import Counter from '../../components/counter'
 import { ProductCard } from '../../components/product-card'
+import { ProductCardSkeleton } from '../../components/product-card/skeleton'
 import { useGetProduct } from './hooks/use-get-product'
 
 export function Content() {
   const { productId } = useParams<{ productId: string }>()
 
-  const { data: product } = useGetProduct({ product: { id: productId } })
+  const { data: product } = useGetProduct({
+    product: { id: productId },
+  })
 
-  const { data: products } = useGetProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
   })
+
+  const { addToCart } = useCart()
 
   const isInStock = product?.quantity && product.quantity > 0
   const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
@@ -144,7 +150,12 @@ export function Content() {
 
           <div className="flex justify-between gap-4">
             <Counter />
-            <Button className="flex-1">Buy Now</Button>
+            <Button
+              className="flex-1"
+              onClick={() => product && addToCart(product)}
+            >
+              Adicionar ao carrinho
+            </Button>
             <Button>
               <Heart />
             </Button>
@@ -191,6 +202,11 @@ export function Content() {
 
             return <ProductCard key={id} data={product} />
           })}
+
+          {isLoadingProducts &&
+            Array.from({ length: 4 }).map((_, index) => {
+              return <ProductCardSkeleton key={index} />
+            })}
         </div>
       </section>
     </>
