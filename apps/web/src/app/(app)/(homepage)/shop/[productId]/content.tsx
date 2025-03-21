@@ -22,6 +22,7 @@ import { formatPrice } from '@/utils/formatPrice'
 import Counter from '../../components/counter'
 import { ProductCard } from '../../components/product-card'
 import { ProductCardSkeleton } from '../../components/product-card/skeleton'
+import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
 import { useGetProduct } from './hooks/use-get-product'
 
 export function Content() {
@@ -35,6 +36,10 @@ export function Content() {
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
+  })
+
+  const { mutate: addToWishlist } = useAddToWishlist({
+    queryKey: ['get-wishlist'],
   })
 
   const { addToCart } = useCart()
@@ -156,7 +161,11 @@ export function Content() {
             >
               Adicionar ao carrinho
             </Button>
-            <Button>
+            <Button
+              onClick={() =>
+                product && addToWishlist({ product: { id: product.id } })
+              }
+            >
               <Heart />
             </Button>
           </div>

@@ -22,7 +22,7 @@ async function get(params: Params) {
 }
 
 export function useGetWishlist({ params }: Props) {
-  const queryKey = ['get-wishlist', params]
+  const queryKey = ['get-wishlist']
 
   const query = useQuery({
     queryKey,
