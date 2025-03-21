@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
@@ -28,7 +29,10 @@ import { useGetProduct } from './hooks/use-get-product'
 export function Content() {
   const { productId } = useParams<{ productId: string }>()
 
-  const { data: product } = useGetProduct({
+  const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
+    useCart()
+
+  const { data: product, isLoading: isLoadingProduct } = useGetProduct({
     product: { id: productId },
   })
 
@@ -42,10 +46,12 @@ export function Content() {
     queryKey: ['get-wishlist'],
   })
 
-  const { addToCart } = useCart()
-
   const isInStock = product?.quantity && product.quantity > 0
   const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
+
+  const productInCart = cart.find((item) => item.id === product?.id)
+
+  const isProductInCart = cart.some((item) => item.id === product?.id)
 
   return (
     <>
@@ -154,12 +160,24 @@ export function Content() {
           <Separator />
 
           <div className="flex justify-between gap-4">
-            <Counter />
+            {product && (
+              <Counter
+                value={productInCart?.cartQuantity ?? 0}
+                disabled={!productInCart}
+                increment={() => incrementCartQuantity(product.id)}
+                decrement={() => decrementCartQuantity(product.id)}
+              />
+            )}
+
+            {isLoadingProduct && <Skeleton className="h-9 w-full" />}
             <Button
               className="flex-1"
               onClick={() => product && addToCart(product)}
+              disabled={isProductInCart}
             >
-              Adicionar ao carrinho
+              {isProductInCart
+                ? 'Produto no carrinho'
+                : 'Adicionar ao carrinho'}
             </Button>
             <Button
               onClick={() =>

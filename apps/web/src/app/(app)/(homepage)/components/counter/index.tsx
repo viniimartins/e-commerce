@@ -10,14 +10,34 @@ interface Props extends ComponentProps<typeof Input> {
   decrement: () => void
 }
 
-export default function Counter({ increment, decrement, ...props }: Props) {
+export default function Counter({
+  increment,
+  decrement,
+  disabled,
+  ...props
+}: Props) {
   return (
     <div className="flex items-center">
-      <Button variant="outline" size="icon" onClick={decrement}>
+      <Button
+        variant="outline"
+        disabled={disabled}
+        size="icon"
+        onClick={decrement}
+      >
         -
       </Button>
-      <Input {...props} className="z-10 w-12 text-center" readOnly />
-      <Button variant="outline" size="icon" onClick={increment}>
+      <Input
+        {...props}
+        disabled={disabled}
+        className="z-10 w-12 text-center"
+        readOnly
+      />
+      <Button
+        variant="outline"
+        disabled={disabled}
+        size="icon"
+        onClick={increment}
+      >
         +
       </Button>
     </div>
