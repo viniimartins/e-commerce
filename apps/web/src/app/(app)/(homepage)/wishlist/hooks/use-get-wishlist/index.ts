@@ -32,7 +32,7 @@ export function useGetWishlist({ params }: Props) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    enabled: isUserAuthenticated,
+    enabled: !!isUserAuthenticated,
   })
 
   const { isError } = query

@@ -11,7 +11,7 @@ import { useRemoveAllWishlist } from './hooks/use-remove-all-wishlist'
 export function Content() {
   const { addToCart } = useCart()
 
-  const { data: products, isLoading, queryKey } = useGetWishlist({ params: {} })
+  const { data: products, queryKey, isLoading } = useGetWishlist({ params: {} })
 
   const { mutate: removeAll } = useRemoveAllWishlist({ queryKey })
 
@@ -43,7 +43,7 @@ export function Content() {
         </span>
       )}
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid w-full grid-cols-4 gap-4">
         {products?.data.map((product) => {
           const { id } = product
 
@@ -51,9 +51,9 @@ export function Content() {
         })}
 
         {isLoading &&
-          Array.from({ length: 4 }).map((_, index) => (
-            <ProductCardSkeleton key={index} />
-          ))}
+          Array.from({ length: 4 }).map((_, index) => {
+            return <ProductCardSkeleton key={index} />
+          })}
       </div>
     </>
   )
