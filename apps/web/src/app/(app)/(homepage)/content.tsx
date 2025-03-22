@@ -88,7 +88,7 @@ export function Content() {
 
         <div className="flex justify-center">
           <Link href="/shop">
-            <Button size="lg">View All Products</Button>
+            <Button size="lg">Ver todos os produtos</Button>
           </Link>
         </div>
       </section>
@@ -190,7 +190,7 @@ export function Content() {
 
         <div className="flex justify-center">
           <Link href="/shop">
-            <Button size="lg">View All Products</Button>
+            <Button size="lg">Ver todos os produtos</Button>
           </Link>
         </div>
       </section>
@@ -207,12 +207,12 @@ export function Content() {
               <span className="font-inter text-2xl font-semibold">
                 PlayStation 5
               </span>
-              <p className="text-sm">
+              <p className="text-sm font-medium">
                 Versões Preto e Branco do PS5 <br /> chegando agora para venda!
               </p>
 
               <div className="mr-auto">
-                <Button variant="link" className="px-0 text-white underline">
+                <Button variant="link" className="px-0 text-white">
                   Compre Agora
                 </Button>
               </div>
@@ -225,12 +225,12 @@ export function Content() {
                 Coleção Feminina
               </span>
 
-              <p className="text-sm">
+              <p className="text-sm font-medium">
                 Destaques da coleção feminina que <br /> te darão outra vibe.
               </p>
 
               <div className="mr-auto">
-                <Button variant="link" className="px-0 text-white underline">
+                <Button variant="link" className="px-0 text-white">
                   Compre Agora
                 </Button>
               </div>
@@ -250,10 +250,10 @@ export function Content() {
                 Speakers
               </span>
 
-              <p className="text-sm">Speakers sem fio da Amazon.</p>
+              <p className="text-sm font-medium">Speakers sem fio da Amazon.</p>
 
               <div className="mr-auto">
-                <Button variant="link" className="px-0 text-white underline">
+                <Button variant="link" className="px-0 text-white">
                   Compre Agora
                 </Button>
               </div>
@@ -273,10 +273,10 @@ export function Content() {
                 Fragrâncias
               </span>
 
-              <p className="text-sm">GUCCI INTENSE OUD EDP</p>
+              <p className="text-sm font-medium">GUCCI INTENSE OUD EDP</p>
 
               <div className="mr-auto">
-                <Button variant="link" className="px-0 text-white underline">
+                <Button variant="link" className="px-0 text-white">
                   Compre Agora
                 </Button>
               </div>
