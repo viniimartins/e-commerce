@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
 
   const redirectUrl = request.nextUrl.clone()
 
-  redirectUrl.pathname = '/'
+  redirectUrl.pathname = '/login'
 
   cookieStore.delete('token')
 

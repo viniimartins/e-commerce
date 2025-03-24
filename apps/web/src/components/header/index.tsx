@@ -8,6 +8,7 @@ import {
   Search,
   ShoppingCart,
   Sun,
+  User,
   User2,
 } from 'lucide-react'
 import Link from 'next/link'
@@ -127,7 +128,10 @@ export function Header() {
               </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="center" className="w-72 py-3">
+            <DropdownMenuContent
+              align="center"
+              className="flex w-72 flex-col gap-1 py-2"
+            >
               {isUserAuthenticated && (
                 <div className="flex flex-col items-center space-y-2">
                   <Button
@@ -171,39 +175,67 @@ export function Header() {
                 </div>
               )}
 
-              <Button
-                variant="outline"
-                className="flex w-full justify-start gap-2 border-none p-2"
-                onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-              >
-                <MoonIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
-                <Sun className="hidden h-[1.2rem] w-[1.2rem] transition-all dark:flex" />
-                {theme === 'dark' ? 'Claro' : 'Escuro'}
-              </Button>
+              {isUserAuthenticated && (
+                <>
+                  <DropdownMenuSeparator />
 
-              <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile" className="px-0! py-0!">
+                      <Button
+                        variant="ghost"
+                        className="flex w-full justify-start gap-2"
+                      >
+                        <User className="h-[1.2rem] w-[1.2rem]" />
+                        Meu perfil
+                      </Button>
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )}
+
+              <DropdownMenuItem asChild>
+                <Button
+                  variant="ghost"
+                  className="flex w-full justify-start gap-2"
+                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                >
+                  <MoonIcon className="h-[1.2rem] w-[1.2rem] transition-all dark:hidden" />
+                  <Sun className="hidden h-[1.2rem] w-[1.2rem] transition-all dark:flex" />
+                  {theme === 'dark' ? 'Claro' : 'Escuro'}
+                </Button>
+              </DropdownMenuItem>
 
               {isUserAuthenticated && (
                 <DropdownMenuItem
-                  className="flex items-center gap-2 p-2 font-normal"
+                  className="flex items-center gap-2 font-normal"
                   asChild
                 >
-                  <a href="/api/auth/sign-out">
-                    <LogOut size={20} />
-                    Sair
+                  <a href="/api/auth/sign-out" className="px-0! py-0!">
+                    <Button
+                      variant="ghost"
+                      className="flex w-full justify-start gap-2"
+                    >
+                      <LogOut size={20} />
+                      Sair
+                    </Button>
                   </a>
                 </DropdownMenuItem>
               )}
 
               {!isUserAuthenticated && (
                 <DropdownMenuItem
-                  className="flex items-center gap-2 p-2 font-normal"
+                  className="flex items-center gap-2 font-normal"
                   asChild
                 >
-                  <Link href="/login">
-                    <LogIn size={20} />
-                    Entrar
-                  </Link>
+                  <a href="/login" className="px-0! py-0!">
+                    <Button
+                      variant="ghost"
+                      className="flex w-full justify-start gap-2"
+                    >
+                      <LogIn size={20} />
+                      Entrar
+                    </Button>
+                  </a>
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

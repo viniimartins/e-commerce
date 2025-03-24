@@ -1,7 +1,6 @@
 import { env } from '@e-commerce/env'
 import axios, { type AxiosError } from 'axios'
 import { getCookie } from 'cookies-next'
-import { redirect } from 'next/navigation'
 
 const baseURL = env.NEXT_PUBLIC_API_URL
 
@@ -41,7 +40,7 @@ api.interceptors.response.use(
   },
   async function (error: AxiosError) {
     if (error?.response?.status === 401) {
-      redirect('/login')
+      window.location.href = '/api/auth/sign-out'
     }
 
     return Promise.reject(error)
