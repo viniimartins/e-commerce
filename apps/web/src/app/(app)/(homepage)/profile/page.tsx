@@ -8,6 +8,8 @@ import {
 } from '@/components/ui/breadcrumb'
 import { getProfile } from '@/service/profile'
 
+import { Content } from './content'
+
 export default async function Profile() {
   const user = await getProfile()
 
@@ -27,12 +29,14 @@ export default async function Profile() {
         </Breadcrumb>
 
         <div>
-          Ola,{' '}
-          <span className="text-muted-foreground font-semibold">
+          Olá,{' '}
+          <span className="text-muted-foreground font-medium">
             {user?.name}
           </span>
         </div>
       </div>
+
+      <Content />
     </>
   )
 }
