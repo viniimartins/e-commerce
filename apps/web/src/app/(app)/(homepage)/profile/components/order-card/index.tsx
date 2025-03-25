@@ -11,7 +11,8 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { formatPrice } from '@/utils/formatPrice'
-export function ProductCard() {
+
+export function OrderCard() {
   return (
     <Card className="gap-0 rounded-none pb-0">
       <CardHeader className="border-b">

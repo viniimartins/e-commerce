@@ -1,6 +1,6 @@
 import { Tabs } from 'radix-ui'
 
-import { ProductCard } from './components/product-card'
+import { OrderCard } from './components/order-card'
 
 export function Content() {
   return (
@@ -25,7 +25,7 @@ export function Content() {
       <div className="col-span-3">
         <Tabs.Content value="pedidos" className="space-y-4">
           {Array.from({ length: 10 }).map((_, index) => (
-            <ProductCard key={index} />
+            <OrderCard key={index} />
           ))}
         </Tabs.Content>
         <Tabs.Content value="cancelamentos">

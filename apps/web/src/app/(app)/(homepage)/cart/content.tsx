@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import gamepadSmall from '@/assets/g92-2-500x500 1.png'
 import x from '@/assets/Vector.svg'
 import { Button } from '@/components/ui/button'
 import {
@@ -47,31 +46,31 @@ export function Content() {
           {cart.map((product, index) => (
             <TableRow key={index} className="shadow-xs">
               <TableCell className="group relative flex items-center gap-4 p-6">
-                <div className="absolute top-5 left-4 hidden group-hover:block">
+                <div className="relative h-12 w-12">
                   <Button
                     size="icon"
                     variant="destructive"
-                    className="h-4 w-4 rounded-full"
+                    className="absolute -top-2 -left-2 z-10 hidden h-4 w-4 rounded-full group-hover:flex"
                     onClick={() => removeToCart(product.id)}
                   >
                     <Image
                       src={x}
                       width={8}
                       height={8}
-                      alt=" X remove product"
+                      alt="X remove product"
                     />
                   </Button>
+                  <Image
+                    src={product.productImage[0].url}
+                    fill
+                    className="object-cover"
+                    alt="Image cart small"
+                  />
                 </div>
-                <Image
-                  src={gamepadSmall}
-                  width={50}
-                  height={50}
-                  alt="Image cart small"
-                />
-                {product.name}
+                <p className="text-sm">{product.name}</p>
               </TableCell>
               <TableCell className="text-muted-foreground py-6 text-sm">
-                {product.price}
+                {formatPrice(product.price)}
               </TableCell>
               <TableCell className="py-6">
                 <Input
