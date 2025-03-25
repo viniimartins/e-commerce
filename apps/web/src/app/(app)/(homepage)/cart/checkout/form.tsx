@@ -24,7 +24,6 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { cn } from '@/lib/utils'
-import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
 
 const formSchema = z.object({
