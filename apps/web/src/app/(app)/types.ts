@@ -1,8 +1,14 @@
+export interface ICustomer {
+  taxId: string
+  cellphone: string
+}
+
 export interface IUser {
   id: string
   name: string
   email: string
   avatarUrl: string
+  customer: ICustomer
 }
 
 export interface ICategory {

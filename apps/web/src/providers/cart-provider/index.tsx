@@ -52,6 +52,10 @@ export function CartProvider({ children }: CartProviderProps) {
     )
   }
 
+  function removeAllProducts() {
+    setCart([])
+  }
+
   function decrementCartQuantity(productId: string) {
     setCart((prevCart) =>
       prevCart.map((product) =>
@@ -92,6 +96,7 @@ export function CartProvider({ children }: CartProviderProps) {
         total,
         subTotal,
         handleQuantityChange,
+        removeAllProducts,
       }}
     >
       {children}

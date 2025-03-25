@@ -3,94 +3,139 @@ import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
+import { auth } from '@/http/middlewares/auth'
+import { prisma } from '@/lib/prisma'
+
 export function createBilling(app: FastifyInstance) {
-  app.withTypeProvider<ZodTypeProvider>().post(
-    '/checkout/billing',
-    {
-      schema: {
-        tags: ['Checkout'],
-        summary: 'Create a billing',
-        body: z.object({
-          customerId: z.string(),
-          products: z.array(
-            z.object({
-              externalId: z.string(),
-              name: z.string(),
-              description: z.string(),
-              quantity: z.number(),
-              price: z.number(),
-            }),
-          ),
-        }),
-        response: {
-          200: z.object({
-            url: z.string(),
+  app
+    .withTypeProvider<ZodTypeProvider>()
+    .register(auth)
+    .post(
+      '/checkout/billing',
+      {
+        schema: {
+          tags: ['Checkout'],
+          summary: 'Create a billing',
+          body: z.object({
+            customerId: z.string().optional(),
+            products: z.array(
+              z.object({
+                externalId: z.string(),
+                name: z.string(),
+                description: z.string(),
+                quantity: z.number(),
+                price: z.number(),
+              }),
+            ),
+            customer: z
+              .object({
+                name: z.string(),
+                email: z.string(),
+                cellphone: z.string(),
+                taxId: z.string(),
+              })
+              .optional(),
           }),
+          response: {
+            200: z.object({
+              url: z.string(),
+            }),
+          },
         },
       },
-    },
-    async (request, reply) => {
-      const { customerId, products } = request.body
+      async (request, reply) => {
+        const userId = await request.getCurrentUserId()
 
-      const response = await fetch(
-        'https://api.abacatepay.com/v1/billing/create',
-        {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${env.ABACATE_API_KEY}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            frequency: 'ONE_TIME',
-            methods: ['PIX'],
-            customerId,
-            // customer: {
-            //   name: 'John Doe',
-            //   email: 'john.doe@example.com',
-            //   cellphone: '(55) 11 99999-9999',
-            //   taxId: '124.349.799-80',
-            // },
-            products,
-            returnUrl: 'http://localhost:3000/cart/checkout',
-            completionUrl: 'http://localhost:3000/cart/checkout',
-          }),
-        },
-      )
+        const { customerId, products, customer } = request.body
 
-      const { data } = (await response.json()) as { data: object }
-
-      const { url } = z
-        .object({
-          allowCoupons: z.boolean(),
-          amount: z.number(),
-          coupons: z.array(z.string()),
-          couponsUsed: z.array(z.string()),
-          createdAt: z.string(),
-          customer: z.object({
-            id: z.string(),
-          }),
-          devMode: z.boolean(),
-          frequency: z.string(),
-          id: z.string(),
-          updatedAt: z.string(),
-          url: z.string(),
-          metadata: z.object({
-            fee: z.number(),
-            returnUrl: z.string(),
-            completionUrl: z.string(),
-          }),
-          methods: z.array(z.string()),
-          products: z.array(
-            z.object({
-              id: z.string(),
-              externalId: z.string(),
-              quantity: z.number(),
+        const response = await fetch(
+          'https://api.abacatepay.com/v1/billing/create',
+          {
+            method: 'POST',
+            headers: {
+              Authorization: `Bearer ${env.ABACATE_API_KEY}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              frequency: 'ONE_TIME',
+              methods: ['PIX'],
+              customerId,
+              customer,
+              products,
+              returnUrl: 'http://localhost:3000/cart/checkout',
+              completionUrl: 'http://localhost:3000/cart/checkout',
             }),
-          ),
-        })
-        .parse(data)
+          },
+        )
 
-      return reply.send({ url })
-    },
-  )
+        const { data } = (await response.json()) as { data: object }
+
+        const {
+          url,
+          customer: { id: gatewayId },
+        } = z
+          .object({
+            allowCoupons: z.boolean(),
+            amount: z.number(),
+            coupons: z.array(z.string()),
+            couponsUsed: z.array(z.string()),
+            createdAt: z.string(),
+            customer: z.object({
+              id: z.string(),
+            }),
+            devMode: z.boolean(),
+            frequency: z.string(),
+            id: z.string(),
+            updatedAt: z.string(),
+            url: z.string(),
+            metadata: z.object({
+              fee: z.number(),
+              returnUrl: z.string(),
+              completionUrl: z.string(),
+            }),
+            methods: z.array(z.string()),
+            products: z.array(
+              z.object({
+                id: z.string(),
+                externalId: z.string(),
+                quantity: z.number(),
+              }),
+            ),
+          })
+          .parse(data)
+
+        if (customer) {
+          await prisma.customer.create({
+            data: {
+              userId,
+              cellphone: customer.cellphone,
+              gatewayId,
+              taxId: customer.taxId,
+            },
+          })
+        }
+
+        console.log(products)
+
+        const pedido = await prisma.order.create({
+          data: {
+            userId,
+            products: {
+              create: products.map(({ externalId: productId, quantity }) => ({
+                productId,
+                quantity,
+              })),
+            },
+            total: products.reduce(
+              (acc, { price, quantity }) => acc + price * quantity,
+              0,
+            ),
+          },
+        })
+
+        console.log(pedido)
+
+        return reply.send({ url })
+      },
+    )
 }

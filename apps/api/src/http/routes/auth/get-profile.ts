@@ -24,6 +24,13 @@ export async function getProfile(app: FastifyInstance) {
               name: z.string().nullable(),
               email: z.string().email(),
               avatarUrl: z.string().url().nullable(),
+              customer: z
+                .object({
+                  gatewayId: z.string(),
+                  cellphone: z.string(),
+                  taxId: z.string(),
+                })
+                .nullable(),
             }),
           },
         },
@@ -32,11 +39,8 @@ export async function getProfile(app: FastifyInstance) {
         const userId = await request.getCurrentUserId()
 
         const user = await prisma.user.findUnique({
-          select: {
-            id: true,
-            name: true,
-            email: true,
-            avatarUrl: true,
+          include: {
+            customer: true,
           },
           where: {
             id: userId,

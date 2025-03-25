@@ -22,6 +22,7 @@ model User {
   accounts Account[]
   wishlist Wishlist[]
   customer Customer?
+  orders   Order[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -82,6 +83,7 @@ model Product {
 
   productImage ProductImage[]
   wishlist     Wishlist[]
+  orders       OrderProduct[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -102,7 +104,7 @@ model ProductImage {
 }
 
 model Wishlist {
-  userId String
+  userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   productId String  @map("product_id")
@@ -112,4 +114,45 @@ model Wishlist {
 
   @@id([userId, productId])
   @@map("wishlist")
+}
+
+enum OrderBilling {
+  PIX
+  CREDIT_CARD
+  BILLET
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Order {
+  id    String  @id @default(uuid())
+  total Decimal
+
+  products OrderProduct[]
+  billing  OrderBilling   @default(PIX)
+  status   OrderStatus    @default(PENDING)
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  orderId   String @map("order_id")
+  productId String @map("product_id")
+  quantity  Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+  @@map("order_products")
 }
