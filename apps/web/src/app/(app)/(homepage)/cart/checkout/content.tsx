@@ -2,15 +2,47 @@
 
 import Image from 'next/image'
 
+import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
 import { CheckoutForm } from './form'
+import { useCreateBilling } from './hooks/use-create-billing'
 
 export function Content() {
   const { cart, subTotal, total } = useCart()
+
+  const { mutate: createBilling } = useCreateBilling()
+
+  const { data: profile } = useGetProfile()
+
+  function handleCreateBilling() {
+    if (!profile) return
+
+    createBilling(
+      {
+        billing: {
+          customerId: 'cust_dbzqTgBpnATT3YXw0zRtTrpE',
+          products: cart.map(
+            ({ id, name, description, price, cartQuantity }) => ({
+              externalId: id,
+              name,
+              description,
+              quantity: cartQuantity,
+              price: price * 100,
+            }),
+          ),
+        },
+      },
+      {
+        onSuccess: ({ url }) => {
+          window.location.href = url
+        },
+      },
+    )
+  }
 
   return (
     <section className="grid grid-cols-2 gap-28">
@@ -71,7 +103,9 @@ export function Content() {
           </div>
         </div>
 
-        <Button size="lg">Finalizar compra</Button>
+        <Button size="lg" onClick={handleCreateBilling}>
+          Finalizar compra
+        </Button>
       </div>
     </section>
   )
