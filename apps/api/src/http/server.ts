@@ -20,6 +20,7 @@ import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
 import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
+import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
 import { removeAllFromWishlist } from './routes/wishlist/remove-all-wishlist'
@@ -82,6 +83,8 @@ app.register(removeAllFromWishlist)
 
 app.register(createBilling)
 app.register(getBilling)
+
+app.register(abacatepay)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')

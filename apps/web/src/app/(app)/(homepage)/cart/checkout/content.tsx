@@ -109,6 +109,8 @@ export function Content() {
     }
   }
 
+  console.log(profile)
+
   function onSubmit(values: IFormSchema) {
     const { fullName, email, cpf, phoneNumber } = values
 
@@ -122,6 +124,32 @@ export function Content() {
               taxId: cpf,
               cellphone: phoneNumber,
             },
+            products: cart.map(
+              ({ id, name, description, price, cartQuantity }) => ({
+                externalId: id,
+                name,
+                description,
+                quantity: cartQuantity,
+                price: price * 100,
+              }),
+            ),
+          },
+        },
+        {
+          onSuccess: ({ url }) => {
+            router.push(url)
+
+            removeAllProducts()
+          },
+        },
+      )
+    }
+
+    if (profile?.customer) {
+      createBilling(
+        {
+          billing: {
+            customerId: profile.customer.gatewayId,
             products: cart.map(
               ({ id, name, description, price, cartQuantity }) => ({
                 externalId: id,

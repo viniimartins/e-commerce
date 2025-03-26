@@ -118,8 +118,6 @@ model Wishlist {
 
 enum OrderBilling {
   PIX
-  CREDIT_CARD
-  BILLET
 }
 
 enum OrderStatus {

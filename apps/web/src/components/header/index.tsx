@@ -45,6 +45,9 @@ export function Header() {
 
   const { data: profile, isLoading: isLoadingProfile } = useGetProfile()
 
+  const isPageLoginAndNotAuthenticated =
+    pathname === '/login' && !isUserAuthenticated
+
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
@@ -109,16 +112,29 @@ export function Header() {
             </Button>
           </Link>
 
-          <Link href="/cart">
-            <Button size="icon" variant="ghost" className="relative">
-              <ShoppingCart className="h-[1.2rem] w-[1.2rem] transition-all" />
-              {cart.length > 0 && (
-                <span className="bg-accent absolute top-0 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[0.7rem]">
-                  {cart.length}
-                </span>
-              )}
-            </Button>
-          </Link>
+          {isPageLoginAndNotAuthenticated ? (
+            <Link href="/cart" target="_top">
+              <Button size="icon" variant="ghost" className="relative">
+                <ShoppingCart className="h-[1.2rem] w-[1.2rem] transition-all" />
+                {cart.length > 0 && (
+                  <span className="bg-accent absolute top-0 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[0.7rem]">
+                    {cart.length}
+                  </span>
+                )}
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/cart">
+              <Button size="icon" variant="ghost" className="relative">
+                <ShoppingCart className="h-[1.2rem] w-[1.2rem] transition-all" />
+                {cart.length > 0 && (
+                  <span className="bg-accent absolute top-0 -right-1 flex h-5 w-5 items-center justify-center rounded-full text-[0.7rem]">
+                    {cart.length}
+                  </span>
+                )}
+              </Button>
+            </Link>
+          )}
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

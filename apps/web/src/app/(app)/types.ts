@@ -1,6 +1,7 @@
 export interface ICustomer {
   taxId: string
   cellphone: string
+  gatewayId: string
 }
 
 export interface IUser {

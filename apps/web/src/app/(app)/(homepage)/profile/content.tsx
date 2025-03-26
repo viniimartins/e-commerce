@@ -6,7 +6,7 @@ import { BillingCard } from './components/billing-card'
 import { useGetBilling } from './hooks/use-get-billing'
 
 export function Content() {
-  const { data: billing } = useGetBilling({
+  const { data: billing, isLoading } = useGetBilling({
     params: {
       page: 1,
       perPage: 10,
@@ -39,6 +39,18 @@ export function Content() {
 
             return <BillingCard key={id} data={order} />
           })}
+
+          {billing?.data.length === 0 && (
+            <span className="text-muted-foreground text-sm">
+              Nenhum pedido encontrado
+            </span>
+          )}
+
+          {isLoading && (
+            <span className="text-muted-foreground text-sm">
+              Carregando pedidos...
+            </span>
+          )}
         </Tabs.Content>
         <Tabs.Content value="cancelamentos">
           <p className="text-sm">Conteúdo de Meus Cancelamentos</p>

@@ -17,7 +17,7 @@ export function CartProvider({ children }: CartProviderProps) {
   }, [])
 
   useEffect(() => {
-    if (cart.length > 0) {
+    if (cart.length >= 0) {
       localStorage.setItem('cart', JSON.stringify(cart))
     }
   }, [cart])

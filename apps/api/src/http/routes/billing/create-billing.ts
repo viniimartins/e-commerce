@@ -50,17 +50,13 @@ export function createBilling(app: FastifyInstance) {
 
         const { customerId, products, customer } = request.body
 
-        products.forEach(async ({ externalId }) => {
+        for (const { externalId } of products) {
           const productExists = await prisma.product.findUnique({
-            where: {
-              id: externalId,
-            },
+            where: { id: externalId },
           })
 
-          if (!productExists) {
-            throw new BadRequestError('Product not found')
-          }
-        })
+          if (!productExists) throw new BadRequestError('Product not found')
+        }
 
         const response = await fetch(
           'https://api.abacatepay.com/v1/billing/create',
@@ -81,6 +77,8 @@ export function createBilling(app: FastifyInstance) {
             }),
           },
         )
+
+        if (!response.ok) throw new BadRequestError('Failed to create billing')
 
         const { data } = (await response.json()) as { data: object }
 
