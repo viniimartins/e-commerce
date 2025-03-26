@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "cookies-next": "^5.1.0",
     "cpf-cnpj-validator": "^1.0.3",
+    "date-fns": "^4.1.0",
     "dotenv-cli": "^8.0.0",
     "embla-carousel-autoplay": "^8.5.2",
     "embla-carousel-react": "^8.5.2",

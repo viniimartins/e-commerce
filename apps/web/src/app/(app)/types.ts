@@ -30,3 +30,31 @@ export interface IProduct {
     productId: string
   }[]
 }
+
+export enum OrderStatus {
+  PENDING = 'PENDING',
+  PAID = 'PAID',
+  CANCELLED = 'CANCELLED',
+}
+
+export enum OrderBilling {
+  PIX = 'PIX',
+}
+
+export interface IProductBilling {
+  orderId: string
+  quantity: number
+  productId: string
+  product: IProduct
+}
+
+export interface IBilling {
+  id: string
+  billing: OrderBilling
+  status: OrderStatus
+  products: IProductBilling[]
+  total: number
+  createdAt: Date
+  updatedAt: Date
+  userId: string
+}

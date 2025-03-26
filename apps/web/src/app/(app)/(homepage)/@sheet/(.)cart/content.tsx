@@ -29,7 +29,7 @@ export function Content() {
 
           return (
             <div key={id} className="flex gap-4 border-b pb-6">
-              <div className="dark:bg-muted-foreground/10 h-30 w-30 relative flex items-center justify-center bg-neutral-100 dark:border">
+              <div className="dark:bg-muted-foreground/10 relative flex h-30 w-30 items-center justify-center bg-neutral-100 dark:border">
                 <Image
                   src={productImage[0].url}
                   alt={name}
@@ -90,7 +90,7 @@ export function Content() {
           <span className="text-xl font-semibold">{formatPrice(total)}</span>
         </div>
 
-        <Link href="/cart/checkout" className="w-full">
+        <Link href="/cart/checkout" target="_top" className="w-full">
           <Button size="lg" className="w-full">
             Finalizar a compra
           </Button>
