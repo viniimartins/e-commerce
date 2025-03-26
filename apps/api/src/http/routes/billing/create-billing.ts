@@ -6,6 +6,8 @@ import z from 'zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
+import { BadRequestError } from '../_errors/bad-request-error'
+
 export function createBilling(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
@@ -14,7 +16,7 @@ export function createBilling(app: FastifyInstance) {
       '/checkout/billing',
       {
         schema: {
-          tags: ['Checkout'],
+          tags: ['Billing'],
           summary: 'Create a billing',
           body: z.object({
             customerId: z.string().optional(),
@@ -47,6 +49,18 @@ export function createBilling(app: FastifyInstance) {
         const userId = await request.getCurrentUserId()
 
         const { customerId, products, customer } = request.body
+
+        products.forEach(async ({ externalId }) => {
+          const productExists = await prisma.product.findUnique({
+            where: {
+              id: externalId,
+            },
+          })
+
+          if (!productExists) {
+            throw new BadRequestError('Product not found')
+          }
+        })
 
         const response = await fetch(
           'https://api.abacatepay.com/v1/billing/create',
@@ -104,36 +118,34 @@ export function createBilling(app: FastifyInstance) {
           })
           .parse(data)
 
-        if (customer) {
-          await prisma.customer.create({
+        await prisma.$transaction(async (tx) => {
+          if (customer) {
+            await tx.customer.create({
+              data: {
+                userId,
+                cellphone: customer.cellphone,
+                gatewayId,
+                taxId: customer.taxId,
+              },
+            })
+          }
+
+          await tx.order.create({
             data: {
               userId,
-              cellphone: customer.cellphone,
-              gatewayId,
-              taxId: customer.taxId,
+              products: {
+                create: products.map(({ externalId: productId, quantity }) => ({
+                  productId,
+                  quantity,
+                })),
+              },
+              total: products.reduce(
+                (acc, { price, quantity }) => acc + price * quantity,
+                0,
+              ),
             },
           })
-        }
-
-        console.log(products)
-
-        const pedido = await prisma.order.create({
-          data: {
-            userId,
-            products: {
-              create: products.map(({ externalId: productId, quantity }) => ({
-                productId,
-                quantity,
-              })),
-            },
-            total: products.reduce(
-              (acc, { price, quantity }) => acc + price * quantity,
-              0,
-            ),
-          },
         })
-
-        console.log(pedido)
 
         return reply.send({ url })
       },

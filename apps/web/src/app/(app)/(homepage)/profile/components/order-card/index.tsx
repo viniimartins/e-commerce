@@ -31,7 +31,7 @@ export function OrderCard() {
         <CardDescription className="hidden" />
       </CardHeader>
       <CardContent className="flex flex-col gap-1 px-0">
-        <div className="flex flex-1 gap-2 border-b p-4">
+        <div className="flex flex-1 gap-3 border-b p-4">
           <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[5rem] w-[5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
             <Image
               src={product}
@@ -61,7 +61,7 @@ export function OrderCard() {
             <span className="text-sm">1 un. R$ 61,13</span>
           </div>
         </div>
-        <div className="flex flex-1 gap-2 p-4">
+        <div className="flex flex-1 gap-3 p-4">
           <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[5rem] w-[5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
             <Image
               src={product}

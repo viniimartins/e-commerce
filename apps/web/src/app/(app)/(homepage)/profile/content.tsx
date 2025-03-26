@@ -1,8 +1,20 @@
+'use client'
+
 import { Tabs } from 'radix-ui'
 
 import { OrderCard } from './components/order-card'
+import { useGetBilling } from './hooks/use-get-billing'
 
 export function Content() {
+  const { data: billing } = useGetBilling({
+    params: {
+      page: 1,
+      perPage: 10,
+    },
+  })
+
+  console.log(billing)
+
   return (
     <Tabs.Root defaultValue="pedidos" className="grid w-full grid-cols-4 gap-6">
       <aside className="col-span-1 space-y-3">

@@ -14,9 +14,10 @@ import {
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getProfile } from './routes/auth/get-profile'
+import { createBilling } from './routes/billing/create-billing'
+import { getBilling } from './routes/billing/get-billing'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
-import { createBilling } from './routes/checkout/billing'
 import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
@@ -80,6 +81,7 @@ app.register(removeFromWishlist)
 app.register(removeAllFromWishlist)
 
 app.register(createBilling)
+app.register(getBilling)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')
