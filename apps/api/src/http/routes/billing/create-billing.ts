@@ -139,6 +139,7 @@ export function createBilling(app: FastifyInstance) {
                   quantity,
                 })),
               },
+              url,
               total: products.reduce(
                 (acc, { price, quantity }) => acc + price * quantity,
                 0,
