@@ -127,7 +127,9 @@ enum OrderStatus {
 }
 
 model Order {
-  id    String  @id @default(uuid())
+  id        String @id @default(uuid())
+  gatewayId String @map("gateway_id")
+
   total Decimal
   url   String
 

@@ -51,6 +51,8 @@ export interface IProductBilling {
 
 export interface IBilling {
   id: string
+  url: string
+  gatewayId: string
   billing: OrderBilling
   status: OrderStatus
   products: IProductBilling[]

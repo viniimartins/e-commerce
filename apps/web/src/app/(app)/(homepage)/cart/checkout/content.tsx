@@ -109,8 +109,6 @@ export function Content() {
     }
   }
 
-  console.log(profile)
-
   function onSubmit(values: IFormSchema) {
     const { fullName, email, cpf, phoneNumber } = values
 

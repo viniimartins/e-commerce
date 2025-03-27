@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 import type { IBilling } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
@@ -20,7 +21,9 @@ interface Props {
 }
 
 export function BillingCard({ data }: Props) {
-  const { createdAt, products, total, status } = data
+  const { createdAt, products, total, status, url } = data
+
+  console.log(data)
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -40,9 +43,11 @@ export function BillingCard({ data }: Props) {
 
           {status === 'PENDING' && (
             <div className="flex items-center gap-2">
-              <Button size="sm" variant="outline">
-                Finalizar compra
-              </Button>
+              <Link href={url}>
+                <Button size="sm" variant="outline">
+                  Finalizar compra
+                </Button>
+              </Link>
 
               <Badge variant="outline" className="h-full bg-yellow-400">
                 Pendente

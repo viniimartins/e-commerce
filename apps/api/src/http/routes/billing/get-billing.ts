@@ -27,6 +27,8 @@ export function getBilling(app: FastifyInstance) {
                 z.object({
                   id: z.string(),
                   status: z.nativeEnum(OrderStatus),
+                  url: z.string(),
+                  gatewayId: z.string(),
                   billing: z.nativeEnum(OrderBilling),
                   total: z.number(),
                   createdAt: z.date(),

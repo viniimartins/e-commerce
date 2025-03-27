@@ -72,8 +72,8 @@ export function createBilling(app: FastifyInstance) {
               customerId,
               customer,
               products,
-              returnUrl: 'http://localhost:3000/cart/checkout',
-              completionUrl: 'http://localhost:3000/cart/checkout',
+              returnUrl: 'http://localhost:3000/profile',
+              completionUrl: 'http://localhost:3000',
             }),
           },
         )
@@ -84,7 +84,8 @@ export function createBilling(app: FastifyInstance) {
 
         const {
           url,
-          customer: { id: gatewayId },
+          id: gatewayId,
+          customer: { id: customerGatewayId },
         } = z
           .object({
             allowCoupons: z.boolean(),
@@ -122,7 +123,7 @@ export function createBilling(app: FastifyInstance) {
               data: {
                 userId,
                 cellphone: customer.cellphone,
-                gatewayId,
+                gatewayId: customerGatewayId,
                 taxId: customer.taxId,
               },
             })
@@ -137,6 +138,7 @@ export function createBilling(app: FastifyInstance) {
                   quantity,
                 })),
               },
+              gatewayId,
               url,
               total: products.reduce(
                 (acc, { price, quantity }) => acc + price * quantity,
@@ -146,7 +148,7 @@ export function createBilling(app: FastifyInstance) {
           })
         })
 
-        return reply.send({ url })
+        return reply.status(200).send({ url })
       },
     )
 }
