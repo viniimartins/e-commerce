@@ -49,14 +49,14 @@ export function BillingCard({ data }: Props) {
                 </Button>
               </Link>
 
-              <Badge variant="outline" className="h-full bg-yellow-400">
+              <Badge variant="outline" className="h-full bg-yellow-500">
                 Pendente
               </Badge>
             </div>
           )}
 
           {status === 'PAID' && (
-            <Badge variant="outline" className="bg-green-400">
+            <Badge variant="outline" className="bg-green-500">
               Pago
             </Badge>
           )}

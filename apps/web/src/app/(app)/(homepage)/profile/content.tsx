@@ -24,12 +24,6 @@ export function Content() {
           >
             Meus Pedidos
           </Tabs.Trigger>
-          <Tabs.Trigger
-            value="cancelamentos"
-            className="text-muted-foreground data-[state=active]:text-primary group w-full text-start text-base hover:cursor-pointer"
-          >
-            Meus Cancelamentos
-          </Tabs.Trigger>
         </Tabs.List>
       </aside>
       <div className="col-span-3">
@@ -51,9 +45,6 @@ export function Content() {
               Carregando pedidos...
             </span>
           )}
-        </Tabs.Content>
-        <Tabs.Content value="cancelamentos">
-          <p className="text-sm">Conteúdo de Meus Cancelamentos</p>
         </Tabs.Content>
       </div>
     </Tabs.Root>
