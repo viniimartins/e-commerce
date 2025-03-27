@@ -13,12 +13,17 @@ import {
 
 import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
+import { getProfile } from './routes/auth/get-profile'
+import { createBilling } from './routes/billing/create-billing'
+import { getBilling } from './routes/billing/get-billing'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
 import { getProduct } from './routes/products/get-product'
 import { getProducts } from './routes/products/get-products'
+import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
+import { removeAllFromWishlist } from './routes/wishlist/remove-all-wishlist'
 import { removeFromWishlist } from './routes/wishlist/remove-from-wishlist'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
@@ -63,6 +68,7 @@ app.register(fastifyCors, {
 })
 
 app.register(authenticateWithGithub)
+app.register(getProfile)
 
 app.register(getCategories)
 app.register(getCategory)
@@ -73,6 +79,12 @@ app.register(getProduct)
 app.register(getWishlist)
 app.register(addToWishlist)
 app.register(removeFromWishlist)
+app.register(removeAllFromWishlist)
+
+app.register(createBilling)
+app.register(getBilling)
+
+app.register(abacatepay)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')

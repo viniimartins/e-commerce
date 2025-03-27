@@ -1,5 +1,5 @@
 import { env } from '@e-commerce/env'
-import axios from 'axios'
+import axios, { type AxiosError } from 'axios'
 import { getCookie } from 'cookies-next'
 
 const baseURL = env.NEXT_PUBLIC_API_URL
@@ -34,18 +34,15 @@ api.interceptors.request.use(async (config) => {
   return config
 })
 
-// api.interceptors.response.use(
-//   (response) => {
-//     return response
-//   },
-//   async function (error: AxiosError) {
-//     if (error?.response?.status === 401) {
-//       await signOut({
-//         redirect: true,
-//         callbackUrl: '/login',
-//       })
-//     }
+api.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  async function (error: AxiosError) {
+    if (error?.response?.status === 401) {
+      window.location.href = '/api/auth/sign-out'
+    }
 
-//     return Promise.reject(error)
-//   },
-// )
+    return Promise.reject(error)
+  },
+)

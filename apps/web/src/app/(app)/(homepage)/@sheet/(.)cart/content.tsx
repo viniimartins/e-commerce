@@ -12,13 +12,20 @@ import { formatPrice } from '@/utils/formatPrice'
 import Counter from '../../components/counter'
 
 export function Content() {
-  const { cart } = useCart()
+  const {
+    cart,
+    decrementCartQuantity,
+    incrementCartQuantity,
+    removeToCart,
+    subTotal,
+    total,
+  } = useCart()
 
   return (
     <div className="flex h-full flex-col pb-8 pl-4">
       <div className="h-[65vh] space-y-4 overflow-y-auto pr-2">
         {cart.map((product) => {
-          const { id, name, price, productImage } = product
+          const { id, name, price, cartQuantity, productImage } = product
 
           return (
             <div key={id} className="flex gap-4 border-b pb-6">
@@ -41,36 +48,57 @@ export function Content() {
                   </span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <Counter />
-                  <Button variant="outline" size="icon">
+                  <Counter
+                    value={cartQuantity}
+                    increment={() => incrementCartQuantity(id)}
+                    decrement={() => decrementCartQuantity(id)}
+                  />
+
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => removeToCart(id)}
+                  >
                     <X />
-                    <span className="sr-only">Remove product</span>
+                    <span className="sr-only">Remover produto</span>
                   </Button>
                 </div>
               </div>
             </div>
           )
         })}
+
+        {cart.length === 0 && (
+          <p className="text-muted-foreground text-sm">
+            Seu carrinho está vazio. Adicione alguns produtos ao seu carrinho.
+          </p>
+        )}
       </div>
 
       <div className="mt-auto flex flex-col gap-2 pr-4">
         <div className="flex justify-between">
           <span className="text-base font-medium">SubTotal</span>
-          <span className="text-base font-semibold">{formatPrice(99)}</span>
+          <span className="text-base font-semibold">
+            {formatPrice(subTotal)}
+          </span>
         </div>
 
         <Separator />
 
         <div className="flex justify-between">
           <span className="text-xl font-medium">Total</span>
-          <span className="text-xl font-semibold">{formatPrice(234)}</span>
+          <span className="text-xl font-semibold">{formatPrice(total)}</span>
         </div>
 
-        <Button size="lg">Checkout</Button>
+        <Link href="/cart/checkout" target="_top" className="w-full">
+          <Button size="lg" className="w-full">
+            Finalizar a compra
+          </Button>
+        </Link>
 
         <Link href="/cart" target="_top" className="m-auto">
           <Button variant="link" className="underline">
-            View cart
+            Ver carrinho
           </Button>
         </Link>
       </div>

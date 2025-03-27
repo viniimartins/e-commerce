@@ -1,3 +1,6 @@
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,10 +9,38 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { getProduct } from '@/service/product'
 
 import { Content } from './content'
 
-export default async function ProductPage() {
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    productId: string
+  }
+}): Promise<Metadata> {
+  const { productId } = await params
+
+  const data = await getProduct({ id: productId })
+
+  return {
+    title: `${data?.name}`,
+  }
+}
+
+interface Props {
+  params: Promise<{ productId: string }>
+}
+
+export default async function ProductPage({ params }: Props) {
+  const { productId } = await params
+
+  const product = await getProduct({ id: productId })
+
+  if (!product) {
+    notFound()
+  }
   return (
     <>
       <Breadcrumb className="mt-14">
@@ -23,12 +54,12 @@ export default async function ProductPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Product</BreadcrumbPage>
+            <BreadcrumbPage>{product?.name}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Content />
+      <Content product={product} />
     </>
   )
 }

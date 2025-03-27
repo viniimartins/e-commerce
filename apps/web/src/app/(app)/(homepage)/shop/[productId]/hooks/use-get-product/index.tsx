@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
@@ -23,6 +25,14 @@ export function useGetProduct({ product }: Props) {
     queryFn: () => get(product.id),
     enabled: !!product.id,
   })
+
+  const { isError } = query
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Erro ao buscar o produto')
+    }
+  }, [isError])
 
   return { ...query, queryKey }
 }

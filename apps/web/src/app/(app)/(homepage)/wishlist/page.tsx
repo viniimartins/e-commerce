@@ -12,10 +12,10 @@ import {
 import { Content } from './content'
 
 export const metadata: Metadata = {
-  title: 'Wishlist',
+  title: 'Lista de desejos',
 }
 
-export default function Wishlist() {
+export default async function Wishlist() {
   return (
     <>
       <Breadcrumb className="mt-14">
@@ -25,7 +25,7 @@ export default function Wishlist() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Wishlist</BreadcrumbPage>
+            <BreadcrumbPage>Lista de desejos</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

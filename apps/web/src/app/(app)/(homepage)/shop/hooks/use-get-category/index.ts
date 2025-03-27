@@ -1,4 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
+import { useEffect } from 'react'
+import { toast } from 'sonner'
 
 import type { ICategory } from '@/app/(app)/types'
 import { api } from '@/service/api'
@@ -23,6 +25,14 @@ export function useGetCategory({ category }: Props) {
     queryFn: () => get(category.id),
     enabled: !!category.id,
   })
+
+  const { isError } = query
+
+  useEffect(() => {
+    if (isError) {
+      toast.error('Erro ao buscar a categoria')
+    }
+  }, [isError])
 
   return { ...query, queryKey }
 }

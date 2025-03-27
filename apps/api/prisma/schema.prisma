@@ -21,11 +21,26 @@ model User {
 
   accounts Account[]
   wishlist Wishlist[]
+  customer Customer?
+  orders   Order[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("users")
+}
+
+model Customer {
+  id String @id @default(uuid())
+
+  gatewayId String @map("gateway_id")
+  cellphone String
+  taxId     String
+
+  userId String @unique @map("user_id")
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("customers")
 }
 
 enum AccountProvider {
@@ -64,10 +79,11 @@ model Product {
   quantity    Int
 
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String
+  categoryId String   @map("category_id")
 
   productImage ProductImage[]
   wishlist     Wishlist[]
+  orders       OrderProduct[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -79,7 +95,7 @@ model ProductImage {
   id  String @id @default(uuid())
   url String
 
-  productId String
+  productId String  @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -88,14 +104,56 @@ model ProductImage {
 }
 
 model Wishlist {
-  userId String
+  userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  productId String
+  productId String  @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
 
   @@id([userId, productId])
   @@map("wishlist")
+}
+
+enum OrderBilling {
+  PIX
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
+model Order {
+  id        String @id @default(uuid())
+  gatewayId String @map("gateway_id")
+
+  total Decimal
+  url   String
+
+  products OrderProduct[]
+  billing  OrderBilling   @default(PIX)
+  status   OrderStatus    @default(PENDING)
+
+  userId String @map("user_id")
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderProduct {
+  orderId   String @map("order_id")
+  productId String @map("product_id")
+  quantity  Int
+
+  order   Order   @relation(fields: [orderId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([orderId, productId])
+  @@map("order_products")
 }

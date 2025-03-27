@@ -2,9 +2,9 @@
 
 import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
-import { useParams } from 'next/navigation'
 
 import { useGetProducts } from '@/app/(app)/hooks/use-get-products'
+import type { IProduct } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -16,25 +16,60 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
+import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
 import Counter from '../../components/counter'
 import { ProductCard } from '../../components/product-card'
-import { useGetProduct } from './hooks/use-get-product'
+import { ProductCardSkeleton } from '../../components/product-card/skeleton'
+import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
+import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
+import { useRemoveFromWishlist } from '../../wishlist/hooks/use-remove-from-wishlist'
 
-export function Content() {
-  const { productId } = useParams<{ productId: string }>()
+interface Props {
+  product: IProduct
+}
 
-  const { data: product } = useGetProduct({ product: { id: productId } })
+export function Content({ product }: Props) {
+  const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
+    useCart()
 
-  const { data: products } = useGetProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
   })
 
+  const { data: wishlist } = useGetWishlist({ params: {} })
+
+  const { mutate: addToWishlist } = useAddToWishlist({
+    queryKey: ['get-wishlist'],
+  })
+
+  const { mutate: removeFromWishlist } = useRemoveFromWishlist({
+    queryKey: ['get-wishlist'],
+  })
+
   const isInStock = product?.quantity && product.quantity > 0
   const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
+
+  const productInCart = cart.find((item) => item.id === product?.id)
+  const isProductInCart = cart.some((item) => item.id === product?.id)
+
+  const isProductInWishlist = wishlist?.data.some(
+    (item) => item.id === product?.id,
+  )
+
+  function handleChangeWishlist(product: IProduct) {
+    if (isProductInWishlist) {
+      removeFromWishlist({ product: { id: product.id } })
+    }
+
+    if (!isProductInWishlist) {
+      addToWishlist({ product: { id: product.id } })
+    }
+  }
 
   return (
     <>
@@ -143,10 +178,32 @@ export function Content() {
           <Separator />
 
           <div className="flex justify-between gap-4">
-            <Counter />
-            <Button className="flex-1">Buy Now</Button>
-            <Button>
-              <Heart />
+            {product && (
+              <Counter
+                value={productInCart?.cartQuantity ?? 0}
+                disabled={!productInCart}
+                increment={() => incrementCartQuantity(product.id)}
+                decrement={() => decrementCartQuantity(product.id)}
+              />
+            )}
+
+            {/* {isLoadingProduct && <Skeleton className="h-9 w-full" />} */}
+            <Button
+              className="flex-1"
+              onClick={() => product && addToCart(product)}
+              disabled={isProductInCart}
+            >
+              {isProductInCart
+                ? 'Produto no carrinho'
+                : 'Adicionar ao carrinho'}
+            </Button>
+            <Button onClick={() => product && handleChangeWishlist(product)}>
+              <Heart
+                className={cn(
+                  'h-[1.2rem] w-[1.2rem] transition-all',
+                  isProductInWishlist && 'fill-current',
+                )}
+              />
             </Button>
           </div>
 
@@ -191,6 +248,11 @@ export function Content() {
 
             return <ProductCard key={id} data={product} />
           })}
+
+          {isLoadingProducts &&
+            Array.from({ length: 4 }).map((_, index) => {
+              return <ProductCardSkeleton key={index} />
+            })}
         </div>
       </section>
     </>
