@@ -21,9 +21,7 @@ interface Props {
 }
 
 export function BillingCard({ data }: Props) {
-  const { createdAt, products, total, status, url } = data
-
-  console.log(data)
+  const { createdAt, products, total, status, url, id } = data
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -37,29 +35,37 @@ export function BillingCard({ data }: Props) {
             <span>{formatPrice(total / 100)}</span>
           </div>
 
-          {status === 'CANCELLED' && (
-            <Badge variant="destructive">Cancelado</Badge>
-          )}
+          <div className="flex h-8 gap-3">
+            <Link href={`/billing/${id}`}>
+              <Button size="sm" variant="secondary">
+                Ver detalhes
+              </Button>
+            </Link>
 
-          {status === 'PENDING' && (
-            <div className="flex items-center gap-2">
-              <Link href={url}>
-                <Button size="sm" variant="outline">
-                  Finalizar compra
-                </Button>
-              </Link>
+            {status === 'CANCELLED' && (
+              <Badge variant="destructive">Cancelado</Badge>
+            )}
 
-              <Badge variant="outline" className="h-full bg-yellow-500">
-                Pendente
+            {status === 'PENDING' && (
+              <div className="flex items-center gap-2">
+                <Link href={url}>
+                  <Button size="sm" variant="outline">
+                    Finalizar compra
+                  </Button>
+                </Link>
+
+                <Badge variant="outline" className="h-full bg-yellow-500">
+                  Pendente
+                </Badge>
+              </div>
+            )}
+
+            {status === 'PAID' && (
+              <Badge variant="outline" className="bg-green-500">
+                Pago
               </Badge>
-            </div>
-          )}
-
-          {status === 'PAID' && (
-            <Badge variant="outline" className="bg-green-500">
-              Pago
-            </Badge>
-          )}
+            )}
+          </div>
         </CardTitle>
         <CardDescription className="hidden" />
       </CardHeader>
