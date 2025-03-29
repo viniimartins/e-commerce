@@ -1,9 +1,11 @@
+'use client'
+
 import { TruckIcon } from 'lucide-react'
 import Image from 'next/image'
+import { useState } from 'react'
 
 import product1 from '@/assets/gamepad.png'
 import pix from '@/assets/pix.svg'
-import truck from '@/assets/truck.svg'
 import {
   Accordion,
   AccordionContent,
@@ -19,6 +21,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -28,6 +31,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
+import { cn } from '@/lib/utils'
 import { formatPrice } from '@/utils/formatPrice'
 
 import { Stepper } from './components/stepper'
@@ -43,6 +47,10 @@ import { Stepper } from './components/stepper'
 // Pedido Entregue – Pedido chegou ao destino.
 
 export default function BillingPage() {
+  const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+
+  const [items] = useState(5)
+
   return (
     <>
       <Breadcrumb className="mt-14">
@@ -52,49 +60,94 @@ export default function BillingPage() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Pedido 1234567890</BreadcrumbPage>
+            <BreadcrumbPage>Status da compra</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="ml-auto flex h-10">
-        <Badge variant="outline" className="h-full">
-          Aguardando Pagamento{' '}
-        </Badge>
-      </div>
-
       <div className="grid grid-cols-3 gap-4">
-        <Card className="col-span-2 gap-1 rounded-none">
-          <CardContent className="space-y-2">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                  <Image
-                    src={product1}
-                    alt="product"
-                    fill
-                    quality={100}
-                    priority
-                    className="object-cover p-1"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
-                </div>
-
-                <div className="flex h-full flex-col justify-between">
-                  <span className="text-base font-medium">Brinquedo </span>
-
-                  <span className="text-muted-foreground text-sm">1 un.</span>
-                </div>
-              </div>
-
-              <span className="text-sm font-medium">R$ 167,02</span>
-            </div>
+        <div className="col-span-2 space-y-4">
+          <Card className="rounded-none">
+            <CardHeader className="flex flex-col items-start justify-between">
+              <Badge variant="outline" className="h-8 bg-green-500">
+                Entregue
+              </Badge>
+              <CardTitle className="text-xl">
+                Chegou no dia 23 de novembro
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm">
+                Entregamos seu pacote às 14:42h na
+                <span className="font-bold">
+                  {' '}
+                  Avenida Visconde de Barbacena 188, Passagem,
+                </span>{' '}
+                Tubarão, Santa Catarina.
+              </p>
+            </CardContent>
 
             <Separator />
-          </CardContent>
-        </Card>
 
-        <Card className="col-span-1 gap-1 rounded-none">
+            <CardFooter>
+              <Button>Comprar novamente</Button>
+            </CardFooter>
+          </Card>
+
+          <Card
+            className={cn(
+              'gap-1 overflow-auto rounded-none px-2',
+              items > 3 && 'h-[22.8rem]',
+            )}
+          >
+            <CardContent className="space-y-3 overflow-auto px-4">
+              {Array.from({ length: items }).map((_, index) => {
+                const item = items === index + 1
+
+                return (
+                  <div key={index}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                          <Image
+                            src={product1}
+                            alt="product"
+                            fill
+                            quality={100}
+                            priority
+                            className="object-cover p-1"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
+
+                        <div className="flex h-full flex-col justify-between">
+                          <span className="text-base font-medium">
+                            Brinquedo{' '}
+                          </span>
+
+                          <span className="text-muted-foreground text-sm">
+                            1 un.
+                          </span>
+                        </div>
+                      </div>
+
+                      <span className="text-sm font-medium">R$ 167,02</span>
+                    </div>
+
+                    {!item && <Separator className="my-2" />}
+                  </div>
+                )
+              })}
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card
+          className={cn(
+            'col-span-1 h-[19rem] gap-1 rounded-none',
+            isAccordionOpen && 'h-auto',
+          )}
+        >
           <CardHeader>
             <CardTitle className="text-xl font-bold">
               Detalhe da compra
@@ -137,7 +190,12 @@ export default function BillingPage() {
           </CardContent>
 
           <CardFooter>
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion
+              type="single"
+              collapsible
+              className="w-full"
+              onValueChange={(value) => setIsAccordionOpen(!!value)}
+            >
               <AccordionItem value="item-1" className="w-full">
                 <AccordionTrigger className="w-full">
                   Detalhes do pagamento e envio
