@@ -137,13 +137,14 @@ model Order {
   url   String
 
   products OrderProduct[]
-  address  Address[]
 
   billing OrderBilling @default(PIX)
   status  OrderStatus  @default(PENDING)
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
+
+  address Address?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -175,10 +176,10 @@ model Address {
   city  String
   state String
 
-  orderId String @map("order_id")
-  order   Order  @relation(fields: [orderId], references: [id])
-
   createdAt DateTime @default(now()) @map("created_at")
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @unique @map("order_id")
 
   @@map("addresses")
 }

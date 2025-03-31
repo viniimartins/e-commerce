@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma'
 
 export async function getCategories(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    '/categories',
+    '/category',
     {
       schema: {
         tags: ['Category'],

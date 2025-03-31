@@ -6,16 +6,16 @@ import z from 'zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
-export function getBilling(app: FastifyInstance) {
+export function getOrders(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .get(
-      '/billing',
+      '/order',
       {
         schema: {
-          tags: ['Billing'],
-          summary: 'Get user billing',
+          tags: ['Order'],
+          summary: 'Get user orders',
           security: [{ bearerAuth: [] }],
           querystring: z.object({
             page: z.coerce.number().min(1).default(1),
@@ -73,7 +73,7 @@ export function getBilling(app: FastifyInstance) {
 
         const userId = await request.getCurrentUserId()
 
-        const [billing, total] = await Promise.all([
+        const [orders, total] = await Promise.all([
           prisma.order.findMany({
             where: {
               userId,
@@ -100,7 +100,7 @@ export function getBilling(app: FastifyInstance) {
         const totalPages = Math.ceil(total / perPage)
 
         return reply.status(200).send({
-          data: billing.map((order) => ({
+          data: orders.map((order) => ({
             ...order,
             total: Number(order.total),
             products: order.products.map((item) => ({
