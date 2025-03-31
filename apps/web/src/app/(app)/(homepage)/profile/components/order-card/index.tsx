@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type { IBilling } from '@/app/(app)/types'
+import type { IOrder } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,11 +17,11 @@ import { formatDateLong } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
 
 interface Props {
-  data: IBilling
+  data: IOrder
 }
 
-export function BillingCard({ data }: Props) {
-  const { createdAt, products, total, status, url, id } = data
+export function OrderCard({ data }: Props) {
+  const { createdAt, products, total, id } = data
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -36,13 +36,13 @@ export function BillingCard({ data }: Props) {
           </div>
 
           <div className="flex h-8 gap-3">
-            <Link href={`/billing/${id}`}>
+            <Link href={`/order/${id}`}>
               <Button size="sm" variant="secondary">
                 Ver detalhes
               </Button>
             </Link>
 
-            {status === 'CANCELLED' && (
+            {/* {status === 'CANCELLED' && (
               <Badge variant="destructive">Cancelado</Badge>
             )}
 
@@ -64,7 +64,7 @@ export function BillingCard({ data }: Props) {
               <Badge variant="outline" className="bg-green-500">
                 Pago
               </Badge>
-            )}
+            )} */}
           </div>
         </CardTitle>
         <CardDescription className="hidden" />

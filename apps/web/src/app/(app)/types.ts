@@ -63,12 +63,20 @@ export interface IProductBilling {
   product: IProduct
 }
 
-export interface IBilling {
+export interface IOrderStatus {
+  id: string
+  status: OrderStatus
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface IOrder {
   id: string
   url: string
   gatewayId: string
   billing: OrderBilling
-  status: OrderStatus
+  status: IOrderStatus[]
+  currentStatus: OrderStatus
   products: IProductBilling[]
   address: IAddress
   total: number

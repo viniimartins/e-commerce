@@ -27,7 +27,7 @@ export function createBilling(app: FastifyInstance) {
                 name: z.string(),
                 description: z.string(),
                 quantity: z.number(),
-                price: z.number(),
+                price: z.number().transform((value) => Math.floor(value)),
               }),
             ),
             address: z.object({

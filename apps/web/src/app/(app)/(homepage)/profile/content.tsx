@@ -2,7 +2,7 @@
 
 import { Tabs } from 'radix-ui'
 
-import { BillingCard } from './components/billing-card'
+import { OrderCard } from './components/order-card'
 import { useGetOrders } from './hooks/use-get-orders'
 
 export function Content() {
@@ -31,7 +31,7 @@ export function Content() {
           {orders?.data.map((order) => {
             const { id } = order
 
-            return <BillingCard key={id} data={order} />
+            return <OrderCard key={id} data={order} />
           })}
 
           {orders?.data.length === 0 && (

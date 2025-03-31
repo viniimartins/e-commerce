@@ -4,7 +4,7 @@ import { TruckIcon } from 'lucide-react'
 import Image from 'next/image'
 import { useState } from 'react'
 
-import type { IBilling } from '@/app/(app)/types'
+import type { IOrder } from '@/app/(app)/types'
 import pix from '@/assets/pix.svg'
 import {
   Accordion,
@@ -30,11 +30,11 @@ import { formatPrice } from '@/utils/formatPrice'
 import { Stepper } from './components/stepper'
 
 interface Props {
-  data: IBilling
+  data: IOrder
 }
 
 export function Content({ data }: Props) {
-  const { createdAt, address, products, total } = data
+  const { createdAt, address, products, total, status } = data
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false)
 
@@ -242,7 +242,7 @@ export function Content({ data }: Props) {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <Stepper />
+            <Stepper status={status} />
           </CardContent>
         </Card>
       </div>

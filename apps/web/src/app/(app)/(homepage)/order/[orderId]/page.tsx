@@ -10,21 +10,18 @@ import {
 } from '@/components/ui/breadcrumb'
 import { getOrder } from '@/service/order'
 
-// import { getOrder } from '@/service/order'
 import { Content } from './content'
 
 interface Props {
-  params: Promise<{ billingId: string }>
+  params: Promise<{ orderId: string }>
 }
 
-export default async function BillingPage({ params }: Props) {
-  const { billingId } = await params
+export default async function OrderPage({ params }: Props) {
+  const { orderId } = await params
 
-  const billing = await getOrder({ id: billingId })
+  const order = await getOrder({ id: orderId })
 
-  console.log(billing)
-
-  if (!billing) {
+  if (!order) {
     notFound()
   }
 
@@ -42,7 +39,7 @@ export default async function BillingPage({ params }: Props) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Content data={billing} />
+      <Content data={order} />
     </>
   )
 }
