@@ -16,10 +16,21 @@ interface Customer {
   cellphone: string
 }
 
+interface Address {
+  cep: string
+  address: string
+  number: string
+  complement?: string
+  neighborhood: string
+  city: string
+  state: string
+}
+
 interface Billing {
   customer?: Customer
   customerId?: string
   products: IExternalProduct[]
+  address: Address
 }
 
 interface Params {

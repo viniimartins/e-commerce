@@ -110,7 +110,19 @@ export function Content() {
   }
 
   function onSubmit(values: IFormSchema) {
-    const { fullName, email, cpf, phoneNumber } = values
+    const {
+      fullName,
+      email,
+      cpf,
+      phoneNumber,
+      cep,
+      streetAddress,
+      number,
+      complement,
+      neighborhood,
+      city,
+      state,
+    } = values
 
     if (!profile?.customer) {
       createBilling(
@@ -131,6 +143,15 @@ export function Content() {
                 price: price * 100,
               }),
             ),
+            address: {
+              cep,
+              address: streetAddress,
+              number,
+              complement,
+              neighborhood,
+              city,
+              state,
+            },
           },
         },
         {
@@ -157,6 +178,15 @@ export function Content() {
                 price: price * 100,
               }),
             ),
+            address: {
+              cep,
+              address: streetAddress,
+              number,
+              complement,
+              neighborhood,
+              city,
+              state,
+            },
           },
         },
         {

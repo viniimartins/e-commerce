@@ -29,6 +29,15 @@ export function createBilling(app: FastifyInstance) {
                 price: z.number(),
               }),
             ),
+            address: z.object({
+              cep: z.string().transform((value) => value.replace(/-/g, '')),
+              address: z.string(),
+              number: z.string(),
+              complement: z.string().optional(),
+              neighborhood: z.string(),
+              city: z.string(),
+              state: z.string(),
+            }),
             customer: z
               .object({
                 name: z.string(),
@@ -48,7 +57,7 @@ export function createBilling(app: FastifyInstance) {
       async (request, reply) => {
         const userId = await request.getCurrentUserId()
 
-        const { customerId, products, customer } = request.body
+        const { customerId, products, customer, address } = request.body
 
         for (const { externalId } of products) {
           const productExists = await prisma.product.findUnique({
@@ -138,6 +147,11 @@ export function createBilling(app: FastifyInstance) {
                   quantity,
                 })),
               },
+              address: {
+                create: {
+                  ...address,
+                },
+              },
               gatewayId,
               url,
               total: products.reduce(
@@ -146,9 +160,9 @@ export function createBilling(app: FastifyInstance) {
               ),
             },
           })
-        })
 
-        return reply.status(200).send({ url })
+          return reply.status(200).send({ url })
+        })
       },
     )
 }

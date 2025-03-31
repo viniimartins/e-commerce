@@ -134,8 +134,10 @@ model Order {
   url   String
 
   products OrderProduct[]
-  billing  OrderBilling   @default(PIX)
-  status   OrderStatus    @default(PENDING)
+  address  Address[]
+
+  billing OrderBilling @default(PIX)
+  status  OrderStatus  @default(PENDING)
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
@@ -156,4 +158,24 @@ model OrderProduct {
 
   @@id([orderId, productId])
   @@map("order_products")
+}
+
+model Address {
+  id String @id @default(uuid())
+
+  cep          String
+  address      String
+  number       String
+  complement   String?
+  neighborhood String
+
+  city  String
+  state String
+
+  orderId String @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("addresses")
 }
