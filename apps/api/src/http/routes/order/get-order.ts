@@ -9,7 +9,7 @@ import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
 
-export function getOrders(app: FastifyInstance) {
+export function getOrder(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
@@ -18,7 +18,7 @@ export function getOrders(app: FastifyInstance) {
       {
         schema: {
           tags: ['Order'],
-          summary: 'Get user order',
+          summary: 'Get user order details',
           security: [{ bearerAuth: [] }],
           params: z.object({
             orderId: z.string(),

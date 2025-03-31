@@ -32,6 +32,17 @@ export interface IProduct {
   }[]
 }
 
+export interface IAddress {
+  id: string
+  cep: string
+  address: string
+  number: string
+  complement: string | null
+  neighborhood: string
+  city: string
+  state: string
+}
+
 export enum OrderStatus {
   PENDING = 'PENDING',
   PAID = 'PAID',
@@ -59,6 +70,7 @@ export interface IBilling {
   billing: OrderBilling
   status: OrderStatus
   products: IProductBilling[]
+  address: IAddress
   total: number
   createdAt: Date
   updatedAt: Date

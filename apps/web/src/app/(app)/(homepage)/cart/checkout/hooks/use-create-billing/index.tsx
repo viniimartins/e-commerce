@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import type { IProduct } from '@/app/(app)/types'
+import type { IAddress, IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
 
 export interface IExternalProduct
@@ -16,21 +16,11 @@ interface Customer {
   cellphone: string
 }
 
-interface Address {
-  cep: string
-  address: string
-  number: string
-  complement?: string
-  neighborhood: string
-  city: string
-  state: string
-}
-
 interface Billing {
   customer?: Customer
   customerId?: string
   products: IExternalProduct[]
-  address: Address
+  address: IAddress
 }
 
 interface Params {

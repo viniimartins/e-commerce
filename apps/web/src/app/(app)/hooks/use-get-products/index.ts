@@ -14,7 +14,7 @@ interface Params {
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<IProduct>>('/products', {
+  const { data } = await api.get<PaginatedResponse<IProduct>>('/product', {
     params,
   })
 

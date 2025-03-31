@@ -3,10 +3,10 @@
 import { Tabs } from 'radix-ui'
 
 import { BillingCard } from './components/billing-card'
-import { useGetBilling } from './hooks/use-get-billing'
+import { useGetOrders } from './hooks/use-get-orders'
 
 export function Content() {
-  const { data: billing, isLoading } = useGetBilling({
+  const { data: orders, isLoading } = useGetOrders({
     params: {
       page: 1,
       perPage: 10,
@@ -28,13 +28,13 @@ export function Content() {
       </aside>
       <div className="col-span-3">
         <Tabs.Content value="pedidos" className="space-y-4">
-          {billing?.data.map((order) => {
+          {orders?.data.map((order) => {
             const { id } = order
 
             return <BillingCard key={id} data={order} />
           })}
 
-          {billing?.data.length === 0 && (
+          {orders?.data.length === 0 && (
             <span className="text-muted-foreground text-sm">
               Nenhum pedido encontrado
             </span>

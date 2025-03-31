@@ -17,15 +17,15 @@ interface Props {
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<IBilling>>('/billing', {
+  const { data } = await api.get<PaginatedResponse<IBilling>>('/order', {
     params,
   })
 
   return data
 }
 
-export function useGetBilling({ params }: Props) {
-  const queryKey = ['get-billing']
+export function useGetOrders({ params }: Props) {
+  const queryKey = ['get-orders']
 
   const isUserAuthenticated = isAuthenticated()
 
