@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type { IOrder } from '@/app/(app)/types'
+import { type IOrder, OrderStatusLabels } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function OrderCard({ data }: Props) {
-  const { createdAt, products, total, id } = data
+  const { createdAt, products, total, id, currentStatus } = data
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -42,29 +42,13 @@ export function OrderCard({ data }: Props) {
               </Button>
             </Link>
 
-            {/* {status === 'CANCELLED' && (
-              <Badge variant="destructive">Cancelado</Badge>
-            )}
-
-            {status === 'PENDING' && (
-              <div className="flex items-center gap-2">
-                <Link href={url}>
-                  <Button size="sm" variant="outline">
-                    Finalizar compra
-                  </Button>
-                </Link>
-
-                <Badge variant="outline" className="h-full bg-yellow-500">
-                  Pendente
-                </Badge>
-              </div>
-            )}
-
-            {status === 'PAID' && (
-              <Badge variant="outline" className="bg-green-500">
-                Pago
-              </Badge>
-            )} */}
+            <Badge
+              variant="outline"
+              data-status={currentStatus}
+              className="h-8 data-[status=DELIVERED]:bg-green-500"
+            >
+              {OrderStatusLabels[currentStatus]}
+            </Badge>
           </div>
         </CardTitle>
         <CardDescription className="hidden" />

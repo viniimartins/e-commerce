@@ -43,6 +43,10 @@ export function nextStatusOrder(app: FastifyInstance) {
           throw new BadRequestError('Order not found')
         }
 
+        if (order.currentStatus === OrderStatus.DELIVERED) {
+          throw new BadRequestError('Order already delivered')
+        }
+
         const nextStatus = advanceOrderStatus(order.currentStatus)
 
         await prisma.order.update({

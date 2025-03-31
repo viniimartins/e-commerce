@@ -1,10 +1,12 @@
 'use client'
 
+import { addDays } from 'date-fns'
 import { TruckIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState } from 'react'
 
-import type { IOrder } from '@/app/(app)/types'
+import { type IOrder, OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
 import pix from '@/assets/pix.svg'
 import {
   Accordion,
@@ -24,7 +26,8 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { formatDateLong } from '@/utils/formatDate'
+import { useCart } from '@/providers/cart-provider'
+import { formatDateLong, formatDateShort } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
 
 import { Stepper } from './components/stepper'
@@ -34,27 +37,50 @@ interface Props {
 }
 
 export function Content({ data }: Props) {
-  const { createdAt, address, products, total, status } = data
+  const { createdAt, address, products, total, status, currentStatus, id } =
+    data
+
+  const { removeAllProducts, addToCart } = useCart()
 
   const [isAccordionOpen, setIsAccordionOpen] = useState(false)
+
+  function handleBuyAgain() {
+    removeAllProducts()
+
+    products.forEach(({ product }) => {
+      addToCart(product)
+    })
+  }
 
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
         <div className="col-span-2 space-y-4">
           <Card className="rounded-none">
-            <CardHeader className="flex flex-col items-start justify-between">
-              <Badge variant="outline" className="h-8 bg-green-500">
-                Entregue
+            <CardHeader className="flex flex-col items-start justify-between gap-2">
+              <Badge
+                variant="outline"
+                data-status={currentStatus}
+                className="h-8 data-[status=DELIVERED]:bg-green-500"
+              >
+                {OrderStatusLabels[currentStatus]}
               </Badge>
               <CardTitle className="text-xl">
-                Chegou no dia 23 de novembro
+                {currentStatus !== OrderStatus.SHIPPED &&
+                  `Pedido chegara no dia ${formatDateShort(
+                    addDays(new Date(createdAt), 7),
+                  )}`}
+
+                {currentStatus === OrderStatus.SHIPPED &&
+                  `Pedido entregue no dia ${formatDateShort(
+                    addDays(new Date(createdAt), 8),
+                  )}`}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-sm">
-                Enviaremos seu pacote na
-                <span className="font-bold">
+                {`${currentStatus === OrderStatus.SHIPPED ? 'Entregamos' : 'Entregaremos'} seu pacote no endereço`}
+                <span className="font-bold underline">
                   {' '}
                   {address?.address}, {address?.neighborhood},
                 </span>{' '}
@@ -65,7 +91,11 @@ export function Content({ data }: Props) {
             <Separator />
 
             <CardFooter>
-              <Button>Comprar novamente</Button>
+              <Link href={`/cart`}>
+                <Button variant="secondary" onClick={handleBuyAgain}>
+                  Comprar novamente
+                </Button>
+              </Link>
             </CardFooter>
           </Card>
 
@@ -133,7 +163,9 @@ export function Content({ data }: Props) {
               <span className="text-sm">{formatDateLong(createdAt)}</span>
 
               <Separator orientation="vertical" />
-              <span className="text-muted-foreground text-sm">#12345678</span>
+              <span className="text-muted-foreground text-sm uppercase">
+                #{id.slice(0, 8)}
+              </span>
             </CardDescription>
 
             <Separator className="my-2" />

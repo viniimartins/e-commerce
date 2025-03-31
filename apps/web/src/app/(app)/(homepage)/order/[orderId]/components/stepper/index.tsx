@@ -1,6 +1,10 @@
 import { CheckIcon } from 'lucide-react'
 
-import { type IOrderStatus, OrderStatus } from '@/app/(app)/types'
+import {
+  type IOrderStatus,
+  OrderStatus,
+  OrderStatusLabels,
+} from '@/app/(app)/types'
 import { cn } from '@/lib/utils'
 import { formatDateLong } from '@/utils/formatDate'
 
@@ -18,7 +22,7 @@ export function Stepper({ status }: Props) {
   const steps = [
     {
       id: 1,
-      title: 'Pedido confirmado',
+      title: OrderStatusLabels[OrderStatus.PENDING],
       status: statusMap.has(OrderStatus.PENDING) ? 'completed' : 'pending',
       date: statusMap.has(OrderStatus.PENDING)
         ? formatDateLong(statusMap.get(OrderStatus.PENDING)!.createdAt)
@@ -26,7 +30,7 @@ export function Stepper({ status }: Props) {
     },
     {
       id: 2,
-      title: 'Pagamento aprovado',
+      title: OrderStatusLabels[OrderStatus.PAID],
       status: statusMap.has(OrderStatus.PAID) ? 'completed' : 'pending',
       date: statusMap.has(OrderStatus.PAID)
         ? formatDateLong(statusMap.get(OrderStatus.PAID)!.createdAt)
@@ -34,7 +38,7 @@ export function Stepper({ status }: Props) {
     },
     {
       id: 3,
-      title: 'Pedido preparado',
+      title: OrderStatusLabels[OrderStatus.PROCESSING],
       status: statusMap.has(OrderStatus.PROCESSING) ? 'completed' : 'pending',
       date: statusMap.has(OrderStatus.PROCESSING)
         ? formatDateLong(statusMap.get(OrderStatus.PROCESSING)!.createdAt)
@@ -42,7 +46,7 @@ export function Stepper({ status }: Props) {
     },
     {
       id: 4,
-      title: 'Enviando pedido',
+      title: OrderStatusLabels[OrderStatus.SHIPPED],
       status: statusMap.has(OrderStatus.SHIPPED) ? 'completed' : 'pending',
       date: statusMap.has(OrderStatus.SHIPPED)
         ? formatDateLong(statusMap.get(OrderStatus.SHIPPED)!.createdAt)
@@ -50,7 +54,7 @@ export function Stepper({ status }: Props) {
     },
     {
       id: 5,
-      title: 'Entregar pedido',
+      title: OrderStatusLabels[OrderStatus.DELIVERED],
       status: statusMap.has(OrderStatus.DELIVERED) ? 'completed' : 'pending',
       date: statusMap.has(OrderStatus.DELIVERED)
         ? formatDateLong(statusMap.get(OrderStatus.DELIVERED)!.createdAt)
