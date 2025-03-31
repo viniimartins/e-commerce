@@ -1,4 +1,5 @@
 import { env } from '@e-commerce/env'
+import { OrderStatus } from '@prisma/client'
 import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -150,6 +151,11 @@ export function createBilling(app: FastifyInstance) {
               address: {
                 create: {
                   ...address,
+                },
+              },
+              status: {
+                create: {
+                  status: OrderStatus.PENDING,
                 },
               },
               gatewayId,

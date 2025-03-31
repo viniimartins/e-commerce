@@ -85,6 +85,7 @@ export function abacatepay(app: FastifyInstance) {
       await prisma.order.update({
         where: { id: order.id },
         data: {
+          currentStatus: nextStatus,
           status: {
             create: {
               status: nextStatus,

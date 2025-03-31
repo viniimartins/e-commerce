@@ -34,6 +34,13 @@ export function getOrder(app: FastifyInstance) {
               createdAt: z.date(),
               updatedAt: z.date(),
               userId: z.string(),
+              status: z.array(
+                z.object({
+                  id: z.string(),
+                  status: z.nativeEnum(OrderStatus),
+                  createdAt: z.date(),
+                }),
+              ),
               address: z
                 .object({
                   id: z.string(),
@@ -92,6 +99,7 @@ export function getOrder(app: FastifyInstance) {
                 },
               },
             },
+            status: true,
             address: true,
           },
         })

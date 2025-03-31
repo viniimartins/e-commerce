@@ -12,7 +12,6 @@ export async function getOrder({ id }: Order) {
   const token = cookieStore.get('token')?.value
 
   const data = await apiServer<IBilling>(`/order/${id}`, {
-    cache: 'force-cache',
     headers: {
       Authorization: `Bearer ${token}`,
     },

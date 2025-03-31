@@ -19,6 +19,7 @@ import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
+import { nextStatusOrder } from './routes/order/next-status-order'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
 import { abacatepay } from './routes/webhook/abacatepay'
@@ -86,6 +87,7 @@ app.register(createBilling)
 
 app.register(getOrder)
 app.register(getOrders)
+app.register(nextStatusOrder)
 
 app.register(abacatepay)
 

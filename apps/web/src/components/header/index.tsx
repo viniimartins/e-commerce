@@ -38,7 +38,7 @@ export function Header() {
 
   const pathname = usePathname()
 
-  const { cart } = useCart()
+  const { cart, removeAllProducts } = useCart()
   const { setTheme, theme } = useTheme()
 
   const { data: wishlist } = useGetWishlist({ params: {} })
@@ -230,6 +230,7 @@ export function Header() {
                     <Button
                       variant="ghost"
                       className="flex w-full justify-start gap-2"
+                      onClick={removeAllProducts}
                     >
                       <LogOut size={20} />
                       Sair

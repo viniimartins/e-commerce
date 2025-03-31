@@ -31,14 +31,11 @@ export function nextStatusOrder(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const userId = await request.getCurrentUserId()
-
         const { orderId } = request.params
 
         const order = await prisma.order.findUnique({
           where: {
             id: orderId,
-            userId,
           },
         })
 
