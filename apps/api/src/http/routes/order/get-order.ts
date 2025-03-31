@@ -26,7 +26,7 @@ export function getOrder(app: FastifyInstance) {
           response: {
             200: z.object({
               id: z.string(),
-              status: z.nativeEnum(OrderStatus),
+              currentStatus: z.nativeEnum(OrderStatus),
               url: z.string(),
               gatewayId: z.string(),
               billing: z.nativeEnum(OrderBilling),
