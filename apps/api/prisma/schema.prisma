@@ -129,6 +129,17 @@ enum OrderStatus {
   CANCELLED
 }
 
+model OrderStatusProgress {
+  id        String      @id @default(uuid())
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  orderId String @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_status_progress")
+}
+
 model Order {
   id        String @id @default(uuid())
   gatewayId String @map("gateway_id")
@@ -136,15 +147,15 @@ model Order {
   total Decimal
   url   String
 
-  products OrderProduct[]
+  billing       OrderBilling          @default(PIX)
+  status        OrderStatusProgress[]
+  currentStatus OrderStatus           @default(PENDING)
 
-  billing OrderBilling @default(PIX)
-  status  OrderStatus  @default(PENDING)
+  products OrderProduct[]
+  address  Address?
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
-
-  address Address?
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

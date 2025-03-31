@@ -79,13 +79,15 @@ export function abacatepay(app: FastifyInstance) {
         throw new BadRequestError('Order not found')
       }
 
-      if (order.status !== OrderStatus.PENDING) {
-        throw new BadRequestError('Order is not pending')
-      }
-
       await prisma.order.update({
         where: { id: order.id },
-        data: { status: OrderStatus.PAID },
+        data: {
+          status: {
+            create: {
+              status: OrderStatus.PAID,
+            },
+          },
+        },
       })
     },
   )
