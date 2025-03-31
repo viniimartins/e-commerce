@@ -2,6 +2,8 @@
 
 import { Tabs } from 'radix-ui'
 
+import { Skeleton } from '@/components/ui/skeleton'
+
 import { OrderCard } from './components/order-card'
 import { useGetOrders } from './hooks/use-get-orders'
 
@@ -40,11 +42,10 @@ export function Content() {
             </span>
           )}
 
-          {isLoading && (
-            <span className="text-muted-foreground text-sm">
-              Carregando pedidos...
-            </span>
-          )}
+          {!isLoading &&
+            Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton key={index} className="h-[13rem] w-full" />
+            ))}
         </Tabs.Content>
       </div>
     </Tabs.Root>

@@ -52,6 +52,8 @@ export function Content({ data }: Props) {
     })
   }
 
+  const paymentDate = status.find(({ status }) => status === OrderStatus.PAID)
+
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
@@ -210,38 +212,41 @@ export function Content({ data }: Props) {
                   Detalhes do pagamento e envio
                 </AccordionTrigger>
                 <AccordionContent className="space-y-8">
-                  <div className="mt-4 flex flex-col gap-2">
-                    <span className="text-base font-semibold">Pagamento</span>
-                    <div className="flex w-full gap-4 border p-4">
-                      <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-neutral-100 dark:border">
-                        <Image
-                          src={pix}
-                          alt="pix"
-                          fill
-                          quality={100}
-                          priority
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </div>
+                  {currentStatus === OrderStatus.PAID && (
+                    <div className="mt-4 flex flex-col gap-2">
+                      <span className="text-base font-semibold">Pagamento</span>
+                      <div className="flex w-full gap-4 border p-4">
+                        <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-neutral-100 dark:border">
+                          <Image
+                            src={pix}
+                            alt="pix"
+                            fill
+                            quality={100}
+                            priority
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
 
-                      <div className="flex flex-1 flex-col gap-1">
-                        <span className="text-sm font-medium">
-                          {formatPrice(total / 100)}
-                        </span>
-                        <span className="text-muted-foreground text-sm font-medium">
-                          PIX
-                        </span>
+                        <div className="flex flex-1 flex-col gap-1">
+                          <span className="text-sm font-medium">
+                            {formatPrice(total / 100)}
+                          </span>
+                          <span className="text-muted-foreground text-sm font-medium">
+                            PIX
+                          </span>
 
-                        <span className="text-muted-foreground text-sm">
-                          21 de novembro de 2024
-                        </span>
+                          <span className="text-muted-foreground text-sm">
+                            {paymentDate?.createdAt &&
+                              formatDateLong(paymentDate.createdAt)}
+                          </span>
 
-                        <span className="text-sm font-medium text-green-500">
-                          Pagamento Aprovado
-                        </span>
+                          <span className="text-sm font-medium text-green-500">
+                            Pagamento Aprovado
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
                   <div className="flex flex-col gap-2">
                     <span className="text-base font-semibold">Frete</span>
                     <div className="flex w-full gap-4 border p-4">
