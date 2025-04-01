@@ -199,20 +199,6 @@ export function ProductCard(props: Props) {
                 <div className="mt-1 flex flex-col gap-2">
                   <Button
                     variant="secondary"
-                    disabled={isProductInCart}
-                    onClick={(event) => {
-                      event.preventDefault()
-                      addToCart(data)
-                    }}
-                    size="sm"
-                    className="w-full"
-                  >
-                    <ShoppingCart />
-                    {isProductInCart ? 'No carrinho' : 'Adicionar'}
-                  </Button>
-
-                  <Button
-                    variant="outline"
                     disabled={isProductInWishlist}
                     onClick={(event) => {
                       event.preventDefault()
@@ -225,6 +211,158 @@ export function ProductCard(props: Props) {
                       className={cn(isProductInWishlist && 'fill-current')}
                     />
                     {isProductInWishlist ? 'Favorito' : 'Favoritar'}
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    disabled={isProductInCart}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      addToCart(data)
+                    }}
+                    size="sm"
+                    className="w-full"
+                  >
+                    <ShoppingCart />
+                    {isProductInCart ? 'No carrinho' : 'Adicionar'}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        {gridView === 'columns2' && (
+          <Card className="relative w-full cursor-pointer gap-0 space-y-3 rounded-none border-none py-0 shadow-none">
+            <CardContent
+              onClick={handleOpenDialog}
+              className="group dark:bg-muted-foreground/10 relative h-[18rem] w-full cursor-pointer bg-neutral-100 p-0 dark:border"
+            >
+              {productImage && (
+                <Image
+                  src={productImage[0].url}
+                  alt={name}
+                  fill
+                  quality={100}
+                  priority
+                  className="object-cover p-2"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              )}
+
+              <div className="absolute top-4 right-4 flex cursor-pointer flex-col gap-2">
+                <Button
+                  variant="secondary"
+                  className="cursor-pointer rounded-full border-none disabled:opacity-80"
+                  size="icon"
+                  disabled={isProductInWishlist}
+                  onClick={(event) => {
+                    event.preventDefault()
+
+                    addToWishlist({ product: data })
+                  }}
+                >
+                  <Heart
+                    className={cn(isProductInWishlist && 'fill-current')}
+                  />
+                </Button>
+              </div>
+            </CardContent>
+            <CardFooter className="flex flex-col items-start justify-between gap-3 px-0">
+              <div className="space-y-0.5">
+                <h3 className="text-base font-medium">{name}</h3>
+                <span className="text-muted-foreground text-sm font-medium">
+                  {formatPrice(price)}
+                </span>
+              </div>
+              <div className="h-20 w-full">
+                <p className="text-muted-foreground line-clamp-4 text-sm font-medium">
+                  {description}
+                </p>
+              </div>
+
+              <Button
+                variant="outline"
+                disabled={isProductInCart}
+                onClick={(event) => {
+                  event.preventDefault()
+                  addToCart(data)
+                }}
+                className="w-full"
+              >
+                <ShoppingCart />
+                {isProductInCart
+                  ? 'Produto adicionado ao carrinho'
+                  : 'Adicionar ao carrinho'}
+              </Button>
+            </CardFooter>
+          </Card>
+        )}
+
+        {gridView === 'rows2' && (
+          <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
+            <CardContent className="flex flex-row px-0">
+              <div
+                onClick={handleOpenDialog}
+                className="group dark:bg-muted-foreground/10 relative h-[18rem] w-1/2 cursor-pointer bg-neutral-100 p-0 dark:border"
+              >
+                <div className="relative h-full w-full">
+                  {productImage && (
+                    <Image
+                      src={productImage[0].url}
+                      alt={name}
+                      fill
+                      quality={100}
+                      priority
+                      className="object-cover p-2"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex w-1/2 flex-col justify-between px-2">
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="text-base font-medium">{name}</h3>
+                    <span className="text-muted-foreground text-sm font-medium">
+                      {formatPrice(price)}
+                    </span>
+                  </div>
+                  <p className="text-muted-foreground line-clamp-6 text-sm font-medium">
+                    {description}
+                  </p>
+                </div>
+
+                <div className="mt-1 flex flex-col gap-2">
+                  <Button
+                    variant="secondary"
+                    disabled={isProductInWishlist}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      addToWishlist({ product: data })
+                    }}
+                    size="sm"
+                    className="w-full"
+                  >
+                    <Heart
+                      className={cn(isProductInWishlist && 'fill-current')}
+                    />
+                    {isProductInWishlist ? 'Favorito' : 'Favoritar'}
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    disabled={isProductInCart}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      addToCart(data)
+                    }}
+                    size="sm"
+                    className="w-full"
+                  >
+                    <ShoppingCart />
+                    {isProductInCart ? 'No carrinho' : 'Adicionar'}
                   </Button>
                 </div>
               </div>

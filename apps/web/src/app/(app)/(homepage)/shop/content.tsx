@@ -48,7 +48,7 @@ export function Content() {
             className="h-[1.5rem] w-[1.5rem] dark:invert"
             alt="Filter icon"
           />
-          Filter
+          Filtros
         </h2>
 
         <Filter />
@@ -58,7 +58,7 @@ export function Content() {
           {isLoading && <Skeleton className="h-5 w-56" />}
 
           <h2 className="text-xl font-semibold">
-            {(!isLoading && category?.name) ?? 'All'}
+            {(!isLoading && category?.name) ?? 'Todos os produtos'}
           </h2>
 
           <div className="flex items-center justify-end">
@@ -89,8 +89,8 @@ export function Content() {
           className={cn('grid', {
             'grid-cols-3 gap-4': gridView === 'grid3x3',
             'grid-cols-2 gap-4': gridView === 'grid2x2',
-            // 'grid-cols-2 gap-4': gridView === 'columns2',
-            // 'grid-cols-2 gap-4': gridView === 'rows2',
+            'grid-cols-2 gap-[1rem]': gridView === 'columns2',
+            'grid-cols-1 gap-4': gridView === 'rows2',
           })}
         >
           {products?.data.map((product) => {
