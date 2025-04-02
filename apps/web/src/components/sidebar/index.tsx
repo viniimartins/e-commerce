@@ -1,6 +1,12 @@
 'use client'
 
-import { ChevronsUpDown, LayoutDashboardIcon, LogOut } from 'lucide-react'
+import {
+  BoxesIcon,
+  ChevronsUpDown,
+  LayoutDashboardIcon,
+  LogOut,
+  Package,
+} from 'lucide-react'
 import Link from 'next/link'
 import * as React from 'react'
 
@@ -18,7 +24,6 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -39,6 +44,16 @@ const data = {
       url: '/admin',
       icon: LayoutDashboardIcon,
     },
+    {
+      title: 'Categorias',
+      url: '/admin/category',
+      icon: BoxesIcon,
+    },
+    {
+      title: 'Produtos',
+      url: '/admin/product',
+      icon: Package,
+    },
   ],
 }
 
@@ -54,7 +69,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Plataforma</SidebarGroupLabel>
           <SidebarMenu>
             {data.panel.map((item) => (
               <SidebarMenuItem key={item.title}>
