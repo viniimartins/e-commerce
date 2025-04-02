@@ -1,3 +1,5 @@
+import type { Metadata } from 'next'
+
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -8,6 +10,10 @@ import {
 } from '@/components/ui/breadcrumb'
 
 import { Content } from './content'
+
+export const metadata: Metadata = {
+  title: 'Shop',
+}
 
 export default function CategoryPage() {
   return (

@@ -1,4 +1,5 @@
 import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+import type { Metadata } from 'next'
 
 import { Badge } from '@/components/ui/badge'
 import {
@@ -14,6 +15,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+
+export const metadata: Metadata = {
+  title: 'Admin | Painel',
+}
 
 export default function AdminPage() {
   return (

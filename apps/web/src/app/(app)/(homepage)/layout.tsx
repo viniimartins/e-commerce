@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     default: 'Shop',
   },
 }
+
 export default async function ShoppLayout({
   children,
   sheet,

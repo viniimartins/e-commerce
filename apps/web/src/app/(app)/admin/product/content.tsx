@@ -1,6 +1,7 @@
 'use client'
 
 import { PlusIcon } from 'lucide-react'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -38,10 +39,12 @@ export function Content() {
   return (
     <>
       <div className="flex justify-end">
-        <Button>
-          <PlusIcon className="size-4" />
-          Adicionar Categoria
-        </Button>
+        <Link href="/admin/product/create">
+          <Button variant="outline">
+            <PlusIcon className="size-4" />
+            Adicionar Categoria
+          </Button>
+        </Link>
       </div>
 
       <div className="space-y-4 border p-8">

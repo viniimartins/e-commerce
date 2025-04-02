@@ -1,6 +1,5 @@
 import '@/styles/globals.css'
 
-import type { Metadata } from 'next'
 import { Inter, Poppins } from 'next/font/google'
 
 import { Providers } from '@/providers'
@@ -15,13 +14,6 @@ const poppions = Poppins({
   weight: ['400', '600', '700'],
   variable: '--font-poppions',
 })
-
-export const metadata: Metadata = {
-  title: {
-    template: 'Univinte | %s',
-    default: 'Shop',
-  },
-}
 
 export default function RootLayout({
   children,
