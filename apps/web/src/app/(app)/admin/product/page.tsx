@@ -7,6 +7,8 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 
+import { Content } from './content'
+
 export default function ProductPage() {
   return (
     <>
@@ -21,6 +23,8 @@ export default function ProductPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      <Content />
     </>
   )
 }
