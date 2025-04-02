@@ -12,7 +12,7 @@ interface Props {
 }
 
 async function get(productId: Props['product']['id']) {
-  const { data } = await api.get<IProduct>(`/products/${productId}`)
+  const { data } = await api.get<IProduct>(`/product/${productId}`)
 
   return data
 }

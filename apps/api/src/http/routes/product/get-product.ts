@@ -8,10 +8,10 @@ import { BadRequestError } from '../_errors/bad-request-error'
 
 export async function getProduct(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
-    '/products/:productId',
+    '/product/:productId',
     {
       schema: {
-        tags: ['Products'],
+        tags: ['Product'],
         summary: 'Get product',
         params: z.object({
           productId: z.string(),

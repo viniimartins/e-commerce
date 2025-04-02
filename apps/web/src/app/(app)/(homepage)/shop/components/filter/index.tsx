@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Skeleton } from '@/components/ui/skeleton'
+import { formatPrice } from '@/utils/formatPrice'
 
 export function Filter() {
   const searchParams = useSearchParams()
@@ -21,8 +22,8 @@ export function Filter() {
 
   return (
     <aside className="space-y-10">
-      <div className="flex flex-col gap-1">
-        <span className="text-xl font-medium">CATEGORIES</span>
+      <div className="flex flex-col gap-2">
+        <span className="text-xl font-semibold">Categorias</span>
 
         <div className="flex h-56 flex-col items-start gap-2 overflow-auto">
           <a
@@ -30,7 +31,7 @@ export function Filter() {
             href="/shop"
             className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
           >
-            All
+            Todas categorias
           </a>
 
           {categories?.data.map((category) => {
@@ -55,8 +56,8 @@ export function Filter() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-1">
-        <span className="text-xl font-medium">PRICE</span>
+      <div className="flex flex-col gap-2">
+        <span className="text-xl font-semibold">Preço</span>
 
         <div className="flex flex-col items-start gap-2">
           <div className="flex w-full items-center justify-between">
@@ -64,7 +65,7 @@ export function Filter() {
               htmlFor="allprice"
               className="text-muted-foreground text-sm font-medium"
             >
-              All price
+              Todos os preços
             </label>
             <Checkbox id="allprice" />
           </div>
@@ -74,7 +75,7 @@ export function Filter() {
               htmlFor="1"
               className="text-muted-foreground text-sm font-medium"
             >
-              $0.00 - 99.99
+              {formatPrice(0)} - {formatPrice(99.99)}
             </label>
             <Checkbox id="1" />
           </div>
@@ -84,7 +85,7 @@ export function Filter() {
               htmlFor="2"
               className="text-muted-foreground text-sm font-medium"
             >
-              $100.00 - 199.99
+              {formatPrice(100)} - {formatPrice(199.99)}
             </label>
             <Checkbox id="2" />
           </div>
@@ -94,7 +95,7 @@ export function Filter() {
               htmlFor="1"
               className="text-muted-foreground text-sm font-medium"
             >
-              $200.00 - 299.99
+              {formatPrice(200)} - {formatPrice(299.99)}
             </label>
             <Checkbox id="1" />
           </div>
@@ -104,7 +105,7 @@ export function Filter() {
               htmlFor="1"
               className="text-muted-foreground text-sm font-medium"
             >
-              $300.00 - 399.99
+              {formatPrice(300)} - {formatPrice(399.99)}
             </label>
             <Checkbox id="1" />
           </div>
@@ -114,7 +115,7 @@ export function Filter() {
               htmlFor="1"
               className="text-muted-foreground text-sm font-medium"
             >
-              $400.00+
+              {formatPrice(400)}+
             </label>
             <Checkbox id="1" />
           </div>

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import type { IBilling } from '@/app/(app)/types'
+import { type IOrder, OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -17,13 +17,11 @@ import { formatDateLong } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
 
 interface Props {
-  data: IBilling
+  data: IOrder
 }
 
-export function BillingCard({ data }: Props) {
-  const { createdAt, products, total, status, url } = data
-
-  console.log(data)
+export function OrderCard({ data }: Props) {
+  const { createdAt, products, total, id, currentStatus, url } = data
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -37,29 +35,29 @@ export function BillingCard({ data }: Props) {
             <span>{formatPrice(total / 100)}</span>
           </div>
 
-          {status === 'CANCELLED' && (
-            <Badge variant="destructive">Cancelado</Badge>
-          )}
-
-          {status === 'PENDING' && (
-            <div className="flex items-center gap-2">
-              <Link href={url}>
-                <Button size="sm" variant="outline">
-                  Finalizar compra
+          <div className="flex h-8 gap-3">
+            {currentStatus === OrderStatus.PENDING && (
+              <Link href={`${url}`}>
+                <Button variant="link" size="sm">
+                  Pagar agora
                 </Button>
               </Link>
+            )}
 
-              <Badge variant="outline" className="h-full bg-yellow-500">
-                Pendente
-              </Badge>
-            </div>
-          )}
+            <Link href={`/order/${id}`}>
+              <Button size="sm" variant="secondary">
+                Ver detalhes
+              </Button>
+            </Link>
 
-          {status === 'PAID' && (
-            <Badge variant="outline" className="bg-green-500">
-              Pago
+            <Badge
+              variant="outline"
+              data-status={currentStatus}
+              className="h-8 data-[status=DELIVERED]:bg-green-500"
+            >
+              {OrderStatusLabels[currentStatus]}
             </Badge>
-          )}
+          </div>
         </CardTitle>
         <CardDescription className="hidden" />
       </CardHeader>

@@ -1,4 +1,5 @@
 import { env } from '@e-commerce/env'
+import { OrderStatus } from '@prisma/client'
 import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -26,9 +27,18 @@ export function createBilling(app: FastifyInstance) {
                 name: z.string(),
                 description: z.string(),
                 quantity: z.number(),
-                price: z.number(),
+                price: z.number().transform((value) => Math.floor(value)),
               }),
             ),
+            address: z.object({
+              cep: z.string().transform((value) => value.replace(/-/g, '')),
+              address: z.string(),
+              number: z.string(),
+              complement: z.string().optional(),
+              neighborhood: z.string(),
+              city: z.string(),
+              state: z.string(),
+            }),
             customer: z
               .object({
                 name: z.string(),
@@ -48,7 +58,7 @@ export function createBilling(app: FastifyInstance) {
       async (request, reply) => {
         const userId = await request.getCurrentUserId()
 
-        const { customerId, products, customer } = request.body
+        const { customerId, products, customer, address } = request.body
 
         for (const { externalId } of products) {
           const productExists = await prisma.product.findUnique({
@@ -138,6 +148,16 @@ export function createBilling(app: FastifyInstance) {
                   quantity,
                 })),
               },
+              address: {
+                create: {
+                  ...address,
+                },
+              },
+              status: {
+                create: {
+                  status: OrderStatus.PENDING,
+                },
+              },
               gatewayId,
               url,
               total: products.reduce(
@@ -146,9 +166,9 @@ export function createBilling(app: FastifyInstance) {
               ),
             },
           })
-        })
 
-        return reply.status(200).send({ url })
+          return reply.status(200).send({ url })
+        })
       },
     )
 }

@@ -15,11 +15,13 @@ import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getProfile } from './routes/auth/get-profile'
 import { createBilling } from './routes/billing/create-billing'
-import { getBilling } from './routes/billing/get-billing'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
-import { getProduct } from './routes/products/get-product'
-import { getProducts } from './routes/products/get-products'
+import { getOrder } from './routes/order/get-order'
+import { getOrders } from './routes/order/get-orders'
+import { nextStatusOrder } from './routes/order/next-status-order'
+import { getProduct } from './routes/product/get-product'
+import { getProducts } from './routes/product/get-products'
 import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
@@ -82,7 +84,10 @@ app.register(removeFromWishlist)
 app.register(removeAllFromWishlist)
 
 app.register(createBilling)
-app.register(getBilling)
+
+app.register(getOrder)
+app.register(getOrders)
+app.register(nextStatusOrder)
 
 app.register(abacatepay)
 

@@ -123,7 +123,20 @@ enum OrderBilling {
 enum OrderStatus {
   PENDING
   PAID
-  CANCELLED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+}
+
+model OrderStatusProgress {
+  id        String      @id @default(uuid())
+  status    OrderStatus @default(PENDING)
+  createdAt DateTime    @default(now()) @map("created_at")
+
+  orderId String @map("order_id")
+  order   Order  @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("order_status_progress")
 }
 
 model Order {
@@ -133,9 +146,12 @@ model Order {
   total Decimal
   url   String
 
+  billing       OrderBilling          @default(PIX)
+  status        OrderStatusProgress[]
+  currentStatus OrderStatus           @default(PENDING)
+
   products OrderProduct[]
-  billing  OrderBilling   @default(PIX)
-  status   OrderStatus    @default(PENDING)
+  address  Address?
 
   userId String @map("user_id")
   user   User   @relation(fields: [userId], references: [id])
@@ -156,4 +172,24 @@ model OrderProduct {
 
   @@id([orderId, productId])
   @@map("order_products")
+}
+
+model Address {
+  id String @id @default(uuid())
+
+  cep          String
+  address      String
+  number       String
+  complement   String?
+  neighborhood String
+
+  city  String
+  state String
+
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order   Order?  @relation(fields: [orderId], references: [id])
+  orderId String? @unique @map("order_id")
+
+  @@map("addresses")
 }

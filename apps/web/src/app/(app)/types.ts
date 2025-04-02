@@ -32,10 +32,31 @@ export interface IProduct {
   }[]
 }
 
+export interface IAddress {
+  id: string
+  cep: string
+  address: string
+  number: string
+  complement: string | null
+  neighborhood: string
+  city: string
+  state: string
+}
+
 export enum OrderStatus {
   PENDING = 'PENDING',
   PAID = 'PAID',
-  CANCELLED = 'CANCELLED',
+  PROCESSING = 'PROCESSING',
+  SHIPPED = 'SHIPPED',
+  DELIVERED = 'DELIVERED',
+}
+
+export const OrderStatusLabels: Record<OrderStatus, string> = {
+  [OrderStatus.PENDING]: 'Aguardando pagamento',
+  [OrderStatus.PAID]: 'Pagamento aprovado',
+  [OrderStatus.PROCESSING]: 'Pedido processando',
+  [OrderStatus.SHIPPED]: 'Pedido enviado',
+  [OrderStatus.DELIVERED]: 'Pedido entregue',
 }
 
 export enum OrderBilling {
@@ -49,13 +70,22 @@ export interface IProductBilling {
   product: IProduct
 }
 
-export interface IBilling {
+export interface IOrderStatus {
+  id: string
+  status: OrderStatus
+  createdAt: Date
+  updatedAt: Date
+}
+
+export interface IOrder {
   id: string
   url: string
   gatewayId: string
   billing: OrderBilling
-  status: OrderStatus
+  status: IOrderStatus[]
+  currentStatus: OrderStatus
   products: IProductBilling[]
+  address: IAddress
   total: number
   createdAt: Date
   updatedAt: Date

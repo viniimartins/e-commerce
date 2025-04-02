@@ -5,6 +5,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { prisma } from '@/lib/prisma'
+import { advanceOrderStatus } from '@/utils/advanceOrderStatus'
 
 import { BadRequestError } from '../_errors/bad-request-error'
 
@@ -79,13 +80,18 @@ export function abacatepay(app: FastifyInstance) {
         throw new BadRequestError('Order not found')
       }
 
-      if (order.status !== OrderStatus.PENDING) {
-        throw new BadRequestError('Order is not pending')
-      }
+      const nextStatus = advanceOrderStatus(order.currentStatus)
 
       await prisma.order.update({
         where: { id: order.id },
-        data: { status: OrderStatus.PAID },
+        data: {
+          currentStatus: nextStatus,
+          status: {
+            create: {
+              status: nextStatus,
+            },
+          },
+        },
       })
     },
   )
