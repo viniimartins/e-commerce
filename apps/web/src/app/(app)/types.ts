@@ -52,10 +52,10 @@ export enum OrderStatus {
 }
 
 export const OrderStatusLabels: Record<OrderStatus, string> = {
-  [OrderStatus.PENDING]: 'Pedido confirmado',
+  [OrderStatus.PENDING]: 'Aguardando pagamento',
   [OrderStatus.PAID]: 'Pagamento aprovado',
-  [OrderStatus.PROCESSING]: 'Pedido preparado',
-  [OrderStatus.SHIPPED]: 'Enviando pedido',
+  [OrderStatus.PROCESSING]: 'Pedido processando',
+  [OrderStatus.SHIPPED]: 'Pedido enviado',
   [OrderStatus.DELIVERED]: 'Pedido entregue',
 }
 

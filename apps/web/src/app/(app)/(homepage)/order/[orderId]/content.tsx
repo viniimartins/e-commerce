@@ -52,7 +52,9 @@ export function Content({ data }: Props) {
     })
   }
 
-  const paymentDate = status.find(({ status }) => status === OrderStatus.PAID)
+  const paymentDate = status.find(
+    ({ status }) => status !== OrderStatus.PENDING,
+  )
 
   return (
     <>
@@ -212,7 +214,7 @@ export function Content({ data }: Props) {
                   Detalhes do pagamento e envio
                 </AccordionTrigger>
                 <AccordionContent className="space-y-8">
-                  {currentStatus === OrderStatus.PAID && (
+                  {currentStatus !== OrderStatus.PENDING && (
                     <div className="mt-4 flex flex-col gap-2">
                       <span className="text-base font-semibold">Pagamento</span>
                       <div className="flex w-full gap-4 border p-4">

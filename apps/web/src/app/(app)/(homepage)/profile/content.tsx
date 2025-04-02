@@ -42,7 +42,7 @@ export function Content() {
             </span>
           )}
 
-          {!isLoading &&
+          {isLoading &&
             Array.from({ length: 4 }).map((_, index) => (
               <Skeleton key={index} className="h-[13rem] w-full" />
             ))}

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { type IOrder, OrderStatusLabels } from '@/app/(app)/types'
+import { type IOrder, OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -21,7 +21,7 @@ interface Props {
 }
 
 export function OrderCard({ data }: Props) {
-  const { createdAt, products, total, id, currentStatus } = data
+  const { createdAt, products, total, id, currentStatus, url } = data
 
   return (
     <Card className="gap-0 rounded-none pb-0">
@@ -36,6 +36,14 @@ export function OrderCard({ data }: Props) {
           </div>
 
           <div className="flex h-8 gap-3">
+            {currentStatus === OrderStatus.PENDING && (
+              <Link href={`${url}`}>
+                <Button variant="link" size="sm">
+                  Pagar agora
+                </Button>
+              </Link>
+            )}
+
             <Link href={`/order/${id}`}>
               <Button size="sm" variant="secondary">
                 Ver detalhes
