@@ -1,8 +1,8 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { PlusIcon } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { LoaderCircle, PlusIcon } from 'lucide-react'
+import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -30,8 +30,9 @@ import { useModal } from '@/hooks/use-modal'
 import type { TableParams } from '@/types/paginated-response'
 
 import { useGetCategories } from '../../hooks/use-get-category'
+import type { ICategory } from '../../types'
 import { DataTable } from '../components/table'
-import { columns } from './columns'
+import { getColumns } from './columns'
 import { useCreateCategory } from './use-create-category'
 
 const formCategorySchema = z.object({
@@ -43,7 +44,11 @@ const formCategorySchema = z.object({
 type FormCategorySchema = z.infer<typeof formCategorySchema>
 
 export function Content() {
-  const { actions: modalActions, isOpen: isModalOpen } = useModal()
+  const {
+    actions: modalActions,
+    isOpen: isModalOpen,
+    target: modalTarget,
+  } = useModal<ICategory>()
 
   const { mutate: createCategory } = useCreateCategory()
 
@@ -59,6 +64,11 @@ export function Content() {
       name: '',
     },
   })
+
+  const {
+    formState: { isSubmitting },
+    reset,
+  } = form
 
   const { pageIndex, perPage } = categoriesTableParams
 
@@ -83,10 +93,16 @@ export function Content() {
     createCategory({ category: { name } })
   }
 
+  useEffect(() => {
+    reset({
+      name: modalTarget?.name,
+    })
+  }, [reset, modalTarget, isModalOpen])
+
   return (
     <>
       <div className="flex justify-end">
-        <Button variant="outline" onClick={modalActions.open}>
+        <Button variant="outline" onClick={() => modalActions.open()}>
           <PlusIcon className="size-4" />
           Adicionar Categoria
         </Button>
@@ -101,7 +117,7 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={columns}
+          columns={getColumns({ modalActions })}
           data={categories?.data ?? []}
           isLoading={isLoading}
           meta={categories?.meta}
@@ -112,9 +128,13 @@ export function Content() {
       <Dialog open={isModalOpen} onOpenChange={modalActions.close}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Adicionar Categoria</DialogTitle>
+            <DialogTitle>
+              {modalTarget ? 'Editar Categoria' : 'Adicionar Categoria'}
+            </DialogTitle>
             <DialogDescription>
-              Adicione uma nova categoria para gerenciar seus produtos
+              {modalTarget
+                ? 'Edite a categoria para gerenciar seus produtos'
+                : 'Adicione uma nova categoria para gerenciar seus produtos'}
             </DialogDescription>
           </DialogHeader>
 
@@ -144,8 +164,11 @@ export function Content() {
               </Button>
             </DialogClose>
 
-            <Button type="submit" form="form-category">
+            <Button type="submit" form="form-category" disabled={isSubmitting}>
               Adicionar
+              {isSubmitting && (
+                <LoaderCircle size={18} className="animate-spin" />
+              )}
             </Button>
           </DialogFooter>
         </DialogContent>
