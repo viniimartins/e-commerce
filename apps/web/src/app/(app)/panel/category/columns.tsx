@@ -16,10 +16,12 @@ import type { ICategory } from '../../types'
 
 interface ColumnsProps {
   modalActions: ModalActions<ICategory>
+  alertModalActions: ModalActions<ICategory>
 }
 
 export const getColumns = ({
   modalActions,
+  alertModalActions,
 }: ColumnsProps): ColumnDef<ICategory>[] => [
     {
       accessorKey: 'name',
@@ -46,7 +48,9 @@ export const getColumns = ({
               <DropdownMenuItem onClick={() => modalActions.open(row.original)}>
                 Editar
               </DropdownMenuItem>
-              <DropdownMenuItem>Deletar</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => alertModalActions.open(row.original)}>
+                Deletar
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>

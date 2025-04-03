@@ -6,6 +6,16 @@ import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -49,6 +59,9 @@ export function Content() {
     isOpen: isModalOpen,
     target: modalTarget,
   } = useModal<ICategory>()
+
+  const { actions: alertModalActions, isOpen: isAlertModalOpen } =
+    useModal<ICategory>()
 
   const { mutate: createCategory } = useCreateCategory()
 
@@ -117,7 +130,7 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={getColumns({ modalActions })}
+          columns={getColumns({ modalActions, alertModalActions })}
           data={categories?.data ?? []}
           isLoading={isLoading}
           meta={categories?.meta}
@@ -173,6 +186,25 @@ export function Content() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
+
+      <AlertDialog
+        open={isAlertModalOpen}
+        onOpenChange={alertModalActions.close}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deseja deletar a categoria?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação não pode ser revertida. Isso irá deletar a categoria
+              permanentemente e remover seus dados dos nossos servidores.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction>Deletar</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }
