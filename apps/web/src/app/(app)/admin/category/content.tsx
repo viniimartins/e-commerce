@@ -5,33 +5,32 @@ import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import type { TableParams } from '@/types/paginated-response'
 
-import { useGetProducts } from '../../hooks/use-get-products'
+import { useGetCategories } from '../../hooks/use-get-category'
 import { DataTable } from '../components/table'
 import { columns } from './columns'
 
-interface ProductsTableParams {
-  pageIndex: number
-  perPage: number
-}
-
 export function Content() {
-  const [productsTableParams, setProductsTableParams] =
-    useState<ProductsTableParams>({
+  const [categoriesTableParams, setCategoriesTableParams] =
+    useState<TableParams>({
       pageIndex: 1,
       perPage: 10,
     })
 
-  const { pageIndex, perPage } = productsTableParams
+  const { pageIndex, perPage } = categoriesTableParams
 
-  const onChangeProductsTableParams = useCallback(
-    (updatedParams: Partial<ProductsTableParams>) => {
-      return setProductsTableParams((state) => ({ ...state, ...updatedParams }))
+  const onChangeCategoriesTableParams = useCallback(
+    (updatedParams: Partial<TableParams>) => {
+      return setCategoriesTableParams((state) => ({
+        ...state,
+        ...updatedParams,
+      }))
     },
     [],
   )
 
-  const { data: products, isLoading } = useGetProducts({
+  const { data: categories, isLoading } = useGetCategories({
     page: pageIndex,
     perPage,
   })
@@ -42,25 +41,25 @@ export function Content() {
         <Link href="/admin/product/create">
           <Button variant="outline">
             <PlusIcon className="size-4" />
-            Adicionar Produto
+            Adicionar Categoria
           </Button>
         </Link>
       </div>
 
       <div className="space-y-4 border p-8">
         <div className="space-y-2">
-          <span className="text-2xl font-bold">Produtos</span>
+          <span className="text-2xl font-bold">Categorias</span>
           <p className="text-muted-foreground text-sm">
-            Gerencie seus produtos e visualize seu desempenho de vendas
+            Gerencie suas categorias e visualize seu desempenho de vendas
           </p>
         </div>
 
         <DataTable
           columns={columns}
-          data={products?.data ?? []}
+          data={categories?.data ?? []}
           isLoading={isLoading}
-          meta={products?.meta}
-          onChangeParams={onChangeProductsTableParams}
+          meta={categories?.meta}
+          onChangeParams={onChangeCategoriesTableParams}
         />
       </div>
     </>

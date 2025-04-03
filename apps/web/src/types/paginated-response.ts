@@ -9,3 +9,5 @@ export interface PaginatedResponse<T> {
   meta: PaginatedMeta
   data: T[]
 }
+
+export type TableParams = Pick<PaginatedMeta, 'pageIndex' | 'perPage'>

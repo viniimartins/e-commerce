@@ -72,22 +72,20 @@ export const columns: ColumnDef<IProduct>[] = [
     header: 'Ações',
     cell: ({ row }) => {
       return (
-        <div className="flex w-full items-center">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button aria-haspopup="true" size="icon" variant="ghost">
-                <MoreHorizontal className="h-4 w-4" />
-                <span className="sr-only">Toggle menu</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <Link href={`/admin/product/${row.original.id}/edit`}>
-                <DropdownMenuItem>Editar</DropdownMenuItem>
-              </Link>
-              <DropdownMenuItem>Deletar</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button aria-haspopup="true" size="icon" variant="ghost">
+              <MoreHorizontal className="h-4 w-4" />
+              <span className="sr-only">Toggle menu</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <Link href={`/admin/product/${row.original.id}/edit`}>
+              <DropdownMenuItem>Editar</DropdownMenuItem>
+            </Link>
+            <DropdownMenuItem>Deletar</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       )
     },
   },
