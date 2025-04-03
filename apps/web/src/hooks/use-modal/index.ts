@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { ModalHookData } from '@/types/modal'
 
-export const useModal = <T>(): ModalHookData<T> => {
+export function useModal<T>(): ModalHookData<T> {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [target, setTarget] = useState<T | null>(null)
 

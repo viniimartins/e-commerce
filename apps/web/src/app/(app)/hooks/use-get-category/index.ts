@@ -1,9 +1,9 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { api } from '@/service/api'
-import type { PaginatedResponse } from '@/types/paginated-response'
+import { PaginatedResponse } from '@/types/paginated-response'
 
 import type { ICategory } from '../../types'
 
@@ -12,7 +12,7 @@ interface Params {
   perPage?: number
 }
 
-async function get(params: Params) {
+async function get(params: { page: number; perPage?: number }) {
   const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
     params,
   })
@@ -20,12 +20,23 @@ async function get(params: Params) {
   return data
 }
 
-export function useGetCategories(params: Params) {
-  const queryKey = ['get-categories', params]
+export function useGetCategories(initialParams: Params) {
+  const queryKey = ['get-categories', initialParams]
 
-  const query = useQuery({
+  const query = useInfiniteQuery({
     queryKey,
-    queryFn: () => get(params),
+    queryFn: ({ pageParam }) => {
+      return get({ ...initialParams, page: pageParam })
+    },
+    getNextPageParam: (lastPage) => {
+      const { pageIndex, totalPages } = lastPage.meta
+      const nextPage = pageIndex + 1
+      return nextPage < totalPages ? nextPage : null
+    },
+    initialPageParam: 1,
+    select(data) {
+      return data.pages.flatMap((page) => page.data)
+    },
   })
 
   const { isError } = query
