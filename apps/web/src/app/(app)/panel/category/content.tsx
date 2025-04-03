@@ -32,6 +32,7 @@ import type { TableParams } from '@/types/paginated-response'
 import { useGetCategories } from '../../hooks/use-get-category'
 import { DataTable } from '../components/table'
 import { columns } from './columns'
+import { useCreateCategory } from './use-create-category'
 
 const formCategorySchema = z.object({
   name: z.string().min(2, {
@@ -43,6 +44,8 @@ type FormCategorySchema = z.infer<typeof formCategorySchema>
 
 export function Content() {
   const { actions: modalActions, isOpen: isModalOpen } = useModal()
+
+  const { mutate: createCategory } = useCreateCategory()
 
   const [categoriesTableParams, setCategoriesTableParams] =
     useState<TableParams>({
@@ -75,7 +78,9 @@ export function Content() {
   })
 
   function onSubmit(values: FormCategorySchema) {
-    console.log(values)
+    const { name } = values
+
+    createCategory({ category: { name } })
   }
 
   return (

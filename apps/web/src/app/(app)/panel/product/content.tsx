@@ -39,7 +39,7 @@ export function Content() {
   return (
     <>
       <div className="flex justify-end">
-        <Link href="/admin/product/create">
+        <Link href="/panel/product/create">
           <Button variant="outline">
             <PlusIcon className="size-4" />
             Adicionar Produto

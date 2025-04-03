@@ -88,7 +88,7 @@ export const columns: ColumnDef<IProduct>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <Link href={`/admin/product/${row.original.id}/edit`}>
+              <Link href={`/panel/product/${row.original.id}/edit`}>
                 <DropdownMenuItem>Editar</DropdownMenuItem>
               </Link>
               <DropdownMenuItem>Deletar</DropdownMenuItem>

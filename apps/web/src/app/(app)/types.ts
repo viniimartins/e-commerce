@@ -37,7 +37,7 @@ export interface IAddress {
   cep: string
   address: string
   number: string
-  complement: string | null
+  complement: string | null | undefined
   neighborhood: string
   city: string
   state: string

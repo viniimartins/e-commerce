@@ -12,7 +12,9 @@ export async function postCategory(app: FastifyInstance) {
         tags: ['Category'],
         summary: 'Create category',
         body: z.object({
-          name: z.string(),
+          name: z.string().min(2, {
+            message: 'Nome da categoria deve ter pelo menos 2 caracteres.',
+          }),
         }),
         response: {
           201: z.object({

@@ -12,20 +12,20 @@ import {
 import { Content } from './content'
 
 export const metadata: Metadata = {
-  title: 'Produtos',
+  title: 'Categorias',
 }
 
-export default function ProductPage() {
+export default function CategoryPage() {
   return (
     <>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/admin">Painel</BreadcrumbLink>
+            <BreadcrumbLink href="/panel">Painel</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Produtos</BreadcrumbPage>
+            <BreadcrumbPage>Categorias</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>

@@ -17,6 +17,7 @@ import { getProfile } from './routes/auth/get-profile'
 import { createBilling } from './routes/billing/create-billing'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
+import { postCategory } from './routes/category/post-caterory'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { nextStatusOrder } from './routes/order/next-status-order'
@@ -74,6 +75,7 @@ app.register(getProfile)
 
 app.register(getCategories)
 app.register(getCategory)
+app.register(postCategory)
 
 app.register(getProducts)
 app.register(getProduct)

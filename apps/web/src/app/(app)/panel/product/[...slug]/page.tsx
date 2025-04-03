@@ -72,7 +72,7 @@ export default async function ProductCreateAndEditPage({
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <BreadcrumbLink href="/admin">Painel</BreadcrumbLink>
+            <BreadcrumbLink href="/panel">Painel</BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
@@ -86,7 +86,7 @@ export default async function ProductCreateAndEditPage({
       <main className="grid flex-1 items-start gap-4">
         <div className="mx-auto grid flex-1 auto-rows-max gap-4">
           <div className="flex items-center gap-4">
-            <Link href="/admin/product">
+            <Link href="/panel/product">
               <Button variant="outline" size="icon" className="h-7 w-7">
                 <ChevronLeft className="h-4 w-4" />
                 <span className="sr-only">Voltar</span>

@@ -15,7 +15,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
-import { useGetWishlist } from '@/app/(app)/(homepage)/wishlist/hooks/use-get-wishlist'
+import { useGetWishlist } from '@/app/(app)/(store)/wishlist/hooks/use-get-wishlist'
 import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
 import { isAuthenticated } from '@/auth/client-auth'
 import { Button } from '@/components/ui/button'

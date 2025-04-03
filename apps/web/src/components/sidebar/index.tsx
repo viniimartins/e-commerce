@@ -41,17 +41,17 @@ const data = {
   panel: [
     {
       title: 'Painel',
-      url: '/admin',
+      url: '/panel',
       icon: LayoutDashboardIcon,
     },
     {
       title: 'Categorias',
-      url: '/admin/category',
+      url: '/panel/category',
       icon: BoxesIcon,
     },
     {
       title: 'Produtos',
-      url: '/admin/product',
+      url: '/panel/product',
       icon: Package,
     },
   ],

@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import type { IAddress, IProduct } from '@/app/(app)/types'
+import type { IProduct } from '@/app/(app)/types'
+import { IAddress } from '@/app/(app)/types'
 import { api } from '@/service/api'
 
 export interface IExternalProduct
@@ -16,11 +17,15 @@ interface Customer {
   cellphone: string
 }
 
+interface Address extends Omit<IAddress, 'id'> {
+  complement: string | undefined
+}
+
 interface Billing {
   customer?: Customer
   customerId?: string
   products: IExternalProduct[]
-  address: IAddress
+  address: Address
 }
 
 interface Params {
