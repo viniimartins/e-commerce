@@ -76,6 +76,9 @@ export function getOrder(app: FastifyInstance) {
                 }),
               ),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },

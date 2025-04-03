@@ -27,6 +27,9 @@ export function nextStatusOrder(app: FastifyInstance) {
             200: z.object({
               status: z.nativeEnum(OrderStatus),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },

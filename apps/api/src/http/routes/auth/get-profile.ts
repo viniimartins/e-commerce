@@ -32,6 +32,9 @@ export async function getProfile(app: FastifyInstance) {
                 })
                 .nullable(),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },

@@ -52,6 +52,9 @@ export function createBilling(app: FastifyInstance) {
             200: z.object({
               url: z.string(),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },

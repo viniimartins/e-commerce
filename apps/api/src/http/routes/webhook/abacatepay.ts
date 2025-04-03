@@ -55,6 +55,12 @@ export function abacatepay(app: FastifyInstance) {
           devMode: z.boolean(),
           event: z.string(),
         }),
+        response: {
+          200: z.null(),
+          400: z.object({
+            message: z.string(),
+          }),
+        },
       },
     },
     async (request) => {

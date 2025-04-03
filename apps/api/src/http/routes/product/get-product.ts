@@ -36,6 +36,9 @@ export async function getProduct(app: FastifyInstance) {
               }),
             ),
           }),
+          400: z.object({
+            message: z.string(),
+          }),
         },
       },
     },
