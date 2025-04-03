@@ -37,7 +37,7 @@ export const getColumns = ({
       header: () => <TableHead className="text-center">Produtos</TableHead>,
       cell: ({ row }) => {
         return <TableCell>
-          <div className="flex items-center justify-center gap-2">
+          <div className="flex items-center justify-between gap-2">
             <span className="text-sm font-medium">{row.original.productsCount}</span>
             <Button size="icon" variant="outline" className="p-0" onClick={() => viewProductsModalActions.open(row.original)}>
               <Eye className="h-4 w-4" />

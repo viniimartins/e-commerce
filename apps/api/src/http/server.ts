@@ -20,6 +20,7 @@ import { getCategories } from './routes/category/get-categories'
 import { getCategoriesWithProducts } from './routes/category/get-categories-with-products'
 import { getCategory } from './routes/category/get-category'
 import { postCategory } from './routes/category/post-caterory'
+import { updateCategory } from './routes/category/update-category'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { nextStatusOrder } from './routes/order/next-status-order'
@@ -79,6 +80,7 @@ app.register(getCategories)
 app.register(getCategory)
 app.register(postCategory)
 app.register(deleteCategory)
+app.register(updateCategory)
 app.register(getCategoriesWithProducts)
 
 app.register(getProducts)

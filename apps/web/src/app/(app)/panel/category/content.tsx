@@ -48,6 +48,7 @@ import { getColumns } from './columns'
 import { useCreateCategory } from './hooks/use-create-category'
 import { useDeleteCategory } from './hooks/use-delete-category'
 import { useGetCategoriesWithProducts } from './hooks/use-get-categories-with-products'
+import { useUpdateCategory } from './hooks/use-update-category'
 import type { ICategoryWithProducts } from './types'
 
 const formCategorySchema = z.object({
@@ -108,6 +109,8 @@ export function Content() {
 
   const { mutate: createCategory } = useCreateCategory({ queryKey })
 
+  const { mutate: updateCategory } = useUpdateCategory({ queryKey })
+
   const onChangeCategoriesTableParams = useCallback(
     (updatedParams: Partial<TableParams>) => {
       return setCategoriesTableParams((state) => ({
@@ -123,14 +126,27 @@ export function Content() {
   function onSubmit(values: FormCategorySchema) {
     const { name } = values
 
-    createCategory(
-      { category: { name } },
-      {
-        onSuccess: () => {
-          categoryModalActions.close()
+    if (!categoryModalTarget) {
+      createCategory(
+        { category: { name } },
+        {
+          onSuccess: () => {
+            categoryModalActions.close()
+          },
         },
-      },
-    )
+      )
+    }
+
+    if (categoryModalTarget) {
+      updateCategory(
+        { category: { id: categoryModalTarget.id, name } },
+        {
+          onSuccess: () => {
+            categoryModalActions.close()
+          },
+        },
+      )
+    }
   }
 
   function handleDeleteCategory() {

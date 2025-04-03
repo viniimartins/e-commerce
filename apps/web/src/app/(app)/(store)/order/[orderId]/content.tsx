@@ -104,14 +104,11 @@ export function Content({ data }: Props) {
             </CardFooter>
           </Card>
 
-          <Card
-            className={cn(
-              'gap-1 overflow-auto rounded-none',
-              products.length > 3 && 'h-[22.8rem]',
-            )}
-          >
-            <CardContent>
-              <ScrollArea>
+          <Card className="gap-1 rounded-none">
+            <ScrollArea
+              className={cn(products.length >= 4 ? 'h-[20rem]' : undefined)}
+            >
+              <CardContent>
                 {products.map(({ product, quantity }, index) => {
                   const lastIndex = products.length === index + 1
 
@@ -153,8 +150,8 @@ export function Content({ data }: Props) {
                     </div>
                   )
                 })}
-              </ScrollArea>
-            </CardContent>
+              </CardContent>
+            </ScrollArea>
           </Card>
         </div>
 
