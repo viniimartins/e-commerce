@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
@@ -23,12 +24,12 @@ export function Content() {
 
   return (
     <div className="flex h-full flex-col pb-8 pl-4">
-      <div className="h-[65vh] space-y-4 overflow-y-auto pr-2">
+      <ScrollArea className="h-[65vh] pr-4">
         {cart.map((product) => {
           const { id, name, price, cartQuantity, productImage } = product
 
           return (
-            <div key={id} className="flex gap-4 border-b pb-6">
+            <div key={id} className="flex gap-4 border-b pt-4 pb-6">
               <div className="dark:bg-muted-foreground/10 relative flex h-30 w-30 items-center justify-center bg-neutral-100 dark:border">
                 <Image
                   src={productImage[0].url}
@@ -73,7 +74,7 @@ export function Content() {
             Seu carrinho está vazio. Adicione alguns produtos ao seu carrinho.
           </p>
         )}
-      </div>
+      </ScrollArea>
 
       <div className="mt-auto flex flex-col gap-2 pr-4">
         <div className="flex justify-between">

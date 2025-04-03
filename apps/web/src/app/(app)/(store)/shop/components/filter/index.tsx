@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { formatPrice } from '@/utils/formatPrice'
 
@@ -25,35 +26,37 @@ export function Filter() {
       <div className="flex flex-col gap-2">
         <span className="text-xl font-semibold">Categorias</span>
 
-        <div className="flex h-56 flex-col items-start gap-2 overflow-auto">
-          <a
-            data-active={!categoryActiveId}
-            href="/shop"
-            className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
-          >
-            Todas categorias
-          </a>
+        <ScrollArea>
+          <div className="flex h-56 flex-col items-start gap-2">
+            <a
+              data-active={!categoryActiveId}
+              href="/shop"
+              className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+            >
+              Todas categorias
+            </a>
 
-          {categories?.data.map((category) => {
-            const { id, name } = category
+            {categories?.data.map((category) => {
+              const { id, name } = category
 
-            return (
-              <a
-                data-active={categoryActiveId === id}
-                key={id}
-                href={`/shop/?category=${id}`}
-                className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
-              >
-                {name}
-              </a>
-            )
-          })}
-
-          {isLoading &&
-            Array.from({ length: 12 }).map((_, index) => {
-              return <Skeleton key={index} className="h-4 w-full" />
+              return (
+                <a
+                  data-active={categoryActiveId === id}
+                  key={id}
+                  href={`/shop/?category=${id}`}
+                  className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+                >
+                  {name}
+                </a>
+              )
             })}
-        </div>
+
+            {isLoading &&
+              Array.from({ length: 12 }).map((_, index) => {
+                return <Skeleton key={index} className="h-4 w-full" />
+              })}
+          </div>
+        </ScrollArea>
       </div>
 
       <div className="flex flex-col gap-2">

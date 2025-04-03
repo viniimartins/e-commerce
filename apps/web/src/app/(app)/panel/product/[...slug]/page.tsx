@@ -176,7 +176,7 @@ export default async function ProductCreateAndEditPage({
               </Card>
             </div>
             <div className="grid auto-rows-max items-start gap-4 lg:gap-8">
-              <Card className="overflow-hidden rounded-none">
+              <Card className="rounded-none">
                 <CardHeader>
                   <CardTitle>Imagens</CardTitle>
                   <CardDescription className="hidden" />

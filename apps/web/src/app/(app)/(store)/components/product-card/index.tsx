@@ -22,6 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
@@ -405,9 +406,11 @@ export function ProductCard(props: Props) {
             <DialogHeader className="flex flex-1 flex-col gap-3">
               <DialogTitle className="text-2xl font-bold">{name}</DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <DialogDescription className="text-muted-foreground line-clamp-12 overflow-auto pr-2 text-base">
-                {description}
-              </DialogDescription>
+              <ScrollArea className="h-96">
+                <DialogDescription className="text-muted-foreground text-base">
+                  {description}
+                </DialogDescription>
+              </ScrollArea>
             </DialogHeader>
             <Separator />
 

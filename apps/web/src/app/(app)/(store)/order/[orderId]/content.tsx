@@ -24,6 +24,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
@@ -105,50 +106,54 @@ export function Content({ data }: Props) {
 
           <Card
             className={cn(
-              'gap-1 overflow-auto rounded-none px-2',
+              'gap-1 overflow-auto rounded-none',
               products.length > 3 && 'h-[22.8rem]',
             )}
           >
-            <CardContent className="space-y-3 overflow-auto px-4">
-              {products.map(({ product, quantity }, index) => {
-                const lastIndex = products.length === index + 1
+            <CardContent>
+              <ScrollArea>
+                {products.map(({ product, quantity }, index) => {
+                  const lastIndex = products.length === index + 1
 
-                const { id, name, price, productImage } = product
+                  const { id, name, price, productImage } = product
 
-                return (
-                  <div key={id}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                          <Image
-                            src={productImage[0].url}
-                            alt="product"
-                            fill
-                            quality={100}
-                            priority
-                            className="object-cover p-1"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
+                  return (
+                    <div key={id}>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                          <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                            <Image
+                              src={productImage[0].url}
+                              alt="product"
+                              fill
+                              quality={100}
+                              priority
+                              className="object-cover p-1"
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                          </div>
+
+                          <div className="flex h-full flex-col justify-between">
+                            <span className="text-base font-medium">
+                              {name}
+                            </span>
+
+                            <span className="text-muted-foreground text-sm">
+                              {quantity} un.
+                            </span>
+                          </div>
                         </div>
 
-                        <div className="flex h-full flex-col justify-between">
-                          <span className="text-base font-medium">{name}</span>
-
-                          <span className="text-muted-foreground text-sm">
-                            {quantity} un.
-                          </span>
-                        </div>
+                        <span className="text-sm font-medium">
+                          {formatPrice(price)}
+                        </span>
                       </div>
 
-                      <span className="text-sm font-medium">
-                        {formatPrice(price)}
-                      </span>
+                      {!lastIndex && <Separator className="my-2" />}
                     </div>
-
-                    {!lastIndex && <Separator className="my-2" />}
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </ScrollArea>
             </CardContent>
           </Card>
         </div>

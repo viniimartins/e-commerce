@@ -15,6 +15,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
@@ -171,9 +172,11 @@ export function Content({ product }: Props) {
               </Badge>
             </div>
 
-            <p className="text-muted-foreground line-clamp-9 overflow-auto pr-2 text-base">
-              {product?.description}
-            </p>
+            <ScrollArea className="h-56">
+              <p className="text-muted-foreground pr-2 text-base">
+                {product?.description}
+              </p>
+            </ScrollArea>
           </div>
           <Separator />
 
