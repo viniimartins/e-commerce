@@ -15,7 +15,9 @@ import { errorHandler } from './error-handler'
 import { authenticateWithGithub } from './routes/auth/authenticate-with-github'
 import { getProfile } from './routes/auth/get-profile'
 import { createBilling } from './routes/billing/create-billing'
+import { deleteCategory } from './routes/category/delete-category'
 import { getCategories } from './routes/category/get-categories'
+import { getCategoriesWithProducts } from './routes/category/get-categories-with-products'
 import { getCategory } from './routes/category/get-category'
 import { postCategory } from './routes/category/post-caterory'
 import { getOrder } from './routes/order/get-order'
@@ -76,6 +78,8 @@ app.register(getProfile)
 app.register(getCategories)
 app.register(getCategory)
 app.register(postCategory)
+app.register(deleteCategory)
+app.register(getCategoriesWithProducts)
 
 app.register(getProducts)
 app.register(getProduct)

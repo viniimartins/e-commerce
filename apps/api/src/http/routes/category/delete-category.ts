@@ -44,7 +44,7 @@ export async function deleteCategory(app: FastifyInstance) {
           where: { id },
         })
 
-        return reply.status(200)
+        return reply.status(200).send(null)
       },
     )
 }
