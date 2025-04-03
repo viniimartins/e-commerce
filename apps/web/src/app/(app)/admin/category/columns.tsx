@@ -2,7 +2,6 @@
 
 import { ColumnDef } from '@tanstack/react-table'
 import { MoreHorizontal } from 'lucide-react'
-import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -21,11 +20,14 @@ export const columns: ColumnDef<ICategory>[] = [
   },
   {
     accessorKey: 'actions',
-    header: 'Ações',
-    size: 100,
-    cell: ({ row }) => {
+    header: () => {
+      return <div className="flex justify-end pr-16">Ações</div>
+    },
+    cell: () => {
       return (
-        <div className="flex gap-2">
+        <div className="flex justify-end gap-2">
+          <Button variant="link">Ver produtos</Button>
+
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button aria-haspopup="true" size="icon" variant="ghost">
@@ -34,14 +36,10 @@ export const columns: ColumnDef<ICategory>[] = [
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <Link href={`/admin/product/${row.original.id}/edit`}>
-                <DropdownMenuItem>Editar</DropdownMenuItem>
-              </Link>
+              <DropdownMenuItem>Editar</DropdownMenuItem>
               <DropdownMenuItem>Deletar</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Button variant="link">Ver produtos</Button>
         </div>
       )
     },
