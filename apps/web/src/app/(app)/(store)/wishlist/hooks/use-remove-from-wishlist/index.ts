@@ -1,7 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
+import { queryClient } from '@/lib/react-query'
 import { api } from '@/service/api'
 import type { QueryKeyProps } from '@/types/queryKeyProps'
 
@@ -18,8 +19,6 @@ async function remove({ product }: Params) {
 }
 
 export function useRemoveFromWishlist({ queryKey }: QueryKeyProps) {
-  const queryClient = useQueryClient()
-
   return useMutation({
     mutationKey: ['remove-from-wishlist'],
     mutationFn: remove,

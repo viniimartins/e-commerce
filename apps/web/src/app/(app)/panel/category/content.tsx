@@ -2,6 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderCircle, PlusIcon } from 'lucide-react'
+import Image from 'next/image'
 import { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -36,14 +37,18 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
 import { useModal } from '@/hooks/use-modal'
 import type { TableParams } from '@/types/paginated-response'
+import { formatPrice } from '@/utils/formatPrice'
 
-import { useGetCategories } from '../../hooks/use-get-category'
-import type { ICategory } from '../../types'
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
-import { useCreateCategory } from './use-create-category'
+import { useCreateCategory } from './hooks/use-create-category'
+import { useDeleteCategory } from './hooks/use-delete-category'
+import { useGetCategoriesWithProducts } from './hooks/use-get-categories-with-products'
+import type { ICategoryWithProducts } from './types'
 
 const formCategorySchema = z.object({
   name: z.string().min(2, {
@@ -54,17 +59,6 @@ const formCategorySchema = z.object({
 type FormCategorySchema = z.infer<typeof formCategorySchema>
 
 export function Content() {
-  const {
-    actions: modalActions,
-    isOpen: isModalOpen,
-    target: modalTarget,
-  } = useModal<ICategory>()
-
-  const { actions: alertModalActions, isOpen: isAlertModalOpen } =
-    useModal<ICategory>()
-
-  const { mutate: createCategory } = useCreateCategory()
-
   const [categoriesTableParams, setCategoriesTableParams] =
     useState<TableParams>({
       pageIndex: 1,
@@ -83,7 +77,36 @@ export function Content() {
     reset,
   } = form
 
+  const {
+    actions: categoryModalActions,
+    isOpen: isCategoryModalOpen,
+    target: categoryModalTarget,
+  } = useModal<ICategoryWithProducts>()
+
+  const {
+    actions: deleteCategoryModalActions,
+    isOpen: isDeleteCategoryModalOpen,
+    target: deleteCategoryModalTarget,
+  } = useModal<ICategoryWithProducts>()
+
+  const {
+    actions: viewProductsModalActions,
+    isOpen: isViewProductsModalOpen,
+    target: viewProductsModalTarget,
+  } = useModal<ICategoryWithProducts>()
+
   const { pageIndex, perPage } = categoriesTableParams
+
+  const {
+    data: categories,
+    isLoading,
+    queryKey,
+  } = useGetCategoriesWithProducts({
+    page: pageIndex,
+    perPage,
+  })
+
+  const { mutate: createCategory } = useCreateCategory({ queryKey })
 
   const onChangeCategoriesTableParams = useCallback(
     (updatedParams: Partial<TableParams>) => {
@@ -95,27 +118,36 @@ export function Content() {
     [],
   )
 
-  const { data: categories, isLoading } = useGetCategories({
-    page: pageIndex,
-    perPage,
-  })
+  const { mutateAsync: deleteCategory } = useDeleteCategory({ queryKey })
 
   function onSubmit(values: FormCategorySchema) {
     const { name } = values
 
-    createCategory({ category: { name } })
+    createCategory(
+      { category: { name } },
+      {
+        onSuccess: () => {
+          categoryModalActions.close()
+        },
+      },
+    )
+  }
+
+  function handleDeleteCategory() {
+    deleteCategoryModalTarget &&
+      deleteCategory({ category: { id: deleteCategoryModalTarget.id } })
   }
 
   useEffect(() => {
     reset({
-      name: modalTarget?.name,
+      name: categoryModalTarget?.name ?? '',
     })
-  }, [reset, modalTarget, isModalOpen])
+  }, [reset, categoryModalTarget, isCategoryModalOpen])
 
   return (
     <>
       <div className="flex justify-end">
-        <Button variant="outline" onClick={() => modalActions.open()}>
+        <Button variant="outline" onClick={() => categoryModalActions.open()}>
           <PlusIcon className="size-4" />
           Adicionar Categoria
         </Button>
@@ -130,7 +162,11 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={getColumns({ modalActions, alertModalActions })}
+          columns={getColumns({
+            categoryModalActions,
+            deleteCategoryModalActions,
+            viewProductsModalActions,
+          })}
           data={categories?.data ?? []}
           isLoading={isLoading}
           meta={categories?.meta}
@@ -138,14 +174,17 @@ export function Content() {
         />
       </div>
 
-      <Dialog open={isModalOpen} onOpenChange={modalActions.close}>
+      <Dialog
+        open={isCategoryModalOpen}
+        onOpenChange={categoryModalActions.close}
+      >
         <DialogContent>
           <DialogHeader>
             <DialogTitle>
-              {modalTarget ? 'Editar Categoria' : 'Adicionar Categoria'}
+              {categoryModalTarget ? 'Editar Categoria' : 'Adicionar Categoria'}
             </DialogTitle>
             <DialogDescription>
-              {modalTarget
+              {categoryModalTarget
                 ? 'Edite a categoria para gerenciar seus produtos'
                 : 'Adicione uma nova categoria para gerenciar seus produtos'}
             </DialogDescription>
@@ -188,8 +227,8 @@ export function Content() {
       </Dialog>
 
       <AlertDialog
-        open={isAlertModalOpen}
-        onOpenChange={alertModalActions.close}
+        open={isDeleteCategoryModalOpen}
+        onOpenChange={deleteCategoryModalActions.close}
       >
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -201,10 +240,69 @@ export function Content() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction>Deletar</AlertDialogAction>
+            <AlertDialogAction onClick={handleDeleteCategory}>
+              Deletar
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <Dialog
+        open={isViewProductsModalOpen}
+        onOpenChange={viewProductsModalActions.close}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Visualizar produtos da categoria</DialogTitle>
+            <DialogDescription>
+              Visualize todos os produtos da categoria
+            </DialogDescription>
+          </DialogHeader>
+
+          <ScrollArea className="h-96 pr-3">
+            {viewProductsModalTarget?.products.map((product, index) => {
+              const lastIndex =
+                viewProductsModalTarget?.products.length === index + 1
+
+              const { id, name, price, productImage, quantity } = product
+
+              return (
+                <div key={id}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                        <Image
+                          src={productImage[0].url}
+                          alt="product"
+                          fill
+                          quality={100}
+                          priority
+                          className="object-cover p-1"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </div>
+
+                      <div className="flex h-full flex-col justify-between">
+                        <span className="text-base font-medium">{name}</span>
+
+                        <span className="text-muted-foreground text-sm">
+                          {quantity} un.
+                        </span>
+                      </div>
+                    </div>
+
+                    <span className="text-sm font-medium">
+                      {formatPrice(price)}
+                    </span>
+                  </div>
+
+                  {!lastIndex && <Separator className="my-2" />}
+                </div>
+              )
+            })}
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
