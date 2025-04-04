@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
@@ -24,9 +24,20 @@ async function get(params: Params) {
 export function useGetProducts(params: Params) {
   const queryKey = ['get-products', params]
 
-  const query = useQuery({
+  const query = useInfiniteQuery({
     queryKey,
-    queryFn: () => get(params),
+    queryFn: ({ pageParam }) => get({ ...params, page: pageParam }),
+    getNextPageParam: (lastResult) => {
+      const { pageIndex, totalPages } = lastResult.meta
+
+      const nextPage = pageIndex + 1
+
+      return nextPage > totalPages ? undefined : nextPage
+    },
+    initialPageParam: 1,
+    select(data) {
+      return data.pages.flatMap((page) => page.data)
+    },
   })
 
   const { isError } = query

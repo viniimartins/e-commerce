@@ -22,16 +22,16 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 
 import { useGetCategories } from '../hooks/use-get-category'
-import { useGetProducts } from '../hooks/use-get-products'
+// import { useGetProducts } from '../hooks/use-get-products'
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
-import { ProductCard } from './components/product-card'
-import { ProductCardSkeleton } from './components/product-card/skeleton'
+// import { ProductCard } from './components/product-card'
+// import { ProductCardSkeleton } from './components/product-card/skeleton'
 
 export function Content() {
-  const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
-  const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
+  // const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
+  // const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
   const loadMoreRef = useRef<HTMLDivElement>(null)
 
@@ -51,10 +51,10 @@ export function Content() {
     isActive: true,
   })
 
-  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
-    page: 1,
-    perPage: 10,
-  })
+  // const { data: products, isLoading: isLoadingProducts } = useGetProducts({
+  //   page: 1,
+  //   perPage: 10,
+  // })
 
   return (
     <>
@@ -67,10 +67,10 @@ export function Content() {
             <br />
             Arrivals
           </span>
-          <CarouselControls api={apiBestSelling} />
+          {/* <CarouselControls api={apiBestSelling} /> */}
         </div>
 
-        <Carousel
+        {/* <Carousel
           opts={{
             align: 'start',
           }}
@@ -97,7 +97,7 @@ export function Content() {
                 )
               })}
           </CarouselContent>
-        </Carousel>
+        </Carousel> */}
 
         <div className="flex justify-center">
           <Link href="/shop">
@@ -178,10 +178,10 @@ export function Content() {
             <br />
             Arrivals
           </span>
-          <CarouselControls api={apiCarrousel} />
+          {/* <CarouselControls api={apiCarrousel} /> */}
         </div>
 
-        <Carousel
+        {/* <Carousel
           opts={{
             align: 'start',
           }}
@@ -208,7 +208,7 @@ export function Content() {
                 )
               })}
           </CarouselContent>
-        </Carousel>
+        </Carousel> */}
 
         <div className="flex justify-center">
           <Link href="/shop">

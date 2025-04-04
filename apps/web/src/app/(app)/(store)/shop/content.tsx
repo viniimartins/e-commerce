@@ -1,12 +1,13 @@
 'use client'
 
-import { Columns2, Grid2x2, Grid3x3, Rows2 } from 'lucide-react'
+import { Columns2, Grid2x2, Grid3x3, LoaderCircle, Rows2 } from 'lucide-react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
 
 import filter from '@/assets/filter.svg'
 import { Button } from '@/components/ui/button'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
@@ -25,9 +26,13 @@ export function Content() {
 
   const [gridView, setGridView] = useState<GridView>('grid3x3')
 
-  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
-    page: 1,
-    perPage: 15,
+  const {
+    data: products,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isLoadingProducts,
+  } = useGetProducts({
     categoryId: categoryActiveId,
   })
 
@@ -36,6 +41,12 @@ export function Content() {
   })
 
   const isLoading = isLoadingProducts || isLoadingCategory
+
+  const handleLoadMore = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
+    }
+  }
 
   return (
     <section className="grid grid-cols-4 gap-8">
@@ -85,28 +96,57 @@ export function Content() {
           </div>
         </div>
 
-        <div
-          className={cn('grid', {
-            'grid-cols-3 gap-4': gridView === 'grid3x3',
-            'grid-cols-2 gap-4': gridView === 'grid2x2',
-            'grid-cols-2 gap-[1rem]': gridView === 'columns2',
-            'grid-cols-1 gap-4': gridView === 'rows2',
-          })}
-        >
-          {products?.data.map((product) => {
-            const { id } = product
-
-            return <ProductCard key={id} data={product} gridView={gridView} />
-          })}
-
-          {isLoading &&
-            Array.from({ length: 12 }).map((_, index) => {
-              return <ProductCardSkeleton key={index} />
+        <ScrollArea className="h-[calc(100vh-10rem)]">
+          <div
+            className={cn('grid px-4', {
+              'grid-cols-3 gap-4': gridView === 'grid3x3',
+              'grid-cols-2 gap-4': gridView === 'grid2x2',
+              'grid-cols-2 gap-[1rem]': gridView === 'columns2',
+              'grid-cols-1 gap-4': gridView === 'rows2',
             })}
-        </div>
+          >
+            {products?.map((product) => {
+              const { id } = product
+
+              return <ProductCard key={id} data={product} gridView={gridView} />
+            })}
+
+            {isLoading &&
+              Array.from({ length: 12 }).map((_, index) => {
+                return <ProductCardSkeleton key={index} />
+              })}
+
+            {!isLoading && products?.length === 0 && (
+              <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
+                <p className="text-muted-foreground mb-2 text-lg">
+                  Nenhum produto encontrado
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  Tente mudar os filtros ou buscar por outra categoria
+                </p>
+              </div>
+            )}
+          </div>
+        </ScrollArea>
 
         <div className="flex justify-center">
-          <Button size="lg">Show more</Button>
+          <Button
+            size="lg"
+            variant="outline"
+            onClick={handleLoadMore}
+            disabled={!hasNextPage || isFetchingNextPage}
+          >
+            {isFetchingNextPage && (
+              <>
+                Carregando...
+                <LoaderCircle size={18} className="ml-2 animate-spin" />
+              </>
+            )}
+
+            {!isFetchingNextPage && hasNextPage && 'Carregar mais'}
+
+            {!hasNextPage && 'Sem mais produtos'}
+          </Button>
         </div>
       </div>
     </section>
