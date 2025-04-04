@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 
 import { DataTable } from '../components/table'
-import { columns } from './columns'
+import { getColumns } from './columns'
 import { useGetTableProducts } from './hooks/use-get-table-products'
 interface ProductsTableParams {
   pageIndex: number
@@ -55,7 +55,7 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={columns({ isLoading })}
+          columns={getColumns({ isLoading })}
           data={products?.data ?? []}
           meta={products?.meta}
           onChangeParams={onChangeProductsTableParams}

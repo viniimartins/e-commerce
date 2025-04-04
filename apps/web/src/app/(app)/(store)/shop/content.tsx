@@ -42,7 +42,7 @@ export function Content() {
 
   const isLoading = isLoadingProducts || isLoadingCategory
 
-  const handleLoadMore = () => {
+  function handleLoadMore() {
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage()
     }

@@ -15,7 +15,9 @@ export function CarouselControls({ api }: CarouselControlsProps) {
   useEffect(() => {
     if (!api) return
 
-    const update = () => forceUpdate((prev) => prev + 1)
+    function update() {
+      forceUpdate((prev) => prev + 1)
+    }
 
     api.on('scroll', update)
     api.on('reInit', update)

@@ -66,7 +66,7 @@ export function CartProvider({ children }: CartProviderProps) {
     )
   }
 
-  const handleQuantityChange = (productId: string, newQuantity: number) => {
+  function handleQuantityChange(productId: string, newQuantity: number) {
     if (newQuantity < 1) return
     setCart((prevCart) =>
       prevCart.map((product) =>

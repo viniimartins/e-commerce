@@ -22,12 +22,13 @@ interface ColumnsProps {
   isLoading: boolean
 }
 
-export const getColumns = ({
+export function getColumns({
   categoryModalActions,
   deleteCategoryModalActions,
   viewProductsModalActions,
   isLoading,
-}: ColumnsProps): ColumnDef<ICategory>[] => [
+}: ColumnsProps): ColumnDef<ICategory>[] {
+  return [
     {
       accessorKey: 'name',
       header: () => <TableHead>Nome</TableHead>,

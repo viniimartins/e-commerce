@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ChangeEvent, Fragment, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
@@ -112,13 +113,20 @@ export function Content() {
     },
   })
 
-  const { handleSubmit } = form
+  const {
+    handleSubmit,
+    formState: { errors },
+  } = form
+
+  const { errorProductImage } = {
+    errorProductImage: errors.productImages,
+  }
 
   function onSubmit(values: FormProductSchema) {
     console.log(values)
   }
 
-  const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
+  function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0]
 
@@ -132,7 +140,22 @@ export function Content() {
     }
   }
 
-  const handleUploadClick = () => {
+  function handleImageDelete(imageUrl: string) {
+    if (productImages.length === 1) {
+      return toast.error('O produto deve ter pelo menos uma imagem')
+    }
+
+    setProductImages(productImages.filter((image) => image !== imageUrl))
+
+    const currentImages = form.getValues().productImages
+
+    form.setValue(
+      'productImages',
+      currentImages.filter((image) => image !== imageUrl),
+    )
+  }
+
+  function handleUploadClick() {
     fileInputRef.current?.click()
   }
 
@@ -299,22 +322,23 @@ export function Content() {
                     <CardTitle>Imagens</CardTitle>
                     <CardDescription className="hidden" />
                   </CardHeader>
-                  <CardContent>
-                    <div className="grid gap-2">
-                      <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[20rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                        {productImages.length > 0 && (
+                  <CardContent className="flex flex-col gap-2">
+                    <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[20rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                      {productImages.slice(0, 1).map((image) => {
+                        return (
                           <div
-                            onClick={() => actions.open()}
+                            key={image}
                             className="relative h-full w-full hover:cursor-pointer"
                           >
                             <Image
-                              src={productImages[0]}
+                              src={image}
                               alt={'Product Image'}
                               fill
                               quality={100}
                               priority
                               className="p-2"
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              onClick={() => actions.open()}
                             />
 
                             <div className="absolute top-5 right-5">
@@ -324,14 +348,15 @@ export function Content() {
                                 size="icon"
                                 onClick={(event) => {
                                   event.preventDefault()
+                                  handleImageDelete(image)
                                 }}
                               >
                                 <Trash className="h-4 w-4" />
                               </Button>
                             </div>
                           </div>
-                        )}
-                      </div>
+                        )
+                      })}
                     </div>
                     <div className="grid grid-cols-3 gap-2">
                       {productImages.slice(1, 3).map((image, index) => {
@@ -340,18 +365,22 @@ export function Content() {
                         return (
                           <div
                             key={index}
-                            onClick={() => actions.open()}
                             className="dark:bg-muted-foreground/10 relative mb-1 flex h-[7rem] items-center justify-center bg-neutral-100 p-0 dark:border"
                           >
-                            <Image
-                              alt={`Product image ${index + 1}`}
-                              className="object-cover p-2"
-                              quality={100}
-                              fill
-                              priority
-                              src={image}
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
+                            <div
+                              className="relative h-full w-full"
+                              onClick={() => actions.open()}
+                            >
+                              <Image
+                                alt={`Product image ${index + 1}`}
+                                className="object-cover p-2"
+                                quality={100}
+                                fill
+                                priority
+                                src={image}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              />
+                            </div>
 
                             <div className="absolute top-3 right-3 flex flex-col gap-1">
                               <Button
@@ -360,6 +389,7 @@ export function Content() {
                                 size="icon"
                                 onClick={(event) => {
                                   event.preventDefault()
+                                  handleImageDelete(image)
                                 }}
                               >
                                 <Trash className="size-3" />
@@ -377,34 +407,35 @@ export function Content() {
                         )
                       })}
 
-                      <div
-                        onClick={handleUploadClick}
-                        className="dark:bg-muted-foreground/10 relative mb-1 flex aspect-square h-[7rem] w-full cursor-pointer items-center justify-center rounded-md border border-dashed bg-neutral-100 p-0 transition-colors hover:bg-neutral-200 dark:border"
-                      >
-                        <Upload className="text-muted-foreground h-4 w-4" />
-                        <span className="sr-only">Upload</span>
-                        <input
-                          type="file"
-                          ref={fileInputRef}
-                          className="hidden"
-                          accept="image/*"
-                          onChange={handleImageUpload}
-                        />
-                      </div>
+                      <FormField
+                        control={form.control}
+                        name="productImages"
+                        render={() => (
+                          <FormItem>
+                            <FormControl>
+                              <div
+                                onClick={handleUploadClick}
+                                className="dark:bg-muted-foreground/10 relative mb-1 flex aspect-square h-[7rem] w-full cursor-pointer items-center justify-center rounded-md border border-dashed bg-neutral-100 p-0 transition-colors hover:bg-neutral-200 dark:border"
+                              >
+                                <Upload className="text-muted-foreground h-4 w-4" />
+                                <span className="sr-only">Upload</span>
+                                <input
+                                  type="file"
+                                  ref={fileInputRef}
+                                  className="hidden"
+                                  accept="image/*"
+                                  onChange={handleImageUpload}
+                                />
+                              </div>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
                     </div>
-                  </CardContent>
-                  <FormField
-                    control={form.control}
-                    name="productImages"
-                    render={({ field }) => (
-                      <FormItem className="hidden">
-                        <FormControl>
-                          <Input {...field} type="hidden" />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
+                    {errorProductImage && (
+                      <FormMessage>{errorProductImage.message}</FormMessage>
                     )}
-                  />
+                  </CardContent>
                 </Card>
 
                 <Card className="rounded-none">
@@ -416,7 +447,11 @@ export function Content() {
                         name="categoryId"
                         render={({ field }) => (
                           <FormItem>
-                            <Select onOpenChange={setSelectOpen} {...field}>
+                            <Select
+                              onOpenChange={setSelectOpen}
+                              onValueChange={field.onChange}
+                              {...field}
+                            >
                               <FormControl>
                                 <SelectTrigger className="w-full">
                                   <SelectValue placeholder="Selecione a categoria" />
@@ -486,6 +521,7 @@ export function Content() {
                           variant="destructive"
                           onClick={(event) => {
                             event.preventDefault()
+                            handleImageDelete(image)
                           }}
                         >
                           Excluir Imagem

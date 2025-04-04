@@ -55,9 +55,9 @@ export function ProductCard(props: Props) {
 
   const [isOpen, setIsOpen] = useState(false)
 
-  const handleOpenDialog = (
+  function handleOpenDialog(
     event: MouseEvent<HTMLButtonElement | HTMLDivElement>,
-  ) => {
+  ) {
     event.preventDefault()
     setIsOpen(true)
   }
