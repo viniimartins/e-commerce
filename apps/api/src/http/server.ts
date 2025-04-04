@@ -17,7 +17,6 @@ import { getProfile } from './routes/auth/get-profile'
 import { createBilling } from './routes/billing/create-billing'
 import { deleteCategory } from './routes/category/delete-category'
 import { getCategories } from './routes/category/get-categories'
-import { getCategoriesWithProducts } from './routes/category/get-categories-with-products'
 import { getCategory } from './routes/category/get-category'
 import { postCategory } from './routes/category/post-caterory'
 import { updateCategory } from './routes/category/update-category'
@@ -81,7 +80,6 @@ app.register(getCategory)
 app.register(postCategory)
 app.register(deleteCategory)
 app.register(updateCategory)
-app.register(getCategoriesWithProducts)
 
 app.register(getProducts)
 app.register(getProduct)
