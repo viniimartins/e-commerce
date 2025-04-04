@@ -6,10 +6,9 @@ import { useCallback, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 
-import { useGetProducts } from '../../hooks/use-get-products'
 import { DataTable } from '../components/table'
 import { columns } from './columns'
-
+import { useGetTableProducts } from './hooks/use-get-table-products'
 interface ProductsTableParams {
   pageIndex: number
   perPage: number
@@ -31,7 +30,7 @@ export function Content() {
     [],
   )
 
-  const { data: products, isLoading } = useGetProducts({
+  const { data: products, isLoading } = useGetTableProducts({
     page: pageIndex,
     perPage,
   })
@@ -56,9 +55,8 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={columns}
+          columns={columns({ isLoading })}
           data={products?.data ?? []}
-          isLoading={isLoading}
           meta={products?.meta}
           onChangeParams={onChangeProductsTableParams}
         />

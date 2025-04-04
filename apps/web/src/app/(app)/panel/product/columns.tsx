@@ -17,13 +17,17 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import type { IProduct } from '../../types'
 
-export const columns: ColumnDef<IProduct>[] = [
+interface ColumnsProps {
+  isLoading: boolean
+}
+
+export const columns = ({ isLoading }: ColumnsProps): ColumnDef<IProduct>[] => [
   {
     accessorKey: 'productImage',
     header: () => <TableHead>Imagem</TableHead>,
     cell: ({ row }) => {
       return (
-        <TableCell>
+        <TableCell isLoading={isLoading}>
           <div className="relative h-14 w-14">
             <Image
               src={row.original.productImage[0].url}
@@ -40,14 +44,16 @@ export const columns: ColumnDef<IProduct>[] = [
   {
     accessorKey: 'name',
     header: () => <TableHead>Nome</TableHead>,
-    cell: ({ row }) => <TableCell>{row.original.name}</TableCell>,
+    cell: ({ row }) => (
+      <TableCell isLoading={isLoading}>{row.original.name}</TableCell>
+    ),
   },
   {
     accessorKey: 'description',
     header: () => <TableHead>Descrição</TableHead>,
     cell: ({ row }) => {
       return (
-        <TableCell>
+        <TableCell isLoading={isLoading}>
           <div className="w-full max-w-96 truncate">
             <span>{row.original.description}</span>
           </div>
@@ -59,19 +65,29 @@ export const columns: ColumnDef<IProduct>[] = [
     accessorKey: 'price',
     header: () => <TableHead>Preço</TableHead>,
     cell: ({ row }) => {
-      return <TableCell>{formatPrice(row.original.price)}</TableCell>
+      return (
+        <TableCell isLoading={isLoading}>
+          {formatPrice(row.original.price)}
+        </TableCell>
+      )
     },
   },
   {
     accessorKey: 'quantity',
     header: () => <TableHead>Quantidade</TableHead>,
-    cell: ({ row }) => <TableCell>{row.original.quantity}</TableCell>,
+    cell: ({ row }) => (
+      <TableCell isLoading={isLoading}>{row.original.quantity}</TableCell>
+    ),
   },
   {
     accessorKey: 'category',
     header: () => <TableHead>Categoria</TableHead>,
     cell: ({ row }) => {
-      return <TableCell>{row.original.category.name}</TableCell>
+      return (
+        <TableCell isLoading={isLoading}>
+          {row.original.category.name}
+        </TableCell>
+      )
     },
   },
   {

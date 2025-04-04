@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { api } from '@/service/api'
 import { PaginatedResponse } from '@/types/paginated-response'
 
-import type { ICategory } from '../../../../types'
+import type { IProduct } from '../../../../types'
 
 interface Params {
   page?: number
@@ -13,15 +13,15 @@ interface Params {
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
+  const { data } = await api.get<PaginatedResponse<IProduct>>('/product', {
     params,
   })
 
   return data
 }
 
-export function useGetTableCategory(params: Params) {
-  const queryKey = ['get-categories']
+export function useGetTableProducts(params: Params) {
+  const queryKey = ['get-table-products']
 
   const query = useQuery({
     queryKey,
@@ -32,7 +32,7 @@ export function useGetTableCategory(params: Params) {
 
   useEffect(() => {
     if (isError) {
-      toast.error('Erro ao buscar as categorias')
+      toast.error('Erro ao buscar os produtos')
     }
   }, [isError])
 

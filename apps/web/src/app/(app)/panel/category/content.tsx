@@ -50,7 +50,7 @@ import { DataTable } from '../components/table'
 import { getColumns } from './columns'
 import { useCreateCategory } from './hooks/use-create-category'
 import { useDeleteCategory } from './hooks/use-delete-category'
-import { useGetTableCategory } from './hooks/use-get-table-categoey'
+import { useGetTableCategories } from './hooks/use-get-table-categories'
 import { useUpdateCategory } from './hooks/use-update-category'
 
 const formCategorySchema = z.object({
@@ -106,7 +106,7 @@ export function Content() {
     data: categories,
     isLoading: isCategoriesLoading,
     queryKey,
-  } = useGetTableCategory({ page: pageIndex, perPage })
+  } = useGetTableCategories({ page: pageIndex, perPage })
 
   const {
     data: products,
