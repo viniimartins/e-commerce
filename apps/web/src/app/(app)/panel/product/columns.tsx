@@ -93,7 +93,7 @@ export function getColumns({ isLoading }: ColumnsProps): ColumnDef<IProduct>[] {
     },
     {
       accessorKey: 'actions',
-      header: () => <TableHead className="text-center">Ações</TableHead>,
+      header: () => <TableHead>Ações</TableHead>,
       cell: ({ row }) => {
         return (
           <TableCell>

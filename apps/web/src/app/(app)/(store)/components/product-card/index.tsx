@@ -427,7 +427,23 @@ export function ProductCard(props: Props) {
             <Separator />
 
             <div className="flex justify-between gap-4">
-              <Button className="flex-1">Comprar agora</Button>
+              <Button
+                disabled={isProductInCart || !isProductIsAvailable}
+                onClick={(event) => {
+                  event.preventDefault()
+                  addToCart(data)
+                }}
+                className="flex-1"
+              >
+                <ShoppingCart />
+                {isProductInCart && 'Produto adicionado ao carrinho'}
+
+                {!isProductInCart && !isProductIsAvailable && 'Sem estoque'}
+
+                {!isProductInCart &&
+                  isProductIsAvailable &&
+                  'Adicionar ao carrinho'}
+              </Button>
               <Button
                 disabled={isProductInWishlist}
                 onClick={(event) => {
