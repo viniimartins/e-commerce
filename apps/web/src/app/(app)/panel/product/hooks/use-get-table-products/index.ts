@@ -10,6 +10,7 @@ import type { IProduct } from '../../../../types'
 interface Params {
   page?: number
   perPage?: number
+  categoryId?: string
 }
 
 async function get(params: Params) {

@@ -3,7 +3,7 @@
 import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 
-import { useGetProducts } from '@/app/(app)/hooks/use-get-products'
+import { useGetTableProducts } from '@/app/(app)/panel/product/hooks/use-get-table-products'
 import type { IProduct } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -36,7 +36,7 @@ export function Content({ product }: Props) {
   const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
     useCart()
 
-  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetTableProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
@@ -125,7 +125,7 @@ export function Content({ product }: Props) {
               )
             })}
           </div>
-          <div className="dark:bg-muted-foreground/10 flex h-[35.5rem] w-[31.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+          <div className="dark:bg-muted-foreground/10 flex h-[39rem] w-[31.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
             {product?.productImage && (
               <Dialog>
                 <DialogTrigger className="relative h-full w-full hover:cursor-pointer">
@@ -190,7 +190,6 @@ export function Content({ product }: Props) {
               />
             )}
 
-            {/* {isLoadingProduct && <Skeleton className="h-9 w-full" />} */}
             <Button
               className="flex-1"
               onClick={() => product && addToCart(product)}
