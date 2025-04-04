@@ -12,7 +12,7 @@ interface Params {
   perPage?: number
 }
 
-async function get(params: { page: number; perPage?: number }) {
+async function get(params: Params) {
   const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
     params,
   })
@@ -20,21 +20,25 @@ async function get(params: { page: number; perPage?: number }) {
   return data
 }
 
-export function useGetCategories(initialParams: Params) {
-  const queryKey = ['get-categories', initialParams]
+export function useGetCategories() {
+  const queryKey = ['get-categories']
 
   const query = useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam }) => {
-      return get({ ...initialParams, page: pageParam })
+      return get({ page: pageParam })
     },
-    getNextPageParam: (lastPage) => {
-      const { pageIndex, totalPages } = lastPage.meta
+    getNextPageParam: (lastResult) => {
+      const { pageIndex, totalPages } = lastResult.meta
+
       const nextPage = pageIndex + 1
+
       return nextPage < totalPages ? nextPage : null
     },
     initialPageParam: 1,
     select(data) {
+      console.log('data', data)
+
       return data.pages.flatMap((page) => page.data)
     },
   })

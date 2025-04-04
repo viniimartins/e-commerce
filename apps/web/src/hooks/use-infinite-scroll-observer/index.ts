@@ -2,7 +2,7 @@ import { type RefObject, useEffect, useRef } from 'react'
 
 type InfiniteScrollObserverProps = {
   targetRef: RefObject<HTMLElement | null>
-  isActive: boolean
+  isActive?: boolean
   hasNextPage: boolean
   isFetchingNextPage: boolean
   fetchNextPage: () => void

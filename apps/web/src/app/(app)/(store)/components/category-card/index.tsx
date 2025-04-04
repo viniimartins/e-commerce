@@ -15,9 +15,9 @@ export function CategoryCard(props: Props) {
   return (
     <Link href={href}>
       <Card className="hover:group border-border hover:border-primary dark:bg-muted-foreground/10 dark:hover:bg-muted-foreground/20 flex h-[9.063rem] items-center justify-center rounded-none shadow-none">
-        <CardContent className="flex flex-col items-center justify-center gap-1 p-6">
+        <CardContent className="flex flex-col items-center justify-center gap-1 px-4">
           {icon}
-          <span className="group-hover:text-primary dark:group-hover:text-primary text-base">
+          <span className="group-hover:text-primary dark:group-hover:text-primary w-28 truncate text-center text-base">
             {name}
           </span>
         </CardContent>

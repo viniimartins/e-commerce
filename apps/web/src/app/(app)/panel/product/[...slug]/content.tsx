@@ -45,7 +45,7 @@ export function Content() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetCategories({})
+  } = useGetCategories()
 
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,

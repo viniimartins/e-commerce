@@ -3,7 +3,7 @@
 import { ArrowUp, Gamepad2 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { Fragment, useRef, useState } from 'react'
 
 import entrega from '@/assets/homepage/delivery.svg'
 import mulher from '@/assets/homepage/mulher.png'
@@ -19,6 +19,7 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 
 import { useGetCategories } from '../hooks/use-get-category'
 import { useGetProducts } from '../hooks/use-get-products'
@@ -32,10 +33,21 @@ export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
   const [apiCarrousel, setApiCarrousel] = useState<CarouselApi>()
   const [apiCategory, setApiCategory] = useState<CarouselApi>()
+  const loadMoreRef = useRef<HTMLDivElement>(null)
 
-  const { data: categories, isLoading: isLoadingCategory } = useGetCategories({
-    page: 1,
-    perPage: 15,
+  const {
+    data: categories,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isLoadingCategory,
+  } = useGetCategories()
+
+  useInfiniteScrollObserver({
+    targetRef: loadMoreRef,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
   })
 
   const { data: products, isLoading: isLoadingProducts } = useGetProducts({
@@ -97,7 +109,7 @@ export function Content() {
 
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-primary text-3xl font-medium">Category</span>
+          <span className="text-primary text-3xl font-medium">Categorias</span>
 
           <CarouselControls api={apiCategory} />
         </div>
@@ -111,35 +123,44 @@ export function Content() {
             className="w-full"
           >
             <CarouselContent>
-              {categories?.data.map((category) => {
+              {categories?.map((category, index) => {
                 const { id } = category
 
                 return (
-                  <CarouselItem key={id} className="basis-1/6">
-                    <CategoryCard
-                      {...category}
-                      icon={
-                        <Gamepad2
-                          width={56}
-                          height={56}
-                          strokeWidth={1}
-                          className="group-hover:text-primary dark:group-hover:text-primary"
-                        />
-                      }
-                      href={`/shop?category=${id}`}
-                    />
-                  </CarouselItem>
+                  <Fragment key={id}>
+                    <CarouselItem key={id} className="basis-1/6">
+                      <CategoryCard
+                        {...category}
+                        icon={
+                          <Gamepad2
+                            width={56}
+                            height={56}
+                            strokeWidth={1}
+                            className="group-hover:text-primary dark:group-hover:text-primary"
+                          />
+                        }
+                        href={`/shop?category=${id}`}
+                      />
+                    </CarouselItem>
+
+                    {index === categories.length - 1 && (
+                      <div ref={loadMoreRef} className="h-1" />
+                    )}
+                  </Fragment>
                 )
               })}
 
-              {isLoadingCategory &&
-                Array.from({ length: 10 }).map((_, index) => {
-                  return (
-                    <CarouselItem key={index} className="basis-1/6">
-                      <Skeleton className="h-[9.063rem] w-[10.625rem]" />
-                    </CarouselItem>
-                  )
-                })}
+              {isLoadingCategory && (
+                <div className="grid grid-cols-6 gap-5">
+                  {Array.from({ length: 6 }).map((_, index) => {
+                    return (
+                      <div key={index} className="col-span-1 grid">
+                        <Skeleton className="h-[9.063rem] w-[10.625rem]" />
+                      </div>
+                    )
+                  })}
+                </div>
+              )}
             </CarouselContent>
           </Carousel>
         </div>

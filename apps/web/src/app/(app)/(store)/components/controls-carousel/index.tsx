@@ -9,40 +9,39 @@ interface CarouselControlsProps {
 }
 
 export function CarouselControls({ api }: CarouselControlsProps) {
-  const [canScrollPrev, setCanScrollPrev] = useState(false)
-  const [canScrollNext, setCanScrollNext] = useState(false)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, forceUpdate] = useState(0)
 
   useEffect(() => {
     if (!api) return
 
-    const updateControls = () => {
-      setCanScrollPrev(api.canScrollPrev())
-      setCanScrollNext(api.canScrollNext())
-    }
+    const update = () => forceUpdate((prev) => prev + 1)
 
-    updateControls()
-    api.on('scroll', updateControls)
+    api.on('scroll', update)
+    api.on('reInit', update)
 
     return () => {
-      api.off('scroll', updateControls)
+      api.off('scroll', update)
+      api.off('reInit', update)
     }
   }, [api])
 
   return (
     <div className="flex items-end gap-2">
       <Button
-        onClick={() => api?.scrollPrev()}
-        size="icon"
         variant="secondary"
-        disabled={!canScrollPrev}
+        size="icon"
+        disabled={!api || !api.canScrollPrev()}
+        onClick={() => api?.scrollPrev()}
       >
         <ArrowLeft />
       </Button>
+
       <Button
-        onClick={() => api?.scrollNext()}
-        size="icon"
         variant="secondary"
-        disabled={!canScrollNext}
+        size="icon"
+        disabled={!api || !api.canScrollNext()}
+        onClick={() => api?.scrollNext()}
       >
         <ArrowRight />
       </Button>

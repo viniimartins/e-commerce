@@ -5,7 +5,7 @@ import { toast } from 'sonner'
 import { api } from '@/service/api'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
-import type { ICategoryWithProducts } from '../types'
+import type { ICategoryWithProducts } from '../../types'
 
 interface Params {
   page?: number
