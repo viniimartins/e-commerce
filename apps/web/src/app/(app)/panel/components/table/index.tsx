@@ -13,7 +13,6 @@ import { Fragment } from 'react'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -26,7 +25,6 @@ import type { PaginatedMeta } from '@/types/paginated-response'
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[]
   data: TData[]
-  isLoading?: boolean
   meta?: PaginatedMeta
   onChangeParams: (params: Partial<PaginatedMeta>) => void
 }
@@ -34,7 +32,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  isLoading,
   meta,
   onChangeParams,
 }: DataTableProps<TData, TValue>) {
@@ -75,9 +72,6 @@ export function DataTable<TData, TValue>({
                 {row.getVisibleCells().map((cell) => (
                   <Fragment key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    {isLoading && (
-                      <Skeleton className="h-6 w-full" />
-                    )}
                   </Fragment>
                 ))}
               </TableRow>

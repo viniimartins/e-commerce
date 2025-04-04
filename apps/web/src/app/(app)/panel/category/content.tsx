@@ -104,12 +104,13 @@ export function Content() {
 
   const {
     data: categories,
-    isLoading,
+    isLoading: isCategoriesLoading,
     queryKey,
   } = useGetTableCategory({ page: pageIndex, perPage })
 
   const {
     data: products,
+    isLoading: isProductsLoading,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
@@ -201,9 +202,9 @@ export function Content() {
             categoryModalActions,
             deleteCategoryModalActions,
             viewProductsModalActions,
+            isLoading: isCategoriesLoading,
           })}
           data={categories?.data ?? []}
-          isLoading={isLoading}
           meta={categories?.meta}
           onChangeParams={onChangeCategoriesTableParams}
         />
@@ -338,6 +339,12 @@ export function Content() {
                 </Fragment>
               )
             })}
+
+            {isProductsLoading && (
+              <div className="flex items-center justify-center">
+                <LoaderCircle className="animate-spin" />
+              </div>
+            )}
           </ScrollArea>
         </DialogContent>
       </Dialog>

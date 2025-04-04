@@ -19,25 +19,27 @@ interface ColumnsProps {
   categoryModalActions: ModalActions<ICategory>
   deleteCategoryModalActions: ModalActions<ICategory>
   viewProductsModalActions: ModalActions<ICategory>
+  isLoading: boolean
 }
 
 export const getColumns = ({
   categoryModalActions,
   deleteCategoryModalActions,
   viewProductsModalActions,
+  isLoading,
 }: ColumnsProps): ColumnDef<ICategory>[] => [
     {
       accessorKey: 'name',
       header: () => <TableHead>Nome</TableHead>,
       cell: ({ row }) => {
-        return <TableCell className="w-full">{row.original.name}</TableCell>
+        return <TableCell isLoading={isLoading} className="w-full">{row.original.name}</TableCell>
       },
     },
     {
       accessorKey: 'productsCount',
       header: () => <TableHead className="text-center">Produtos</TableHead>,
       cell: ({ row }) => {
-        return <TableCell>
+        return <TableCell isLoading={isLoading}>
           <div className="flex items-center justify-between gap-2">
             <span className="text-sm font-medium">{row.original.productsCount}</span>
             <Button size="icon" variant="outline" className="p-0" onClick={() => viewProductsModalActions.open(row.original)}>
