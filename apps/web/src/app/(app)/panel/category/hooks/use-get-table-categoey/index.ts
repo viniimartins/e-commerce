@@ -3,9 +3,9 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import { api } from '@/service/api'
-import type { PaginatedResponse } from '@/types/paginated-response'
+import { PaginatedResponse } from '@/types/paginated-response'
 
-import type { ICategoryWithProducts } from '../../types'
+import type { ICategory } from '../../../../types'
 
 interface Params {
   page?: number
@@ -13,18 +13,15 @@ interface Params {
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<ICategoryWithProducts>>(
-    '/category/with-products',
-    {
-      params,
-    },
-  )
+  const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
+    params,
+  })
 
   return data
 }
 
-export function useGetCategoriesWithProducts(params: Params) {
-  const queryKey = ['get-categories-with-products', params]
+export function useGetTableCategory(params: Params) {
+  const queryKey = ['get-categories']
 
   const query = useQuery({
     queryKey,

@@ -3,7 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { LoaderCircle, PlusIcon } from 'lucide-react'
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -39,17 +39,19 @@ import {
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import type { TableParams } from '@/types/paginated-response'
 import { formatPrice } from '@/utils/formatPrice'
 
+import { useGetProducts } from '../../hooks/use-get-products'
+import { ICategory } from '../../types'
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
 import { useCreateCategory } from './hooks/use-create-category'
 import { useDeleteCategory } from './hooks/use-delete-category'
-import { useGetCategoriesWithProducts } from './hooks/use-get-categories-with-products'
+import { useGetTableCategory } from './hooks/use-get-table-categoey'
 import { useUpdateCategory } from './hooks/use-update-category'
-import type { ICategoryWithProducts } from './types'
 
 const formCategorySchema = z.object({
   name: z.string().min(2, {
@@ -65,6 +67,8 @@ export function Content() {
       pageIndex: 1,
       perPage: 10,
     })
+
+  const loadMoreRef = useRef<HTMLDivElement>(null)
 
   const form = useForm<FormCategorySchema>({
     resolver: zodResolver(formCategorySchema),
@@ -82,19 +86,19 @@ export function Content() {
     actions: categoryModalActions,
     isOpen: isCategoryModalOpen,
     target: categoryModalTarget,
-  } = useModal<ICategoryWithProducts>()
+  } = useModal<ICategory>()
 
   const {
     actions: deleteCategoryModalActions,
     isOpen: isDeleteCategoryModalOpen,
     target: deleteCategoryModalTarget,
-  } = useModal<ICategoryWithProducts>()
+  } = useModal<ICategory>()
 
   const {
     actions: viewProductsModalActions,
     isOpen: isViewProductsModalOpen,
     target: viewProductsModalTarget,
-  } = useModal<ICategoryWithProducts>()
+  } = useModal<ICategory>()
 
   const { pageIndex, perPage } = categoriesTableParams
 
@@ -102,9 +106,16 @@ export function Content() {
     data: categories,
     isLoading,
     queryKey,
-  } = useGetCategoriesWithProducts({
-    page: pageIndex,
-    perPage,
+  } = useGetTableCategory({ page: pageIndex, perPage })
+
+  const {
+    data: products,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useGetProducts({
+    categoryId: viewProductsModalTarget?.id,
+    viewProducts: isViewProductsModalOpen,
   })
 
   const { mutate: createCategory } = useCreateCategory({ queryKey })
@@ -122,6 +133,14 @@ export function Content() {
   )
 
   const { mutateAsync: deleteCategory } = useDeleteCategory({ queryKey })
+
+  useInfiniteScrollObserver({
+    targetRef: loadMoreRef,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isActive: true,
+  })
 
   function onSubmit(values: FormCategorySchema) {
     const { name } = values
@@ -276,44 +295,47 @@ export function Content() {
           </DialogHeader>
 
           <ScrollArea className="h-96 pr-3">
-            {viewProductsModalTarget?.products.map((product, index) => {
-              const lastIndex =
-                viewProductsModalTarget?.products.length === index + 1
+            {products?.map((product, index) => {
+              const lastIndex = products.length === index + 1
 
               const { id, name, price, productImage, quantity } = product
 
               return (
-                <div key={id}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                        <Image
-                          src={productImage[0].url}
-                          alt="product"
-                          fill
-                          quality={100}
-                          priority
-                          className="object-cover p-1"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
+                <Fragment key={id}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                          <Image
+                            src={productImage[0].url}
+                            alt="product"
+                            fill
+                            quality={100}
+                            priority
+                            className="object-cover p-1"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
+
+                        <div className="flex h-full flex-col justify-between">
+                          <span className="text-base font-medium">{name}</span>
+
+                          <span className="text-muted-foreground text-sm">
+                            {quantity} un.
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="flex h-full flex-col justify-between">
-                        <span className="text-base font-medium">{name}</span>
-
-                        <span className="text-muted-foreground text-sm">
-                          {quantity} un.
-                        </span>
-                      </div>
+                      <span className="text-sm font-medium">
+                        {formatPrice(price)}
+                      </span>
                     </div>
 
-                    <span className="text-sm font-medium">
-                      {formatPrice(price)}
-                    </span>
+                    {!lastIndex && <Separator className="my-2" />}
                   </div>
 
-                  {!lastIndex && <Separator className="my-2" />}
-                </div>
+                  {lastIndex && <div ref={loadMoreRef} className="h-1" />}
+                </Fragment>
               )
             })}
           </ScrollArea>

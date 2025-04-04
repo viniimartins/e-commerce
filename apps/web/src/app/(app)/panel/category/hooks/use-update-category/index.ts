@@ -6,8 +6,10 @@ import { queryClient } from '@/lib/react-query'
 import { api } from '@/service/api'
 import type { QueryKeyProps } from '@/types/queryKeyProps'
 
+type Category = Omit<ICategory, 'productsCount'>
+
 interface Params {
-  category: ICategory
+  category: Category
 }
 
 async function update({ category }: Params) {

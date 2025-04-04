@@ -15,6 +15,7 @@ export interface IUser {
 export interface ICategory {
   id: string
   name: string
+  productsCount: number
 }
 
 export interface IProduct {

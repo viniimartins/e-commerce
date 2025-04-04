@@ -12,19 +12,20 @@ import {
 import { TableCell, TableHead } from '@/components/ui/table'
 import type { ModalActions } from '@/types/modal'
 
-import type { ICategoryWithProducts } from './types'
+import type { ICategory } from '../../types'
+
 
 interface ColumnsProps {
-  categoryModalActions: ModalActions<ICategoryWithProducts>
-  deleteCategoryModalActions: ModalActions<ICategoryWithProducts>
-  viewProductsModalActions: ModalActions<ICategoryWithProducts>
+  categoryModalActions: ModalActions<ICategory>
+  deleteCategoryModalActions: ModalActions<ICategory>
+  viewProductsModalActions: ModalActions<ICategory>
 }
 
 export const getColumns = ({
   categoryModalActions,
   deleteCategoryModalActions,
   viewProductsModalActions,
-}: ColumnsProps): ColumnDef<ICategoryWithProducts>[] => [
+}: ColumnsProps): ColumnDef<ICategory>[] => [
     {
       accessorKey: 'name',
       header: () => <TableHead>Nome</TableHead>,

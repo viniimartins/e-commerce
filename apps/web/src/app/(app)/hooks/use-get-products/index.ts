@@ -11,6 +11,7 @@ interface Params {
   page?: number
   perPage?: number
   categoryId?: string | null
+  viewProducts?: boolean
 }
 
 async function get(params: Params) {
@@ -38,6 +39,7 @@ export function useGetProducts(params: Params) {
     select(data) {
       return data.pages.flatMap((page) => page.data)
     },
+    enabled: params.viewProducts,
   })
 
   const { isError } = query
