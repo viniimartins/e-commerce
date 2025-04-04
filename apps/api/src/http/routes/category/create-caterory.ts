@@ -5,7 +5,7 @@ import z from 'zod'
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
-export async function postCategory(app: FastifyInstance) {
+export async function createCategory(app: FastifyInstance) {
   app
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)

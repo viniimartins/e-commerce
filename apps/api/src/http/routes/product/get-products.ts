@@ -72,7 +72,11 @@ export async function getProducts(app: FastifyInstance) {
             categoryId,
           },
           include: {
-            productImage: true,
+            productImage: {
+              include: {
+                image: true,
+              },
+            },
             category: {
               select: {
                 id: true,
@@ -96,6 +100,10 @@ export async function getProducts(app: FastifyInstance) {
         data: products.map((product) => ({
           ...product,
           price: Number(product.price),
+          productImage: product.productImage.map(({ image, ...rest }) => ({
+            ...rest,
+            url: image.url,
+          })),
         })),
         meta: {
           pageIndex: page,
