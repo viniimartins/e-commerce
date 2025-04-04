@@ -97,7 +97,11 @@ export function getOrder(app: FastifyInstance) {
               include: {
                 product: {
                   include: {
-                    productImage: true,
+                    productImage: {
+                      include: {
+                        image: true,
+                      },
+                    },
                   },
                 },
               },
@@ -125,6 +129,10 @@ export function getOrder(app: FastifyInstance) {
             product: {
               ...item.product,
               price: Number(item.product.price),
+              productImage: item.product.productImage.map((image) => ({
+                ...image,
+                url: image.image.url,
+              })),
             },
           })),
         })

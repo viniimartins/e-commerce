@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from 'react'
+import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 
@@ -25,6 +26,12 @@ export function CartProvider({ children }: CartProviderProps) {
   function addToCart(product: IProduct) {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((p) => p.id === product.id)
+      const isProductAvailable = product?.quantity > 0
+
+      if (!isProductAvailable) {
+        toast.error('Produto não disponivel no estoque')
+        return prevCart
+      }
 
       if (existingProduct) {
         return prevCart.map((p) =>
@@ -43,13 +50,25 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   function incrementCartQuantity(productId: string) {
-    setCart((prevCart) =>
-      prevCart.map((product) =>
+    setCart((prevCart) => {
+      const existingProduct = prevCart.find((p) => p.id === productId)
+
+      if (
+        existingProduct &&
+        existingProduct.cartQuantity >= existingProduct.quantity
+      ) {
+        toast.error(
+          'Quantidade máxima atingida para este produto disponível no estoque',
+        )
+        return prevCart
+      }
+
+      return prevCart.map((product) =>
         product.id === productId
           ? { ...product, cartQuantity: product.cartQuantity + 1 }
           : product,
-      ),
-    )
+      )
+    })
   }
 
   function removeAllProducts() {

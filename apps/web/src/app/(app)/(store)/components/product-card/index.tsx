@@ -41,7 +41,7 @@ interface Props {
 export function ProductCard(props: Props) {
   const { data, variant = 'default', gridView = 'grid3x3' } = props
 
-  const { description, id, name, price, productImage } = data
+  const { description, id, name, price, productImage, quantity } = data
 
   const { cart, addToCart } = useCart()
 
@@ -63,6 +63,8 @@ export function ProductCard(props: Props) {
   }
 
   const isProductInCart = cart.some((item) => item.id === data.id)
+
+  const isProductIsAvailable = quantity > 0
 
   return (
     <>
@@ -132,19 +134,23 @@ export function ProductCard(props: Props) {
                     event.preventDefault()
                     addToCart(data)
                   }}
-                  disabled={isProductInCart}
+                  disabled={isProductInCart || !isProductIsAvailable}
                   className="absolute bottom-0 left-1/2 z-10 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
                 >
-                  {isProductInCart
-                    ? 'Produto adicionado ao carrinho'
-                    : 'Adicionar ao carrinho'}
+                  {isProductInCart && 'Produto adicionado ao carrinho'}
+
+                  {!isProductInCart && !isProductIsAvailable && 'Sem estoque'}
+
+                  {!isProductInCart &&
+                    isProductIsAvailable &&
+                    'Adicionar ao carrinho'}
                 </Button>
               )}
 
               {variant !== 'default' && (
                 <Button
                   variant="secondary"
-                  disabled={isProductInCart}
+                  disabled={isProductInCart || !isProductIsAvailable}
                   onClick={(event) => {
                     event.preventDefault()
                     addToCart(data)
@@ -152,7 +158,13 @@ export function ProductCard(props: Props) {
                   className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
                 >
                   <ShoppingCart />
-                  Adicionar ao carrinho
+                  {isProductInCart && 'Produto adicionado ao carrinho'}
+
+                  {!isProductInCart && !isProductIsAvailable && 'Sem estoque'}
+
+                  {!isProductInCart &&
+                    isProductIsAvailable &&
+                    'Adicionar ao carrinho'}
                 </Button>
               )}
             </CardContent>
@@ -284,7 +296,7 @@ export function ProductCard(props: Props) {
 
               <Button
                 variant="outline"
-                disabled={isProductInCart}
+                disabled={isProductInCart || !isProductIsAvailable}
                 onClick={(event) => {
                   event.preventDefault()
                   addToCart(data)

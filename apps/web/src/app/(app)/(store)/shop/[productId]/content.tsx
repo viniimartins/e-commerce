@@ -52,9 +52,8 @@ export function Content({ product }: Props) {
     queryKey: ['get-wishlist'],
   })
 
-  const isInStock = product?.quantity && product.quantity > 0
-  const stockText = isInStock ? 'Em estoque' : 'Sem estoque'
-
+  const isProductIsAvailable = product.quantity > 0
+  const stockText = isProductIsAvailable ? 'Em estoque' : 'Sem estoque'
   const productInCart = cart.find((item) => item.id === product?.id)
   const isProductInCart = cart.some((item) => item.id === product?.id)
 
@@ -167,7 +166,9 @@ export function Content({ product }: Props) {
                 {formatPrice(product?.price ?? 0)}
               </span>
 
-              <Badge variant={isInStock ? 'secondary' : 'destructive'}>
+              <Badge
+                variant={isProductIsAvailable ? 'secondary' : 'destructive'}
+              >
                 {stockText}
               </Badge>
             </div>
@@ -184,21 +185,30 @@ export function Content({ product }: Props) {
             {product && (
               <Counter
                 value={productInCart?.cartQuantity ?? 0}
-                disabled={!productInCart}
+                disabled={!isProductInCart || !isProductIsAvailable}
                 increment={() => incrementCartQuantity(product.id)}
                 decrement={() => decrementCartQuantity(product.id)}
               />
             )}
 
-            <Button
-              className="flex-1"
-              onClick={() => product && addToCart(product)}
-              disabled={isProductInCart}
-            >
-              {isProductInCart
-                ? 'Produto no carrinho'
-                : 'Adicionar ao carrinho'}
-            </Button>
+            {isProductIsAvailable && (
+              <Button
+                className="flex-1"
+                onClick={() => product && addToCart(product)}
+                disabled={isProductInCart}
+              >
+                {isProductInCart
+                  ? 'Produto no carrinho'
+                  : 'Adicionar ao carrinho'}
+              </Button>
+            )}
+
+            {!isProductIsAvailable && (
+              <Button variant="destructive" disabled className="flex-1">
+                Sem estoque
+              </Button>
+            )}
+
             <Button onClick={() => product && handleChangeWishlist(product)}>
               <Heart
                 className={cn(

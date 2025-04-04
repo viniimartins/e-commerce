@@ -62,7 +62,11 @@ export function getWishlist(app: FastifyInstance) {
             include: {
               product: {
                 include: {
-                  productImage: true,
+                  productImage: {
+                    include: {
+                      image: true,
+                    },
+                  },
                 },
               },
             },
@@ -80,6 +84,10 @@ export function getWishlist(app: FastifyInstance) {
           data: wishlist.map((item) => ({
             ...item.product,
             price: Number(item.product.price),
+            productImage: item.product.productImage.map((image) => ({
+              ...image,
+              url: image.image.url,
+            })),
           })),
           meta: {
             pageIndex: page,
