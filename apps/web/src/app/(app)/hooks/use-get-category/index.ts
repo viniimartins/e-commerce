@@ -37,8 +37,6 @@ export function useGetCategories() {
     },
     initialPageParam: 1,
     select(data) {
-      console.log('data', data)
-
       return data.pages.flatMap((page) => page.data)
     },
   })

@@ -48,6 +48,7 @@ export function Content() {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    isActive: true,
   })
 
   const { data: products, isLoading: isLoadingProducts } = useGetProducts({

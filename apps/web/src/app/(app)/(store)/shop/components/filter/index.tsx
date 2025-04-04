@@ -1,33 +1,43 @@
 'use client'
 
 import { useSearchParams } from 'next/navigation'
+import { Fragment, useRef } from 'react'
 
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { formatPrice } from '@/utils/formatPrice'
 
 export function Filter() {
   const searchParams = useSearchParams()
   const categoryActiveId = searchParams.get('category')
+  const loadMoreRef = useRef<HTMLDivElement>(null)
 
-  const { data: categories, isLoading: isLoadingCategories } = useGetCategories(
-    {
-      page: 1,
-      perPage: 15,
-    },
-  )
+  const {
+    data: categories,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+  } = useGetCategories()
 
-  const isLoading = isLoadingCategories
+  useInfiniteScrollObserver({
+    targetRef: loadMoreRef,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isActive: true,
+  })
 
   return (
     <aside className="space-y-10">
       <div className="flex flex-col gap-2">
         <span className="text-xl font-semibold">Categorias</span>
 
-        <ScrollArea>
-          <div className="flex h-56 flex-col items-start gap-2">
+        <ScrollArea className="h-56">
+          <div className="flex flex-col items-start gap-2">
             <a
               data-active={!categoryActiveId}
               href="/shop"
@@ -36,18 +46,25 @@ export function Filter() {
               Todas categorias
             </a>
 
-            {categories?.data.map((category) => {
+            {categories?.map((category, index) => {
               const { id, name } = category
 
+              const isLastItem = index === categories.length - 1
+
               return (
-                <a
-                  data-active={categoryActiveId === id}
-                  key={id}
-                  href={`/shop/?category=${id}`}
-                  className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
-                >
-                  {name}
-                </a>
+                <Fragment key={id}>
+                  <a
+                    data-active={categoryActiveId === id}
+                    href={`/shop/?category=${id}`}
+                    className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+                  >
+                    {name}
+                  </a>
+
+                  {isLastItem && (
+                    <div ref={loadMoreRef} className="h-1 w-full" />
+                  )}
+                </Fragment>
               )
             })}
 

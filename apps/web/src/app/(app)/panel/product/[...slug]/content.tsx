@@ -206,16 +206,22 @@ export function Content() {
                     </SelectTrigger>
                     <SelectContent>
                       <ScrollArea className="h-56">
-                        {categories?.map((category, index) => (
-                          <Fragment key={category.id}>
-                            <SelectItem value={category.id}>
-                              {category.name}
-                            </SelectItem>
-                            {index === categories.length - 1 && (
-                              <div ref={loadMoreRef} className="h-1" />
-                            )}
-                          </Fragment>
-                        ))}
+                        {categories?.map((category, index) => {
+                          const isLastItem = index === categories.length - 1
+
+                          return (
+                            <Fragment key={category.id}>
+                              <SelectItem value={category.id}>
+                                {category.name}
+                              </SelectItem>
+
+                              {isLastItem && (
+                                <div ref={loadMoreRef} className="h-1" />
+                              )}
+                            </Fragment>
+                          )
+                        })}
+
                         {isFetchingNextPage && (
                           <div className="flex justify-center p-2">
                             <Loader2 className="animate-spin" />
