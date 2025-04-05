@@ -1,4 +1,6 @@
+import { LoaderCircle } from 'lucide-react'
 import type { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import {
   Breadcrumb,
@@ -39,7 +41,15 @@ export default function CategoryPage() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Content />
+      <Suspense
+        fallback={
+          <div className="flex h-full items-center justify-center">
+            <LoaderCircle className="h-6 w-6 animate-spin" />
+          </div>
+        }
+      >
+        <Content />
+      </Suspense>
     </>
   )
 }

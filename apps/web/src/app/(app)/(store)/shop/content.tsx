@@ -10,13 +10,13 @@ import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useGetCategory } from '@/hooks/query/category/get-by-id'
+import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { cn } from '@/lib/utils'
 
-import { useGetInfiniteProducts } from '../../hooks/use-get-infinite-products'
 import { ProductCard } from '../components/product-card'
 import { ProductCardSkeleton } from '../components/product-card/skeleton'
 import { Filter } from './components/filter'
-import { useGetCategory } from './hooks/use-get-category'
 
 export type GridView = 'grid3x3' | 'grid2x2' | 'columns2' | 'rows2'
 

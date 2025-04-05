@@ -9,7 +9,6 @@ import { useForm } from 'react-hook-form'
 import { MaskedInput, withMask } from 'react-maskara'
 import z from 'zod'
 
-import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -28,12 +27,12 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
+import { useCreateBilling } from '@/hooks/mutation/billing/create'
+import { useGetProfile } from '@/hooks/query/profile/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
 import { formatPrice } from '@/utils/formatPrice'
-
-import { useCreateBilling } from './hooks/use-create-billing'
 
 const formSchema = z.object({
   fullName: z

@@ -39,19 +39,19 @@ import {
 import { Input } from '@/components/ui/input'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useCreateCategory } from '@/hooks/mutation/category/create'
+import { useDeleteCategory } from '@/hooks/mutation/category/delete'
+import { useUpdateCategory } from '@/hooks/mutation/category/update'
+import { useGetTableCategories } from '@/hooks/query/category/get'
+import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import type { TableParams } from '@/types/paginated-response'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { useGetInfiniteProducts } from '../../hooks/use-get-infinite-products'
 import { ICategory } from '../../types'
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
-import { useCreateCategory } from './hooks/use-create-category'
-import { useDeleteCategory } from './hooks/use-delete-category'
-import { useGetTableCategories } from './hooks/use-get-table-categories'
-import { useUpdateCategory } from './hooks/use-update-category'
 
 const formCategorySchema = z.object({
   name: z.string().min(2, {

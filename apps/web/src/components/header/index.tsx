@@ -15,8 +15,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
-import { useGetWishlist } from '@/app/(app)/(store)/wishlist/hooks/use-get-wishlist'
-import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
 import { isAuthenticated } from '@/auth/client-auth'
 import { Button } from '@/components/ui/button'
 import {
@@ -26,6 +24,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useGetProfile } from '@/hooks/query/profile/get'
+import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 

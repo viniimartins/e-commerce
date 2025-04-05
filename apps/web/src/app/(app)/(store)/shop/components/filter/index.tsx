@@ -3,10 +3,10 @@
 import { useSearchParams } from 'next/navigation'
 import { Fragment, useRef } from 'react'
 
-import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { formatPrice } from '@/utils/formatPrice'
 
@@ -21,7 +21,7 @@ export function Filter() {
     hasNextPage,
     isFetchingNextPage,
     isLoading,
-  } = useGetCategories()
+  } = useGetInfiniteCategories()
 
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,

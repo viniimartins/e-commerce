@@ -10,8 +10,6 @@ import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
-import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
-import { useUploadImage } from '@/app/(app)/hooks/use-upload-image'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -62,11 +60,12 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Textarea } from '@/components/ui/textarea'
+import { useCreateProduct } from '@/hooks/mutation/product/create'
+import { useUploadImage } from '@/hooks/mutation/upload/upload-image'
+import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import { normalizedPrice } from '@/utils/normalized-price'
-
-import { useCreateProduct } from './hooks/use-create-product'
 
 const formProductSchema = z.object({
   name: z.string().min(1, { message: 'O nome é obrigatório' }),
@@ -95,7 +94,7 @@ export function Content() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useGetCategories()
+  } = useGetInfiniteCategories()
 
   const { mutateAsync: uploadImage } = useUploadImage()
 

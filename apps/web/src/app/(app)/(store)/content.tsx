@@ -19,17 +19,15 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
+import { useGetProducts } from '@/hooks/query/product/get'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 
-import { useGetCategories } from '../hooks/use-get-category'
-import { useGetProducts } from '../panel/product/hooks/use-get-products'
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
 import { ProductCard } from './components/product-card'
 import { ProductCardSkeleton } from './components/product-card/skeleton'
-// import { ProductCard } from './components/product-card'
-// import { ProductCardSkeleton } from './components/product-card/skeleton'
 
 export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
@@ -43,7 +41,7 @@ export function Content() {
     hasNextPage,
     isFetchingNextPage,
     isLoading: isLoadingCategory,
-  } = useGetCategories()
+  } = useGetInfiniteCategories()
 
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,

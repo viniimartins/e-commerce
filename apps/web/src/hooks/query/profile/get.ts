@@ -2,10 +2,9 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
+import type { IUser } from '@/app/(app)/types'
 import { isAuthenticated } from '@/auth/client-auth'
 import { api } from '@/service/api'
-
-import type { IUser } from '../../types'
 
 async function get() {
   const { data } = await api.get<IUser>('/profile')

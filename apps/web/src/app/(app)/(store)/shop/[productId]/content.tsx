@@ -3,7 +3,6 @@
 import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 
-import { useGetProducts } from '@/app/(app)/panel/product/hooks/use-get-products'
 import type { IProduct } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -17,6 +16,10 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useRemoveFromWishlist } from '@/hooks/mutation/wishlist/remove'
+import { useAddToWishlist } from '@/hooks/mutation/wishlist/to-add'
+import { useGetProducts } from '@/hooks/query/product/get'
+import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
@@ -24,9 +27,6 @@ import { formatPrice } from '@/utils/formatPrice'
 import Counter from '../../components/counter'
 import { ProductCard } from '../../components/product-card'
 import { ProductCardSkeleton } from '../../components/product-card/skeleton'
-import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
-import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
-import { useRemoveFromWishlist } from '../../wishlist/hooks/use-remove-from-wishlist'
 
 interface Props {
   product: IProduct

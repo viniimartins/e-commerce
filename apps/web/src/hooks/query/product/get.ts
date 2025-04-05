@@ -2,26 +2,26 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
+import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
 import { PaginatedResponse } from '@/types/paginated-response'
-
-import type { ICategory } from '../../../../types'
 
 interface Params {
   page?: number
   perPage?: number
+  categoryId?: string
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
+  const { data } = await api.get<PaginatedResponse<IProduct>>('/product', {
     params,
   })
 
   return data
 }
 
-export function useGetTableCategories(params: Params) {
-  const queryKey = ['get-table-categories']
+export function useGetProducts(params: Params) {
+  const queryKey = ['get-products']
 
   const query = useQuery({
     queryKey,
@@ -32,7 +32,7 @@ export function useGetTableCategories(params: Params) {
 
   useEffect(() => {
     if (isError) {
-      toast.error('Erro ao buscar as categorias')
+      toast.error('Erro ao buscar os produtos')
     }
   }, [isError])
 

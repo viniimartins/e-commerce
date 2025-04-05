@@ -16,9 +16,7 @@ import { Content } from './content'
 export async function generateMetadata({
   params,
 }: {
-  params: {
-    productId: string
-  }
+  params: Promise<{ productId: string }>
 }): Promise<Metadata> {
   const { productId } = await params
 
@@ -29,11 +27,11 @@ export async function generateMetadata({
   }
 }
 
-interface Props {
+export default async function ProductPage({
+  params,
+}: {
   params: Promise<{ productId: string }>
-}
-
-export default async function ProductPage({ params }: Props) {
+}) {
   const { productId } = await params
 
   const product = await getProduct({ id: productId })

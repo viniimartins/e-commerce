@@ -24,14 +24,14 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
+import { useRemoveFromWishlist } from '@/hooks/mutation/wishlist/remove'
+import { useAddToWishlist } from '@/hooks/mutation/wishlist/to-add'
+import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
 import type { GridView } from '../../shop/content'
-import { useAddToWishlist } from '../../wishlist/hooks/use-add-to-wishlist'
-import { useGetWishlist } from '../../wishlist/hooks/use-get-wishlist'
-import { useRemoveFromWishlist } from '../../wishlist/hooks/use-remove-from-wishlist'
 interface Props {
   variant?: 'default' | 'wishlist'
   gridView?: GridView

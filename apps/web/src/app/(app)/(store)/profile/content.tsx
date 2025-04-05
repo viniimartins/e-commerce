@@ -3,9 +3,9 @@
 import { Tabs } from 'radix-ui'
 
 import { Skeleton } from '@/components/ui/skeleton'
+import { useGetOrders } from '@/hooks/query/order/get'
 
 import { OrderCard } from './components/order-card'
-import { useGetOrders } from './hooks/use-get-orders'
 
 export function Content() {
   const { data: orders, isLoading } = useGetOrders({

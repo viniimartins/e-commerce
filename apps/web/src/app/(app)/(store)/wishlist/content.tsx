@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import { useRemoveAllWishlist } from '@/hooks/mutation/wishlist/remove-all'
+import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useCart } from '@/providers/cart-provider'
 
 import { ProductCard } from '../components/product-card'
 import { ProductCardSkeleton } from '../components/product-card/skeleton'
-import { useGetWishlist } from './hooks/use-get-wishlist'
-import { useRemoveAllWishlist } from './hooks/use-remove-all-wishlist'
 
 export function Content() {
   const { addToCart } = useCart()

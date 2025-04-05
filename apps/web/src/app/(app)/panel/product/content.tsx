@@ -5,10 +5,10 @@ import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
 import { Button } from '@/components/ui/button'
+import { useGetProducts } from '@/hooks/query/product/get'
 
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
-import { useGetProducts } from './hooks/use-get-products'
 interface ProductsTableParams {
   pageIndex: number
   perPage: number
