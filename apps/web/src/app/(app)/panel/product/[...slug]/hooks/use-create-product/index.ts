@@ -1,17 +1,17 @@
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
+import type { IProduct } from '@/app/(app)/types'
 import { queryClient } from '@/lib/react-query'
 import { api } from '@/service/api'
 import type { QueryKeyProps } from '@/types/queryKeyProps'
 
-interface Product {
-  name: string
-  description: string
-  price: number
-  quantity: number
-  categoryId: string
+type Product = Omit<
+  IProduct,
+  'id' | 'createdAt' | 'updatedAt' | 'productImage' | 'category'
+> & {
   productImages: string[]
+  categoryId: string
 }
 
 interface Params {
