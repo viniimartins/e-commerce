@@ -22,8 +22,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 
 import { useGetCategories } from '../hooks/use-get-category'
-import { useGetTableProducts } from '../panel/product/hooks/use-get-table-products'
-// import { useGetProducts } from '../hooks/use-get-products'
+import { useGetProducts } from '../panel/product/hooks/use-get-products'
 import { BannerCarousel } from './components/banner-carousel'
 import { CategoryCard } from './components/category-card'
 import { CarouselControls } from './components/controls-carousel'
@@ -54,7 +53,7 @@ export function Content() {
     isActive: true,
   })
 
-  const { data: products, isLoading: isLoadingProducts } = useGetTableProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     page: 1,
     perPage: 10,
   })

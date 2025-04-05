@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button'
 
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
-import { useGetTableProducts } from './hooks/use-get-table-products'
+import { useGetProducts } from './hooks/use-get-products'
 interface ProductsTableParams {
   pageIndex: number
   perPage: number
@@ -30,7 +30,7 @@ export function Content() {
     [],
   )
 
-  const { data: products, isLoading } = useGetTableProducts({
+  const { data: products, isLoading } = useGetProducts({
     page: pageIndex,
     perPage,
   })

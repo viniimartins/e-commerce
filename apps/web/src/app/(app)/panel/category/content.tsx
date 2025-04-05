@@ -44,7 +44,7 @@ import { useModal } from '@/hooks/use-modal'
 import type { TableParams } from '@/types/paginated-response'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { useGetProducts } from '../../hooks/use-get-products'
+import { useGetInfiniteProducts } from '../../hooks/use-get-infinite-products'
 import { ICategory } from '../../types'
 import { DataTable } from '../components/table'
 import { getColumns } from './columns'
@@ -114,7 +114,7 @@ export function Content() {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
-  } = useGetProducts({
+  } = useGetInfiniteProducts({
     categoryId: viewProductsModalTarget?.id,
     viewProducts: isViewProductsModalOpen,
   })

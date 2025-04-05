@@ -12,7 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { cn } from '@/lib/utils'
 
-import { useGetProducts } from '../../hooks/use-get-products'
+import { useGetInfiniteProducts } from '../../hooks/use-get-infinite-products'
 import { ProductCard } from '../components/product-card'
 import { ProductCardSkeleton } from '../components/product-card/skeleton'
 import { Filter } from './components/filter'
@@ -32,7 +32,7 @@ export function Content() {
     hasNextPage,
     isFetchingNextPage,
     isLoading: isLoadingProducts,
-  } = useGetProducts({
+  } = useGetInfiniteProducts({
     categoryId: categoryActiveId,
   })
 

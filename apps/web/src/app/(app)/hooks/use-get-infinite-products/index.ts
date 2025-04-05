@@ -22,7 +22,7 @@ async function get(params: Params) {
   return data
 }
 
-export function useGetProducts(params: Params) {
+export function useGetInfiniteProducts(params: Params) {
   const queryKey = ['get-products', params]
 
   const query = useInfiniteQuery({

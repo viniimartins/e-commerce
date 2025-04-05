@@ -3,7 +3,7 @@
 import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 
-import { useGetTableProducts } from '@/app/(app)/panel/product/hooks/use-get-table-products'
+import { useGetProducts } from '@/app/(app)/panel/product/hooks/use-get-products'
 import type { IProduct } from '@/app/(app)/types'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -36,7 +36,7 @@ export function Content({ product }: Props) {
   const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
     useCart()
 
-  const { data: products, isLoading: isLoadingProducts } = useGetTableProducts({
+  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,

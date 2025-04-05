@@ -21,8 +21,8 @@ async function get(params: Params) {
   return data
 }
 
-export function useGetTableProducts(params: Params) {
-  const queryKey = ['get-table-products']
+export function useGetProducts(params: Params) {
+  const queryKey = ['get-products']
 
   const query = useQuery({
     queryKey,

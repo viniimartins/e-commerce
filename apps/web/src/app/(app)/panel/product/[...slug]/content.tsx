@@ -11,6 +11,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { useGetCategories } from '@/app/(app)/hooks/use-get-category'
+import { useUploadImage } from '@/app/(app)/hooks/use-upload-image'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -63,6 +64,9 @@ import {
 import { Textarea } from '@/components/ui/textarea'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
+import { normalizedPrice } from '@/utils/normalized-price'
+
+import { useCreateProduct } from './hooks/use-create-product'
 
 const formProductSchema = z.object({
   name: z.string().min(1, { message: 'O nome é obrigatório' }),
@@ -70,9 +74,9 @@ const formProductSchema = z.object({
   price: z.string().min(1, { message: 'O preço é obrigatório' }),
   quantity: z.string().min(1, { message: 'A quantidade é obrigatória' }),
   categoryId: z.string().min(1, { message: 'A categoria é obrigatória' }),
-  productImages: z.array(z.string()).min(1, {
-    message: 'As imagens são obrigatórias',
-  }),
+  productImages: z
+    .array(z.instanceof(File))
+    .min(1, 'Envie pelo menos uma imagem'),
 })
 
 type FormProductSchema = z.infer<typeof formProductSchema>
@@ -92,6 +96,12 @@ export function Content() {
     hasNextPage,
     isFetchingNextPage,
   } = useGetCategories()
+
+  const { mutateAsync: uploadImage } = useUploadImage()
+
+  const { mutate: createProduct } = useCreateProduct({
+    queryKey: ['get-products'],
+  })
 
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,
@@ -121,22 +131,44 @@ export function Content() {
   const { errorProductImage } = {
     errorProductImage: errors.productImages,
   }
+  async function onSubmit(values: FormProductSchema) {
+    const { productImages, ...product } = values
 
-  function onSubmit(values: FormProductSchema) {
-    console.log(values)
+    const productImagesIds = []
+
+    for (const image of productImages) {
+      const { id } = await uploadImage({ image })
+
+      productImagesIds.push(id)
+    }
+
+    createProduct(
+      {
+        product: {
+          ...product,
+          price: normalizedPrice(product.price),
+          quantity: Number(product.quantity),
+          productImages: productImagesIds,
+        },
+      },
+      {
+        onSuccess: () => {
+          form.reset()
+          setProductImages([])
+        },
+      },
+    )
   }
 
   function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
     if (e.target.files && e.target.files.length > 0) {
       const file = e.target.files[0]
-
       const imageUrl = URL.createObjectURL(file)
 
-      setProductImages([...productImages, imageUrl])
+      setProductImages((prev) => [...prev, imageUrl])
 
-      const currentImages = form.getValues().productImages
-
-      form.setValue('productImages', [...currentImages, imageUrl])
+      const currentFiles = (form.getValues().productImages as File[]) || []
+      form.setValue('productImages', [...currentFiles, file])
     }
   }
 
@@ -151,7 +183,10 @@ export function Content() {
 
     form.setValue(
       'productImages',
-      currentImages.filter((image) => image !== imageUrl),
+      currentImages.filter((_, index) => {
+        const imageUrlToCompare = productImages[index]
+        return imageUrlToCompare !== imageUrl
+      }),
     )
   }
 
