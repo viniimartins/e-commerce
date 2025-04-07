@@ -67,7 +67,6 @@ export function getOrder(app: FastifyInstance) {
                     productImage: z.array(
                       z.object({
                         id: z.string(),
-                        createdAt: z.date(),
                         url: z.string(),
                         productId: z.string(),
                       }),
@@ -131,6 +130,7 @@ export function getOrder(app: FastifyInstance) {
               price: Number(item.product.price),
               productImage: item.product.productImage.map((image) => ({
                 ...image,
+                id: image.imageId,
                 url: image.image.url,
               })),
             },

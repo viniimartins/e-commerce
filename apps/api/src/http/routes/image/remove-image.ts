@@ -43,7 +43,7 @@ export function removeImage(app: FastifyInstance) {
       const imageUrl = new URL(image.url)
       const pathname = imageUrl.pathname
       const filename = pathname.split('/').pop()
-      const filePath = path.resolve(`./uploads/${filename}`)
+      const filePath = path.resolve(`./images/${filename}`)
 
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath)

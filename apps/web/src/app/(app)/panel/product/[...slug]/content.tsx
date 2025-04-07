@@ -61,7 +61,7 @@ import {
 } from '@/components/ui/table'
 import { Textarea } from '@/components/ui/textarea'
 import { useCreateProduct } from '@/hooks/mutation/product/create'
-import { useUploadImage } from '@/hooks/mutation/upload/upload-image'
+import { useUploadImage } from '@/hooks/mutation/image/upload'
 import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'

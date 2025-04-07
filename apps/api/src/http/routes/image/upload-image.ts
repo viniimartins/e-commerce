@@ -17,7 +17,7 @@ export function uploadImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
 
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/upload',
+    '/image',
     {
       schema: {
         tags: ['Upload'],
@@ -41,11 +41,11 @@ export function uploadImage(app: FastifyInstance) {
       }
 
       const filename = `${Date.now()}-${file.filename}`
-      const filePath = `./uploads/${filename}`
+      const filePath = `./images/${filename}`
 
       await pump(file.file, fs.createWriteStream(filePath))
 
-      const url = `${env.NEXT_PUBLIC_API_URL}/uploads/${filename}`
+      const url = `${env.NEXT_PUBLIC_API_URL}/images/${filename}`
 
       const image = await prisma.image.create({
         data: {

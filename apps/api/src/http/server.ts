@@ -22,19 +22,20 @@ import { deleteCategory } from './routes/category/delete-category'
 import { getCategories } from './routes/category/get-categories'
 import { getCategory } from './routes/category/get-category'
 import { updateCategory } from './routes/category/update-category'
+import { removeImage } from './routes/image/remove-image'
+import { uploadImage } from './routes/image/upload-image'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { nextStatusOrder } from './routes/order/next-status-order'
 import { createProduct } from './routes/product/create-product'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
-import { removeImage } from './routes/upload/remove-image'
-import { uploadImage } from './routes/upload/upload-image'
 import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
 import { removeAllFromWishlist } from './routes/wishlist/remove-all-wishlist'
 import { removeFromWishlist } from './routes/wishlist/remove-from-wishlist'
+
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
@@ -77,8 +78,8 @@ app.register(fastifyCors, {
 })
 
 app.register(fastifyStatic, {
-  root: path.join(__dirname, '..', '..', 'uploads'),
-  prefix: '/uploads/',
+  root: path.join(__dirname, '..', '..', 'images'),
+  prefix: '/images/',
 })
 
 app.register(authenticateWithGithub)

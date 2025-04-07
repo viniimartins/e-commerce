@@ -101,8 +101,6 @@ model Image {
 }
 
 model ProductImage {
-  id String @id @default(uuid())
-
   imageId String @map("image_id")
   image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
@@ -111,6 +109,7 @@ model ProductImage {
 
   createdAt DateTime @default(now()) @map("created_at")
 
+  @@id([productId, imageId])
   @@map("product_images")
 }
 
@@ -124,7 +123,7 @@ model Wishlist {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@id([userId, productId])
-  @@map("wishlist")
+  @@map("wishlists")
 }
 
 enum OrderBilling {

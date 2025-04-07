@@ -16,7 +16,7 @@ async function post({ image }: Params) {
 
   formData.append('image', image)
 
-  const { data } = await api.post<Response>('/upload-image', formData, {
+  const { data } = await api.post<Response>('/image', formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
