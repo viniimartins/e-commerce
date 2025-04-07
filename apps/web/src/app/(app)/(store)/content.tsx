@@ -70,7 +70,7 @@ export function Content() {
           <CarouselControls api={apiBestSelling} />
         </div>
 
-        {/* <Carousel
+        <Carousel
           opts={{
             align: 'start',
           }}
@@ -97,7 +97,7 @@ export function Content() {
                 )
               })}
           </CarouselContent>
-        </Carousel> */}
+        </Carousel>
 
         <div className="flex justify-center">
           <Link href="/shop">

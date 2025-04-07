@@ -74,7 +74,7 @@ export function ProductCard(props: Props) {
             <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
               {productImage && (
                 <Image
-                  src={productImage[0].url}
+                  src={productImage[0].image.url}
                   alt={name}
                   fill
                   quality={100}
@@ -187,7 +187,7 @@ export function ProductCard(props: Props) {
                 <div className="relative h-full w-full">
                   {productImage && (
                     <Image
-                      src={productImage[0].url}
+                      src={productImage[0].image.url}
                       alt={name}
                       fill
                       quality={100}
@@ -253,7 +253,7 @@ export function ProductCard(props: Props) {
             >
               {productImage && (
                 <Image
-                  src={productImage[0].url}
+                  src={productImage[0].image.url}
                   alt={name}
                   fill
                   quality={100}
@@ -322,7 +322,7 @@ export function ProductCard(props: Props) {
                 <div className="relative h-full w-full">
                   {productImage && (
                     <Image
-                      src={productImage[0].url}
+                      src={productImage[0].image.url}
                       alt={name}
                       fill
                       quality={100}
@@ -389,8 +389,8 @@ export function ProductCard(props: Props) {
           <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
             <Carousel>
               <CarouselContent>
-                {productImage?.map((image) => {
-                  const { id, url } = image
+                {productImage?.map(({ image }) => {
+                  const { url } = image
 
                   return (
                     <CarouselItem

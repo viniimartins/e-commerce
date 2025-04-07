@@ -23,8 +23,10 @@ export interface IImage {
   url: string
 }
 
-export interface IProductImage extends IImage {
+export interface IProductImage {
   productId: string
+  imageId: string
+  image: IImage
 }
 
 export interface IProduct {
