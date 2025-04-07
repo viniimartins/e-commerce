@@ -18,7 +18,7 @@ export function Content() {
   function handleMoveAllToCart() {
     removeAll(undefined, {
       onSuccess: () => {
-        products?.data.forEach((product) => {
+        products?.data.forEach(({ product }) => {
           addToCart(product)
         })
       },
@@ -44,7 +44,7 @@ export function Content() {
       )}
 
       <div className="grid w-full grid-cols-4 gap-4">
-        {products?.data.map((product) => {
+        {products?.data.map(({ product }) => {
           const { id } = product
 
           return <ProductCard variant="wishlist" key={id} data={product} />

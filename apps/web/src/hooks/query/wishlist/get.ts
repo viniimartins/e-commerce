@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
-import type { IProduct } from '@/app/(app)/types'
+import type { IWishlist } from '@/app/(app)/types'
 import { isAuthenticated } from '@/auth/client-auth'
 import { api } from '@/service/api'
 import type { PaginatedResponse } from '@/types/paginated-response'
@@ -17,7 +17,7 @@ interface Props {
 }
 
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<IProduct>>('/wishlist', {
+  const { data } = await api.get<PaginatedResponse<IWishlist>>('/wishlist', {
     params,
   })
 

@@ -32,11 +32,17 @@ export interface IProductImage {
 export interface IProduct {
   id: string
   name: string
-  price: number
+  price: string
   description: string
   quantity: number
   category: ICategory
   productImage: IProductImage[]
+}
+
+export interface IWishlist {
+  productId: string
+  userId: string
+  product: IProduct
 }
 
 export interface IAddress {
@@ -72,7 +78,7 @@ export enum OrderBilling {
 
 export interface IProductBilling {
   orderId: string
-  quantity: number
+  quantity: string
   productId: string
   product: IProduct
 }
@@ -93,7 +99,7 @@ export interface IOrder {
   currentStatus: OrderStatus
   products: IProductBilling[]
   address: IAddress
-  total: number
+  total: string
   createdAt: Date
   updatedAt: Date
   userId: string

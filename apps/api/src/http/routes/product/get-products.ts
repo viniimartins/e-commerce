@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime/library'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -25,7 +26,7 @@ export async function getProducts(app: FastifyInstance) {
                 id: z.string(),
                 name: z.string(),
                 description: z.string(),
-                price: z.number(),
+                price: z.instanceof(Decimal),
                 quantity: z.number(),
                 category: z.object({
                   id: z.string(),
@@ -100,10 +101,7 @@ export async function getProducts(app: FastifyInstance) {
       const totalPages = Math.ceil(total / perPage)
 
       return reply.status(200).send({
-        data: products.map((product) => ({
-          ...product,
-          price: Number(product.price),
-        })),
+        data: products,
         meta: {
           pageIndex: page,
           perPage,

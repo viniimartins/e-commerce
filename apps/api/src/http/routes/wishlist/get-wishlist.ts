@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime/library'
 import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -24,22 +25,26 @@ export function getWishlist(app: FastifyInstance) {
             200: z.object({
               data: z.array(
                 z.object({
-                  id: z.string(),
-                  name: z.string(),
-                  description: z.string(),
-                  price: z.number(),
-                  quantity: z.number(),
-                  productImage: z.array(
-                    z.object({
-                      image: z.object({
-                        id: z.string(),
-                        url: z.string(),
+                  userId: z.string(),
+                  productId: z.string(),
+                  product: z.object({
+                    id: z.string(),
+                    name: z.string(),
+                    description: z.string(),
+                    price: z.instanceof(Decimal),
+                    quantity: z.number(),
+                    categoryId: z.string(),
+                    productImage: z.array(
+                      z.object({
+                        imageId: z.string(),
+                        productId: z.string(),
+                        image: z.object({
+                          id: z.string(),
+                          url: z.string(),
+                        }),
                       }),
-                      createdAt: z.date(),
-                      imageId: z.string(),
-                      productId: z.string(),
-                    }),
-                  ),
+                    ),
+                  }),
                 }),
               ),
               meta: z.object({
@@ -84,10 +89,7 @@ export function getWishlist(app: FastifyInstance) {
         const totalPages = Math.ceil(total / perPage)
 
         return reply.status(200).send({
-          data: wishlist.map((item) => ({
-            ...item.product,
-            price: Number(item.product.price),
-          })),
+          data: wishlist,
           meta: {
             pageIndex: page,
             perPage,
