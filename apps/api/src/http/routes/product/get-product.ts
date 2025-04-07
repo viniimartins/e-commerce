@@ -72,9 +72,7 @@ export async function getProduct(app: FastifyInstance) {
         throw new BadRequestError('Product not found.')
       }
 
-      return reply.status(200).send({
-        ...product,
-      })
+      return reply.status(200).send(product)
     },
   )
 }

@@ -27,7 +27,9 @@ export function createBilling(app: FastifyInstance) {
                 name: z.string(),
                 description: z.string(),
                 quantity: z.number(),
-                price: z.number().transform((value) => Math.floor(value)),
+                price: z
+                  .string()
+                  .transform((value) => Math.floor(Number(value))),
               }),
             ),
             address: z.object({
@@ -74,7 +76,7 @@ export function createBilling(app: FastifyInstance) {
             throw new BadRequestError('Product not available')
           }
 
-          if (productExists.price.toNumber() !== price) {
+          if (Number(productExists.price) * 100 !== price) {
             throw new BadRequestError('Product price changed')
           }
         }

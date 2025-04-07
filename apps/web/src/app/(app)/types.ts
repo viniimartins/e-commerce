@@ -78,7 +78,7 @@ export enum OrderBilling {
 
 export interface IProductBilling {
   orderId: string
-  quantity: string
+  quantity: number
   productId: string
   product: IProduct
 }
@@ -95,10 +95,8 @@ export interface IOrder {
   url: string
   gatewayId: string
   billing: OrderBilling
-  status: IOrderStatus[]
   currentStatus: OrderStatus
   products: IProductBilling[]
-  address: IAddress
   total: string
   createdAt: Date
   updatedAt: Date

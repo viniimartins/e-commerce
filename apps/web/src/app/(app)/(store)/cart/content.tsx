@@ -61,7 +61,7 @@ export function Content() {
                     />
                   </Button>
                   <Image
-                    src={product.productImage[0].url}
+                    src={product.productImage[0].image.url}
                     fill
                     className="object-cover"
                     alt="Image cart small"

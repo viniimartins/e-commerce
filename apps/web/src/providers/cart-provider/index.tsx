@@ -97,11 +97,11 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   const total = cart.reduce((acc, product) => {
-    return acc + product.price * product.cartQuantity
+    return acc + Number(product.price) * product.cartQuantity
   }, 0)
 
   const subTotal = cart.reduce((acc, product) => {
-    return acc + product.price
+    return acc + Number(product.price)
   }, 0)
 
   return (

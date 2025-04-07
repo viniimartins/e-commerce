@@ -32,7 +32,7 @@ export function OrderCard({ data }: Props) {
               {formatDateLong(createdAt)}
             </span>
             <Separator orientation="vertical" />
-            <span>{formatPrice(total / 100)}</span>
+            <span>{formatPrice(Number(total) / 100)}</span>
           </div>
 
           <div className="flex h-8 gap-3">
@@ -76,7 +76,7 @@ export function OrderCard({ data }: Props) {
             >
               <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[5rem] w-[5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
                 <Image
-                  src={productImage[0]?.url}
+                  src={productImage[0].image.url}
                   alt="product"
                   fill
                   quality={100}
