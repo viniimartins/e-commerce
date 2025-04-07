@@ -13,15 +13,20 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { TableCell, TableHead } from '@/components/ui/table'
+import type { ModalActions } from '@/types/modal'
 import { formatPrice } from '@/utils/formatPrice'
 
 import type { IProduct } from '../../types'
 
 interface ColumnsProps {
   isLoading: boolean
+  deleteProductModalActions: ModalActions<IProduct>
 }
 
-export function getColumns({ isLoading }: ColumnsProps): ColumnDef<IProduct>[] {
+export function getColumns({
+  isLoading,
+  deleteProductModalActions,
+}: ColumnsProps): ColumnDef<IProduct>[] {
   return [
     {
       accessorKey: 'productImage',
@@ -108,7 +113,11 @@ export function getColumns({ isLoading }: ColumnsProps): ColumnDef<IProduct>[] {
                 <Link href={`/panel/product/${row.original.id}/edit`}>
                   <DropdownMenuItem>Editar</DropdownMenuItem>
                 </Link>
-                <DropdownMenuItem>Deletar</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => deleteProductModalActions.open(row.original)}
+                >
+                  Deletar
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </TableCell>

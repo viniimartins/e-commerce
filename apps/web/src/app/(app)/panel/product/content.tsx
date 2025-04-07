@@ -4,9 +4,22 @@ import { PlusIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useCallback, useState } from 'react'
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { useDeleteProduct } from '@/hooks/mutation/product/delete'
 import { useGetProducts } from '@/hooks/query/product/get'
+import { useModal } from '@/hooks/use-modal'
 
+import type { IProduct } from '../../types'
 import { DataTable } from '../_components/table'
 import { getColumns } from './columns'
 interface ProductsTableParams {
@@ -23,6 +36,22 @@ export function Content() {
 
   const { pageIndex, perPage } = productsTableParams
 
+  const {
+    actions: deleteProductModalActions,
+    isOpen: isDeleteProductModalOpen,
+    target: deleteProductModalTarget,
+  } = useModal<IProduct>()
+
+  const {
+    data: products,
+    isLoading,
+    queryKey,
+  } = useGetProducts({
+    page: pageIndex,
+    perPage,
+  })
+  const { mutateAsync: deleteProduct } = useDeleteProduct({ queryKey })
+
   const onChangeProductsTableParams = useCallback(
     (updatedParams: Partial<ProductsTableParams>) => {
       return setProductsTableParams((state) => ({ ...state, ...updatedParams }))
@@ -30,10 +59,10 @@ export function Content() {
     [],
   )
 
-  const { data: products, isLoading } = useGetProducts({
-    page: pageIndex,
-    perPage,
-  })
+  function handleDeleteProduct() {
+    deleteProductModalTarget &&
+      deleteProduct({ product: { id: deleteProductModalTarget.id } })
+  }
 
   return (
     <>
@@ -55,12 +84,33 @@ export function Content() {
         </div>
 
         <DataTable
-          columns={getColumns({ isLoading })}
+          columns={getColumns({ isLoading, deleteProductModalActions })}
           data={products?.data ?? []}
           meta={products?.meta}
           onChangeParams={onChangeProductsTableParams}
         />
       </div>
+
+      <AlertDialog
+        open={isDeleteProductModalOpen}
+        onOpenChange={deleteProductModalActions.close}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Deseja deletar o produto?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Esta ação não pode ser revertida. Isso irá deletar o produto
+              permanentemente e remover seus dados dos nossos servidores.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={handleDeleteProduct}>
+              Deletar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   )
 }
