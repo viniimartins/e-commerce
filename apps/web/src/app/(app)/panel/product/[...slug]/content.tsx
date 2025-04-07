@@ -4,12 +4,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronLeft, LoaderCircle, Trash, Upload } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChangeEvent, Fragment, useRef, useState } from 'react'
+import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
+import type { IProduct } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -82,7 +83,14 @@ const formProductSchema = z.object({
 
 type FormProductSchema = z.infer<typeof formProductSchema>
 
-export function Content() {
+interface Props {
+  product: IProduct | null
+  isEditing: boolean
+}
+
+export function Content(props: Props) {
+  const { product, isEditing } = props
+
   const [selectOpen, setSelectOpen] = useState(false)
   const [productImages, setProductImages] = useState<string[]>([])
 
@@ -127,11 +135,15 @@ export function Content() {
   const {
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = form
+
+  console.log(productImages)
 
   const { errorProductImage } = {
     errorProductImage: errors.productImages,
   }
+
   async function onSubmit(values: FormProductSchema) {
     const { productImages, ...product } = values
 
@@ -143,27 +155,29 @@ export function Content() {
       productImagesIds.push(id)
     }
 
-    createProduct(
-      {
-        product: {
-          ...product,
-          price: normalizedPrice(product.price),
-          quantity: Number(product.quantity),
-          productImages: productImagesIds,
+    if (!isEditing) {
+      createProduct(
+        {
+          product: {
+            ...product,
+            price: normalizedPrice(product.price),
+            quantity: Number(product.quantity),
+            productImages: productImagesIds,
+          },
         },
-      },
-      {
-        onSuccess: () => {
-          form.reset()
-          setProductImages([])
+        {
+          onSuccess: () => {
+            form.reset()
+            setProductImages([])
+          },
+          onError: () => {
+            for (const imageId of productImagesIds) {
+              removeImage({ image: { id: imageId } })
+            }
+          },
         },
-        onError: () => {
-          for (const imageId of productImagesIds) {
-            removeImage({ image: { id: imageId } })
-          }
-        },
-      },
-    )
+      )
+    }
   }
 
   function handleImageUpload(e: ChangeEvent<HTMLInputElement>) {
@@ -200,6 +214,21 @@ export function Content() {
     fileInputRef.current?.click()
   }
 
+  useEffect(() => {
+    if (product) {
+      reset({
+        name: product.name,
+        description: product.description,
+        price: String(product.price),
+        quantity: String(product.quantity),
+        categoryId: product.category.id,
+        productImages: [],
+      })
+
+      setProductImages(product.productImage.map(({ image }) => image.url))
+    }
+  }, [product])
+
   return (
     <>
       <div className="grid flex-1 items-start gap-4">
@@ -213,7 +242,7 @@ export function Content() {
             </Link>
 
             <h1 className="flex-1 shrink-0 text-xl font-semibold tracking-tight whitespace-nowrap sm:grow-0">
-              Adicionar Produto
+              {isEditing ? 'Editar Produto' : 'Adicionar Produto'}
             </h1>
             <div className="ml-auto flex items-center justify-center gap-2">
               <Button variant="outline" size="sm">
@@ -534,6 +563,7 @@ export function Content() {
           </Form>
         </div>
       </div>
+
       <Dialog open={isOpen} onOpenChange={actions.toggle}>
         <DialogContent className="max-h-[70vh]! w-[50vw]! max-w-[55vw]! p-0">
           <DialogHeader className="hidden">

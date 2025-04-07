@@ -8,6 +8,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
+import { getProduct } from '@/service/product'
 import { normalizeSlug } from '@/utils/normalized-slug'
 
 import { Content } from './content'
@@ -37,7 +38,9 @@ export default async function ProductCreateAndEditPage({
 }) {
   const { slug } = await params
 
-  const { isEditing } = normalizeSlug(slug)
+  const { isEditing, id } = normalizeSlug(slug)
+
+  const product = id ? await getProduct({ id }) : null
 
   return (
     <>
@@ -59,7 +62,7 @@ export default async function ProductCreateAndEditPage({
         </BreadcrumbList>
       </Breadcrumb>
 
-      <Content />
+      <Content product={product} isEditing={isEditing} />
     </>
   )
 }
