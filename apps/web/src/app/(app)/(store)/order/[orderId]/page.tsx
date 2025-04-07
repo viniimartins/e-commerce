@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 
+import { OrderStatusLabels } from '@/app/(app)/types'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,18 +13,34 @@ import { getOrder } from '@/service/order'
 
 import { Content } from './content'
 
-interface Props {
+interface Params {
   params: Promise<{ orderId: string }>
 }
 
-export default async function OrderPage({ params }: Props) {
-  const { orderId } = await params
-
+async function fetchOrderData(orderId: string) {
   const order = await getOrder({ id: orderId })
 
   if (!order) {
     notFound()
   }
+
+  return order
+}
+
+export async function generateMetadata({ params }: Params) {
+  const { orderId } = await params
+
+  const order = await fetchOrderData(orderId)
+
+  return {
+    title: OrderStatusLabels[order.currentStatus],
+  }
+}
+
+export default async function OrderPage({ params }: Params) {
+  const { orderId } = await params
+
+  const order = await fetchOrderData(orderId)
 
   return (
     <>

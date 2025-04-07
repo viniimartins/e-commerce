@@ -28,6 +28,7 @@ import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { nextStatusOrder } from './routes/order/next-status-order'
 import { createProduct } from './routes/product/create-product'
+import { deleteProduct } from './routes/product/delete-product'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
 import { abacatepay } from './routes/webhook/abacatepay'
@@ -94,6 +95,7 @@ app.register(updateCategory)
 app.register(getProducts)
 app.register(getProduct)
 app.register(createProduct)
+app.register(deleteProduct)
 
 app.register(getWishlist)
 app.register(addToWishlist)
