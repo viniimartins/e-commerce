@@ -29,8 +29,12 @@ export async function getProduct(app: FastifyInstance) {
             }),
             productImage: z.array(
               z.object({
-                id: z.string(),
-                url: z.string(),
+                image: z.object({
+                  id: z.string(),
+                  url: z.string(),
+                }),
+                createdAt: z.date(),
+                imageId: z.string(),
                 productId: z.string(),
               }),
             ),
@@ -70,11 +74,6 @@ export async function getProduct(app: FastifyInstance) {
       return reply.status(200).send({
         ...product,
         price: Number(product.price),
-        productImage: product.productImage.map((image) => ({
-          ...image,
-          id: image.imageId,
-          url: image.image.url,
-        })),
       })
     },
   )

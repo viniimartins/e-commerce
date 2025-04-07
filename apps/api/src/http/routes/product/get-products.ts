@@ -33,8 +33,12 @@ export async function getProducts(app: FastifyInstance) {
                 }),
                 productImage: z.array(
                   z.object({
-                    id: z.string(),
-                    url: z.string(),
+                    image: z.object({
+                      id: z.string(),
+                      url: z.string(),
+                    }),
+                    createdAt: z.date(),
+                    imageId: z.string(),
                     productId: z.string(),
                   }),
                 ),
@@ -94,19 +98,11 @@ export async function getProducts(app: FastifyInstance) {
       ])
 
       const totalPages = Math.ceil(total / perPage)
+
       return reply.status(200).send({
         data: products.map((product) => ({
-          id: product.id,
-          name: product.name,
-          description: product.description,
+          ...product,
           price: Number(product.price),
-          quantity: product.quantity,
-          category: product.category,
-          productImage: product.productImage.map((image) => ({
-            ...image,
-            id: image.imageId,
-            url: image.image.url,
-          })),
         })),
         meta: {
           pageIndex: page,
