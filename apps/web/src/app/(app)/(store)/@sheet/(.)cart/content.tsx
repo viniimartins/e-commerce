@@ -10,7 +10,7 @@ import { Separator } from '@/components/ui/separator'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
-import Counter from '../../components/counter'
+import Counter from '../../_components/counter'
 
 export function Content() {
   const {

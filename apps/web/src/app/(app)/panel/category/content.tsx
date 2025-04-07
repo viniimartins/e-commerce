@@ -46,11 +46,12 @@ import { useGetTableCategories } from '@/hooks/query/category/get'
 import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
+import { cn } from '@/lib/utils'
 import type { TableParams } from '@/types/paginated-response'
 import { formatPrice } from '@/utils/formatPrice'
 
 import { ICategory } from '../../types'
-import { DataTable } from '../components/table'
+import { DataTable } from '../_components/table'
 import { getColumns } from './columns'
 
 const formCategorySchema = z.object({
@@ -295,7 +296,9 @@ export function Content() {
             </DialogDescription>
           </DialogHeader>
 
-          <ScrollArea className="h-96 pr-3">
+          <ScrollArea
+            className={cn(products && products.length > 5 ? 'h-96' : 'h-auto')}
+          >
             {products?.map((product, index) => {
               const lastIndex = products.length === index + 1
 
@@ -308,7 +311,7 @@ export function Content() {
                       <div className="flex items-center gap-4">
                         <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
                           <Image
-                            src={productImage[0].url}
+                            src={productImage[0].image.url}
                             alt="product"
                             fill
                             quality={100}

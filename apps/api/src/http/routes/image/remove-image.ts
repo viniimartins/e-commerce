@@ -13,7 +13,7 @@ export function removeImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
 
   app.withTypeProvider<ZodTypeProvider>().delete(
-    '/remove/:idImage',
+    '/image/:idImage',
     {
       schema: {
         tags: ['Upload'],

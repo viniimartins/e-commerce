@@ -1,4 +1,4 @@
-export function normalizedPrice(price: string): number {
+export function normalizedPrice(price: string) {
   const cleaned = price
     .trim()
     .replace(/\s/g, '')
@@ -6,5 +6,5 @@ export function normalizedPrice(price: string): number {
     .replace(/\./g, '')
     .replace(',', '.')
 
-  return Number(cleaned)
+  return cleaned
 }

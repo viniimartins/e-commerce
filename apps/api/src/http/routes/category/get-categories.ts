@@ -13,7 +13,7 @@ export async function getCategories(app: FastifyInstance) {
         summary: 'List categories',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
-          perPage: z.coerce.number().min(1).max(20).default(10),
+          perPage: z.coerce.number().min(1).max(50).default(10),
         }),
         response: {
           200: z.object({

@@ -5,8 +5,8 @@ import { useRemoveAllWishlist } from '@/hooks/mutation/wishlist/remove-all'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useCart } from '@/providers/cart-provider'
 
-import { ProductCard } from '../components/product-card'
-import { ProductCardSkeleton } from '../components/product-card/skeleton'
+import { ProductCard } from '../_components/product-card'
+import { ProductCardSkeleton } from '../_components/product-card/skeleton'
 
 export function Content() {
   const { addToCart } = useCart()

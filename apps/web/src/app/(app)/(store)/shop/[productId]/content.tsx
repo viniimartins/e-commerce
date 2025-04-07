@@ -24,9 +24,9 @@ import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
-import Counter from '../../components/counter'
-import { ProductCard } from '../../components/product-card'
-import { ProductCardSkeleton } from '../../components/product-card/skeleton'
+import Counter from '../../_components/counter'
+import { ProductCard } from '../../_components/product-card'
+import { ProductCardSkeleton } from '../../_components/product-card/skeleton'
 
 interface Props {
   product: IProduct

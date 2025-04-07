@@ -37,12 +37,12 @@ export function getColumns({
       },
     },
     {
-      accessorKey: 'productsCount',
+      accessorKey: 'count',
       header: () => <TableHead className="text-center">Produtos</TableHead>,
       cell: ({ row }) => {
         return <TableCell isLoading={isLoading}>
           <div className="flex items-center justify-between gap-2">
-            <span className="text-sm font-medium">{row.original.productsCount}</span>
+            <span className="text-sm font-medium">{row.original.count}</span>
             <Button size="icon" variant="outline" className="p-0" onClick={() => viewProductsModalActions.open(row.original)}>
               <Eye className="h-4 w-4" />
             </Button>

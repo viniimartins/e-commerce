@@ -1,7 +1,7 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { ChevronLeft, Trash, Upload } from 'lucide-react'
+import { ChevronLeft, LoaderCircle, Trash, Upload } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ChangeEvent, Fragment, useRef, useState } from 'react'
@@ -60,11 +60,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Textarea } from '@/components/ui/textarea'
-import { useCreateProduct } from '@/hooks/mutation/product/create'
+import { useRemoveImage } from '@/hooks/mutation/image/remove'
 import { useUploadImage } from '@/hooks/mutation/image/upload'
+import { useCreateProduct } from '@/hooks/mutation/product/create'
 import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
+import { cn } from '@/lib/utils'
 import { normalizedPrice } from '@/utils/normalized-price'
 
 const formProductSchema = z.object({
@@ -98,9 +100,9 @@ export function Content() {
 
   const { mutateAsync: uploadImage } = useUploadImage()
 
-  const { mutate: createProduct } = useCreateProduct({
-    queryKey: ['get-products'],
-  })
+  const { mutateAsync: removeImage } = useRemoveImage()
+
+  const { mutate: createProduct } = useCreateProduct()
 
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,
@@ -124,7 +126,7 @@ export function Content() {
 
   const {
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = form
 
   const { errorProductImage } = {
@@ -133,7 +135,7 @@ export function Content() {
   async function onSubmit(values: FormProductSchema) {
     const { productImages, ...product } = values
 
-    const productImagesIds = []
+    const productImagesIds: string[] = []
 
     for (const image of productImages) {
       const { id } = await uploadImage({ image })
@@ -154,6 +156,11 @@ export function Content() {
         onSuccess: () => {
           form.reset()
           setProductImages([])
+        },
+        onError: () => {
+          for (const imageId of productImagesIds) {
+            removeImage({ image: { id: imageId } })
+          }
         },
       },
     )
@@ -213,15 +220,10 @@ export function Content() {
                 Descartar
               </Button>
               <Button size="sm" type="submit" form="product-form">
-                {/* {isSubmitting ? (
-                <>
-                  Salvando
-                  <LoaderCircle className="ml-2 h-4 w-4 animate-spin" />
-                </>
-              ) : (
-                'Salvar Produto'
-              )} */}
                 Salvar Produto
+                {isSubmitting && (
+                  <LoaderCircle className="ml-2 h-4 w-4 animate-spin" />
+                )}
               </Button>
             </div>
           </div>
@@ -492,7 +494,12 @@ export function Content() {
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                <ScrollArea className="h-56">
+                                <ScrollArea
+                                  className={cn('h-56', {
+                                    'h-auto':
+                                      categories && categories?.length < 10,
+                                  })}
+                                >
                                   {categories?.map((category, index) => {
                                     const isLastItem =
                                       index === categories.length - 1

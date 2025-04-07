@@ -48,6 +48,10 @@ export default async function ProductCreateAndEditPage({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
+            <BreadcrumbLink href="/panel/product">Produtos</BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
             <BreadcrumbPage>
               {isEditing ? 'Editar Produto' : 'Adicionar Produto'}
             </BreadcrumbPage>

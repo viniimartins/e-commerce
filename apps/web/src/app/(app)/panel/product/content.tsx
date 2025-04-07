@@ -7,7 +7,7 @@ import { useCallback, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useGetProducts } from '@/hooks/query/product/get'
 
-import { DataTable } from '../components/table'
+import { DataTable } from '../_components/table'
 import { getColumns } from './columns'
 interface ProductsTableParams {
   pageIndex: number

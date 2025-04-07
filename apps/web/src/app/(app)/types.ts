@@ -15,6 +15,7 @@ export interface IUser {
 export interface ICategory {
   id: string
   name: string
+  count: number
 }
 
 export interface IImage {
@@ -100,4 +101,9 @@ export interface IOrder {
   url: string
   createdAt: Date
   updatedAt: Date
+}
+
+export interface IOrderById extends IOrder {
+  address: IAddress
+  status: IOrderStatus[]
 }

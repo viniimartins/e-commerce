@@ -110,10 +110,12 @@ export function Content({ data }: Props) {
 
           <Card className="gap-1 rounded-none">
             <ScrollArea
-              className={cn(products.length >= 4 ? 'h-[20rem]' : undefined)}
+              className={cn('h-56', {
+                'h-auto': products && products?.length <= 4,
+              })}
             >
               <CardContent>
-                {products.map(({ product, quantity }, index) => {
+                {products?.map(({ product, quantity }, index) => {
                   const lastIndex = products.length === index + 1
 
                   const { id, name, price, productImage } = product

@@ -23,11 +23,11 @@ import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useGetProducts } from '@/hooks/query/product/get'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 
-import { BannerCarousel } from './components/banner-carousel'
-import { CategoryCard } from './components/category-card'
-import { CarouselControls } from './components/controls-carousel'
-import { ProductCard } from './components/product-card'
-import { ProductCardSkeleton } from './components/product-card/skeleton'
+import { BannerCarousel } from './_components/banner-carousel'
+import { CategoryCard } from './_components/category-card'
+import { CarouselControls } from './_components/controls-carousel'
+import { ProductCard } from './_components/product-card'
+import { ProductCardSkeleton } from './_components/product-card/skeleton'
 
 export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()

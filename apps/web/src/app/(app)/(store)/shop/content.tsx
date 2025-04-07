@@ -14,8 +14,8 @@ import { useGetCategory } from '@/hooks/query/category/get-by-id'
 import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { cn } from '@/lib/utils'
 
-import { ProductCard } from '../components/product-card'
-import { ProductCardSkeleton } from '../components/product-card/skeleton'
+import { ProductCard } from '../_components/product-card'
+import { ProductCardSkeleton } from '../_components/product-card/skeleton'
 import { Filter } from './filter'
 
 export type GridView = 'grid3x3' | 'grid2x2' | 'columns2' | 'rows2'

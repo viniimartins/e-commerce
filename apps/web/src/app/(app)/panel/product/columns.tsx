@@ -31,7 +31,7 @@ export function getColumns({ isLoading }: ColumnsProps): ColumnDef<IProduct>[] {
           <TableCell isLoading={isLoading}>
             <div className="relative h-14 w-14">
               <Image
-                src={row.original.productImage[0].url}
+                src={row.original.productImage[0].image.url}
                 alt={row.original.name}
                 fill
                 className="object-cover"

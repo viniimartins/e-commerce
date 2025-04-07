@@ -14,7 +14,7 @@ export function createProduct(app: FastifyInstance) {
         body: z.object({
           name: z.string(),
           description: z.string(),
-          price: z.number(),
+          price: z.string(),
           categoryId: z.string(),
           quantity: z.number(),
           productImages: z.array(z.string()),

@@ -16,7 +16,7 @@ export async function getProducts(app: FastifyInstance) {
         summary: 'List all product',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
-          perPage: z.coerce.number().min(1).max(24).default(12),
+          perPage: z.coerce.number().min(1).max(50).default(12),
           categoryId: z.string().optional(),
         }),
         response: {
