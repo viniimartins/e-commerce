@@ -17,7 +17,7 @@ export function uploadImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
 
   app.withTypeProvider<ZodTypeProvider>().post(
-    '/upload-image',
+    '/upload',
     {
       schema: {
         tags: ['Upload'],

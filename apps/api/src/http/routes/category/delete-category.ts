@@ -12,14 +12,14 @@ export async function deleteCategory(app: FastifyInstance) {
     .withTypeProvider<ZodTypeProvider>()
     .register(auth)
     .delete(
-      '/category/:id',
+      '/category/:idCategory',
       {
         schema: {
           tags: ['Category'],
           summary: 'Delete category',
           security: [{ bearerAuth: [] }],
           params: z.object({
-            id: z.string(),
+            idCategory: z.string(),
           }),
           response: {
             200: z.null(),
@@ -30,10 +30,10 @@ export async function deleteCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        const { id } = request.params
+        const { idCategory } = request.params
 
         const category = await prisma.category.findUnique({
-          where: { id },
+          where: { id: idCategory },
         })
 
         if (!category) {
@@ -41,7 +41,7 @@ export async function deleteCategory(app: FastifyInstance) {
         }
 
         await prisma.category.delete({
-          where: { id },
+          where: { id: idCategory },
         })
 
         return reply.status(200).send(null)

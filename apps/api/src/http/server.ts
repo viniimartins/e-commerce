@@ -28,6 +28,7 @@ import { nextStatusOrder } from './routes/order/next-status-order'
 import { createProduct } from './routes/product/create-product'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
+import { removeImage } from './routes/upload/remove-image'
 import { uploadImage } from './routes/upload/upload-image'
 import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
@@ -107,6 +108,7 @@ app.register(nextStatusOrder)
 app.register(abacatepay)
 
 app.register(uploadImage)
+app.register(removeImage)
 
 app.listen({ port: env.PORT }).then(() => {
   console.log('HTTP server running!')
