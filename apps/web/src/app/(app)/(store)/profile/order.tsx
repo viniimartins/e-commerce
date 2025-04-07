@@ -20,7 +20,7 @@ interface Props {
   data: IOrder
 }
 
-export function OrderCard({ data }: Props) {
+export function Order({ data }: Props) {
   const { createdAt, products, total, id, currentStatus, url } = data
 
   return (

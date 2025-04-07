@@ -11,8 +11,12 @@ interface Params {
   perPage?: number
 }
 
+interface Category extends ICategory {
+  count: number
+}
+
 async function get(params: Params) {
-  const { data } = await api.get<PaginatedResponse<ICategory>>('/category', {
+  const { data } = await api.get<PaginatedResponse<Category>>('/category', {
     params,
   })
 

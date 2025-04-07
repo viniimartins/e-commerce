@@ -5,7 +5,7 @@ import { Tabs } from 'radix-ui'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetOrders } from '@/hooks/query/order/get'
 
-import { OrderCard } from './components/order-card'
+import { Order } from './order'
 
 export function Content() {
   const { data: orders, isLoading } = useGetOrders({
@@ -33,7 +33,7 @@ export function Content() {
           {orders?.data.map((order) => {
             const { id } = order
 
-            return <OrderCard key={id} data={order} />
+            return <Order key={id} data={order} />
           })}
 
           {orders?.data.length === 0 && (

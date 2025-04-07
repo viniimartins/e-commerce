@@ -21,7 +21,7 @@ export async function getCategories(app: FastifyInstance) {
               z.object({
                 id: z.string(),
                 name: z.string(),
-                productsCount: z.number(),
+                count: z.number(),
               }),
             ),
             meta: z.object({
@@ -57,7 +57,7 @@ export async function getCategories(app: FastifyInstance) {
       return reply.status(200).send({
         data: categories.map((category) => ({
           ...category,
-          productsCount: category._count.products,
+          count: category._count.products,
         })),
         meta: {
           pageIndex: page,
