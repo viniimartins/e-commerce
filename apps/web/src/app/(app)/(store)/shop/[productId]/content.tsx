@@ -58,7 +58,7 @@ export function Content({ product }: Props) {
   const isProductInCart = cart.some((item) => item.id === product?.id)
 
   const isProductInWishlist = wishlist?.data.some(
-    (item) => item.id === product?.id,
+    (item) => item.productId === product?.id,
   )
 
   function handleChangeWishlist(product: IProduct) {
@@ -84,7 +84,7 @@ export function Content({ product }: Props) {
                 />
               ))}
 
-            {product?.productImage.slice(1).map((image) => {
+            {product?.productImage.slice(1).map(({ image }) => {
               const { id, url } = image
 
               return (
@@ -129,7 +129,7 @@ export function Content({ product }: Props) {
               <Dialog>
                 <DialogTrigger className="relative h-full w-full hover:cursor-pointer">
                   <Image
-                    src={product?.productImage[0].url}
+                    src={product?.productImage[0].image.url}
                     alt="Controls"
                     fill
                     quality={100}
@@ -145,7 +145,7 @@ export function Content({ product }: Props) {
                   </DialogHeader>
                   <div className="relative h-[40rem] w-full">
                     <Image
-                      src={product?.productImage[0].url}
+                      src={product?.productImage[0].image.url}
                       alt={product.name}
                       fill
                       quality={100}

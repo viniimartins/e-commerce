@@ -16,7 +16,7 @@ import { cn } from '@/lib/utils'
 
 import { ProductCard } from '../components/product-card'
 import { ProductCardSkeleton } from '../components/product-card/skeleton'
-import { Filter } from './components/filter'
+import { Filter } from './filter'
 
 export type GridView = 'grid3x3' | 'grid2x2' | 'columns2' | 'rows2'
 

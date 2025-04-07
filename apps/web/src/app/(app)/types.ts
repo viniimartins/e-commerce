@@ -92,13 +92,17 @@ export interface IOrderStatus {
 
 export interface IOrder {
   id: string
-  url: string
-  gatewayId: string
   billing: OrderBilling
   currentStatus: OrderStatus
+  gatewayId: string
   products: IProductBilling[]
   total: string
+  userId: string
+  url: string
   createdAt: Date
   updatedAt: Date
-  userId: string
+}
+export interface IOrderById extends IOrder {
+  address: IAddress
+  status: IOrderStatus[]
 }

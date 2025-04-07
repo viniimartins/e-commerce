@@ -3,7 +3,7 @@
 import { Eye, Heart, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { type MouseEvent, useState } from 'react'
+import { type MouseEvent } from 'react'
 
 import type { IProduct } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
@@ -27,6 +27,7 @@ import { Separator } from '@/components/ui/separator'
 import { useRemoveFromWishlist } from '@/hooks/mutation/wishlist/remove'
 import { useAddToWishlist } from '@/hooks/mutation/wishlist/to-add'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
+import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
@@ -43,6 +44,8 @@ export function ProductCard(props: Props) {
 
   const { description, id, name, price, productImage, quantity } = data
 
+  const { isOpen, actions } = useModal()
+
   const { cart, addToCart } = useCart()
 
   const { data: wishlist, queryKey } = useGetWishlist({ params: {} })
@@ -51,15 +54,15 @@ export function ProductCard(props: Props) {
 
   const { mutate: removeFromWishlist } = useRemoveFromWishlist({ queryKey })
 
-  const isProductInWishlist = wishlist?.data.some((item) => item.id === data.id)
-
-  const [isOpen, setIsOpen] = useState(false)
+  const isProductInWishlist = wishlist?.data.some(
+    ({ productId }) => productId === data.id,
+  )
 
   function handleOpenDialog(
     event: MouseEvent<HTMLButtonElement | HTMLDivElement>,
   ) {
     event.preventDefault()
-    setIsOpen(true)
+    actions.open()
   }
 
   const isProductInCart = cart.some((item) => item.id === data.id)
@@ -384,7 +387,7 @@ export function ProductCard(props: Props) {
         )}
       </Link>
 
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      <Dialog open={isOpen} onOpenChange={actions.close}>
         <DialogContent className="grid max-h-[70vh]! max-w-[50vw]! grid-cols-5 gap-6">
           <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
             <Carousel>

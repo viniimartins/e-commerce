@@ -6,7 +6,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import { type IOrder, OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
+import {
+  type IOrderById,
+  OrderStatus,
+  OrderStatusLabels,
+} from '@/app/(app)/types'
 import pix from '@/assets/pix.svg'
 import {
   Accordion,
@@ -31,14 +35,14 @@ import { useCart } from '@/providers/cart-provider'
 import { formatDateLong, formatDateShort } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { Stepper } from './components/stepper'
+import { Stepper } from './stepper'
 
 interface Props {
-  data: IOrder
+  data: IOrderById
 }
 
 export function Content({ data }: Props) {
-  const { createdAt, address, products, total, status, currentStatus, id } =
+  const { createdAt, products, total, currentStatus, id, address, status } =
     data
 
   const { removeAllProducts, addToCart } = useCart()
@@ -120,7 +124,7 @@ export function Content({ data }: Props) {
                         <div className="flex items-center gap-4">
                           <div className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
                             <Image
-                              src={productImage[0].url}
+                              src={productImage[0].image.url}
                               alt="product"
                               fill
                               quality={100}
@@ -197,7 +201,7 @@ export function Content({ data }: Props) {
             <div className="flex items-center justify-between">
               <span className="text-sm">Total</span>
               <span className="text-muted-foreground text-sm">
-                {formatPrice(total / 100)}
+                {formatPrice(Number(total) / 100)}
               </span>
             </div>
 
@@ -233,7 +237,7 @@ export function Content({ data }: Props) {
 
                         <div className="flex flex-1 flex-col gap-1">
                           <span className="text-sm font-medium">
-                            {formatPrice(total / 100)}
+                            {formatPrice(Number(total) / 100)}
                           </span>
                           <span className="text-muted-foreground text-sm font-medium">
                             PIX
