@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { ChevronLeft, LoaderCircle, Trash, Upload } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { ChangeEvent, Fragment, useEffect, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { NumericFormat } from 'react-number-format'
@@ -64,24 +65,34 @@ import { Textarea } from '@/components/ui/textarea'
 import { useRemoveImage } from '@/hooks/mutation/image/remove'
 import { useUploadImage } from '@/hooks/mutation/image/upload'
 import { useCreateProduct } from '@/hooks/mutation/product/create'
+import { useUpdateProduct } from '@/hooks/mutation/product/update'
 import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { normalizedPrice } from '@/utils/normalized-price'
 
-const formProductSchema = z.object({
+const baseProductSchema = z.object({
   name: z.string().min(1, { message: 'O nome é obrigatório' }),
   description: z.string().min(1, { message: 'A descrição é obrigatória' }),
   price: z.string().min(1, { message: 'O preço é obrigatório' }),
   quantity: z.string().min(1, { message: 'A quantidade é obrigatória' }),
   categoryId: z.string().min(1, { message: 'A categoria é obrigatória' }),
+})
+
+const formProductSchema = baseProductSchema.extend({
   productImages: z
     .array(z.instanceof(File))
     .min(1, 'Envie pelo menos uma imagem'),
 })
 
-type FormProductSchema = z.infer<typeof formProductSchema>
+const formEditProductSchema = baseProductSchema.extend({
+  productImages: z.array(z.instanceof(File)).optional(),
+})
+
+type FormProductSchema = z.infer<typeof baseProductSchema> & {
+  productImages?: File[]
+}
 
 interface Props {
   product: IProduct | null
@@ -91,8 +102,11 @@ interface Props {
 export function Content(props: Props) {
   const { product, isEditing } = props
 
+  const router = useRouter()
+
   const [selectOpen, setSelectOpen] = useState(false)
   const [productImages, setProductImages] = useState<string[]>([])
+  const [deletedImageIds, setDeletedImageIds] = useState<string[]>([])
 
   const { isOpen, actions } = useModal()
 
@@ -112,6 +126,8 @@ export function Content(props: Props) {
 
   const { mutate: createProduct } = useCreateProduct()
 
+  const { mutate: updateProduct } = useUpdateProduct()
+
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,
     isActive: selectOpen,
@@ -121,7 +137,9 @@ export function Content(props: Props) {
   })
 
   const form = useForm<FormProductSchema>({
-    resolver: zodResolver(formProductSchema),
+    resolver: zodResolver(
+      isEditing ? formEditProductSchema : formProductSchema,
+    ),
     defaultValues: {
       name: '',
       description: '',
@@ -138,37 +156,74 @@ export function Content(props: Props) {
     reset,
   } = form
 
-  console.log(productImages)
-
   const { errorProductImage } = {
     errorProductImage: errors.productImages,
   }
 
   async function onSubmit(values: FormProductSchema) {
-    const { productImages, ...product } = values
-
-    const productImagesIds: string[] = []
-
-    for (const image of productImages) {
-      const { id } = await uploadImage({ image })
-
-      productImagesIds.push(id)
-    }
+    const { productImages, ...restProduct } = values
 
     if (!isEditing) {
+      const productImagesIds: string[] = []
+
+      for (const image of productImages ?? []) {
+        const { id } = await uploadImage({ image })
+
+        productImagesIds.push(id)
+      }
+
       createProduct(
         {
           product: {
-            ...product,
-            price: normalizedPrice(product.price),
-            quantity: Number(product.quantity),
+            ...restProduct,
+            price: normalizedPrice(restProduct.price),
+            quantity: Number(restProduct.quantity),
             productImages: productImagesIds,
           },
         },
         {
           onSuccess: () => {
-            form.reset()
+            reset()
             setProductImages([])
+          },
+          onError: () => {
+            for (const imageId of productImagesIds) {
+              removeImage({ image: { id: imageId } })
+            }
+          },
+        },
+      )
+    }
+
+    if (isEditing && product?.id) {
+      const productImagesIds: string[] = []
+
+      for (const image of productImages ?? []) {
+        const { id } = await uploadImage({ image })
+
+        productImagesIds.push(id)
+      }
+
+      for (const image of deletedImageIds) {
+        removeImage({ url: image })
+      }
+
+      updateProduct(
+        {
+          product: {
+            ...restProduct,
+            id: product.id,
+            price: normalizedPrice(restProduct.price),
+            quantity: Number(restProduct.quantity),
+            productImages: productImagesIds,
+          },
+        },
+        {
+          onSuccess: () => {
+            router.push('/panel/product')
+            setProductImages([])
+            setDeletedImageIds([])
+            reset()
           },
           onError: () => {
             for (const imageId of productImagesIds) {
@@ -193,6 +248,8 @@ export function Content(props: Props) {
   }
 
   function handleImageDelete(imageUrl: string) {
+    setDeletedImageIds((prev) => [...prev, imageUrl])
+
     if (productImages.length === 1) {
       return toast.error('O produto deve ter pelo menos uma imagem')
     }
@@ -203,10 +260,10 @@ export function Content(props: Props) {
 
     form.setValue(
       'productImages',
-      currentImages.filter((_, index) => {
+      currentImages?.filter((_, index) => {
         const imageUrlToCompare = productImages[index]
         return imageUrlToCompare !== imageUrl
-      }),
+      }) || [],
     )
   }
 
@@ -215,7 +272,7 @@ export function Content(props: Props) {
   }
 
   useEffect(() => {
-    if (product) {
+    if (isEditing && product) {
       reset({
         name: product.name,
         description: product.description,
@@ -227,7 +284,7 @@ export function Content(props: Props) {
 
       setProductImages(product.productImage.map(({ image }) => image.url))
     }
-  }, [product])
+  }, [isEditing, product])
 
   return (
     <>
@@ -506,16 +563,18 @@ export function Content(props: Props) {
                 <Card className="rounded-none">
                   <CardContent>
                     <div className="grid gap-3">
-                      <Label htmlFor="category">Categoria</Label>
                       <FormField
                         control={form.control}
                         name="categoryId"
                         render={({ field }) => (
                           <FormItem>
+                            <Label htmlFor="category">Categoria</Label>
                             <Select
                               onOpenChange={setSelectOpen}
-                              onValueChange={field.onChange}
-                              {...field}
+                              onValueChange={(value) =>
+                                value && field.onChange(value)
+                              }
+                              value={field.value}
                             >
                               <FormControl>
                                 <SelectTrigger className="w-full">

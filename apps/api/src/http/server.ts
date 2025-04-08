@@ -31,6 +31,7 @@ import { createProduct } from './routes/product/create-product'
 import { deleteProduct } from './routes/product/delete-product'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
+import { updateProduct } from './routes/product/update-product'
 import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
@@ -96,6 +97,7 @@ app.register(getProducts)
 app.register(getProduct)
 app.register(createProduct)
 app.register(deleteProduct)
+app.register(updateProduct)
 
 app.register(getWishlist)
 app.register(addToWishlist)

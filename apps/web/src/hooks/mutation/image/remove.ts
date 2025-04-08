@@ -7,21 +7,32 @@ import { api } from '@/service/api'
 type Image = Pick<IImage, 'id'>
 
 interface Params {
-  image: Image
+  image?: Image
+  url?: string
 }
 
-async function post({ image }: Params) {
-  const { id } = image
+async function remove({ image, url }: Params) {
+  if (image) {
+    const { data } = await api.delete(`/image/${image.id}`)
 
-  const { data } = await api.delete(`/image/${id}`)
+    return data
+  }
 
-  return data
+  if (url) {
+    const { data } = await api.delete(`/image`, {
+      data: {
+        url,
+      },
+    })
+
+    return data
+  }
 }
 
 export function useRemoveImage() {
   return useMutation({
     mutationKey: ['remove-image'],
-    mutationFn: post,
+    mutationFn: remove,
     onError: () => {
       toast.error('Erro ao remover a imagem')
     },

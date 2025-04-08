@@ -93,6 +93,8 @@ export function Content() {
     },
   })
 
+  const { reset } = form
+
   async function handleCepChange(cep: string) {
     const cepValue = cep.replace(/\D/g, '')
 
@@ -201,7 +203,7 @@ export function Content() {
 
   useEffect(() => {
     if (profile?.name || profile?.email || profile?.customer) {
-      form.reset({
+      reset({
         fullName: profile?.name,
         cpf: profile?.customer?.taxId,
         email: profile?.email,
