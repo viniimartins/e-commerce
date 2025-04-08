@@ -26,12 +26,14 @@ import { removeImage } from './routes/image/remove-image'
 import { uploadImage } from './routes/image/upload-image'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
+import { getOrdersById } from './routes/order/get-orders-by-id'
 import { nextStatusOrder } from './routes/order/next-status-order'
 import { createProduct } from './routes/product/create-product'
 import { deleteProduct } from './routes/product/delete-product'
 import { getProduct } from './routes/product/get-product'
 import { getProducts } from './routes/product/get-products'
 import { updateProduct } from './routes/product/update-product'
+import { getUsers } from './routes/user/get-users'
 import { abacatepay } from './routes/webhook/abacatepay'
 import { addToWishlist } from './routes/wishlist/add-to-wishlist'
 import { getWishlist } from './routes/wishlist/get-wishlist'
@@ -108,7 +110,10 @@ app.register(createBilling)
 
 app.register(getOrder)
 app.register(getOrders)
+app.register(getOrdersById)
 app.register(nextStatusOrder)
+
+app.register(getUsers)
 
 app.register(abacatepay)
 

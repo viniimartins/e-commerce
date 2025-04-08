@@ -88,12 +88,12 @@ export function Order({ data }: Props) {
 
               <div className="flex w-full flex-col justify-between">
                 <span className="w-[43.6rem] truncate">
-                  <a
-                    href="#"
+                  <Link
+                    href={`/shop/${id}`}
                     className="text-primary h-0 p-0 text-base font-semibold hover:underline"
                   >
                     {name}
-                  </a>
+                  </Link>
                 </span>
 
                 <span className="text-muted-foreground text-sm font-medium">

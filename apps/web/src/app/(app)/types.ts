@@ -8,21 +8,18 @@ export interface IUser {
   id: string
   name: string
   email: string
-  avatarUrl: string
+  avatarUrl?: string
+  createdAt: Date
 }
 
 export interface IProfile extends IUser {
   customer: ICustomer
 }
 
-export enum AccountProvider {
-  GITHUB = 'GITHUB',
-}
-
-export interface IUserWithAccounts extends IUser {
-  accounts: {
-    provider: AccountProvider
-  }[]
+export interface IUserWithOrders extends IUser {
+  _count: {
+    orders: number
+  }
 }
 
 export interface ICategory {
@@ -113,7 +110,6 @@ export interface IOrder {
   userId: string
   url: string
   createdAt: Date
-  updatedAt: Date
 }
 
 export interface IOrderById extends IOrder {

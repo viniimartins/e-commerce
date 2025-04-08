@@ -1,4 +1,3 @@
-import { AccountProvider } from '@prisma/client'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -27,13 +26,11 @@ export async function getUsers(app: FastifyInstance) {
                   id: z.string(),
                   name: z.string().nullable(),
                   email: z.string(),
+                  avatarUrl: z.string().url().nullable(),
                   createdAt: z.date(),
-                  updatedAt: z.date(),
-                  accounts: z.array(
-                    z.object({
-                      provider: z.nativeEnum(AccountProvider),
-                    }),
-                  ),
+                  _count: z.object({
+                    orders: z.number(),
+                  }),
                 }),
               ),
               meta: z.object({
@@ -52,9 +49,9 @@ export async function getUsers(app: FastifyInstance) {
         const [users, total] = await Promise.all([
           prisma.user.findMany({
             include: {
-              accounts: {
+              _count: {
                 select: {
-                  provider: true,
+                  orders: true,
                 },
               },
             },

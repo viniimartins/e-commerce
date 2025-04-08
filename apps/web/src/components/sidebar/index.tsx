@@ -6,6 +6,7 @@ import {
   LayoutDashboardIcon,
   LogOut,
   Package,
+  Users,
 } from 'lucide-react'
 import Link from 'next/link'
 import * as React from 'react'
@@ -53,6 +54,11 @@ const data = {
       title: 'Produtos',
       url: '/panel/product',
       icon: Package,
+    },
+    {
+      title: 'Usuários',
+      url: '/panel/user',
+      icon: Users,
     },
   ],
 }
