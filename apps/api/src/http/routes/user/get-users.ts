@@ -16,37 +16,65 @@ export async function getUsers(app: FastifyInstance) {
         schema: {
           tags: ['User'],
           summary: 'Get users',
-
+          querystring: z.object({
+            page: z.coerce.number().min(1).default(1),
+            perPage: z.coerce.number().min(1).max(50).default(12),
+          }),
           response: {
-            200: z.array(
-              z.object({
-                id: z.string(),
-                name: z.string().nullable(),
-                email: z.string(),
-                createdAt: z.date(),
-                updatedAt: z.date(),
-                accounts: z.array(
-                  z.object({
-                    provider: z.nativeEnum(AccountProvider),
-                  }),
-                ),
+            200: z.object({
+              data: z.array(
+                z.object({
+                  id: z.string(),
+                  name: z.string().nullable(),
+                  email: z.string(),
+                  createdAt: z.date(),
+                  updatedAt: z.date(),
+                  accounts: z.array(
+                    z.object({
+                      provider: z.nativeEnum(AccountProvider),
+                    }),
+                  ),
+                }),
+              ),
+              meta: z.object({
+                pageIndex: z.number(),
+                perPage: z.number(),
+                total: z.number(),
+                totalPages: z.number(),
               }),
-            ),
+            }),
           },
         },
       },
       async (request, reply) => {
-        const users = await prisma.user.findMany({
-          include: {
-            accounts: {
-              select: {
-                provider: true,
+        const { page, perPage } = request.query
+
+        const [users, total] = await Promise.all([
+          prisma.user.findMany({
+            include: {
+              accounts: {
+                select: {
+                  provider: true,
+                },
               },
             },
+            take: perPage,
+            skip: (page - 1) * perPage,
+          }),
+          prisma.user.count(),
+        ])
+
+        const totalPages = Math.ceil(total / perPage)
+
+        return reply.status(200).send({
+          data: users,
+          meta: {
+            pageIndex: page,
+            perPage,
+            total,
+            totalPages,
           },
         })
-
-        return reply.status(200).send(users)
       },
     )
 }
