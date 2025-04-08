@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 
-import type { IUser } from '@/app/(app)/types'
+import type { IProfile } from '@/app/(app)/types'
 
 import { apiServer } from './apiServer'
 
@@ -9,7 +9,7 @@ export async function getProfile() {
 
   const token = cookieStore.get('token')?.value
 
-  const data = await apiServer<IUser>(`/profile`, {
+  const data = await apiServer<IProfile>(`/profile`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -9,7 +9,20 @@ export interface IUser {
   name: string
   email: string
   avatarUrl: string
+}
+
+export interface IProfile extends IUser {
   customer: ICustomer
+}
+
+export enum AccountProvider {
+  GITHUB = 'GITHUB',
+}
+
+export interface IUserWithAccounts extends IUser {
+  accounts: {
+    provider: AccountProvider
+  }[]
 }
 
 export interface ICategory {
