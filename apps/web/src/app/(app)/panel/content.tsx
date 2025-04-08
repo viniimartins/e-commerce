@@ -1,119 +1,192 @@
-import { TrendingDownIcon, TrendingUpIcon } from 'lucide-react'
+'use client'
 
-import { Badge } from '@/components/ui/badge'
+import Image from 'next/image'
+import { Fragment, useCallback, useState } from 'react'
+
 import {
   Card,
+  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Separator } from '@/components/ui/separator'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useGetAllOrders } from '@/hooks/query/order/get-all'
+import { useGetStatistics } from '@/hooks/query/statistics/get'
+import { useModal } from '@/hooks/use-modal'
+import { cn } from '@/lib/utils'
+import type { TableParams } from '@/types/paginated-response'
+import { formatPrice } from '@/utils/formatPrice'
+
+import type { IOrderWithUser } from '../types'
+import { DataTable } from './_components/table'
+import { getColumns } from './columns'
 
 export function Content() {
+  const [ordersTableParams, setOrdersTableParams] = useState<TableParams>({
+    pageIndex: 1,
+    perPage: 10,
+  })
+
+  const {
+    actions: viewOrdersModalActions,
+    isOpen: isViewOrdersModalOpen,
+    target: viewOrdersModalTarget,
+  } = useModal<IOrderWithUser>()
+
+  const { data: statistics, isLoading } = useGetStatistics()
+
+  const { pageIndex, perPage } = ordersTableParams
+
+  const { data: orders, isLoading: isLoadingOrders } = useGetAllOrders({
+    params: {
+      page: pageIndex,
+      perPage,
+    },
+  })
+
+  const onChangeOrdersTableParams = useCallback(
+    (updatedParams: Partial<TableParams>) => {
+      return setOrdersTableParams((state) => ({
+        ...state,
+        ...updatedParams,
+      }))
+    },
+    [],
+  )
+
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Card className="from-primary/5 to-card dark:bg-card @container/card rounded-none bg-gradient-to-t shadow-xs">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <Card className="rounded-none">
           <CardHeader className="relative">
-            <CardDescription>Total Revenue</CardDescription>
+            <CardDescription>Total de receita</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              $1,250.00
+              {!isLoading &&
+                formatPrice(Number(statistics?.totalRevenue) / 100)}
+              {isLoading && <Skeleton className="h-9 w-50" />}
             </CardTitle>
-            <div className="absolute top-4 right-4">
-              <Badge
-                variant="outline"
-                className="flex gap-1 rounded-lg text-xs"
-              >
-                <TrendingUpIcon className="size-3" />
-                +12.5%
-              </Badge>
-            </div>
           </CardHeader>
-          <CardFooter className="flex-col items-start gap-1 text-sm">
-            <div className="line-clamp-1 flex gap-2 font-medium">
-              Trending up this month <TrendingUpIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground">
-              Visitors for the last 6 months
-            </div>
-          </CardFooter>
         </Card>
-        <Card className="from-primary/5 to-card dark:bg-card @container/card rounded-none bg-gradient-to-t shadow-xs">
+
+        <Card className="rounded-none">
           <CardHeader className="relative">
-            <CardDescription>New Customers</CardDescription>
+            <CardDescription>Total de pedidos</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              1,234
+              {!isLoading && statistics?.totalOrders}
+              {isLoading && <Skeleton className="h-9 w-50" />}
             </CardTitle>
-            <div className="absolute top-4 right-4">
-              <Badge
-                variant="outline"
-                className="flex gap-1 rounded-lg text-xs"
-              >
-                <TrendingDownIcon className="size-3" />
-                -20%
-              </Badge>
-            </div>
           </CardHeader>
-          <CardFooter className="flex-col items-start gap-1 text-sm">
-            <div className="line-clamp-1 flex gap-2 font-medium">
-              Down 20% this period <TrendingDownIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground">
-              Acquisition needs attention
-            </div>
-          </CardFooter>
         </Card>
-        <Card className="from-primary/5 to-card dark:bg-card @container/card rounded-none bg-gradient-to-t shadow-xs">
+
+        <Card className="rounded-none">
           <CardHeader className="relative">
-            <CardDescription>Active Accounts</CardDescription>
+            <CardDescription>Total de Usuários</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              45,678
+              {!isLoading && statistics?.totalUsers}
+              {isLoading && <Skeleton className="h-9 w-50" />}
             </CardTitle>
-            <div className="absolute top-4 right-4">
-              <Badge
-                variant="outline"
-                className="flex gap-1 rounded-lg text-xs"
-              >
-                <TrendingUpIcon className="size-3" />
-                +12.5%
-              </Badge>
-            </div>
           </CardHeader>
-          <CardFooter className="flex-col items-start gap-1 text-sm">
-            <div className="line-clamp-1 flex gap-2 font-medium">
-              Strong user retention <TrendingUpIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground">
-              Engagement exceed targets
-            </div>
-          </CardFooter>
-        </Card>
-        <Card className="from-primary/5 to-card dark:bg-card @container/card rounded-none bg-gradient-to-t shadow-xs">
-          <CardHeader className="relative">
-            <CardDescription>Growth Rate</CardDescription>
-            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-              4.5%
-            </CardTitle>
-            <div className="absolute top-4 right-4">
-              <Badge
-                variant="outline"
-                className="flex gap-1 rounded-lg text-xs"
-              >
-                <TrendingUpIcon className="size-3" />
-                +4.5%
-              </Badge>
-            </div>
-          </CardHeader>
-          <CardFooter className="flex-col items-start gap-1 text-sm">
-            <div className="line-clamp-1 flex gap-2 font-medium">
-              Steady performance <TrendingUpIcon className="size-4" />
-            </div>
-            <div className="text-muted-foreground">
-              Meets growth projections
-            </div>
-          </CardFooter>
         </Card>
       </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        <Card className="rounded-none">
+          <CardHeader>
+            <CardTitle className="text-2xl">Pedidos recentes</CardTitle>
+            <CardDescription>
+              Visualize os pedidos recentes e gerencie seus pedidos
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent>
+            <DataTable
+              columns={getColumns({
+                isLoading: isLoadingOrders,
+                viewOrdersModalActions,
+              })}
+              data={orders?.data ?? []}
+              meta={orders?.meta}
+              onChangeParams={onChangeOrdersTableParams}
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      <Dialog
+        open={isViewOrdersModalOpen}
+        onOpenChange={viewOrdersModalActions.close}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Visualizar produtos do usuário</DialogTitle>
+            <DialogDescription>
+              Visualize todos os produtos do usuário
+            </DialogDescription>
+          </DialogHeader>
+
+          <ScrollArea
+            className={cn(
+              viewOrdersModalTarget?.products &&
+                viewOrdersModalTarget?.products.length > 5
+                ? 'h-96'
+                : 'h-auto',
+            )}
+          >
+            {viewOrdersModalTarget?.products?.map(({ product }, index) => {
+              const lastIndex =
+                viewOrdersModalTarget?.products.length === index + 1
+
+              const { id, name, price, productImage, quantity } = product
+
+              return (
+                <Fragment key={id}>
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                          <Image
+                            src={productImage[0].image.url}
+                            alt="product"
+                            fill
+                            quality={100}
+                            priority
+                            className="object-cover p-1"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
+
+                        <div className="flex h-full flex-col justify-between">
+                          <span className="text-base font-medium">{name}</span>
+
+                          <span className="text-muted-foreground text-sm">
+                            {quantity} un.
+                          </span>
+                        </div>
+                      </div>
+
+                      <span className="text-sm font-medium">
+                        {formatPrice(price)}
+                      </span>
+                    </div>
+
+                    {!lastIndex && <Separator className="my-2" />}
+                  </div>
+                </Fragment>
+              )
+            })}
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }

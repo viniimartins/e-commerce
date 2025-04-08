@@ -15,6 +15,13 @@ import {
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { useDeleteProduct } from '@/hooks/mutation/product/delete'
 import { useGetProducts } from '@/hooks/query/product/get'
 import { useModal } from '@/hooks/use-modal'
@@ -75,21 +82,24 @@ export function Content() {
         </Link>
       </div>
 
-      <div className="space-y-4 border p-8">
-        <div className="space-y-2">
-          <span className="text-2xl font-bold">Produtos</span>
-          <p className="text-muted-foreground text-sm">
+      <Card className="rounded-none">
+        <CardHeader>
+          <CardTitle className="text-2xl">Produtos</CardTitle>
+          <CardDescription>
             Gerencie seus produtos e visualize seu desempenho de vendas
-          </p>
-        </div>
+          </CardDescription>
+        </CardHeader>
 
-        <DataTable
-          columns={getColumns({ isLoading, deleteProductModalActions })}
-          data={products?.data ?? []}
-          meta={products?.meta}
-          onChangeParams={onChangeProductsTableParams}
-        />
-      </div>
+        <CardContent>
+          Gerencie seus produtos e visualize seu desempenho de vendas
+          <DataTable
+            columns={getColumns({ isLoading, deleteProductModalActions })}
+            data={products?.data ?? []}
+            meta={products?.meta}
+            onChangeParams={onChangeProductsTableParams}
+          />
+        </CardContent>
+      </Card>
 
       <AlertDialog
         open={isDeleteProductModalOpen}

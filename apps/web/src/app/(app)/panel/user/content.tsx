@@ -90,12 +90,23 @@ export function Content() {
 
   return (
     <>
-      <DataTable
-        columns={getColumns({ isLoading, viewOrdersModalActions })}
-        data={users?.data ?? []}
-        meta={users?.meta}
-        onChangeParams={onChangeUsersTableParams}
-      />
+      <Card className="rounded-none">
+        <CardHeader>
+          <CardTitle className="text-2xl">Usuários</CardTitle>
+          <CardDescription>
+            Gerencie seus usuários e visualize seu desempenho de vendas
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent>
+          <DataTable
+            columns={getColumns({ isLoading, viewOrdersModalActions })}
+            data={users?.data ?? []}
+            meta={users?.meta}
+            onChangeParams={onChangeUsersTableParams}
+          />
+        </CardContent>
+      </Card>
 
       <Dialog
         open={isViewOrdersModalOpen}

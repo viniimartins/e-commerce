@@ -19,6 +19,13 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import {
   Dialog,
   DialogClose,
   DialogContent,
@@ -190,26 +197,28 @@ export function Content() {
         </Button>
       </div>
 
-      <div className="space-y-4 border p-8">
-        <div className="space-y-2">
-          <span className="text-2xl font-bold">Categorias</span>
-          <p className="text-muted-foreground text-sm">
+      <Card className="rounded-none">
+        <CardHeader>
+          <CardTitle className="text-2xl">Categorias</CardTitle>
+          <CardDescription>
             Gerencie suas categorias e visualize seu desempenho de vendas
-          </p>
-        </div>
+          </CardDescription>
+        </CardHeader>
 
-        <DataTable
-          columns={getColumns({
-            categoryModalActions,
-            deleteCategoryModalActions,
-            viewProductsModalActions,
-            isLoading: isCategoriesLoading,
-          })}
-          data={categories?.data ?? []}
-          meta={categories?.meta}
-          onChangeParams={onChangeCategoriesTableParams}
-        />
-      </div>
+        <CardContent>
+          <DataTable
+            columns={getColumns({
+              categoryModalActions,
+              deleteCategoryModalActions,
+              viewProductsModalActions,
+              isLoading: isCategoriesLoading,
+            })}
+            data={categories?.data ?? []}
+            meta={categories?.meta}
+            onChangeParams={onChangeCategoriesTableParams}
+          />
+        </CardContent>
+      </Card>
 
       <Dialog
         open={isCategoryModalOpen}

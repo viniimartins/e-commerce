@@ -105,14 +105,25 @@ export interface IOrder {
   billing: OrderBilling
   currentStatus: OrderStatus
   gatewayId: string
-  products: IProductBilling[]
   total: string
   userId: string
   url: string
+  products: IProductBilling[]
+
   createdAt: Date
+}
+export interface IOrderWithUser extends IOrder {
+  user: IUser
 }
 
 export interface IOrderById extends IOrder {
   address: IAddress
+  products: IProductBilling[]
   status: IOrderStatus[]
+}
+
+export interface IStatistics {
+  totalOrders: number
+  totalUsers: number
+  totalRevenue: string
 }

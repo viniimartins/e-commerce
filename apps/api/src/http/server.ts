@@ -24,6 +24,7 @@ import { getCategory } from './routes/category/get-category'
 import { updateCategory } from './routes/category/update-category'
 import { removeImage } from './routes/image/remove-image'
 import { uploadImage } from './routes/image/upload-image'
+import { getAllOrders } from './routes/order/get-all-orders'
 import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { getOrdersById } from './routes/order/get-orders-by-id'
@@ -112,6 +113,7 @@ app.register(createBilling)
 app.register(getOrder)
 app.register(getOrders)
 app.register(getOrdersById)
+app.register(getAllOrders)
 app.register(nextStatusOrder)
 
 app.register(getUsers)
