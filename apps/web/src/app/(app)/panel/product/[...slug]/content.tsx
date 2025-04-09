@@ -99,14 +99,20 @@ interface Props {
   isEditing: boolean
 }
 
+type ProductImage = {
+  url: string
+  id?: string
+  file?: File
+}
+
 export function Content(props: Props) {
   const { product, isEditing } = props
 
   const router = useRouter()
 
   const [selectOpen, setSelectOpen] = useState(false)
-  const [productImages, setProductImages] = useState<string[]>([])
-  const [deletedImageIds, setDeletedImageIds] = useState<string[]>([])
+  const [productImages, setProductImages] = useState<ProductImage[]>([])
+  const [deletedLocalImage, setDeletedLocalImage] = useState<string[]>([])
 
   const { isOpen, actions } = useModal()
 
@@ -204,10 +210,6 @@ export function Content(props: Props) {
         productImagesIds.push(id)
       }
 
-      for (const image of deletedImageIds) {
-        removeImage({ url: image })
-      }
-
       updateProduct(
         {
           product: {
@@ -219,10 +221,14 @@ export function Content(props: Props) {
           },
         },
         {
-          onSuccess: () => {
+          onSuccess: async () => {
+            for (const image of deletedLocalImage) {
+              await removeImage({ url: image })
+            }
+
             router.push('/panel/product')
             setProductImages([])
-            setDeletedImageIds([])
+            setDeletedLocalImage([])
             reset()
           },
           onError: () => {
@@ -240,31 +246,35 @@ export function Content(props: Props) {
       const file = e.target.files[0]
       const imageUrl = URL.createObjectURL(file)
 
-      setProductImages((prev) => [...prev, imageUrl])
+      const newImage: ProductImage = { url: imageUrl, file }
+
+      setProductImages((prev) => [...prev, newImage])
 
       const currentFiles = (form.getValues().productImages as File[]) || []
       form.setValue('productImages', [...currentFiles, file])
     }
   }
 
-  function handleImageDelete(imageUrl: string) {
-    setDeletedImageIds((prev) => [...prev, imageUrl])
-
+  function handleImageDelete(image: ProductImage) {
     if (productImages.length === 1) {
       return toast.error('O produto deve ter pelo menos uma imagem')
     }
 
-    setProductImages(productImages.filter((image) => image !== imageUrl))
-
-    const currentImages = form.getValues().productImages
-
-    form.setValue(
-      'productImages',
-      currentImages?.filter((_, index) => {
-        const imageUrlToCompare = productImages[index]
-        return imageUrlToCompare !== imageUrl
-      }) || [],
+    const updatedProductImages = productImages.filter(
+      (img) => img.url !== image.url,
     )
+
+    if (image.file) {
+      const updatedFiles = updatedProductImages
+        .map((img) => img.file)
+        .filter((file): file is File => !!file)
+
+      form.setValue('productImages', updatedFiles)
+    }
+
+    if (image.id) {
+      setDeletedLocalImage((prev) => [...prev, image.url])
+    }
   }
 
   function handleUploadClick() {
@@ -282,7 +292,14 @@ export function Content(props: Props) {
         productImages: [],
       })
 
-      setProductImages(product.productImage.map(({ image }) => image.url))
+      const imagesFromAPI: ProductImage[] = product.productImage.map(
+        ({ image }) => ({
+          url: image.url,
+          id: image.id,
+        }),
+      )
+
+      setProductImages(imagesFromAPI)
     }
   }, [isEditing, product])
 
@@ -449,11 +466,11 @@ export function Content(props: Props) {
                       {productImages.slice(0, 1).map((image) => {
                         return (
                           <div
-                            key={image}
+                            key={image.url}
                             className="relative h-full w-full hover:cursor-pointer"
                           >
                             <Image
-                              src={image}
+                              src={image.url}
                               alt={'Product Image'}
                               fill
                               quality={100}
@@ -499,7 +516,7 @@ export function Content(props: Props) {
                                 quality={100}
                                 fill
                                 priority
-                                src={image}
+                                src={image.url}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               />
                             </div>
@@ -635,11 +652,11 @@ export function Content(props: Props) {
                 {productImages?.map((image) => {
                   return (
                     <CarouselItem
-                      key={image}
+                      key={image.url}
                       className="relative h-[40rem] w-full"
                     >
                       <Image
-                        src={image}
+                        src={image.url}
                         alt={'Product Image'}
                         fill
                         quality={100}
