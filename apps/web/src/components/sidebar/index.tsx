@@ -6,9 +6,11 @@ import {
   LayoutDashboardIcon,
   LogOut,
   Package,
+  ShoppingCart,
   Users,
 } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -46,6 +48,11 @@ const data = {
       icon: LayoutDashboardIcon,
     },
     {
+      title: 'Vendas',
+      url: '/panel/sales',
+      icon: ShoppingCart,
+    },
+    {
       title: 'Categorias',
       url: '/panel/category',
       icon: BoxesIcon,
@@ -64,6 +71,8 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const pathname = usePathname()
+
   const { isMobile } = useSidebar()
 
   return (
@@ -82,6 +91,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <SidebarMenuButton
                     tooltip={item.title}
                     className="cursor-pointer"
+                    isActive={pathname === item.url}
                   >
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>

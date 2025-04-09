@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { type IOrder, OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
-import { Badge } from '@/components/ui/badge'
+import { type IOrder, OrderStatus } from '@/app/(app)/types'
+import { BadgeStatus } from '@/components/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -50,13 +50,7 @@ export function Order({ data }: Props) {
               </Button>
             </Link>
 
-            <Badge
-              variant="outline"
-              data-status={currentStatus}
-              className="h-8 data-[status=DELIVERED]:bg-green-500"
-            >
-              {OrderStatusLabels[currentStatus]}
-            </Badge>
+            <BadgeStatus status={currentStatus} className="h-8" />
           </div>
         </CardTitle>
         <CardDescription className="hidden" />

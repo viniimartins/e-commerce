@@ -11,13 +11,13 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import type { IBestSellerProduct } from '../types'
 
-interface ColumnsProps {
+interface Props {
   isLoading: boolean
 }
 
 export function getBestSellerProductsColumns({
   isLoading,
-}: ColumnsProps): ColumnDef<IBestSellerProduct>[] {
+}: Props): ColumnDef<IBestSellerProduct>[] {
   return [
     {
       accessorKey: 'product.name',

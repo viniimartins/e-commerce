@@ -15,7 +15,7 @@ import type { ModalActions } from '@/types/modal'
 import type { ICategory } from '../../types'
 
 
-interface ColumnsProps {
+interface Props {
   categoryModalActions: ModalActions<ICategory>
   deleteCategoryModalActions: ModalActions<ICategory>
   viewProductsModalActions: ModalActions<ICategory>
@@ -27,7 +27,7 @@ export function getColumns({
   deleteCategoryModalActions,
   viewProductsModalActions,
   isLoading,
-}: ColumnsProps): ColumnDef<ICategory>[] {
+}: Props): ColumnDef<ICategory>[] {
   return [
     {
       accessorKey: 'name',

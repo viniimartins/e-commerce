@@ -315,37 +315,35 @@ export function Content() {
 
               return (
                 <Fragment key={id}>
-                  <div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                          <Image
-                            src={productImage[0].image.url}
-                            alt="product"
-                            fill
-                            quality={100}
-                            priority
-                            className="object-cover p-1"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                        </div>
-
-                        <div className="flex h-full flex-col justify-between">
-                          <span className="text-base font-medium">{name}</span>
-
-                          <span className="text-muted-foreground text-sm">
-                            {quantity} un.
-                          </span>
-                        </div>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                        <Image
+                          src={productImage[0].image.url}
+                          alt="product"
+                          fill
+                          quality={100}
+                          priority
+                          className="object-cover p-1"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
                       </div>
 
-                      <span className="text-sm font-medium">
-                        {formatPrice(price)}
-                      </span>
+                      <div className="flex h-full flex-col justify-between">
+                        <span className="text-base font-medium">{name}</span>
+
+                        <span className="text-muted-foreground text-sm">
+                          {quantity} un.
+                        </span>
+                      </div>
                     </div>
 
-                    {!lastIndex && <Separator className="my-2" />}
+                    <span className="text-sm font-medium">
+                      {formatPrice(price)}
+                    </span>
                   </div>
+
+                  {!lastIndex && <Separator className="my-2" />}
 
                   {lastIndex && <div ref={loadMoreRef} className="h-1" />}
                 </Fragment>

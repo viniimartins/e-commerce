@@ -3,7 +3,7 @@
 import { Columns2, Grid2x2, Grid3x3, LoaderCircle, Rows2 } from 'lucide-react'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
-import { useState } from 'react'
+import { Fragment, useState } from 'react'
 
 import filter from '@/assets/filter.svg'
 import { Button } from '@/components/ui/button'
@@ -65,7 +65,7 @@ export function Content() {
         <Filter />
       </div>
       <div className="col-span-3 space-y-8">
-        <div>
+        <Fragment>
           {isLoading && <Skeleton className="h-5 w-56" />}
 
           <h2 className="text-xl font-semibold">
@@ -94,7 +94,7 @@ export function Content() {
               </ToggleGroupItem>
             </ToggleGroup>
           </div>
-        </div>
+        </Fragment>
 
         <ScrollArea className="h-[calc(100vh-10rem)]">
           <div

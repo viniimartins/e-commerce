@@ -5,13 +5,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Fragment, useCallback, useRef, useState } from 'react'
 
+import { BadgeStatus } from '@/components/badge'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Badge } from '@/components/ui/badge'
 import {
   Card,
   CardContent,
@@ -37,7 +37,7 @@ import type { TableParams } from '@/types/paginated-response'
 import { formatDateShort } from '@/utils/formatDate'
 import { formatPrice } from '@/utils/formatPrice'
 
-import { type IUserWithOrders, OrderStatusLabels } from '../../types'
+import { type IUserWithOrders } from '../../types'
 import { DataTable } from '../_components/table'
 import { getColumns } from './columns'
 
@@ -144,13 +144,7 @@ export function Content() {
                         </div>
 
                         <div className="flex h-8 gap-3">
-                          <Badge
-                            variant="outline"
-                            data-status={currentStatus}
-                            className="h-8 data-[status=DELIVERED]:bg-green-500"
-                          >
-                            {OrderStatusLabels[currentStatus]}
-                          </Badge>
+                          <BadgeStatus status={currentStatus} className="h-8" />
                         </div>
                       </CardTitle>
                       <CardDescription className="hidden" />

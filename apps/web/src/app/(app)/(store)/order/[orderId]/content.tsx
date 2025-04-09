@@ -6,19 +6,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import {
-  type IOrderById,
-  OrderStatus,
-  OrderStatusLabels,
-} from '@/app/(app)/types'
+import { type IOrderById, OrderStatus } from '@/app/(app)/types'
 import pix from '@/assets/pix.svg'
+import { BadgeStatus } from '@/components/badge'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion'
-import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
   Card,
@@ -67,13 +63,7 @@ export function Content({ data }: Props) {
         <div className="col-span-2 space-y-4">
           <Card className="rounded-none">
             <CardHeader className="flex flex-col items-start justify-between gap-2">
-              <Badge
-                variant="outline"
-                data-status={currentStatus}
-                className="h-8 data-[status=DELIVERED]:bg-green-500"
-              >
-                {OrderStatusLabels[currentStatus]}
-              </Badge>
+              <BadgeStatus status={currentStatus} className="h-9" />
               <CardTitle className="text-xl">
                 {currentStatus !== OrderStatus.SHIPPED &&
                   `Pedido chegara no dia ${formatDateShort(

@@ -9,7 +9,7 @@ import { formatDateLong } from '@/utils/formatDate'
 
 import type { IUserWithOrders } from '../../types'
 
-interface ColumnsProps {
+interface Props {
   isLoading: boolean
   viewOrdersModalActions: ModalActions<IUserWithOrders>
 }
@@ -17,7 +17,7 @@ interface ColumnsProps {
 export function getColumns({
   isLoading,
   viewOrdersModalActions,
-}: ColumnsProps): ColumnDef<IUserWithOrders>[] {
+}: Props): ColumnDef<IUserWithOrders>[] {
   return [
     {
       accessorKey: 'avatarUrl',

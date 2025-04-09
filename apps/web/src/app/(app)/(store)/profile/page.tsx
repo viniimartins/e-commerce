@@ -28,8 +28,8 @@ export default async function Profile() {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <div>
-          Olá,{' '}
+        <div className="flex items-center gap-2">
+          Olá,
           <span className="text-muted-foreground font-medium">
             {user?.name}
           </span>

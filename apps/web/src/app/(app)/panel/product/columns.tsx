@@ -18,7 +18,7 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import type { IProduct } from '../../types'
 
-interface ColumnsProps {
+interface Props {
   isLoading: boolean
   deleteProductModalActions: ModalActions<IProduct>
 }
@@ -26,7 +26,7 @@ interface ColumnsProps {
 export function getColumns({
   isLoading,
   deleteProductModalActions,
-}: ColumnsProps): ColumnDef<IProduct>[] {
+}: Props): ColumnDef<IProduct>[] {
   return [
     {
       accessorKey: 'productImage',
