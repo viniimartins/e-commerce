@@ -82,7 +82,7 @@ export function Content() {
         </Link>
       </div>
 
-      <Card className="rounded-none">
+      <Card className="h-full rounded-none">
         <CardHeader>
           <CardTitle className="text-2xl">Produtos</CardTitle>
           <CardDescription>
@@ -90,8 +90,7 @@ export function Content() {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
-          Gerencie seus produtos e visualize seu desempenho de vendas
+        <CardContent className="h-full">
           <DataTable
             columns={getColumns({ isLoading, deleteProductModalActions })}
             data={products?.data ?? []}

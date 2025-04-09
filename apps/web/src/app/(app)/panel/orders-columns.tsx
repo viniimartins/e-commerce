@@ -18,7 +18,7 @@ interface ColumnsProps {
   viewOrdersModalActions: ModalActions<IOrderWithUser>
 }
 
-export function getColumns({
+export function getOrdersColumns({
   isLoading,
   viewOrdersModalActions,
 }: ColumnsProps): ColumnDef<IOrderWithUser>[] {

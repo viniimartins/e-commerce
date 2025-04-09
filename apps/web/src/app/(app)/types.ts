@@ -49,6 +49,11 @@ export interface IProduct {
   productImage: IProductImage[]
 }
 
+export interface IBestSellerProduct {
+  product: IProduct
+  totalSold: number
+}
+
 export interface IWishlist {
   productId: string
   userId: string

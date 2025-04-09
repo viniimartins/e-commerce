@@ -21,6 +21,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetAllOrders } from '@/hooks/query/order/get-all'
+import { useGetBestSellerProducts } from '@/hooks/query/product/get-best-seller'
 import { useGetStatistics } from '@/hooks/query/statistics/get'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
@@ -29,13 +30,28 @@ import { formatPrice } from '@/utils/formatPrice'
 
 import type { IOrderWithUser } from '../types'
 import { DataTable } from './_components/table'
-import { getColumns } from './columns'
+import { getBestSellerProductsColumns } from './best-seller-columns'
+import { getOrdersColumns } from './orders-columns'
 
 export function Content() {
   const [ordersTableParams, setOrdersTableParams] = useState<TableParams>({
     pageIndex: 1,
     perPage: 10,
   })
+
+  const { pageIndex: ordersPageIndex, perPage: ordersPerPage } =
+    ordersTableParams
+
+  const [bestSellerProductsTableParams, setBestSellerProductsTableParams] =
+    useState<TableParams>({
+      pageIndex: 1,
+      perPage: 10,
+    })
+
+  const {
+    pageIndex: bestSellerProductsPageIndex,
+    perPage: bestSellerProductsPerPage,
+  } = bestSellerProductsTableParams
 
   const {
     actions: viewOrdersModalActions,
@@ -45,18 +61,32 @@ export function Content() {
 
   const { data: statistics, isLoading } = useGetStatistics()
 
-  const { pageIndex, perPage } = ordersTableParams
+  const { data: bestSellerProducts, isLoading: isLoadingBestSellerProducts } =
+    useGetBestSellerProducts({
+      page: bestSellerProductsPageIndex,
+      perPage: bestSellerProductsPerPage,
+    })
 
   const { data: orders, isLoading: isLoadingOrders } = useGetAllOrders({
     params: {
-      page: pageIndex,
-      perPage,
+      page: ordersPageIndex,
+      perPage: ordersPerPage,
     },
   })
 
   const onChangeOrdersTableParams = useCallback(
     (updatedParams: Partial<TableParams>) => {
       return setOrdersTableParams((state) => ({
+        ...state,
+        ...updatedParams,
+      }))
+    },
+    [],
+  )
+
+  const onChangeBestSellerProductsTableParams = useCallback(
+    (updatedParams: Partial<TableParams>) => {
+      return setBestSellerProductsTableParams((state) => ({
         ...state,
         ...updatedParams,
       }))
@@ -110,13 +140,32 @@ export function Content() {
 
           <CardContent>
             <DataTable
-              columns={getColumns({
+              columns={getOrdersColumns({
                 isLoading: isLoadingOrders,
                 viewOrdersModalActions,
               })}
               data={orders?.data ?? []}
               meta={orders?.meta}
               onChangeParams={onChangeOrdersTableParams}
+            />
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-none">
+          <CardHeader>
+            <CardTitle className="text-2xl">Produtos mais vendidos</CardTitle>
+            <CardDescription>
+              Visualize os produtos mais vendidos
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="h-full">
+            <DataTable
+              columns={getBestSellerProductsColumns({
+                isLoading: isLoadingBestSellerProducts,
+              })}
+              data={bestSellerProducts?.data ?? []}
+              meta={bestSellerProducts?.meta}
+              onChangeParams={onChangeBestSellerProductsTableParams}
             />
           </CardContent>
         </Card>

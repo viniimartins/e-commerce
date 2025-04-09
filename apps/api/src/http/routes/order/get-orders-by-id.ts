@@ -129,6 +129,9 @@ export function getOrdersById(app: FastifyInstance) {
               status: true,
               address: true,
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
             skip: (page - 1) * perPage,
             take: perPage,
           }),

@@ -88,6 +88,9 @@ export async function getProducts(app: FastifyInstance) {
               },
             },
           },
+          orderBy: {
+            createdAt: 'desc',
+          },
           take: perPage,
           skip: (page - 1) * perPage,
         }),

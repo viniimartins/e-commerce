@@ -29,6 +29,7 @@ import { getOrder } from './routes/order/get-order'
 import { getOrders } from './routes/order/get-orders'
 import { getOrdersById } from './routes/order/get-orders-by-id'
 import { nextStatusOrder } from './routes/order/next-status-order'
+import { getBestSellerProduct } from './routes/product/best-seller-product'
 import { createProduct } from './routes/product/create-product'
 import { deleteProduct } from './routes/product/delete-product'
 import { getProduct } from './routes/product/get-product'
@@ -102,6 +103,7 @@ app.register(getProduct)
 app.register(createProduct)
 app.register(deleteProduct)
 app.register(updateProduct)
+app.register(getBestSellerProduct)
 
 app.register(getWishlist)
 app.register(addToWishlist)

@@ -42,7 +42,7 @@ export function DataTable<TData, TValue>({
   })
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 h-full flex flex-col flex-1 justify-between">
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -87,7 +87,7 @@ export function DataTable<TData, TValue>({
       </Table>
 
       {meta && (
-        <div className="flex items-center justify-between px-4">
+        <div className="mt-auto flex items-center justify-between px-4">
           <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
             Mostrando {meta.perPage * meta.pageIndex} de {meta.total} resultados
           </div>

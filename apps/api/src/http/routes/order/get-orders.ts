@@ -101,6 +101,9 @@ export function getOrders(app: FastifyInstance) {
               },
               address: true,
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
             take: perPage,
             skip: (page - 1) * perPage,
           }),

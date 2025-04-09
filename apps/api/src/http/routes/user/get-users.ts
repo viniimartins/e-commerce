@@ -55,6 +55,9 @@ export async function getUsers(app: FastifyInstance) {
                 },
               },
             },
+            orderBy: {
+              createdAt: 'desc',
+            },
             take: perPage,
             skip: (page - 1) * perPage,
           }),

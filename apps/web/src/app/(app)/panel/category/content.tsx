@@ -197,7 +197,7 @@ export function Content() {
         </Button>
       </div>
 
-      <Card className="rounded-none">
+      <Card className="h-full rounded-none">
         <CardHeader>
           <CardTitle className="text-2xl">Categorias</CardTitle>
           <CardDescription>
@@ -205,7 +205,7 @@ export function Content() {
           </CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="h-full">
           <DataTable
             columns={getColumns({
               categoryModalActions,
