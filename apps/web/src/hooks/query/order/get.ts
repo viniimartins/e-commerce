@@ -3,9 +3,10 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import type { IOrder } from '@/app/(app)/types'
-import { isAuthenticated } from '@/auth/client-auth'
 import { api } from '@/service/api'
 import type { PaginatedResponse } from '@/types/paginated-response'
+
+import { useGetSession } from '../session/get'
 
 interface Params {
   page?: number
@@ -25,14 +26,14 @@ async function get(params: Params) {
 }
 
 export function useGetOrders({ params }: Props) {
-  const queryKey = ['get-orders']
+  const { isAuthenticated } = useGetSession()
 
-  const isUserAuthenticated = isAuthenticated()
+  const queryKey = ['get-orders']
 
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    enabled: isUserAuthenticated,
+    enabled: isAuthenticated,
   })
 
   const { isError } = query

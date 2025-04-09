@@ -15,7 +15,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
 
-import { isAuthenticated } from '@/auth/client-auth'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -24,7 +23,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useGetProfile } from '@/hooks/query/profile/get'
+import { useGetSession } from '@/hooks/query/session/get'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
@@ -34,7 +33,11 @@ import { Input } from '../ui/input'
 import { Skeleton } from '../ui/skeleton'
 
 export function Header() {
-  const isUserAuthenticated = isAuthenticated()
+  const {
+    data: profile,
+    isLoading: isLoadingProfile,
+    isAuthenticated,
+  } = useGetSession()
 
   const pathname = usePathname()
 
@@ -43,10 +46,8 @@ export function Header() {
 
   const { data: wishlist } = useGetWishlist({ params: {} })
 
-  const { data: profile, isLoading: isLoadingProfile } = useGetProfile()
-
   const isPageLoginAndNotAuthenticated =
-    pathname === '/login' && !isUserAuthenticated
+    pathname === '/login' && !isAuthenticated
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -148,7 +149,7 @@ export function Header() {
               align="center"
               className="flex w-72 flex-col gap-1 py-2"
             >
-              {isUserAuthenticated && (
+              {profile && (
                 <div className="flex flex-col items-center space-y-2">
                   <Button
                     variant="secondary"
@@ -191,7 +192,7 @@ export function Header() {
                 </div>
               )}
 
-              {isUserAuthenticated && (
+              {profile && (
                 <>
                   <DropdownMenuSeparator />
 
@@ -221,7 +222,7 @@ export function Header() {
                 </Button>
               </DropdownMenuItem>
 
-              {isUserAuthenticated && (
+              {profile && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild
@@ -239,7 +240,7 @@ export function Header() {
                 </DropdownMenuItem>
               )}
 
-              {!isUserAuthenticated && (
+              {!profile && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild

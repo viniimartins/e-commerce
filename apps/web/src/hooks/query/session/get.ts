@@ -1,10 +1,17 @@
 import { useQuery } from '@tanstack/react-query'
+import { getCookie } from 'cookies-next'
 import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import type { IProfile } from '@/app/(app)/types'
-import { isAuthenticated } from '@/auth/client-auth'
 import { api } from '@/service/api'
+
+interface ISession {
+  data: IProfile | undefined
+  isLoading: boolean
+  queryKey: string[]
+  isAuthenticated: boolean
+}
 
 async function get() {
   const { data } = await api.get<IProfile>('/profile')
@@ -12,18 +19,16 @@ async function get() {
   return data
 }
 
-export function useGetProfile() {
-  const queryKey = ['get-profile']
+export function useGetSession(): ISession {
+  const queryKey = ['get-session']
 
-  const isUserAuthenticated = isAuthenticated()
+  const token = getCookie('token')
 
-  const query = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey,
     queryFn: get,
-    enabled: isUserAuthenticated,
+    enabled: !!token,
   })
-
-  const { isError } = query
 
   useEffect(() => {
     if (isError) {
@@ -31,5 +36,5 @@ export function useGetProfile() {
     }
   }, [isError])
 
-  return { ...query, queryKey }
+  return { data, isLoading, queryKey, isAuthenticated: !!data }
 }

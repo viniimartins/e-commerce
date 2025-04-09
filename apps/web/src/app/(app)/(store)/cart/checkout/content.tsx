@@ -28,7 +28,7 @@ import {
 } from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { useCreateBilling } from '@/hooks/mutation/billing/create'
-import { useGetProfile } from '@/hooks/query/profile/get'
+import { useGetSession } from '@/hooks/query/session/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
@@ -74,7 +74,7 @@ export function Content() {
 
   const { mutate: createBilling } = useCreateBilling()
 
-  const { data: profile } = useGetProfile()
+  const { data: profile } = useGetSession()
 
   const form = useForm<IFormSchema>({
     resolver: zodResolver(formSchema),

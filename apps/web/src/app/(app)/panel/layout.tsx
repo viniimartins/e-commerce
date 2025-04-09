@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 
-import { auth } from '@/auth/server-auth'
 import { AppSidebar } from '@/components/sidebar'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import { getProfile } from '@/service/profile'
 
 import { Role } from '../types'
 
@@ -20,9 +20,9 @@ export default async function AdminLayout({
 }: {
   children: ReactNode
 }) {
-  const user = await auth()
+  const { role } = (await getProfile())!
 
-  if (user?.role !== Role.ADMIN) {
+  if (role !== Role.ADMIN) {
     redirect('/')
   }
 

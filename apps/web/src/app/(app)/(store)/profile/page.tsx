@@ -11,7 +11,7 @@ import { getProfile } from '@/service/profile'
 import { Content } from './content'
 
 export default async function Profile() {
-  const user = await getProfile()
+  const { name } = (await getProfile())!
 
   return (
     <>
@@ -30,9 +30,7 @@ export default async function Profile() {
 
         <div className="flex items-center gap-2">
           Olá,
-          <span className="text-muted-foreground font-medium">
-            {user?.name}
-          </span>
+          <span className="text-muted-foreground font-medium">{name}</span>
         </div>
       </div>
 
