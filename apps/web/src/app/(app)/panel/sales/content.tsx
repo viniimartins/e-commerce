@@ -75,9 +75,9 @@ export function Content() {
     <>
       <Card className="h-full rounded-none">
         <CardHeader>
-          <CardTitle className="text-2xl">Pedidos recentes</CardTitle>
+          <CardTitle className="text-2xl">Pedidos </CardTitle>
           <CardDescription>
-            Visualize os pedidos recentes e gerencie seus pedidos
+            Visualize e gerencie todos os pedidos da plataforma
           </CardDescription>
         </CardHeader>
 
@@ -101,9 +101,9 @@ export function Content() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Visualizar produtos do usuário</DialogTitle>
+            <DialogTitle>Detalhes do Pedido</DialogTitle>
             <DialogDescription>
-              Visualize todos os produtos do usuário
+              Confira os produtos, quantidades e valores deste pedido
             </DialogDescription>
           </DialogHeader>
 

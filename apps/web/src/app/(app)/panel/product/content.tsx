@@ -86,7 +86,7 @@ export function Content() {
         <CardHeader>
           <CardTitle className="text-2xl">Produtos</CardTitle>
           <CardDescription>
-            Gerencie seus produtos e visualize seu desempenho de vendas
+            Gerencie todos os produtos da plataforma
           </CardDescription>
         </CardHeader>
 

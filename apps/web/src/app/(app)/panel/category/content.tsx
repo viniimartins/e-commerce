@@ -201,7 +201,7 @@ export function Content() {
         <CardHeader>
           <CardTitle className="text-2xl">Categorias</CardTitle>
           <CardDescription>
-            Gerencie suas categorias e visualize seu desempenho de vendas
+            Gerencie todas as categorias da plataforma
           </CardDescription>
         </CardHeader>
 

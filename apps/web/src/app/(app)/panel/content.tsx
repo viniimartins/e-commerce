@@ -153,9 +153,9 @@ export function Content() {
 
         <Card className="rounded-none">
           <CardHeader>
-            <CardTitle className="text-2xl">Produtos mais vendidos</CardTitle>
+            <CardTitle className="text-2xl">Produtos em destaque</CardTitle>
             <CardDescription>
-              Visualize os produtos mais vendidos
+              Confira os produtos com maior volume de vendas
             </CardDescription>
           </CardHeader>
           <CardContent className="h-full">
@@ -177,9 +177,9 @@ export function Content() {
       >
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Visualizar produtos do usuário</DialogTitle>
+            <DialogTitle>Detalhes do Pedido</DialogTitle>
             <DialogDescription>
-              Visualize todos os produtos do usuário
+              Confira os produtos, quantidades e valores deste pedido
             </DialogDescription>
           </DialogHeader>
 
