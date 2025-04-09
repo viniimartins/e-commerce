@@ -293,9 +293,9 @@ export function Content(props: Props) {
       })
 
       const imagesFromAPI: ProductImage[] = product.productImage.map(
-        ({ image }) => ({
-          url: image.url,
-          id: image.id,
+        ({ image: { id, url } }) => ({
+          url,
+          id,
         }),
       )
 
