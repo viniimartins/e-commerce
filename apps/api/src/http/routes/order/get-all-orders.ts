@@ -82,6 +82,8 @@ export function getAllOrders(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { page, perPage } = request.query
 
         const [orders, total] = await Promise.all([

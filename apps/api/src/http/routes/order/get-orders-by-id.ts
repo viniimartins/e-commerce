@@ -104,6 +104,8 @@ export function getOrdersById(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { userId } = request.params
         const { page, perPage } = request.query
 

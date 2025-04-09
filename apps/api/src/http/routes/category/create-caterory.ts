@@ -28,6 +28,8 @@ export async function createCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { name } = request.body
 
         const category = await prisma.category.create({

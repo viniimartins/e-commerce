@@ -30,6 +30,8 @@ export function updateProduct(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
+      await request.ensureAdmin()
+
       const { id } = request.params
 
       const { name, description, price, quantity, categoryId, productImages } =

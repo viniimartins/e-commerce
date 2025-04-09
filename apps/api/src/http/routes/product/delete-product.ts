@@ -30,6 +30,8 @@ export async function deleteProduct(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { idProduct } = request.params
 
         const product = await prisma.product.findUnique({

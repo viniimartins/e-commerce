@@ -44,6 +44,8 @@ export async function getUsers(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { page, perPage } = request.query
 
         const [users, total] = await Promise.all([

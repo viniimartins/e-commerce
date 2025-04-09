@@ -4,12 +4,18 @@ export interface ICustomer {
   gatewayId: string
 }
 
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+
 export interface IUser {
   id: string
   name: string
   email: string
   avatarUrl?: string
   createdAt: Date
+  role: Role
 }
 
 export interface IProfile extends IUser {

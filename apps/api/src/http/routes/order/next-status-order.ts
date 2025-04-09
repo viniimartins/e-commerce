@@ -34,6 +34,8 @@ export function nextStatusOrder(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { orderId } = request.params
 
         const order = await prisma.order.findUnique({

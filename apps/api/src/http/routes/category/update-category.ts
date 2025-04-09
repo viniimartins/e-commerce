@@ -36,6 +36,8 @@ export async function updateCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { id } = request.params
 
         const { name } = request.body

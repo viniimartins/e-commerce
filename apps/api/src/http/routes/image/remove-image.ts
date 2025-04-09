@@ -5,13 +5,14 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
+import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export function removeImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
-
+  app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().delete(
     '/image/:idImage?',
     {
@@ -33,6 +34,8 @@ export function removeImage(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
+      await request.ensureAdmin()
+
       const { idImage } = request.params
       const { url } = request.body
 

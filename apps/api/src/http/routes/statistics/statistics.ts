@@ -25,7 +25,9 @@ export function getStatistics(app: FastifyInstance) {
           },
         },
       },
-      async (_, reply) => {
+      async (request, reply) => {
+        await request.ensureAdmin()
+
         const totalOrders = await prisma.order.count()
 
         const totalUsers = await prisma.user.count()

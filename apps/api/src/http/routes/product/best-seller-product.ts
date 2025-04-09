@@ -59,6 +59,8 @@ export function getBestSellerProduct(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { page, perPage } = request.query
 
         const groupedSales = await prisma.orderProduct.groupBy({

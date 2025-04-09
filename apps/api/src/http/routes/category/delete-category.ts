@@ -30,6 +30,8 @@ export async function deleteCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { idCategory } = request.params
 
         const category = await prisma.category.findUnique({

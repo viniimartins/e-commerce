@@ -7,6 +7,7 @@ import { pipeline } from 'stream'
 import util from 'util'
 import z from 'zod'
 
+import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -15,7 +16,7 @@ const pump = util.promisify(pipeline)
 
 export function uploadImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
-
+  app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().post(
     '/image',
     {
@@ -34,6 +35,8 @@ export function uploadImage(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
+      await request.ensureAdmin()
+
       const file = await request.file()
 
       if (!file) {
