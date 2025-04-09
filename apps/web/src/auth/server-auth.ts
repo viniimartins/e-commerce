@@ -15,7 +15,7 @@ export async function auth() {
   const token = cookieStore.get('token')?.value
 
   if (!token) {
-    redirect('/auth/sign-in')
+    redirect('/login')
   }
 
   try {

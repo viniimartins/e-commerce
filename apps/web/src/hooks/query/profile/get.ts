@@ -17,8 +17,6 @@ export function useGetProfile() {
 
   const isUserAuthenticated = isAuthenticated()
 
-  console.log(isAuthenticated)
-
   const query = useQuery({
     queryKey,
     queryFn: get,

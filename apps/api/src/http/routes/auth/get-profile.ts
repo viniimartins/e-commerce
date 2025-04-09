@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client'
 import type { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -24,6 +25,7 @@ export async function getProfile(app: FastifyInstance) {
               name: z.string().nullable(),
               email: z.string().email(),
               avatarUrl: z.string().url().nullable(),
+              role: z.nativeEnum(Role),
               customer: z
                 .object({
                   gatewayId: z.string(),
