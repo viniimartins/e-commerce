@@ -18,6 +18,14 @@ export async function getProducts(app: FastifyInstance) {
           page: z.coerce.number().min(1).default(1),
           perPage: z.coerce.number().min(1).max(50).default(12),
           categoryId: z.string().optional(),
+          minPrice: z
+            .string()
+            .optional()
+            .transform((value) => (value && value !== '0' ? value : undefined)),
+          maxPrice: z
+            .string()
+            .optional()
+            .transform((value) => (value && value !== '0' ? value : undefined)),
         }),
         response: {
           200: z.object({
@@ -56,7 +64,7 @@ export async function getProducts(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const { page, perPage, categoryId } = request.query
+      const { page, perPage, categoryId, minPrice, maxPrice } = request.query
 
       if (categoryId) {
         const category = await prisma.category.findUnique({
@@ -74,6 +82,10 @@ export async function getProducts(app: FastifyInstance) {
         prisma.product.findMany({
           where: {
             categoryId,
+            price: {
+              gte: minPrice,
+              lte: maxPrice,
+            },
           },
           include: {
             productImage: {

@@ -1,19 +1,31 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
-import { Fragment, useRef } from 'react'
+import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { Fragment, useRef, useState } from 'react'
 
 import { Checkbox } from '@/components/ui/checkbox'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
-import { formatPrice } from '@/utils/formatPrice'
+import { type PriceOption, priceOptions } from '@/shared/price-options'
+
+type HandleSelectCheckbox = Omit<PriceOption, 'label'>
+
+type HandlePriceFilter = Omit<PriceOption, 'label' | 'id'>
 
 export function Filter() {
   const searchParams = useSearchParams()
+  const router = useRouter()
+
   const categoryActiveId = searchParams.get('category')
+
   const loadMoreRef = useRef<HTMLDivElement>(null)
+
+  const [selectedCheckBoxId, setSelectedCheckBoxId] = useState<
+    PriceOption['id'] | null
+  >()
 
   const {
     data: categories,
@@ -30,6 +42,35 @@ export function Filter() {
     fetchNextPage,
     isActive: true,
   })
+
+  const handlePriceFilterChange = ({ min, max }: HandlePriceFilter) => {
+    const params = new URLSearchParams(searchParams.toString())
+
+    if (min !== undefined) {
+      params.set('minPrice', min.toString())
+    } else {
+      params.delete('minPrice')
+    }
+
+    if (max !== undefined) {
+      params.set('maxPrice', max.toString())
+    } else {
+      params.delete('maxPrice')
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false })
+  }
+
+  const handleSelectCheckbox = ({ id, min, max }: HandleSelectCheckbox) => {
+    if (selectedCheckBoxId === id) {
+      setSelectedCheckBoxId(null)
+      handlePriceFilterChange({ min: 0, max: 0 })
+      return
+    }
+
+    setSelectedCheckBoxId(id)
+    handlePriceFilterChange({ min, max })
+  }
 
   return (
     <aside className="space-y-10">
@@ -53,13 +94,13 @@ export function Filter() {
 
               return (
                 <Fragment key={id}>
-                  <a
+                  <Link
                     data-active={categoryActiveId === id}
                     href={`/shop/?category=${id}`}
                     className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
                   >
                     {name}
-                  </a>
+                  </Link>
 
                   {isLastItem && (
                     <div ref={loadMoreRef} className="h-1 w-full" />
@@ -80,65 +121,21 @@ export function Filter() {
         <span className="text-xl font-semibold">Preço</span>
 
         <div className="flex flex-col items-start gap-2">
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="allprice"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              Todos os preços
-            </label>
-            <Checkbox id="allprice" />
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="1"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              {formatPrice(0)} - {formatPrice(99.99)}
-            </label>
-            <Checkbox id="1" />
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="2"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              {formatPrice(100)} - {formatPrice(199.99)}
-            </label>
-            <Checkbox id="2" />
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="1"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              {formatPrice(200)} - {formatPrice(299.99)}
-            </label>
-            <Checkbox id="1" />
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="1"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              {formatPrice(300)} - {formatPrice(399.99)}
-            </label>
-            <Checkbox id="1" />
-          </div>
-
-          <div className="flex w-full items-center justify-between">
-            <label
-              htmlFor="1"
-              className="text-muted-foreground text-sm font-medium"
-            >
-              {formatPrice(400)}+
-            </label>
-            <Checkbox id="1" />
-          </div>
+          {priceOptions.map(({ id, label, min, max }) => (
+            <div key={id} className="flex w-full items-center justify-between">
+              <label
+                htmlFor={id}
+                className="text-muted-foreground text-sm font-medium"
+              >
+                {label}
+              </label>
+              <Checkbox
+                id={id}
+                checked={selectedCheckBoxId === id}
+                onCheckedChange={() => handleSelectCheckbox({ id, min, max })}
+              />
+            </div>
+          ))}
         </div>
       </div>
     </aside>

@@ -22,7 +22,12 @@ export type GridView = 'grid3x3' | 'grid2x2' | 'columns2' | 'rows2'
 
 export function Content() {
   const searchParams = useSearchParams()
-  const categoryActiveId = searchParams.get('category')
+
+  const { categoryId, minPrice, maxPrice } = {
+    categoryId: searchParams.get('category'),
+    minPrice: searchParams.get('minPrice'),
+    maxPrice: searchParams.get('maxPrice'),
+  }
 
   const [gridView, setGridView] = useState<GridView>('grid3x3')
 
@@ -33,11 +38,13 @@ export function Content() {
     isFetchingNextPage,
     isLoading: isLoadingProducts,
   } = useGetInfiniteProducts({
-    categoryId: categoryActiveId,
+    categoryId,
+    minPrice,
+    maxPrice,
   })
 
   const { data: category, isLoading: isLoadingCategory } = useGetCategory({
-    category: { id: categoryActiveId! },
+    category: { id: categoryId! },
   })
 
   const isLoading = isLoadingProducts || isLoadingCategory

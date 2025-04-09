@@ -11,6 +11,8 @@ interface Params {
   perPage?: number
   categoryId?: string | null
   viewProducts?: boolean
+  minPrice?: string | null
+  maxPrice?: string | null
 }
 
 async function get(params: Params) {

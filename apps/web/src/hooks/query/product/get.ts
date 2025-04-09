@@ -10,6 +10,8 @@ interface Params {
   page?: number
   perPage?: number
   categoryId?: string
+  minPrice?: number
+  maxPrice?: number
 }
 
 async function get(params: Params) {
