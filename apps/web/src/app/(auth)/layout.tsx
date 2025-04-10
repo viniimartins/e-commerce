@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 
-import bgEcommerce from '@/assets/bg-ecommerce.jpg'
+import bgEcommerce from '@/assets/auth/bg-ecommerce.jpg'
 
 import { Footer } from '../../components/footer'
 import { Header } from '../../components/header'

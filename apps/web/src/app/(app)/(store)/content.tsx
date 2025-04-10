@@ -1,6 +1,13 @@
 'use client'
 
-import { ArrowRight, ArrowUp } from 'lucide-react'
+import {
+  ArrowRight,
+  ArrowUp,
+  Banknote,
+  LockKeyhole,
+  Phone,
+  Truck,
+} from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -17,6 +24,7 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 import { useGetProducts } from '@/hooks/query/product/get'
+import { formatPrice } from '@/utils/formatPrice'
 
 import { BannerCarousel } from './_components/banner-carousel'
 import { CarouselControls } from './_components/controls-carousel'
@@ -35,55 +43,37 @@ export function Content() {
     <>
       <BannerCarousel />
 
-      <section className="space-y-12">
-        <div className="flex justify-between">
-          <span className="text-primary text-3xl font-medium">
-            New
-            <br />
-            Arrivals
-          </span>
-          <CarouselControls api={apiBestSelling} />
-        </div>
+      <section className="grid grid-cols-2 gap-4">
+        <span className="text-primary font-poppins text-6xl font-medium">
+          Achou<span className="text-muted-foreground">.</span> Levou
+          <span className="text-muted-foreground">/</span>
+          <br />
+          Sem complicar
+          <span className="text-muted-foreground">.</span>
+        </span>
 
-        <Carousel
-          opts={{
-            align: 'start',
-          }}
-          setApi={setApiBestSelling}
-          className="w-full"
-        >
-          <CarouselContent>
-            {products?.data.map((product) => {
-              const { id } = product
-
-              return (
-                <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard data={product} />
-                </CarouselItem>
-              )
-            })}
-
-            {isLoadingProducts &&
-              Array.from({ length: 4 }).map((_, index) => {
-                return (
-                  <CarouselItem key={index} className="basis-1/4">
-                    <ProductCardSkeleton />
-                  </CarouselItem>
-                )
-              })}
-          </CarouselContent>
-        </Carousel>
-
-        <div className="flex justify-center">
-          <Link href="/shop">
-            <Button size="lg">Ver todos os produtos</Button>
-          </Link>
+        <div className="col-span-1">
+          <div className="space-y-3">
+            <p className="text-muted-foreground text-sm font-medium">
+              Projeto de E-Commerce desenvolvido por{' '}
+              <span className="text-primary font-semibold">
+                Vinicius Ribeiro
+              </span>{' '}
+              &{' '}
+              <span className="text-primary font-semibold">
+                Vinicius Martinho
+              </span>{' '}
+              como Trabalho de Conclusão de Curso na{' '}
+              <span className="text-primary font-semibold">Univinte</span>.
+            </p>
+            <span className="text-primary font-semibold">
+              Estilo, tecnologia e experiência desde 2025.
+            </span>
+          </div>
         </div>
       </section>
 
-      <Separator />
-
-      <section className="space-y-12">
+      <section>
         <div className="grid grid-cols-2 gap-4">
           <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8 dark:border">
             <div className="z-20 flex flex-col gap-4">
@@ -162,25 +152,17 @@ export function Content() {
         </div>
       </section>
 
-      <Separator />
-
-      <div>BANNER</div>
-
       <section className="space-y-12">
         <div className="flex justify-between">
-          <span className="text-primary text-3xl font-medium">
-            New
-            <br />
-            Arrivals
-          </span>
-          {/* <CarouselControls api={apiCarrousel} /> */}
+          <span className="text-primary text-4xl font-medium">Novidades</span>
+          <CarouselControls api={apiBestSelling} />
         </div>
 
-        {/* <Carousel
+        <Carousel
           opts={{
             align: 'start',
           }}
-          setApi={setApiCarrousel}
+          setApi={setApiBestSelling}
           className="w-full"
         >
           <CarouselContent>
@@ -203,12 +185,56 @@ export function Content() {
                 )
               })}
           </CarouselContent>
-        </Carousel> */}
+        </Carousel>
+      </section>
 
-        <div className="flex justify-center">
-          <Link href="/shop">
-            <Button size="lg">Ver todos os produtos</Button>
-          </Link>
+      <Separator />
+
+      <section className="space-y-12">
+        <div className="grid grid-cols-4 gap-4">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+            <Truck className="text-primary size-8" />
+            <span className="text-primary text-xl font-medium">
+              Frete grátis
+            </span>
+            <span className="text-muted-foreground text-sm">
+              Pedido acima de {formatPrice(200)}
+            </span>
+          </div>
+
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+            <Banknote className="text-primary size-8" />
+            <span className="text-primary text-xl font-medium">
+              Dinheiro de volta
+            </span>
+            <span className="text-muted-foreground text-sm">
+              Garantia de 30 dias
+            </span>
+          </div>
+
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+            <LockKeyhole className="text-primary size-8" />
+            <span className="text-primary text-xl font-medium">Pagamento</span>
+            <span className="text-muted-foreground text-sm">
+              Protegido por{' '}
+              <Link
+                href="https://www.abacatepay.com/"
+                className="text-primary font-semibold underline"
+              >
+                AbacatePay
+              </Link>
+            </span>
+          </div>
+
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+            <Phone className="text-primary size-8" />
+            <span className="text-primary text-xl font-medium">
+              Suporte 24/7
+            </span>
+            <span className="text-muted-foreground text-sm">
+              Suporte por telefone e e-mail
+            </span>
+          </div>
         </div>
       </section>
 

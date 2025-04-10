@@ -40,6 +40,7 @@ export async function getProducts(app: FastifyInstance) {
                 description: z.string(),
                 price: z.instanceof(Decimal),
                 quantity: z.number(),
+                createdAt: z.date(),
                 category: z.object({
                   id: z.string(),
                   name: z.string(),

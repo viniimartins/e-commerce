@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 
-import githubIcon from '@/assets/github-icon.svg'
+import githubIcon from '@/assets/icon/github.svg'
 import { Button } from '@/components/ui/button'
 
 import { signInWithGithub } from './actions'

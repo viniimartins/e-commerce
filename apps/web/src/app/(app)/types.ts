@@ -51,6 +51,7 @@ export interface IProduct {
   price: string
   description: string
   quantity: number
+  createdAt: Date
   category: ICategory
   productImage: IProductImage[]
 }

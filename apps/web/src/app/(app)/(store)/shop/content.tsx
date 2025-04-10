@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { Fragment, useState } from 'react'
 
-import filter from '@/assets/filter.svg'
+import filter from '@/assets/icon/filter.svg'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'

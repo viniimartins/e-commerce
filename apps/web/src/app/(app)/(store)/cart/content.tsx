@@ -3,7 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import x from '@/assets/Vector.svg'
+import x from '@/assets/icon/x.svg'
 import { Button } from '@/components/ui/button'
 import {
   Card,

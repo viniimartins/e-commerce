@@ -1,11 +1,13 @@
 'use client'
 
+import { isAfter, subDays } from 'date-fns'
 import { Eye, Heart, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type MouseEvent } from 'react'
 
 import type { IProduct } from '@/app/(app)/types'
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter } from '@/components/ui/card'
 import {
@@ -42,7 +44,8 @@ interface Props {
 export function ProductCard(props: Props) {
   const { data, variant = 'default', gridView = 'grid3x3' } = props
 
-  const { description, id, name, price, productImage, quantity } = data
+  const { description, id, name, price, productImage, quantity, createdAt } =
+    data
 
   const { isOpen, actions } = useModal()
 
@@ -69,12 +72,20 @@ export function ProductCard(props: Props) {
 
   const isProductIsAvailable = quantity > 0
 
+  const isNew = isAfter(createdAt, subDays(new Date(), 7))
+
   return (
     <>
       <Link href={`/shop/${id}`}>
         {gridView === 'grid3x3' && (
           <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+              {isNew && (
+                <Badge className="absolute top-4 left-4 z-30 h-8 font-semibold">
+                  NOVO
+                </Badge>
+              )}
+
               {productImage && (
                 <Image
                   src={productImage[0].image.url}
