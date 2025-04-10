@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { type IOrderById, OrderStatus } from '@/app/(app)/types'
-import pix from '@/assets/icons/pix.svg'
+import pix from '@/assets/icon/pix.svg'
 import { BadgeStatus } from '@/components/badge'
 import {
   Accordion,
