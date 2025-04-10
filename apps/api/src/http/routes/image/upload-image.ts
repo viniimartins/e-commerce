@@ -2,17 +2,15 @@ import { env } from '@e-commerce/env'
 import fastifyMultipart from '@fastify/multipart'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-import fs from 'fs'
-import { pipeline } from 'stream'
-import util from 'util'
+import path from 'path'
+import sharp from 'sharp'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
 import { prisma } from '@/lib/prisma'
+import { removeBg } from '@/lib/remove-bg'
 
 import { BadRequestError } from '../_errors/bad-request-error'
-
-const pump = util.promisify(pipeline)
 
 export function uploadImage(app: FastifyInstance) {
   app.register(fastifyMultipart)
@@ -43,10 +41,13 @@ export function uploadImage(app: FastifyInstance) {
         throw new BadRequestError('No file uploaded')
       }
 
-      const filename = `${Date.now()}-${file.filename}`
+      const buffer = await file.toBuffer()
+
+      const filename = `${Date.now()}-${path.parse(file.filename).name}.png`
       const filePath = `./images/${filename}`
 
-      await pump(file.file, fs.createWriteStream(filePath))
+      const processedBuffer = await removeBg(buffer)
+      await sharp(processedBuffer).png().toFile(filePath)
 
       const url = `${env.NEXT_PUBLIC_API_URL}/images/${filename}`
 
