@@ -6,6 +6,7 @@ import {
   LogOut,
   MoonIcon,
   Search,
+  Settings,
   ShoppingCart,
   Sun,
   User,
@@ -19,6 +20,7 @@ import { Fragment } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { Role } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -310,6 +312,22 @@ export function Header() {
                       >
                         <User className="h-[1.2rem] w-[1.2rem]" />
                         Meu perfil
+                      </Button>
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )}
+
+              {profile?.role === Role.ADMIN && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link href="/panel" className="px-0! py-0!">
+                      <Button
+                        variant="ghost"
+                        className="flex w-full justify-start gap-2"
+                      >
+                        <Settings className="h-[1.2rem] w-[1.2rem]" />
+                        Painel de controle
                       </Button>
                     </Link>
                   </DropdownMenuItem>
