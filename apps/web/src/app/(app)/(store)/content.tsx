@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import bedroom from '@/assets/homepage/bedroom.png'
+import ecommerce from '@/assets/homepage/ecommerce.jpg'
 import kitchen from '@/assets/homepage/kitchen.png'
 import livingRoom from '@/assets/homepage/living-room.png'
 import { Button } from '@/components/ui/button'
@@ -36,14 +37,14 @@ export function Content() {
 
   const { data: products, isLoading: isLoadingProducts } = useGetProducts({
     page: 1,
-    perPage: 10,
+    perPage: 50,
   })
 
   return (
     <>
       <BannerCarousel />
 
-      <section className="grid grid-cols-2 gap-4">
+      <section className="my-4 grid grid-cols-2 gap-4">
         <span className="text-primary font-poppins text-6xl font-medium">
           Achou<span className="text-muted-foreground">.</span> Levou
           <span className="text-muted-foreground">/</span>
@@ -73,9 +74,9 @@ export function Content() {
         </div>
       </section>
 
-      <section>
+      <section className="my-4">
         <div className="grid grid-cols-2 gap-4">
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8 dark:border">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
             <div className="z-20 flex flex-col gap-4">
               <div className="flex flex-col items-start justify-start gap-2">
                 <span className="text-2xl font-medium">Living Room</span>
@@ -100,7 +101,7 @@ export function Content() {
             </div>
           </div>
           <div className="col-span-1 flex flex-col gap-4">
-            <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8 dark:border">
+            <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8">
               <div className="z-20 flex flex-col justify-end gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="text-2xl font-medium">Kitchen</span>
@@ -124,7 +125,7 @@ export function Content() {
                 />
               </div>
             </div>
-            <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8 dark:border">
+            <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8">
               <div className="z-20 flex flex-col justify-end gap-4">
                 <div className="flex flex-col gap-2">
                   <span className="text-2xl font-medium">Bedroom</span>
@@ -152,7 +153,7 @@ export function Content() {
         </div>
       </section>
 
-      <section className="space-y-12">
+      <section className="my-4 space-y-12">
         <div className="flex justify-between">
           <span className="text-primary text-4xl font-medium">Novidades</span>
           <CarouselControls api={apiBestSelling} />
@@ -190,9 +191,9 @@ export function Content() {
 
       <Separator />
 
-      <section className="space-y-12">
+      <section className="my-4">
         <div className="grid grid-cols-4 gap-4">
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Truck className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Frete grátis
@@ -202,7 +203,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Banknote className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Dinheiro de volta
@@ -212,7 +213,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <LockKeyhole className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">Pagamento</span>
             <span className="text-muted-foreground text-sm">
@@ -226,7 +227,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6 dark:border">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Phone className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Suporte 24/7
@@ -234,6 +235,43 @@ export function Content() {
             <span className="text-muted-foreground text-sm">
               Suporte por telefone e e-mail
             </span>
+          </div>
+        </div>
+      </section>
+
+      <section className="my-4">
+        <div className="grid grid-cols-2">
+          <div className="relative col-span-1 h-[30rem] w-full">
+            <Image
+              src={ecommerce}
+              alt="Ecommerce"
+              quality={100}
+              priority
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
+          </div>
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[30rem] w-full flex-col items-center justify-center border bg-neutral-100 p-8">
+            <div className="flex flex-col gap-4">
+              <span className="font-base font-semibold text-blue-500">
+                OFERTAS ATÉ 35% OFF
+              </span>
+              <span className="text-3xl font-semibold">
+                CENTENAS de <br /> novos preços mais baixos!
+              </span>
+              <p className="text-muted-foreground text-sm">
+                Aproveite descontos exclusivos em produtos selecionados.
+                Economize em diversos itens com nossas ofertas por tempo
+                limitado. Não perca!
+              </p>
+              <Link href="/shop">
+                <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
+                  Comprar agora
+                  <ArrowRight className="size-4 transition-all group-hover:translate-x-1" />
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

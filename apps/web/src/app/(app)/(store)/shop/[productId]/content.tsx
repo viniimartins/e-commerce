@@ -80,7 +80,7 @@ export function Content({ product }: Props) {
               Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
-                  className="dark:bg-muted-foreground/10 relative flex w-44 flex-1 items-center justify-center bg-neutral-100 p-0 dark:border"
+                  className="dark:bg-muted-foreground/10 relative flex w-44 flex-1 items-center justify-center border bg-neutral-100 p-0"
                 />
               ))}
 
@@ -90,7 +90,7 @@ export function Content({ product }: Props) {
               return (
                 <div
                   key={id}
-                  className="dark:bg-muted-foreground/10 relative flex w-44 flex-1 items-center justify-center bg-neutral-100 p-0 dark:border"
+                  className="dark:bg-muted-foreground/10 relative flex w-44 flex-1 items-center justify-center border bg-neutral-100 p-0"
                 >
                   <Dialog>
                     <DialogTrigger className="relative h-full w-full hover:cursor-pointer">
@@ -124,7 +124,7 @@ export function Content({ product }: Props) {
               )
             })}
           </div>
-          <div className="dark:bg-muted-foreground/10 flex h-[39rem] w-[31.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+          <div className="dark:bg-muted-foreground/10 flex h-[39rem] w-[31.5rem] items-center justify-center border bg-neutral-100 p-0">
             {product?.productImage && (
               <Dialog>
                 <DialogTrigger className="relative h-full w-full hover:cursor-pointer">

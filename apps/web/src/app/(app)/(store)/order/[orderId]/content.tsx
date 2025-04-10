@@ -114,7 +114,7 @@ export function Content({ data }: Props) {
                     <div key={id}>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                          <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                          <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
                             <Image
                               src={productImage[0].image.url}
                               alt="product"
@@ -216,7 +216,7 @@ export function Content({ data }: Props) {
                     <div className="mt-4 flex flex-col gap-2">
                       <span className="text-base font-semibold">Pagamento</span>
                       <div className="flex w-full gap-4 border p-4">
-                        <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-neutral-100 dark:border">
+                        <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full border bg-neutral-100">
                           <Image
                             src={pix}
                             alt="pix"
@@ -250,7 +250,7 @@ export function Content({ data }: Props) {
                   <div className="flex flex-col gap-2">
                     <span className="text-base font-semibold">Frete</span>
                     <div className="flex w-full gap-4 border p-4">
-                      <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full bg-neutral-100 dark:border">
+                      <div className="dark:bg-muted-foreground/10 relative flex h-[3rem] w-[3rem] items-center justify-center rounded-full border bg-neutral-100">
                         <TruckIcon className="size-6" />
                       </div>
 

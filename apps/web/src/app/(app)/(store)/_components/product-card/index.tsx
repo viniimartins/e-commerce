@@ -79,7 +79,7 @@ export function ProductCard(props: Props) {
       <Link href={`/shop/${id}`}>
         {gridView === 'grid3x3' && (
           <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
-            <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+            <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center border bg-neutral-100 p-0">
               {isNew && (
                 <Badge className="absolute top-4 left-4 z-30 h-8 font-semibold">
                   NOVO
@@ -196,7 +196,7 @@ export function ProductCard(props: Props) {
             <CardContent className="flex flex-row px-0">
               <div
                 onClick={handleOpenDialog}
-                className="group dark:bg-muted-foreground/10 relative h-[15rem] w-1/2 cursor-pointer bg-neutral-100 p-0 dark:border"
+                className="group dark:bg-muted-foreground/10 relative h-[15rem] w-1/2 cursor-pointer border bg-neutral-100 p-0"
               >
                 <div className="relative h-full w-full">
                   {productImage && (
@@ -263,7 +263,7 @@ export function ProductCard(props: Props) {
           <Card className="relative w-full cursor-pointer gap-0 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent
               onClick={handleOpenDialog}
-              className="group dark:bg-muted-foreground/10 relative h-[18rem] w-full cursor-pointer bg-neutral-100 p-0 dark:border"
+              className="group dark:bg-muted-foreground/10 relative h-[18rem] w-full cursor-pointer border bg-neutral-100 p-0"
             >
               {productImage && (
                 <Image
@@ -331,7 +331,7 @@ export function ProductCard(props: Props) {
             <CardContent className="flex flex-row px-0">
               <div
                 onClick={handleOpenDialog}
-                className="group dark:bg-muted-foreground/10 relative h-[18rem] w-1/2 cursor-pointer bg-neutral-100 p-0 dark:border"
+                className="group dark:bg-muted-foreground/10 relative h-[18rem] w-1/2 cursor-pointer border bg-neutral-100 p-0"
               >
                 <div className="relative h-full w-full">
                   {productImage && (
@@ -400,7 +400,7 @@ export function ProductCard(props: Props) {
 
       <Dialog open={isOpen} onOpenChange={actions.close}>
         <DialogContent className="grid max-h-[70vh]! max-w-[50vw]! grid-cols-5 gap-6">
-          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
+          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full border bg-neutral-100">
             <Carousel>
               <CarouselContent>
                 {productImage?.map(({ image }) => {

@@ -35,6 +35,7 @@ import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
+import { options } from '@/shared/pages'
 import { formatPrice } from '@/utils/formatPrice'
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
@@ -82,8 +83,6 @@ export function Header() {
   const isPageLoginAndNotAuthenticated =
     pathname === '/login' && !isAuthenticated
 
-  console.log(products?.data.length)
-
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
@@ -91,42 +90,22 @@ export function Header() {
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
         </Link>
         <nav className="flex gap-8">
-          <Link
-            href="/"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/' && 'text-foreground',
-            )}
-          >
-            Home
-          </Link>
-          <Link
-            href="/shop"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/shop' && 'text-foreground',
-            )}
-          >
-            Shop
-          </Link>
-          <Link
-            href="/contact"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/contact' && 'text-foreground',
-            )}
-          >
-            Contact
-          </Link>
-          <Link
-            href="/about"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/about' && 'text-foreground',
-            )}
-          >
-            About
-          </Link>
+          {options.map((option) => {
+            const { title, url, pathname } = option
+
+            return (
+              <Link
+                key={pathname}
+                href={url}
+                className={cn(
+                  'text-muted-foreground hover:text-foreground',
+                  pathname === url && 'text-foreground',
+                )}
+              >
+                {title}
+              </Link>
+            )
+          })}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -169,7 +148,7 @@ export function Header() {
                           <Fragment key={id}>
                             <div className="flex items-center justify-between">
                               <div className="flex items-center gap-4">
-                                <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                                <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
                                   <Image
                                     src={productImage[0].image.url}
                                     alt="product"

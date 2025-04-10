@@ -464,7 +464,7 @@ export function Content(props: Props) {
                     <CardDescription className="hidden" />
                   </CardHeader>
                   <CardContent className="flex flex-col gap-2">
-                    <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[20rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                    <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[20rem] items-center justify-center border bg-neutral-100 p-0">
                       {productImages.slice(0, 1).map((image) => {
                         return (
                           <div
@@ -506,7 +506,7 @@ export function Content(props: Props) {
                         return (
                           <div
                             key={index}
-                            className="dark:bg-muted-foreground/10 relative mb-1 flex h-[7rem] items-center justify-center bg-neutral-100 p-0 dark:border"
+                            className="dark:bg-muted-foreground/10 relative mb-1 flex h-[7rem] items-center justify-center border bg-neutral-100 p-0"
                           >
                             <div
                               className="relative h-full w-full"
@@ -556,7 +556,7 @@ export function Content(props: Props) {
                             <FormControl>
                               <div
                                 onClick={handleUploadClick}
-                                className="dark:bg-muted-foreground/10 relative mb-1 flex aspect-square h-[7rem] w-full cursor-pointer items-center justify-center rounded-md border border-dashed bg-neutral-100 p-0 transition-colors hover:bg-neutral-200 dark:border"
+                                className="dark:bg-muted-foreground/10 relative mb-1 flex aspect-square h-[7rem] w-full cursor-pointer items-center justify-center rounded-md border border-dashed bg-neutral-100 p-0 transition-colors hover:bg-neutral-200"
                               >
                                 <Upload className="text-muted-foreground h-4 w-4" />
                                 <span className="sr-only">Upload</span>
@@ -648,7 +648,7 @@ export function Content(props: Props) {
             <DialogTitle className="hidden" />
             <DialogDescription className="hidden" />
           </DialogHeader>
-          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full bg-neutral-100 dark:border">
+          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full border bg-neutral-100">
             <Carousel>
               <CarouselContent>
                 {productImages?.map((image) => {

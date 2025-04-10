@@ -68,7 +68,7 @@ export function Order({ data }: Props) {
                 'border-b-0': isLast,
               })}
             >
-              <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[5rem] w-[5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+              <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[5rem] w-[5rem] items-center justify-center border bg-neutral-100 p-0">
                 <Image
                   src={productImage[0].image.url}
                   alt="product"

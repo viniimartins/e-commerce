@@ -1,6 +1,7 @@
 import Link from 'next/link'
 
 import { Separator } from '@/components/ui/separator'
+import { options } from '@/shared/pages'
 
 import { Button } from '../ui/button'
 
@@ -14,18 +15,15 @@ export function Footer() {
           </span>
 
           <div className="flex">
-            <Link href="/home">
-              <Button variant="link">Home</Button>
-            </Link>
-            <Link href="/shop">
-              <Button variant="link">Shop</Button>
-            </Link>
-            <Link href="/about">
-              <Button variant="link">Sobre nós</Button>
-            </Link>
-            <Link href="/contact">
-              <Button variant="link">Contato</Button>
-            </Link>
+            {options.map((option) => {
+              const { title, url, pathname } = option
+
+              return (
+                <Link href={url} key={pathname}>
+                  <Button variant="link">{title}</Button>
+                </Link>
+              )
+            })}
           </div>
         </div>
 
