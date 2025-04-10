@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 
-import { OrderStatusLabels } from '@/app/(app)/types'
+import { OrderStatusLabels, Role } from '@/app/(app)/types'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,6 +10,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { getOrder } from '@/service/order'
+import { getSession } from '@/service/session'
 
 import { Content } from './content'
 
@@ -40,7 +41,13 @@ export async function generateMetadata({ params }: Params) {
 export default async function OrderPage({ params }: Params) {
   const { orderId } = await params
 
+  const { data: session } = await getSession()
+
   const order = await fetchOrderData(orderId)
+
+  if (order.userId !== session?.id || session?.role !== Role.ADMIN) {
+    notFound()
+  }
 
   return (
     <>

@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 
 import { AppSidebar } from '@/components/sidebar'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { getProfile } from '@/service/profile'
+import { getSession } from '@/service/session'
 
 import { Role } from '../types'
 
@@ -20,9 +20,9 @@ export default async function AdminLayout({
 }: {
   children: ReactNode
 }) {
-  const { role } = (await getProfile())!
+  const { data: session } = await getSession()
 
-  if (role !== Role.ADMIN) {
+  if (session?.role !== Role.ADMIN) {
     redirect('/')
   }
 

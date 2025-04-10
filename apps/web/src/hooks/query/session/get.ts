@@ -5,13 +5,7 @@ import { toast } from 'sonner'
 
 import type { IProfile } from '@/app/(app)/types'
 import { api } from '@/service/api'
-
-interface ISession {
-  data: IProfile | undefined
-  isLoading: boolean
-  queryKey: string[]
-  isAuthenticated: boolean
-}
+import type { ISession } from '@/types/session'
 
 async function get() {
   const { data } = await api.get<IProfile>('/profile')
@@ -36,5 +30,5 @@ export function useGetSession(): ISession {
     }
   }, [isError])
 
-  return { data, isLoading, queryKey, isAuthenticated: !!data }
+  return { data, isLoading, queryKey, isAuthenticated: !!data, token }
 }
