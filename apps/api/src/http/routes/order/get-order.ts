@@ -92,12 +92,9 @@ export function getOrder(app: FastifyInstance) {
       async (request, reply) => {
         const { orderId } = request.params
 
-        const userId = await request.getCurrentUserId()
-
         const order = await prisma.order.findUnique({
           where: {
             id: orderId,
-            userId,
           },
           include: {
             products: {

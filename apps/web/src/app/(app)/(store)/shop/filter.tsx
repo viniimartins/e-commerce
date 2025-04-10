@@ -1,6 +1,5 @@
 'use client'
 
-import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Fragment, useRef, useState } from 'react'
 
@@ -27,6 +26,8 @@ export function Filter() {
     PriceOption['id'] | null
   >()
 
+  const params = new URLSearchParams(searchParams.toString())
+
   const {
     data: categories,
     fetchNextPage,
@@ -44,8 +45,6 @@ export function Filter() {
   })
 
   const handlePriceFilterChange = ({ min, max }: HandlePriceFilter) => {
-    const params = new URLSearchParams(searchParams.toString())
-
     if (min !== undefined) {
       params.set('minPrice', min.toString())
     } else {
@@ -72,6 +71,18 @@ export function Filter() {
     handlePriceFilterChange({ min, max })
   }
 
+  const handleCategoryClick = (id?: string) => {
+    if (!id) {
+      params.delete('category')
+    }
+
+    if (id) {
+      params.set('category', id)
+    }
+
+    router.push(`?${params.toString()}`, { scroll: false })
+  }
+
   return (
     <aside className="space-y-10">
       <div className="flex flex-col gap-2">
@@ -79,13 +90,13 @@ export function Filter() {
 
         <ScrollArea className="h-56">
           <div className="flex flex-col items-start gap-2">
-            <a
+            <span
               data-active={!categoryActiveId}
-              href="/shop"
+              onClick={() => handleCategoryClick()}
               className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
             >
               Todas categorias
-            </a>
+            </span>
 
             {categories?.map((category, index) => {
               const { id, name } = category
@@ -94,13 +105,13 @@ export function Filter() {
 
               return (
                 <Fragment key={id}>
-                  <Link
+                  <span
                     data-active={categoryActiveId === id}
-                    href={`/shop/?category=${id}`}
+                    onClick={() => handleCategoryClick(id)}
                     className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
                   >
                     {name}
-                  </Link>
+                  </span>
 
                   {isLastItem && (
                     <div ref={loadMoreRef} className="h-1 w-full" />

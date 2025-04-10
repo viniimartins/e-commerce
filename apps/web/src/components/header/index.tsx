@@ -71,12 +71,16 @@ export function Header() {
 
   const { register, watch } = useForm<ISearchInput>()
 
-  const { data: products } = useGetProducts({ name: watch('search') })
+  const { data: products } = useGetProducts({
+    name: watch('search'),
+  })
 
   const { data: wishlist } = useGetWishlist({ params: {} })
 
   const isPageLoginAndNotAuthenticated =
     pathname === '/login' && !isAuthenticated
+
+  console.log(products?.data.length)
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -147,49 +151,59 @@ export function Header() {
                     {products?.data.length} produtos encontrados
                   </CardDescription>
                 </CardHeader>
-                <ScrollArea
-                  className={cn('h-56', {
-                    'h-auto': products && products?.data.length <= 4,
-                  })}
-                >
-                  <CardContent className="p-0 pr-6">
-                    {products?.data.map((product, index) => {
-                      const lastIndex = products.data.length === index + 1
+                {products && (
+                  <ScrollArea
+                    className={cn('h-56', {
+                      'h-auto': products && products?.data.length <= 4,
+                    })}
+                  >
+                    <CardContent className="p-0 pr-6">
+                      {products?.data.map((product, index) => {
+                        const lastIndex = products.data.length === index + 1
 
-                      const { id, name, price, productImage } = product
+                        const { id, name, price, productImage } = product
 
-                      return (
-                        <Fragment key={id}>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-4">
-                              <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
-                                <Image
-                                  src={productImage[0].image.url}
-                                  alt="product"
-                                  fill
-                                  quality={100}
-                                  priority
-                                  className="object-cover p-1"
-                                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                />
+                        return (
+                          <Fragment key={id}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center bg-neutral-100 p-0 dark:border">
+                                  <Image
+                                    src={productImage[0].image.url}
+                                    alt="product"
+                                    fill
+                                    quality={100}
+                                    priority
+                                    className="object-cover p-1"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  />
+                                </div>
+
+                                <span className="text-base font-medium">
+                                  {name}
+                                </span>
                               </div>
 
-                              <span className="text-base font-medium">
-                                {name}
+                              <span className="text-sm font-medium">
+                                {formatPrice(price)}
                               </span>
                             </div>
 
-                            <span className="text-sm font-medium">
-                              {formatPrice(price)}
-                            </span>
-                          </div>
+                            {!lastIndex && <Separator className="my-2" />}
+                          </Fragment>
+                        )
+                      })}
+                    </CardContent>
+                  </ScrollArea>
+                )}
 
-                          {!lastIndex && <Separator className="my-2" />}
-                        </Fragment>
-                      )
-                    })}
-                  </CardContent>
-                </ScrollArea>
+                {!products && (
+                  <div className="flex items-center pl-4">
+                    <p className="text-muted-foreground">
+                      Nenhum produto encontrado
+                    </p>
+                  </div>
+                )}
               </Card>
             </PopoverContent>
           </Popover>
