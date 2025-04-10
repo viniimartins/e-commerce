@@ -275,6 +275,8 @@ export function Content(props: Props) {
     if (image.id) {
       setDeletedLocalImage((prev) => [...prev, image.url])
     }
+
+    setProductImages(updatedProductImages)
   }
 
   function handleUploadClick() {

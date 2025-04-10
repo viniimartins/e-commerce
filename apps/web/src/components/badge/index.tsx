@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react'
 
-import { OrderStatus } from '@/app/(app)/types'
+import { OrderStatus, OrderStatusLabels } from '@/app/(app)/types'
 import { Badge, badgeVariants } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
@@ -29,7 +29,7 @@ export function BadgeStatus({ status, className, ...props }: Props) {
       className={cn(badgeVariants({ variant }), className)}
       {...props}
     >
-      {status}
+      {OrderStatusLabels[status]}
     </Badge>
   )
 }

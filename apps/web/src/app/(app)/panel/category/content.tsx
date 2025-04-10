@@ -356,6 +356,14 @@ export function Content() {
               </div>
             )}
           </ScrollArea>
+
+          {viewProductsModalTarget?.count === 0 && (
+            <div className="flex items-center justify-center">
+              <span className="text-muted-foreground">
+                Nenhum produto encontrado
+              </span>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
     </>

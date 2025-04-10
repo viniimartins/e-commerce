@@ -16,7 +16,7 @@ interface Params {
   product: Product
 }
 
-async function post({ product }: Params) {
+async function put({ product }: Params) {
   const { data } = await api.put(`/product/${product.id}`, product)
 
   return data
@@ -25,7 +25,7 @@ async function post({ product }: Params) {
 export function useUpdateProduct() {
   return useMutation({
     mutationKey: ['update-product'],
-    mutationFn: post,
+    mutationFn: put,
     onSuccess: () => {
       toast.success('Produto atualizado com sucesso')
     },

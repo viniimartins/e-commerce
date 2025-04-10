@@ -1,8 +1,11 @@
 'use client'
 
+import { ArrowRightIcon } from 'lucide-react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Fragment, useCallback, useState } from 'react'
 
+import { Button } from '@/components/ui/button'
 import {
   Card,
   CardContent,
@@ -132,7 +135,16 @@ export function Content() {
       <div className="grid grid-cols-2 gap-4">
         <Card className="rounded-none">
           <CardHeader>
-            <CardTitle className="text-2xl">Pedidos recentes</CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-2xl">Pedidos recentes</CardTitle>
+
+              <Link href="/panel/sales">
+                <Button variant="outline" size="sm">
+                  Ver mais
+                  <ArrowRightIcon className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
             <CardDescription>
               Visualize os pedidos recentes e gerencie seus pedidos
             </CardDescription>
