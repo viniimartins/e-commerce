@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime/library'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -15,8 +16,20 @@ export async function getProducts(app: FastifyInstance) {
         summary: 'List all product',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
-          perPage: z.coerce.number().min(1).max(20).default(10),
+          perPage: z.coerce.number().min(1).max(50).default(12),
           categoryId: z.string().optional(),
+          minPrice: z
+            .string()
+            .optional()
+            .transform((value) => (value && value !== '0' ? value : undefined)),
+          maxPrice: z
+            .string()
+            .optional()
+            .transform((value) => (value && value !== '0' ? value : undefined)),
+          name: z
+            .string()
+            .optional()
+            .transform((value) => (value && value !== '' ? value : undefined)),
         }),
         response: {
           200: z.object({
@@ -25,17 +38,21 @@ export async function getProducts(app: FastifyInstance) {
                 id: z.string(),
                 name: z.string(),
                 description: z.string(),
-                price: z.number(),
+                price: z.instanceof(Decimal),
                 quantity: z.number(),
+                createdAt: z.date(),
                 category: z.object({
                   id: z.string(),
                   name: z.string(),
                 }),
                 productImage: z.array(
                   z.object({
-                    id: z.string(),
+                    image: z.object({
+                      id: z.string(),
+                      url: z.string(),
+                    }),
                     createdAt: z.date(),
-                    url: z.string(),
+                    imageId: z.string(),
                     productId: z.string(),
                   }),
                 ),
@@ -52,7 +69,8 @@ export async function getProducts(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      const { page, perPage, categoryId } = request.query
+      const { page, perPage, categoryId, minPrice, maxPrice, name } =
+        request.query
 
       if (categoryId) {
         const category = await prisma.category.findUnique({
@@ -70,15 +88,29 @@ export async function getProducts(app: FastifyInstance) {
         prisma.product.findMany({
           where: {
             categoryId,
+            price: {
+              gte: minPrice,
+              lte: maxPrice,
+            },
+            name: {
+              contains: name,
+            },
           },
           include: {
-            productImage: true,
+            productImage: {
+              include: {
+                image: true,
+              },
+            },
             category: {
               select: {
                 id: true,
                 name: true,
               },
             },
+          },
+          orderBy: {
+            createdAt: 'desc',
           },
           take: perPage,
           skip: (page - 1) * perPage,
@@ -93,10 +125,7 @@ export async function getProducts(app: FastifyInstance) {
       const totalPages = Math.ceil(total / perPage)
 
       return reply.status(200).send({
-        data: products.map((product) => ({
-          ...product,
-          price: Number(product.price),
-        })),
+        data: products,
         meta: {
           pageIndex: page,
           perPage,

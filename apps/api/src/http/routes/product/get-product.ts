@@ -1,3 +1,4 @@
+import { Decimal } from '@prisma/client/runtime/library'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -21,20 +22,27 @@ export async function getProduct(app: FastifyInstance) {
             id: z.string(),
             name: z.string(),
             description: z.string(),
-            price: z.number(),
+            price: z.instanceof(Decimal),
             quantity: z.number(),
+            createdAt: z.date(),
             category: z.object({
               id: z.string(),
               name: z.string(),
             }),
             productImage: z.array(
               z.object({
-                id: z.string(),
+                image: z.object({
+                  id: z.string(),
+                  url: z.string(),
+                }),
                 createdAt: z.date(),
-                url: z.string(),
+                imageId: z.string(),
                 productId: z.string(),
               }),
             ),
+          }),
+          400: z.object({
+            message: z.string(),
           }),
         },
       },
@@ -47,7 +55,11 @@ export async function getProduct(app: FastifyInstance) {
           id: productId,
         },
         include: {
-          productImage: true,
+          productImage: {
+            include: {
+              image: true,
+            },
+          },
           category: {
             select: {
               id: true,
@@ -61,10 +73,7 @@ export async function getProduct(app: FastifyInstance) {
         throw new BadRequestError('Product not found.')
       }
 
-      return reply.status(200).send({
-        ...product,
-        price: Number(product.price),
-      })
+      return reply.status(200).send(product)
     },
   )
 }

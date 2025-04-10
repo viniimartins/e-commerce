@@ -14,6 +14,7 @@ export const env = createEnv({
 
     ABACATE_API_KEY: z.string(),
     ABACATE_WEBHOOK_SECRET: z.string(),
+    REMOVE_BG_API_KEY: z.string(),
   },
   client: {},
   shared: {
@@ -31,6 +32,7 @@ export const env = createEnv({
     JWT_SECRET: process.env.JWT_SECRET,
     ABACATE_API_KEY: process.env.ABACATE_API_KEY,
     ABACATE_WEBHOOK_SECRET: process.env.ABACATE_WEBHOOK_SECRET,
+    REMOVE_BG_API_KEY: process.env.REMOVE_BG_API_KEY,
   },
   emptyStringAsUndefined: true,
 })

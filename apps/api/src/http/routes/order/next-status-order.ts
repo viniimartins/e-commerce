@@ -27,10 +27,15 @@ export function nextStatusOrder(app: FastifyInstance) {
             200: z.object({
               status: z.nativeEnum(OrderStatus),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },
       async (request, reply) => {
+        await request.ensureAdmin()
+
         const { orderId } = request.params
 
         const order = await prisma.order.findUnique({

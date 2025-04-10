@@ -55,6 +55,12 @@ export function abacatepay(app: FastifyInstance) {
           devMode: z.boolean(),
           event: z.string(),
         }),
+        response: {
+          200: z.null(),
+          400: z.object({
+            message: z.string(),
+          }),
+        },
       },
     },
     async (request) => {
@@ -82,16 +88,25 @@ export function abacatepay(app: FastifyInstance) {
 
       const nextStatus = advanceOrderStatus(order.currentStatus)
 
-      await prisma.order.update({
-        where: { id: order.id },
-        data: {
-          currentStatus: nextStatus,
-          status: {
-            create: {
-              status: nextStatus,
+      await prisma.$transaction(async (tx) => {
+        for (const { externalId: productId, quantity } of billing.products) {
+          await tx.product.update({
+            where: { id: productId },
+            data: { quantity: { decrement: quantity } },
+          })
+        }
+
+        await tx.order.update({
+          where: { id: order.id },
+          data: {
+            currentStatus: nextStatus,
+            status: {
+              create: {
+                status: nextStatus,
+              },
             },
           },
-        },
+        })
       })
     },
   )

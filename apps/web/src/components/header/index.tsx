@@ -6,18 +6,21 @@ import {
   LogOut,
   MoonIcon,
   Search,
+  Settings,
   ShoppingCart,
   Sun,
   User,
   User2,
 } from 'lucide-react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
+import { Fragment } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
-import { useGetWishlist } from '@/app/(app)/(homepage)/wishlist/hooks/use-get-wishlist'
-import { useGetProfile } from '@/app/(app)/hooks/use-get-profile'
-import { isAuthenticated } from '@/auth/client-auth'
+import { Role } from '@/app/(app)/types'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -26,27 +29,59 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useGetProducts } from '@/hooks/query/product/get'
+import { useGetSession } from '@/hooks/query/session/get'
+import { useGetWishlist } from '@/hooks/query/wishlist/get'
+import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
+import { options } from '@/shared/pages'
+import { formatPrice } from '@/utils/formatPrice'
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '../ui/card'
 import { Input } from '../ui/input'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { ScrollArea } from '../ui/scroll-area'
+import { Separator } from '../ui/separator'
 import { Skeleton } from '../ui/skeleton'
 
-export function Header() {
-  const isUserAuthenticated = isAuthenticated()
+const searchInputs = z.object({
+  search: z.string(),
+})
 
+type ISearchInput = z.infer<typeof searchInputs>
+
+export function Header() {
   const pathname = usePathname()
+
+  const {
+    data: profile,
+    isLoading: isLoadingProfile,
+    isAuthenticated,
+  } = useGetSession()
+
+  const { actions, isOpen } = useModal()
 
   const { cart, removeAllProducts } = useCart()
   const { setTheme, theme } = useTheme()
 
+  const { register, watch } = useForm<ISearchInput>()
+
+  const { data: products } = useGetProducts({
+    name: watch('search'),
+  })
+
   const { data: wishlist } = useGetWishlist({ params: {} })
 
-  const { data: profile, isLoading: isLoadingProfile } = useGetProfile()
-
   const isPageLoginAndNotAuthenticated =
-    pathname === '/login' && !isUserAuthenticated
+    pathname === '/login' && !isAuthenticated
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -55,51 +90,104 @@ export function Header() {
           <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
         </Link>
         <nav className="flex gap-8">
-          <Link
-            href="/"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/' && 'text-foreground',
-            )}
-          >
-            Home
-          </Link>
-          <Link
-            href="/shop"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/shop' && 'text-foreground',
-            )}
-          >
-            Shop
-          </Link>
-          <Link
-            href="/contact"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/contact' && 'text-foreground',
-            )}
-          >
-            Contact
-          </Link>
-          <Link
-            href="/about"
-            className={cn(
-              'text-muted-foreground hover:text-foreground',
-              pathname === '/about' && 'text-foreground',
-            )}
-          >
-            About
-          </Link>
+          {options.map((option) => {
+            const { title, url, pathname } = option
+
+            return (
+              <Link
+                key={pathname}
+                href={url}
+                className={cn(
+                  'text-muted-foreground hover:text-foreground',
+                  pathname === url && 'text-foreground',
+                )}
+              >
+                {title}
+              </Link>
+            )
+          })}
         </nav>
+
         <div className="flex items-center gap-2">
-          <div className="relative w-full">
-            <Search className="text-muted-foreground absolute top-2.5 left-2 h-4 w-4" />
-            <Input
-              placeholder="What are you looking for?"
-              className="w-full pl-8"
-            />
-          </div>
+          <Popover open={isOpen} onOpenChange={actions.toggle}>
+            <PopoverTrigger asChild>
+              <div className="relative w-full">
+                <Search className="text-muted-foreground pointer-events-none absolute top-2.5 left-2 h-4 w-4" />
+                <Input
+                  placeholder="O que você está procurando?"
+                  className="w-80 pl-9"
+                  {...register('search')}
+                />
+              </div>
+            </PopoverTrigger>
+
+            <PopoverContent
+              className="w-80 px-6 py-0 pr-0"
+              onOpenAutoFocus={(e) => e.preventDefault()}
+            >
+              <Card className="border-none pr-0">
+                <CardHeader className="px-0">
+                  <CardTitle>Resultados da busca</CardTitle>
+                  <CardDescription>
+                    {products?.data.length} produtos encontrados
+                  </CardDescription>
+                </CardHeader>
+                {products && (
+                  <ScrollArea
+                    className={cn('h-56', {
+                      'h-auto': products && products?.data.length <= 4,
+                    })}
+                  >
+                    <CardContent className="p-0 pr-6">
+                      {products?.data.map((product, index) => {
+                        const lastIndex = products.data.length === index + 1
+
+                        const { id, name, price, productImage } = product
+
+                        return (
+                          <Fragment key={id}>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-4">
+                                <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
+                                  <Image
+                                    src={productImage[0].image.url}
+                                    alt="product"
+                                    fill
+                                    quality={100}
+                                    priority
+                                    className="object-cover p-1"
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                  />
+                                </div>
+
+                                <span className="text-base font-medium">
+                                  {name}
+                                </span>
+                              </div>
+
+                              <span className="text-sm font-medium">
+                                {formatPrice(price)}
+                              </span>
+                            </div>
+
+                            {!lastIndex && <Separator className="my-2" />}
+                          </Fragment>
+                        )
+                      })}
+                    </CardContent>
+                  </ScrollArea>
+                )}
+
+                {!products && (
+                  <div className="flex items-center pl-4">
+                    <p className="text-muted-foreground">
+                      Nenhum produto encontrado
+                    </p>
+                  </div>
+                )}
+              </Card>
+            </PopoverContent>
+          </Popover>
 
           <Link href="/wishlist">
             <Button size="icon" variant="ghost">
@@ -148,7 +236,7 @@ export function Header() {
               align="center"
               className="flex w-72 flex-col gap-1 py-2"
             >
-              {isUserAuthenticated && (
+              {profile && (
                 <div className="flex flex-col items-center space-y-2">
                   <Button
                     variant="secondary"
@@ -191,7 +279,7 @@ export function Header() {
                 </div>
               )}
 
-              {isUserAuthenticated && (
+              {profile && (
                 <>
                   <DropdownMenuSeparator />
 
@@ -203,6 +291,22 @@ export function Header() {
                       >
                         <User className="h-[1.2rem] w-[1.2rem]" />
                         Meu perfil
+                      </Button>
+                    </Link>
+                  </DropdownMenuItem>
+                </>
+              )}
+
+              {profile?.role === Role.ADMIN && (
+                <>
+                  <DropdownMenuItem asChild>
+                    <Link href="/panel" className="px-0! py-0!">
+                      <Button
+                        variant="ghost"
+                        className="flex w-full justify-start gap-2"
+                      >
+                        <Settings className="h-[1.2rem] w-[1.2rem]" />
+                        Painel de controle
                       </Button>
                     </Link>
                   </DropdownMenuItem>
@@ -221,7 +325,7 @@ export function Header() {
                 </Button>
               </DropdownMenuItem>
 
-              {isUserAuthenticated && (
+              {profile && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild
@@ -239,7 +343,7 @@ export function Header() {
                 </DropdownMenuItem>
               )}
 
-              {!isUserAuthenticated && (
+              {!profile && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild

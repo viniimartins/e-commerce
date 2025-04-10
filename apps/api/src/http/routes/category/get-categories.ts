@@ -13,7 +13,7 @@ export async function getCategories(app: FastifyInstance) {
         summary: 'List categories',
         querystring: z.object({
           page: z.coerce.number().min(1).default(1),
-          perPage: z.coerce.number().min(1).max(20).default(10),
+          perPage: z.coerce.number().min(1).max(50).default(10),
         }),
         response: {
           200: z.object({
@@ -21,6 +21,7 @@ export async function getCategories(app: FastifyInstance) {
               z.object({
                 id: z.string(),
                 name: z.string(),
+                count: z.number(),
               }),
             ),
             meta: z.object({
@@ -38,6 +39,16 @@ export async function getCategories(app: FastifyInstance) {
 
       const [categories, total] = await Promise.all([
         prisma.category.findMany({
+          include: {
+            _count: {
+              select: {
+                products: true,
+              },
+            },
+          },
+          orderBy: {
+            createdAt: 'desc',
+          },
           take: perPage,
           skip: (page - 1) * perPage,
         }),
@@ -47,7 +58,10 @@ export async function getCategories(app: FastifyInstance) {
       const totalPages = Math.ceil(total / perPage)
 
       return reply.status(200).send({
-        data: categories,
+        data: categories.map((category) => ({
+          ...category,
+          count: category._count.products,
+        })),
         meta: {
           pageIndex: page,
           perPage,

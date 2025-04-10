@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers'
 
-import type { IOrder } from '@/app/(app)/types'
+import type { IOrder, IOrderById } from '@/app/(app)/types'
 
 import { apiServer } from './apiServer'
 
@@ -11,7 +11,7 @@ export async function getOrder({ id }: Order) {
 
   const token = cookieStore.get('token')?.value
 
-  const data = await apiServer<IOrder>(`/order/${id}`, {
+  const data = await apiServer<IOrderById>(`/order/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

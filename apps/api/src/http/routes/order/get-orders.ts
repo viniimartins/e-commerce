@@ -1,4 +1,5 @@
 import { OrderBilling, OrderStatus } from '@prisma/client'
+import { Decimal } from '@prisma/client/runtime/library'
 import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -26,31 +27,37 @@ export function getOrders(app: FastifyInstance) {
               data: z.array(
                 z.object({
                   id: z.string(),
-                  currentStatus: z.nativeEnum(OrderStatus),
-                  url: z.string(),
                   gatewayId: z.string(),
+                  total: z.instanceof(Decimal),
+                  url: z.string(),
                   billing: z.nativeEnum(OrderBilling),
-                  total: z.number(),
+                  currentStatus: z.nativeEnum(OrderStatus),
+                  userId: z.string(),
                   createdAt: z.date(),
                   updatedAt: z.date(),
-                  userId: z.string(),
                   products: z.array(
                     z.object({
                       orderId: z.string(),
-                      quantity: z.number(),
                       productId: z.string(),
+                      quantity: z.number(),
                       product: z.object({
                         id: z.string(),
                         name: z.string(),
                         description: z.string(),
-                        price: z.number(),
+                        price: z.instanceof(Decimal),
                         quantity: z.number(),
+                        categoryId: z.string(),
+                        createdAt: z.date(),
+                        updatedAt: z.date(),
                         productImage: z.array(
                           z.object({
-                            id: z.string(),
-                            createdAt: z.date(),
-                            url: z.string(),
+                            imageId: z.string(),
                             productId: z.string(),
+                            createdAt: z.date(),
+                            image: z.object({
+                              id: z.string(),
+                              url: z.string(),
+                            }),
                           }),
                         ),
                       }),
@@ -83,11 +90,19 @@ export function getOrders(app: FastifyInstance) {
                 include: {
                   product: {
                     include: {
-                      productImage: true,
+                      productImage: {
+                        include: {
+                          image: true,
+                        },
+                      },
                     },
                   },
                 },
               },
+              address: true,
+            },
+            orderBy: {
+              createdAt: 'desc',
             },
             take: perPage,
             skip: (page - 1) * perPage,
@@ -100,17 +115,7 @@ export function getOrders(app: FastifyInstance) {
         const totalPages = Math.ceil(total / perPage)
 
         return reply.status(200).send({
-          data: orders.map((order) => ({
-            ...order,
-            total: Number(order.total),
-            products: order.products.map((item) => ({
-              ...item,
-              product: {
-                ...item.product,
-                price: Number(item.product.price),
-              },
-            })),
-          })),
+          data: orders,
           meta: {
             pageIndex: page,
             perPage,

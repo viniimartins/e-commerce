@@ -1,3 +1,4 @@
+import { Role } from '@prisma/client'
 import type { FastifyInstance } from 'fastify'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -24,6 +25,7 @@ export async function getProfile(app: FastifyInstance) {
               name: z.string().nullable(),
               email: z.string().email(),
               avatarUrl: z.string().url().nullable(),
+              role: z.nativeEnum(Role),
               customer: z
                 .object({
                   gatewayId: z.string(),
@@ -31,6 +33,9 @@ export async function getProfile(app: FastifyInstance) {
                   taxId: z.string(),
                 })
                 .nullable(),
+            }),
+            400: z.object({
+              message: z.string(),
             }),
           },
         },
@@ -51,7 +56,7 @@ export async function getProfile(app: FastifyInstance) {
           throw new BadRequestError('User not found')
         }
 
-        return reply.send(user)
+        return reply.status(200).send(user)
       },
     )
 }

@@ -27,7 +27,9 @@ export function createBilling(app: FastifyInstance) {
                 name: z.string(),
                 description: z.string(),
                 quantity: z.number(),
-                price: z.number().transform((value) => Math.floor(value)),
+                price: z
+                  .string()
+                  .transform((value) => Math.floor(Number(value))),
               }),
             ),
             address: z.object({
@@ -52,6 +54,9 @@ export function createBilling(app: FastifyInstance) {
             200: z.object({
               url: z.string(),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },
@@ -60,12 +65,20 @@ export function createBilling(app: FastifyInstance) {
 
         const { customerId, products, customer, address } = request.body
 
-        for (const { externalId } of products) {
+        for (const { externalId, quantity, price } of products) {
           const productExists = await prisma.product.findUnique({
             where: { id: externalId },
           })
 
           if (!productExists) throw new BadRequestError('Product not found')
+
+          if (productExists.quantity < quantity) {
+            throw new BadRequestError('Product not available')
+          }
+
+          if (Number(productExists.price) * 100 !== price) {
+            throw new BadRequestError('Product price changed')
+          }
         }
 
         const response = await fetch(

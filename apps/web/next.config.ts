@@ -15,6 +15,11 @@ const nextConfig: NextConfig = {
       {
         hostname: 'via.placeholder.com',
       },
+      {
+        hostname: 'localhost',
+        port: '3333',
+        protocol: 'http',
+      },
     ],
   },
 }

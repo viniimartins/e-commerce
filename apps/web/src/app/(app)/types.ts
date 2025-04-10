@@ -4,32 +4,67 @@ export interface ICustomer {
   gatewayId: string
 }
 
+export enum Role {
+  ADMIN = 'ADMIN',
+  USER = 'USER',
+}
+
 export interface IUser {
   id: string
   name: string
   email: string
-  avatarUrl: string
+  avatarUrl?: string
+  createdAt: Date
+  role: Role
+}
+
+export interface IProfile extends IUser {
   customer: ICustomer
+}
+
+export interface IUserWithOrders extends IUser {
+  _count: {
+    orders: number
+  }
 }
 
 export interface ICategory {
   id: string
   name: string
+  count: number
+}
+
+export interface IImage {
+  id: string
+  url: string
+}
+
+export interface IProductImage {
+  productId: string
+  imageId: string
+  image: IImage
 }
 
 export interface IProduct {
   id: string
   name: string
-  price: number
+  price: string
   description: string
   quantity: number
+  createdAt: Date
   category: ICategory
-  productImage: {
-    id: string
-    createdAt: Date
-    url: string
-    productId: string
-  }[]
+  productImage: IProductImage[]
+}
+
+export interface IBestSellerProduct {
+  product: IProduct
+  totalSold: number
+}
+
+export interface IWishlist {
+  productId: string
+  userId: string
+  product: IProduct
 }
 
 export interface IAddress {
@@ -37,7 +72,7 @@ export interface IAddress {
   cep: string
   address: string
   number: string
-  complement: string | null
+  complement: string | null | undefined
   neighborhood: string
   city: string
   state: string
@@ -79,15 +114,28 @@ export interface IOrderStatus {
 
 export interface IOrder {
   id: string
-  url: string
-  gatewayId: string
   billing: OrderBilling
-  status: IOrderStatus[]
   currentStatus: OrderStatus
-  products: IProductBilling[]
-  address: IAddress
-  total: number
-  createdAt: Date
-  updatedAt: Date
+  gatewayId: string
+  total: string
   userId: string
+  url: string
+  products: IProductBilling[]
+
+  createdAt: Date
+}
+export interface IOrderWithUser extends IOrder {
+  user: IUser
+}
+
+export interface IOrderById extends IOrder {
+  address: IAddress
+  products: IProductBilling[]
+  status: IOrderStatus[]
+}
+
+export interface IStatistics {
+  totalOrders: number
+  totalUsers: number
+  totalRevenue: string
 }

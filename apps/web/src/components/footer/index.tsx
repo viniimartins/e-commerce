@@ -1,51 +1,56 @@
-import { Copyright } from 'lucide-react'
+import Link from 'next/link'
 
 import { Separator } from '@/components/ui/separator'
+import { options } from '@/shared/pages'
+
+import { Button } from '../ui/button'
 
 export function Footer() {
   return (
-    <footer className="h-72 border-t">
-      <div className="flex justify-center gap-20 p-10 align-top">
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-bold">Exclusive</h3>
-          <div className="text-muted-foreground flex flex-col gap-2 text-base">
-            <p>Cadastre-se agora mesmo e</p>
-            <p>ganhe 10% off na primeira compra!</p>
+    <footer className="flex w-full flex-col border-t py-12">
+      <div className="mx-auto flex w-[73.125rem] flex-col gap-8">
+        <div className="flex items-center justify-between">
+          <span className="text-2xl font-bold">
+            UNIVINTE<span className="text-muted-foreground">.</span>
+          </span>
+
+          <div className="flex">
+            {options.map((option) => {
+              const { title, url, pathname } = option
+
+              return (
+                <Link href={url} key={pathname}>
+                  <Button variant="link">{title}</Button>
+                </Link>
+              )
+            })}
           </div>
         </div>
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-bold">Suporte</h3>
-          <div className="text-muted-foreground flex flex-col gap-2 text-base">
-            <p>Avenida Marcolino M. Cabral</p>
-            <p>ExclusiveOficial@suporte.com</p>
-            <p>+55 (48)94002-8922</p>
+
+        <Separator className="w-full" />
+
+        <div className="flex justify-between gap-4">
+          <div className="text-muted-foreground flex items-center gap-2 text-sm">
+            <span className="flex items-center gap-2">
+              Copyright © {new Date().getFullYear()}
+              <Link
+                href="https://univinte.edu.br/portal/"
+                className="text-primary"
+              >
+                <Button variant="link" className="px-0">
+                  UNIVINTE.
+                </Button>
+              </Link>
+            </span>
+            <span>Todos os direitos reservados</span>
           </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-bold">Conta</h3>
-          <div className="text-muted-foreground flex flex-col gap-2 text-base">
-            <p>Logar / Cadastre-se</p>
-            <p>Carrinho</p>
-            <p>Lista de Desejos</p>
-            <p>Loja</p>
+
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-semibold">
+              Política de privacidade
+            </span>
+            <span className="text-sm font-semibold">Termos e condições</span>
           </div>
-        </div>
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-bold">Acesso Rápido</h3>
-          <div className="text-muted-foreground flex flex-col gap-2 text-base">
-            <p>Termos de Uso</p>
-            <p>FAQ</p>
-            <p>Contato</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <Separator />
-        <div className="m-3 flex flex-row items-center justify-center gap-2">
-          <Copyright className="text-muted-foreground size-4" />
-          <p className="text-muted-foreground text-base">
-            Todos os direitos reservados, Exclusive 2025.
-          </p>
         </div>
       </div>
     </footer>

@@ -21,6 +21,9 @@ export async function getCategory(app: FastifyInstance) {
             id: z.string(),
             name: z.string(),
           }),
+          400: z.object({
+            message: z.string(),
+          }),
         },
       },
     },

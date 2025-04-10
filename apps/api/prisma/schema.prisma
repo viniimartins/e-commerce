@@ -13,11 +13,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ADMIN
+  USER
+}
+
 model User {
   id        String  @id @default(uuid())
   name      String?
   email     String  @unique
   avatarUrl String? @map("avatar_url")
+  role      Role    @default(USER)
 
   accounts Account[]
   wishlist Wishlist[]
@@ -91,16 +97,26 @@ model Product {
   @@map("products")
 }
 
-model ProductImage {
+model Image {
   id  String @id @default(uuid())
   url String
+
+  productImage ProductImage[]
+
+  @@map("images")
+}
+
+model ProductImage {
+  imageId String @map("image_id")
+  image   Image  @relation(fields: [imageId], references: [id], onDelete: Cascade)
 
   productId String  @map("product_id")
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now()) @map("created_at")
 
-  @@map("images")
+  @@id([productId, imageId])
+  @@map("product_images")
 }
 
 model Wishlist {
@@ -113,7 +129,7 @@ model Wishlist {
   createdAt DateTime @default(now()) @map("created_at")
 
   @@id([userId, productId])
-  @@map("wishlist")
+  @@map("wishlists")
 }
 
 enum OrderBilling {
@@ -167,8 +183,8 @@ model OrderProduct {
   productId String @map("product_id")
   quantity  Int
 
-  order   Order   @relation(fields: [orderId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([orderId, productId])
   @@map("order_products")

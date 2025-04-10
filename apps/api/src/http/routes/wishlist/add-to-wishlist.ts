@@ -24,6 +24,9 @@ export function addToWishlist(app: FastifyInstance) {
             200: z.object({
               productId: z.string(),
             }),
+            400: z.object({
+              message: z.string(),
+            }),
           },
         },
       },

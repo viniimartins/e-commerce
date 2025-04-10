@@ -1,5 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { OrderBilling, OrderStatus } from '@prisma/client'
+import { Decimal } from '@prisma/client/runtime/library'
 import { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
@@ -26,19 +26,48 @@ export function getOrder(app: FastifyInstance) {
           response: {
             200: z.object({
               id: z.string(),
-              currentStatus: z.nativeEnum(OrderStatus),
-              url: z.string(),
               gatewayId: z.string(),
+              total: z.instanceof(Decimal),
+              url: z.string(),
               billing: z.nativeEnum(OrderBilling),
-              total: z.number(),
+              currentStatus: z.nativeEnum(OrderStatus),
+              userId: z.string(),
               createdAt: z.date(),
               updatedAt: z.date(),
-              userId: z.string(),
+              products: z.array(
+                z.object({
+                  orderId: z.string(),
+                  productId: z.string(),
+                  quantity: z.number(),
+                  product: z.object({
+                    id: z.string(),
+                    name: z.string(),
+                    description: z.string(),
+                    price: z.instanceof(Decimal),
+                    quantity: z.number(),
+                    categoryId: z.string(),
+                    createdAt: z.date(),
+                    updatedAt: z.date(),
+                    productImage: z.array(
+                      z.object({
+                        imageId: z.string(),
+                        productId: z.string(),
+                        createdAt: z.date(),
+                        image: z.object({
+                          id: z.string(),
+                          url: z.string(),
+                        }),
+                      }),
+                    ),
+                  }),
+                }),
+              ),
               status: z.array(
                 z.object({
                   id: z.string(),
                   status: z.nativeEnum(OrderStatus),
                   createdAt: z.date(),
+                  updatedAt: z.date().optional(),
                 }),
               ),
               address: z
@@ -47,34 +76,15 @@ export function getOrder(app: FastifyInstance) {
                   cep: z.string(),
                   address: z.string(),
                   number: z.string(),
-                  complement: z.string().optional(),
+                  complement: z.string().nullable(),
                   neighborhood: z.string(),
                   city: z.string(),
                   state: z.string(),
                 })
                 .nullable(),
-              products: z.array(
-                z.object({
-                  orderId: z.string(),
-                  quantity: z.number(),
-                  productId: z.string(),
-                  product: z.object({
-                    id: z.string(),
-                    name: z.string(),
-                    description: z.string(),
-                    price: z.number(),
-                    quantity: z.number(),
-                    productImage: z.array(
-                      z.object({
-                        id: z.string(),
-                        createdAt: z.date(),
-                        url: z.string(),
-                        productId: z.string(),
-                      }),
-                    ),
-                  }),
-                }),
-              ),
+            }),
+            400: z.object({
+              message: z.string(),
             }),
           },
         },
@@ -82,19 +92,20 @@ export function getOrder(app: FastifyInstance) {
       async (request, reply) => {
         const { orderId } = request.params
 
-        const userId = await request.getCurrentUserId()
-
         const order = await prisma.order.findUnique({
           where: {
             id: orderId,
-            userId,
           },
           include: {
             products: {
               include: {
                 product: {
                   include: {
-                    productImage: true,
+                    productImage: {
+                      include: {
+                        image: true,
+                      },
+                    },
                   },
                 },
               },
@@ -108,23 +119,7 @@ export function getOrder(app: FastifyInstance) {
           throw new BadRequestError('Order not found.')
         }
 
-        return reply.status(200).send({
-          ...order,
-          total: Number(order.total),
-          address: order.address
-            ? {
-              ...order.address,
-              complement: order.address.complement || undefined,
-            }
-            : null,
-          products: order.products.map((item) => ({
-            ...item,
-            product: {
-              ...item.product,
-              price: Number(item.product.price),
-            },
-          })),
-        })
+        return reply.status(200).send(order)
       },
     )
 }
