@@ -16,7 +16,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from 'next-themes'
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
@@ -29,9 +29,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useGetProducts } from '@/hooks/query/product/get'
 import { useGetSession } from '@/hooks/query/session/get'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
+import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
@@ -47,6 +49,14 @@ import {
   CardTitle,
 } from '../ui/card'
 import { Input } from '../ui/input'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from '../ui/navigation-menu'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { ScrollArea } from '../ui/scroll-area'
 import { Separator } from '../ui/separator'
@@ -69,6 +79,8 @@ export function Header() {
 
   const { actions, isOpen } = useModal()
 
+  const loadMoreRef = useRef<HTMLDivElement>(null)
+
   const { cart, removeAllProducts } = useCart()
   const { setTheme, theme } = useTheme()
 
@@ -76,6 +88,21 @@ export function Header() {
 
   const { data: products } = useGetProducts({
     name: watch('search'),
+  })
+
+  const {
+    data: categories,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useGetInfiniteCategories()
+
+  useInfiniteScrollObserver({
+    targetRef: loadMoreRef,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+    isActive: true,
   })
 
   const { data: wishlist } = useGetWishlist({ params: {} })
@@ -87,9 +114,11 @@ export function Header() {
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
       <div className="flex h-10 w-full max-w-[73.125rem] items-center justify-between">
         <Link href="/">
-          <h3 className="font-inter text-2xl font-bold">Exclusive</h3>
+          <h3 className="font-inter text-2xl font-bold">
+            UNIVINTE<span className="text-muted-foreground">.</span>
+          </h3>
         </Link>
-        <nav className="flex gap-8">
+        <nav className="flex items-center gap-3">
           {options.map((option) => {
             const { title, url, pathname } = option
 
@@ -102,10 +131,48 @@ export function Header() {
                   pathname === url && 'text-foreground',
                 )}
               >
-                {title}
+                <Button variant="ghost" size="sm">
+                  {title}
+                </Button>
               </Link>
             )
           })}
+
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Categorias</NavigationMenuTrigger>
+                <NavigationMenuContent className="p-3 pr-1">
+                  <ScrollArea
+                    className={cn('h-56', {
+                      'h-auto': categories && categories?.length < 10,
+                    })}
+                  >
+                    {categories?.map((category, index) => {
+                      const { id, name } = category
+
+                      const lastIndex = index === categories.length - 1
+
+                      return (
+                        <Fragment key={id}>
+                          <NavigationMenuLink
+                            href={`/shop?category=${id}`}
+                            className="mr-3 cursor-pointer"
+                          >
+                            {name}
+                          </NavigationMenuLink>
+
+                          {lastIndex && (
+                            <div ref={loadMoreRef} className="h-1" />
+                          )}
+                        </Fragment>
+                      )
+                    })}
+                  </ScrollArea>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </nav>
 
         <div className="flex items-center gap-2">

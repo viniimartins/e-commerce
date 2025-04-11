@@ -49,7 +49,7 @@ import { Separator } from '@/components/ui/separator'
 import { useCreateCategory } from '@/hooks/mutation/category/create'
 import { useDeleteCategory } from '@/hooks/mutation/category/delete'
 import { useUpdateCategory } from '@/hooks/mutation/category/update'
-import { useGetTableCategories } from '@/hooks/query/category/get'
+import { useGetCategories } from '@/hooks/query/category/get'
 import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
@@ -114,7 +114,7 @@ export function Content() {
     data: categories,
     isLoading: isCategoriesLoading,
     queryKey,
-  } = useGetTableCategories({ page: pageIndex, perPage })
+  } = useGetCategories({ page: pageIndex, perPage })
 
   const {
     data: products,

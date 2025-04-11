@@ -101,7 +101,7 @@ export function Filter() {
             {categories?.map((category, index) => {
               const { id, name } = category
 
-              const isLastItem = index === categories.length - 1
+              const lastIndex = index === categories.length - 1
 
               return (
                 <Fragment key={id}>
@@ -113,7 +113,7 @@ export function Filter() {
                     {name}
                   </span>
 
-                  {isLastItem && (
+                  {lastIndex && (
                     <div ref={loadMoreRef} className="h-1 w-full" />
                   )}
                 </Fragment>

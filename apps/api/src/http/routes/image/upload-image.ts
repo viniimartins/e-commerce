@@ -45,6 +45,7 @@ export function uploadImage(app: FastifyInstance) {
       const filePath = `./images/${filename}`
 
       const processedBuffer = await removeBg(buffer)
+
       await sharp(processedBuffer).png().toFile(filePath)
 
       const url = `${env.NEXT_PUBLIC_API_URL}/images/${filename}`

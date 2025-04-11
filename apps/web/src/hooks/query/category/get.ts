@@ -19,7 +19,7 @@ async function get(params: Params) {
   return data
 }
 
-export function useGetTableCategories(params: Params) {
+export function useGetCategories(params: Params) {
   const queryKey = ['get-table-categories', params]
 
   const query = useQuery({

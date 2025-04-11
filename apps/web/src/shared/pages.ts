@@ -14,9 +14,4 @@ export const options = [
     url: '/contact',
     pathname: '/contact',
   },
-  {
-    title: 'Sobre',
-    url: '/about',
-    pathname: '/about',
-  },
 ]

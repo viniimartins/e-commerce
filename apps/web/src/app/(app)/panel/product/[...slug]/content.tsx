@@ -608,7 +608,7 @@ export function Content(props: Props) {
                                   })}
                                 >
                                   {categories?.map((category, index) => {
-                                    const isLastItem =
+                                    const lastIndex =
                                       index === categories.length - 1
 
                                     return (
@@ -617,7 +617,7 @@ export function Content(props: Props) {
                                           {category.name}
                                         </SelectItem>
 
-                                        {isLastItem && (
+                                        {lastIndex && (
                                           <div
                                             ref={loadMoreRef}
                                             className="h-1"

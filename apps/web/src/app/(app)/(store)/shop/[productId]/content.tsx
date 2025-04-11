@@ -61,6 +61,10 @@ export function Content({ product }: Props) {
     (item) => item.productId === product?.id,
   )
 
+  const productsWithoutCurrent = products?.data.filter(
+    (productItem) => productItem.id !== product?.id,
+  )
+
   function handleChangeWishlist(product: IProduct) {
     if (isProductInWishlist) {
       removeFromWishlist({ product: { id: product.id } })
@@ -255,7 +259,7 @@ export function Content({ product }: Props) {
         </span>
 
         <div className="grid grid-cols-4 gap-4">
-          {products?.data.map((product) => {
+          {productsWithoutCurrent?.map((product) => {
             const { id } = product
 
             return <ProductCard key={id} data={product} />
