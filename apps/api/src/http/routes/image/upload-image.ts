@@ -1,5 +1,4 @@
 import { env } from '@e-commerce/env'
-import fastifyMultipart from '@fastify/multipart'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import path from 'path'
@@ -13,7 +12,6 @@ import { removeBg } from '@/lib/remove-bg'
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export function uploadImage(app: FastifyInstance) {
-  app.register(fastifyMultipart)
   app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().post(
     '/image',

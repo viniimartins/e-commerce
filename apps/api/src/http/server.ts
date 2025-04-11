@@ -1,6 +1,7 @@
 import { env } from '@e-commerce/env'
 import fastifyCors from '@fastify/cors'
 import fastifyJwt from '@fastify/jwt'
+import fastifyMultipart from '@fastify/multipart'
 import fastifyStatic from '@fastify/static'
 import fastifySwagger from '@fastify/swagger'
 import fastifySwaggerUI from '@fastify/swagger-ui'
@@ -87,6 +88,12 @@ app.register(fastifyCors, {
 app.register(fastifyStatic, {
   root: path.join(__dirname, '..', '..', 'images'),
   prefix: '/images/',
+})
+
+app.register(fastifyMultipart, {
+  limits: {
+    fileSize: 20 * 1024 * 1024,
+  },
 })
 
 app.register(authenticateWithGithub)

@@ -146,29 +146,31 @@ export function Header() {
 
                         return (
                           <Fragment key={id}>
-                            <div className="flex items-center justify-between">
-                              <div className="flex items-center gap-4">
-                                <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
-                                  <Image
-                                    src={productImage[0].image.url}
-                                    alt="product"
-                                    fill
-                                    quality={100}
-                                    priority
-                                    className="object-cover p-1"
-                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                  />
+                            <Link href={`/shop/${id}`} onClick={actions.close}>
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-4">
+                                  <div className="dark:bg-muted-foreground/10 group relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
+                                    <Image
+                                      src={productImage[0].image.url}
+                                      alt="product"
+                                      fill
+                                      quality={100}
+                                      priority
+                                      className="object-cover p-1"
+                                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    />
+                                  </div>
+
+                                  <span className="text-base font-medium">
+                                    {name}
+                                  </span>
                                 </div>
 
-                                <span className="text-base font-medium">
-                                  {name}
+                                <span className="text-sm font-medium">
+                                  {formatPrice(price)}
                                 </span>
                               </div>
-
-                              <span className="text-sm font-medium">
-                                {formatPrice(price)}
-                              </span>
-                            </div>
+                            </Link>
 
                             {!lastIndex && <Separator className="my-2" />}
                           </Fragment>

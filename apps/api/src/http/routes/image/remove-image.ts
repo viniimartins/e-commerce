@@ -1,4 +1,3 @@
-import fastifyMultipart from '@fastify/multipart'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import fs from 'fs'
@@ -11,7 +10,6 @@ import { prisma } from '@/lib/prisma'
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export function removeImage(app: FastifyInstance) {
-  app.register(fastifyMultipart)
   app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().delete(
     '/image/:idImage?',
