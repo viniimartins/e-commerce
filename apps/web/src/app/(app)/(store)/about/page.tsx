@@ -41,7 +41,7 @@ export default function about() {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>Shop</BreadcrumbPage>
+            <BreadcrumbPage>About</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
@@ -72,8 +72,11 @@ export default function about() {
           <Card className="hover:bg-destructive/80 hover:group gap-2 transition-all">
             <CardHeader>
               <CardTitle className="flex items-center justify-center">
-                <div className="bg-secondary rounded-full p-2 group-hover:bg-red-500">
-                  <Button className="flex h-12 w-12 items-center justify-center rounded-full">
+                <div className="bg-accent-foreground rounded-full p-2 group-hover:bg-red-500">
+                  <Button
+                    variant="secondary"
+                    className="flex h-12 w-12 items-center justify-center rounded-full"
+                  >
                     <Store className="!h-7 !w-7" />
                   </Button>
                 </div>
@@ -161,9 +164,9 @@ export default function about() {
             </div>
 
             <div className="mt-3 ml-3 flex flex-row gap-2 text-base">
-              <Image src={twitter} alt="Twitter" />
-              <Image src={linkedin} alt="Linkedin" />
-              <Image src={instagram} alt="Instagram" />
+              <Image src={twitter} alt="Twitter" className="dark:invert" />
+              <Image src={linkedin} alt="Linkedin" className="dark:invert" />
+              <Image src={instagram} alt="Instagram" className="dark:invert" />
             </div>
           </div>
           <div className="col-span-1 flex flex-col">
@@ -176,9 +179,9 @@ export default function about() {
             </div>
 
             <div className="m-3 ml-3 flex flex-row gap-2">
-              <Image src={twitter} alt="Twitter" />
-              <Image src={linkedin} alt="Linkedin" />
-              <Image src={instagram} alt="Instagram" />
+              <Image src={twitter} alt="Twitter" className="dark:invert" />
+              <Image src={linkedin} alt="Linkedin" className="dark:invert" />
+              <Image src={instagram} alt="Instagram" className="dark:invert" />
             </div>
           </div>
           <div className="col-span-1 flex flex-col">
@@ -191,9 +194,9 @@ export default function about() {
             </div>
 
             <div className="m-3 ml-3 flex flex-row gap-2">
-              <Image src={twitter} alt="Twitter" />
-              <Image src={linkedin} alt="Linkedin" />
-              <Image src={instagram} alt="Instagram" />
+              <Image src={twitter} alt="Twitter" className="dark:invert" />
+              <Image src={linkedin} alt="Linkedin" className="dark:invert" />
+              <Image src={instagram} alt="Instagram" className="dark:invert" />
             </div>
           </div>
         </div>
@@ -201,8 +204,11 @@ export default function about() {
 
       <section className="mt-12 grid grid-cols-3 gap-4">
         <div className="col-span-1 flex flex-col items-center gap-2">
-          <div className="bg-secondary rounded-full p-2 group-hover:bg-red-500">
-            <Button className="flex h-12 w-12 items-center justify-center rounded-full">
+          <div className="bg-accent-foreground rounded-full p-2 group-hover:bg-red-500">
+            <Button
+              variant="secondary"
+              className="flex h-12 w-12 items-center justify-center rounded-full"
+            >
               <Store className="!h-7 !w-7" />
             </Button>
           </div>
@@ -214,8 +220,11 @@ export default function about() {
           </div>
         </div>
         <div className="col-span-1 flex flex-col items-center gap-2">
-          <div className="bg-secondary rounded-full p-2 group-hover:bg-red-500">
-            <Button className="flex h-12 w-12 items-center justify-center rounded-full">
+          <div className="bg-accent-foreground rounded-full p-2 group-hover:bg-red-500">
+            <Button
+              variant="secondary"
+              className="flex h-12 w-12 items-center justify-center rounded-full"
+            >
               <Store className="!h-7 !w-7" />
             </Button>
           </div>
@@ -227,8 +236,11 @@ export default function about() {
           </div>
         </div>
         <div className="col-span-1 flex flex-col items-center gap-2">
-          <div className="bg-secondary rounded-full p-2 group-hover:bg-red-500">
-            <Button className="flex h-12 w-12 items-center justify-center rounded-full">
+          <div className="bg-accent-foreground rounded-full p-2 group-hover:bg-red-500">
+            <Button
+              variant="secondary"
+              className="flex h-12 w-12 items-center justify-center rounded-full"
+            >
               <Store className="!h-7 !w-7" />
             </Button>
           </div>
