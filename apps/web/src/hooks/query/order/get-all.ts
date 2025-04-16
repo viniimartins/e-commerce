@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IOrderWithUser } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { OrderWithUserMock } from '@/shared/mock/order-with-user'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -32,6 +33,7 @@ export function useGetAllOrders({ params }: Props) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
+    initialData: OrderWithUserMock,
   })
 
   const { isError } = query

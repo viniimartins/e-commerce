@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IBestSellerProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { BestSellerMock } from '@/shared/mock/best-seller'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -28,6 +29,7 @@ export function useGetBestSellerProducts(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
+    initialData: BestSellerMock,
   })
 
   const { isError } = query

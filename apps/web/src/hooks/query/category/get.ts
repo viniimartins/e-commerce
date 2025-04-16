@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { ICategory } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { CategoryMock } from '@/shared/mock/category'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -25,6 +26,7 @@ export function useGetCategories(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
+    initialData: CategoryMock,
   })
 
   const { isError } = query

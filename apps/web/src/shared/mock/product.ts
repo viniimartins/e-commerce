@@ -25,7 +25,7 @@ export const mock: IProduct = {
   createdAt: new Date(),
 }
 
-const content = Array.from({ length: 8 }, (_, index) => ({
+const content = Array.from({ length: 10 }, (_, index) => ({
   ...mock,
   id: `${index + 1}`,
 }))

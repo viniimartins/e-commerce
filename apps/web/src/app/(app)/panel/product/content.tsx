@@ -51,7 +51,7 @@ export function Content() {
 
   const {
     data: products,
-    isLoading,
+    isFetching: isFetchingProducts,
     queryKey,
   } = useGetProducts({
     page: pageIndex,
@@ -92,7 +92,10 @@ export function Content() {
 
         <CardContent className="h-full">
           <DataTable
-            columns={getColumns({ isLoading, deleteProductModalActions })}
+            columns={getColumns({
+              deleteProductModalActions,
+              isLoading: isFetchingProducts,
+            })}
             data={products?.data ?? []}
             meta={products?.meta}
             onChangeParams={onChangeProductsTableParams}

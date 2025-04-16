@@ -112,7 +112,7 @@ export function Content() {
 
   const {
     data: categories,
-    isLoading: isCategoriesLoading,
+    isFetching: isFetchingCategories,
     queryKey,
   } = useGetCategories({ page: pageIndex, perPage })
 
@@ -211,7 +211,7 @@ export function Content() {
               categoryModalActions,
               deleteCategoryModalActions,
               viewProductsModalActions,
-              isLoading: isCategoriesLoading,
+              isLoading: isFetchingCategories,
             })}
             data={categories?.data ?? []}
             meta={categories?.meta}

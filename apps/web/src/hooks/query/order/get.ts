@@ -7,8 +7,6 @@ import { api } from '@/service/api'
 import { OrderMock } from '@/shared/mock/order'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
-import { useGetSession } from '../session/get'
-
 interface Params {
   page?: number
   perPage?: number
@@ -27,14 +25,11 @@ async function get(params: Params) {
 }
 
 export function useGetOrders({ params }: Props) {
-  const { isAuthenticated } = useGetSession()
-
   const queryKey = ['get-orders']
 
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    enabled: isAuthenticated,
     initialData: OrderMock,
   })
 

@@ -57,7 +57,7 @@ export function Content() {
     target: viewOrdersModalTarget,
   } = useModal<IUserWithOrders>()
 
-  const { data: users, isLoading } = useGetUsers({
+  const { data: users, isFetching: isFetchingUsers } = useGetUsers({
     page: pageIndex,
     perPage,
   })
@@ -100,7 +100,10 @@ export function Content() {
 
         <CardContent className="h-full">
           <DataTable
-            columns={getColumns({ isLoading, viewOrdersModalActions })}
+            columns={getColumns({
+              isLoading: isFetchingUsers,
+              viewOrdersModalActions,
+            })}
             data={users?.data ?? []}
             meta={users?.meta}
             onChangeParams={onChangeUsersTableParams}

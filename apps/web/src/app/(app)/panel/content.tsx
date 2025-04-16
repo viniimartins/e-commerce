@@ -64,13 +64,13 @@ export function Content() {
 
   const { data: statistics, isLoading } = useGetStatistics()
 
-  const { data: bestSellerProducts, isLoading: isLoadingBestSellerProducts } =
+  const { data: bestSellerProducts, isFetching: isFetchingBestSellerProducts } =
     useGetBestSellerProducts({
       page: bestSellerProductsPageIndex,
       perPage: bestSellerProductsPerPage,
     })
 
-  const { data: orders, isLoading: isLoadingOrders } = useGetAllOrders({
+  const { data: orders, isFetching: isFetchingOrders } = useGetAllOrders({
     params: {
       page: ordersPageIndex,
       perPage: ordersPerPage,
@@ -153,7 +153,7 @@ export function Content() {
           <CardContent>
             <DataTable
               columns={getOrdersColumns({
-                isLoading: isLoadingOrders,
+                isLoading: isFetchingOrders,
                 viewOrdersModalActions,
               })}
               data={orders?.data ?? []}
@@ -173,7 +173,7 @@ export function Content() {
           <CardContent className="h-full">
             <DataTable
               columns={getBestSellerProductsColumns({
-                isLoading: isLoadingBestSellerProducts,
+                isLoading: isFetchingBestSellerProducts,
               })}
               data={bestSellerProducts?.data ?? []}
               meta={bestSellerProducts?.meta}

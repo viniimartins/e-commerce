@@ -7,7 +7,7 @@ export const mock: ICategory = {
   count: 10,
 }
 
-const content = Array.from({ length: 8 }, (_, index) => ({
+const content = Array.from({ length: 10 }, (_, index) => ({
   ...mock,
   id: `${index + 1}`,
 }))

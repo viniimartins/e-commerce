@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IUserWithOrders } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { UsersMock } from '@/shared/mock/user'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -25,6 +26,7 @@ export function useGetUsers(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
+    initialData: UsersMock,
   })
 
   const { isError } = query

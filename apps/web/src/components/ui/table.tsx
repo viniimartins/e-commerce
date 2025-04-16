@@ -95,7 +95,7 @@ function TableCell({
       )}
       {...props}
     >
-      {isLoading ? <Skeleton className="h-6 w-full" /> : props.children}
+      {isLoading ? <Skeleton className="h-8 w-full" /> : props.children}
     </td>
   )
 }
