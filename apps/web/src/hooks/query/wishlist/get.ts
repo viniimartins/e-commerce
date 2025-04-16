@@ -7,8 +7,6 @@ import { api } from '@/service/api'
 import { WishlistMock } from '@/shared/mock/wishlist'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
-import { useGetSession } from '../session/get'
-
 interface Params {
   page?: number
   perPage?: number
@@ -27,15 +25,12 @@ async function get(params: Params) {
 }
 
 export function useGetWishlist({ params }: Props) {
-  const queryKey = ['get-wishlist']
-
-  const { isAuthenticated } = useGetSession()
+  const queryKey = ['get-wishlist', params]
 
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    enabled: isAuthenticated,
-    initialData: WishlistMock,
+    placeholderData: WishlistMock,
   })
 
   const { isError } = query

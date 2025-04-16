@@ -27,13 +27,10 @@ async function get(params: Params) {
 export function useGetProducts(params: Params) {
   const queryKey = ['get-products', params]
 
-  const isEnabled = params.name?.length !== 0
-
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    enabled: isEnabled,
-    initialData: ProductsMock,
+    placeholderData: ProductsMock,
   })
 
   const { isError } = query

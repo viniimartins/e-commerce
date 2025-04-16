@@ -86,7 +86,7 @@ export function Header() {
 
   const { register, watch } = useForm<ISearchInput>()
 
-  const { data: products } = useGetProducts({
+  const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     name: watch('search'),
   })
 
@@ -193,7 +193,7 @@ export function Header() {
               onOpenAutoFocus={(e) => e.preventDefault()}
             >
               <Card className="border-none pr-0">
-                {!products?.__mock && (
+                {!isFetchingProducts && (
                   <CardHeader className="px-0">
                     <CardTitle>Resultados da busca</CardTitle>
                     <CardDescription>
@@ -201,7 +201,7 @@ export function Header() {
                     </CardDescription>
                   </CardHeader>
                 )}
-                {!products.__mock && (
+                {!isFetchingProducts && (
                   <ScrollArea
                     className={cn('h-56', {
                       'h-auto': products && products?.data.length <= 4,
@@ -249,7 +249,7 @@ export function Header() {
                   </ScrollArea>
                 )}
 
-                {(products?.data.length === 0 || products?.__mock) && (
+                {products?.data.length === 0 && (
                   <div className="flex items-center py-4 pl-4">
                     <p className="text-muted-foreground">
                       Nenhum produto encontrado
@@ -260,16 +260,18 @@ export function Header() {
             </PopoverContent>
           </Popover>
 
-          <Link href="/wishlist">
-            <Button size="icon" variant="ghost">
-              <Heart
-                className={cn(
-                  'h-[1.2rem] w-[1.2rem] transition-all',
-                  wishlist && wishlist.data.length > 0 && 'fill-current',
-                )}
-              />
-            </Button>
-          </Link>
+          {isAuthenticated && (
+            <Link href="/wishlist">
+              <Button size="icon" variant="ghost">
+                <Heart
+                  className={cn(
+                    'h-[1.2rem] w-[1.2rem] transition-all',
+                    wishlist && wishlist.data.length > 0 && 'fill-current',
+                  )}
+                />
+              </Button>
+            </Link>
+          )}
 
           {isPageLoginAndNotAuthenticated ? (
             <Link href="/cart" target="_top">

@@ -42,7 +42,7 @@ export function useGetInfiniteProducts(params: Params) {
       return data.pages.flatMap((page) => page.data)
     },
     enabled: params.viewProducts,
-    initialData: {
+    placeholderData: {
       pages: [ProductsMock],
       pageParams: [1],
     },

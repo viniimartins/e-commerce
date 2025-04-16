@@ -26,7 +26,7 @@ export function useGetCategories(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    initialData: CategoryMock,
+    placeholderData: CategoryMock,
   })
 
   const { isError } = query

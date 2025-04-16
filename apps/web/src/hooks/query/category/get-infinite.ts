@@ -39,7 +39,7 @@ export function useGetInfiniteCategories() {
     select(data) {
       return data.pages.flatMap((page) => page.data)
     },
-    initialData: {
+    placeholderData: {
       pages: [CategoryMock],
       pageParams: [1],
     },

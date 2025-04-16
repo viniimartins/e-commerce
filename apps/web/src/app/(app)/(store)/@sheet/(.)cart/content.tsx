@@ -4,13 +4,12 @@ import { X } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import Counter from '@/components/counter'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
-
-import Counter from '../../_components/counter'
 
 export function Content() {
   const {

@@ -1,7 +1,7 @@
 'use client'
 
 import { isAfter, subDays } from 'date-fns'
-import { Eye, Heart, ShoppingCart } from 'lucide-react'
+import { Eye, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -25,33 +25,23 @@ import {
 } from '@/components/ui/dialog'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
-import { useRemoveFromWishlist } from '@/hooks/mutation/wishlist/remove'
-import { useAddToWishlist } from '@/hooks/mutation/wishlist/to-add'
-import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useModal } from '@/hooks/use-modal'
-import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
 interface Props {
   data: IProduct
+  handleRemoveFromWishlist: () => void
 }
 
 export function ProductCard(props: Props) {
-  const { data } = props
+  const { data, handleRemoveFromWishlist } = props
   const { description, id, name, price, productImage, quantity, createdAt } =
     data
 
   const { isOpen, actions } = useModal()
   const { cart, addToCart } = useCart()
 
-  const { data: wishlist, queryKey } = useGetWishlist({ params: {} })
-  const { mutate: addToWishlist } = useAddToWishlist({ queryKey })
-  const { mutate: removeFromWishlist } = useRemoveFromWishlist({ queryKey })
-
-  const isProductInWishlist = wishlist?.data.some(
-    ({ productId }) => productId === data.id,
-  )
   const isProductInCart = cart.some((item) => item.id === data.id)
   const isProductIsAvailable = quantity > 0
   const isNew = isAfter(createdAt, subDays(new Date(), 7))
@@ -66,6 +56,7 @@ export function ProductCard(props: Props) {
                 NOVO
               </Badge>
             )}
+
             <Image
               src={productImage[0].image.url}
               alt={name}
@@ -75,41 +66,19 @@ export function ProductCard(props: Props) {
               className="object-cover p-2"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            ]
+
             <div className="absolute top-4 right-4 flex cursor-pointer flex-col gap-2">
-              {!isProductInWishlist && (
-                <Button
-                  variant="secondary"
-                  className="cursor-pointer rounded-full border-none disabled:opacity-80"
-                  size="icon"
-                  onClick={(event) => {
-                    event.preventDefault()
-
-                    addToWishlist({ product: { id: data.id } })
-                  }}
-                >
-                  <Heart
-                    className={cn(isProductInWishlist && 'fill-current')}
-                  />
-                </Button>
-              )}
-
-              {isProductInWishlist && (
-                <Button
-                  variant="secondary"
-                  className="cursor-pointer rounded-full border-none disabled:opacity-80"
-                  size="icon"
-                  onClick={(event) => {
-                    event.preventDefault()
-
-                    removeFromWishlist({ product: { id: data.id } })
-                  }}
-                >
-                  <Heart
-                    className={cn(isProductInWishlist && 'fill-current')}
-                  />
-                </Button>
-              )}
+              <Button
+                variant="secondary"
+                className="cursor-pointer rounded-full border-none"
+                size="icon"
+                onClick={(event) => {
+                  event.preventDefault()
+                  handleRemoveFromWishlist()
+                }}
+              >
+                <Trash />
+              </Button>
 
               <Button
                 variant="secondary"
@@ -123,14 +92,17 @@ export function ProductCard(props: Props) {
                 <Eye />
               </Button>
             </div>
+
             <Button
+              variant="secondary"
+              disabled={isProductInCart || !isProductIsAvailable}
               onClick={(event) => {
                 event.preventDefault()
                 addToCart(data)
               }}
-              disabled={isProductInCart || !isProductIsAvailable}
-              className="absolute bottom-0 left-1/2 z-10 h-12 w-full -translate-x-1/2 transform px-4 py-2 opacity-0 transition-opacity group-hover:opacity-100"
+              className="absolute bottom-0 left-1/2 h-12 w-full -translate-x-1/2 transform px-4 py-2"
             >
+              <ShoppingCart />
               {isProductInCart && 'Produto adicionado ao carrinho'}
 
               {!isProductInCart && !isProductIsAvailable && 'Sem estoque'}
@@ -208,16 +180,6 @@ export function ProductCard(props: Props) {
                 {!isProductInCart &&
                   isProductIsAvailable &&
                   'Adicionar ao carrinho'}
-              </Button>
-              <Button
-                disabled={isProductInWishlist}
-                onClick={(event) => {
-                  event.preventDefault()
-                  addToWishlist({ product: data })
-                }}
-                variant="outline"
-              >
-                <Heart className={cn(isProductInWishlist && 'fill-current')} />
               </Button>
             </div>
           </div>

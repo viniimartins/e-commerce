@@ -8,7 +8,16 @@ export const mock: IWishlist = {
     price: '100',
     description: 'Descrição',
     quantity: 10,
-    productImage: [],
+    productImage: [
+      {
+        image: {
+          id: '1',
+          url: 'https://via.placeholder.com/150',
+        },
+        imageId: '1',
+        productId: '1',
+      },
+    ],
     category: {
       id: '1',
       name: 'Eletrônicos',
@@ -22,7 +31,10 @@ export const mock: IWishlist = {
 
 const content = Array.from({ length: 8 }, (_, index) => ({
   ...mock,
-  id: `${index + 1}`,
+  product: {
+    ...mock.product,
+    id: `${index + 1}`,
+  },
 }))
 
 export const WishlistMock: PaginatedResponse<IWishlist> = {
@@ -33,5 +45,4 @@ export const WishlistMock: PaginatedResponse<IWishlist> = {
     total: 10,
     totalPages: 1,
   },
-  __mock: true,
 }

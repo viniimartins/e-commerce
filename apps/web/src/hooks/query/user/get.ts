@@ -26,7 +26,7 @@ export function useGetUsers(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    initialData: UsersMock,
+    placeholderData: UsersMock,
   })
 
   const { isError } = query

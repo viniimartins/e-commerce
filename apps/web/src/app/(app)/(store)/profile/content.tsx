@@ -8,7 +8,7 @@ import { useGetOrders } from '@/hooks/query/order/get'
 import { Order } from './order'
 
 export function Content() {
-  const { data: orders } = useGetOrders({
+  const { data: orders, isFetching: isFetchingOrders } = useGetOrders({
     params: {
       page: 1,
       perPage: 10,
@@ -30,14 +30,14 @@ export function Content() {
       </aside>
       <div className="col-span-3">
         <Tabs.Content value="pedidos" className="space-y-4">
-          {!orders?.__mock &&
+          {!isFetchingOrders &&
             orders?.data.map((order) => {
               const { id } = order
 
               return <Order key={id} data={order} />
             })}
 
-          {orders?.__mock &&
+          {isFetchingOrders &&
             orders?.data.map(({ id }) => (
               <Skeleton key={id} className="h-[13rem] w-full" />
             ))}

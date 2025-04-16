@@ -26,5 +26,4 @@ export const OrderMock: PaginatedResponse<IOrder> = {
     total: 10,
     totalPages: 1,
   },
-  __mock: true,
 }

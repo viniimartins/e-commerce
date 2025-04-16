@@ -33,7 +33,7 @@ export function useGetAllOrders({ params }: Props) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    initialData: OrderWithUserMock,
+    placeholderData: OrderWithUserMock,
   })
 
   const { isError } = query

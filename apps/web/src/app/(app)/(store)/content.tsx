@@ -16,6 +16,7 @@ import bedroom from '@/assets/homepage/bedroom.png'
 import ecommerce from '@/assets/homepage/ecommerce.jpg'
 import kitchen from '@/assets/homepage/kitchen.png'
 import livingRoom from '@/assets/homepage/living-room.png'
+import { ProductCardSkeleton } from '@/components/skeletons/product-card'
 import { Button } from '@/components/ui/button'
 import {
   Carousel,
@@ -30,7 +31,6 @@ import { formatPrice } from '@/utils/formatPrice'
 import { BannerCarousel } from './_components/banner-carousel'
 import { CarouselControls } from './_components/controls-carousel'
 import { ProductCard } from './_components/product-card'
-import { ProductCardSkeleton } from './_components/product-card/skeleton'
 
 export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()

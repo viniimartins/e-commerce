@@ -20,5 +20,4 @@ export const CategoryMock: PaginatedResponse<ICategory> = {
     total: 10,
     totalPages: 1,
   },
-  __mock: true,
 }

@@ -4,6 +4,8 @@ import { Heart, RotateCcw, Truck } from 'lucide-react'
 import Image from 'next/image'
 
 import type { IProduct } from '@/app/(app)/types'
+import Counter from '@/components/counter'
+import { ProductCardSkeleton } from '@/components/skeletons/product-card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import {
@@ -24,9 +26,7 @@ import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { formatPrice } from '@/utils/formatPrice'
 
-import Counter from '../../_components/counter'
-import { ProductCard } from '../../_components/product-card'
-import { ProductCardSkeleton } from '../../_components/product-card/skeleton'
+import { ProductCard } from '../product-card'
 
 interface Props {
   product: IProduct
@@ -36,7 +36,7 @@ export function Content({ product }: Props) {
   const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
     useCart()
 
-  const { data: products } = useGetProducts({
+  const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
@@ -246,21 +246,21 @@ export function Content({ product }: Props) {
       <Separator className="my-10" />
 
       <section className="flex flex-col gap-12">
-        {productsWithoutCurrent?.length > 0 && (
+        {productsWithoutCurrent && productsWithoutCurrent.length > 0 && (
           <span className="text-primary text-3xl font-medium">
             Mais de {product?.category.name}
           </span>
         )}
 
         <div className="grid grid-cols-4 gap-4">
-          {!products?.__mock &&
+          {!isFetchingProducts &&
             productsWithoutCurrent?.map((product) => {
               const { id } = product
 
               return <ProductCard key={id} data={product} />
             })}
 
-          {products?.__mock &&
+          {isFetchingProducts &&
             products?.data.map((_, index) => {
               return <ProductCardSkeleton key={index} />
             })}

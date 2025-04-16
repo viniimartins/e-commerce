@@ -8,7 +8,6 @@ export interface PaginatedMeta {
 export interface PaginatedResponse<T> {
   meta: PaginatedMeta
   data: T[]
-  __mock?: boolean
 }
 
 export type TableParams = Pick<PaginatedMeta, 'pageIndex' | 'perPage'>

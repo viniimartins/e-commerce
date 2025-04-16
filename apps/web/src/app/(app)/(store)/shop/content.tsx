@@ -6,6 +6,7 @@ import { useSearchParams } from 'next/navigation'
 import { Fragment, useState } from 'react'
 
 import filter from '@/assets/icon/filter.svg'
+import { ProductCardSkeleton } from '@/components/skeletons/product-card'
 import { Button } from '@/components/ui/button'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import { Skeleton } from '@/components/ui/skeleton'
@@ -14,9 +15,8 @@ import { useGetCategory } from '@/hooks/query/category/get-by-id'
 import { useGetInfiniteProducts } from '@/hooks/query/product/get-infinity'
 import { cn } from '@/lib/utils'
 
-import { ProductCard } from '../_components/product-card'
-import { ProductCardSkeleton } from '../_components/product-card/skeleton'
 import { Filter } from './filter'
+import { ProductCard } from './product-card'
 
 export type GridView = 'grid3x3' | 'grid2x2' | 'columns2' | 'rows2'
 

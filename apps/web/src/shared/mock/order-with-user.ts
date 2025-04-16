@@ -39,5 +39,4 @@ export const OrderWithUserMock: PaginatedResponse<IOrderWithUser> = {
     total: 10,
     totalPages: 1,
   },
-  __mock: true,
 }

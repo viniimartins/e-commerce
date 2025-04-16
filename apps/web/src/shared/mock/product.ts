@@ -38,5 +38,4 @@ export const ProductsMock: PaginatedResponse<IProduct> = {
     total: 10,
     totalPages: 1,
   },
-  __mock: true,
 }

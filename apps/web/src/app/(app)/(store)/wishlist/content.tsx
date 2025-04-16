@@ -1,19 +1,26 @@
 'use client'
 
+import { ProductCardSkeleton } from '@/components/skeletons/product-card'
 import { Button } from '@/components/ui/button'
+import { useRemoveFromWishlist } from '@/hooks/mutation/wishlist/remove'
 import { useRemoveAllWishlist } from '@/hooks/mutation/wishlist/remove-all'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useCart } from '@/providers/cart-provider'
 
-import { ProductCard } from '../_components/product-card'
-import { ProductCardSkeleton } from '../_components/product-card/skeleton'
+import { ProductCard } from './product-card'
 
 export function Content() {
   const { addToCart } = useCart()
 
-  const { data: products, queryKey } = useGetWishlist({ params: {} })
+  const {
+    data: products,
+    queryKey,
+    isFetching: isFetchingWishlist,
+  } = useGetWishlist({ params: {} })
 
   const { mutate: removeAll } = useRemoveAllWishlist({ queryKey })
+
+  const { mutate: removeFromWishlist } = useRemoveFromWishlist({ queryKey })
 
   function handleMoveAllToCart() {
     removeAll(undefined, {
@@ -44,17 +51,25 @@ export function Content() {
       )}
 
       <div className="grid w-full grid-cols-4 gap-4">
-        {!products?.__mock &&
+        {!isFetchingWishlist &&
           products?.data.map(({ product }) => {
             const { id } = product
 
-            return <ProductCard variant="wishlist" key={id} data={product} />
+            return (
+              <ProductCard
+                key={id}
+                data={product}
+                handleRemoveFromWishlist={() => {
+                  removeFromWishlist({ product })
+                }}
+              />
+            )
           })}
 
-        {products?.__mock &&
-          products?.data.map((_, index) => {
-            return <ProductCardSkeleton key={index} />
-          })}
+        {isFetchingWishlist &&
+          products?.data.map(({ product: { id } }) => (
+            <ProductCardSkeleton key={id} />
+          ))}
       </div>
     </>
   )

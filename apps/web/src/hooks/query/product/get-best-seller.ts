@@ -29,7 +29,7 @@ export function useGetBestSellerProducts(params: Params) {
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
-    initialData: BestSellerMock,
+    placeholderData: BestSellerMock,
   })
 
   const { isError } = query
