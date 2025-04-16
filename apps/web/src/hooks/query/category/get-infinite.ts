@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { ICategory } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { CategoryMock } from '@/shared/mock/category'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -37,6 +38,10 @@ export function useGetInfiniteCategories() {
     initialPageParam: 1,
     select(data) {
       return data.pages.flatMap((page) => page.data)
+    },
+    initialData: {
+      pages: [CategoryMock],
+      pageParams: [1],
     },
   })
 

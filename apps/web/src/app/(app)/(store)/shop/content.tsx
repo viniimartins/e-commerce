@@ -36,7 +36,7 @@ export function Content() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading: isLoadingProducts,
+    isFetching: isFetchingProducts,
   } = useGetInfiniteProducts({
     categoryId,
     minPrice,
@@ -47,10 +47,10 @@ export function Content() {
     category: { id: categoryId! },
   })
 
-  const isLoading = isLoadingProducts || isLoadingCategory
+  const isFetching = isFetchingProducts || isLoadingCategory
 
   function handleLoadMore() {
-    if (hasNextPage && !isFetchingNextPage) {
+    if (hasNextPage && !isFetching) {
       fetchNextPage()
     }
   }
@@ -73,10 +73,10 @@ export function Content() {
       </div>
       <div className="col-span-3 space-y-8">
         <Fragment>
-          {isLoading && <Skeleton className="h-5 w-56" />}
+          {isFetching && <Skeleton className="h-5 w-56" />}
 
           <h2 className="text-xl font-semibold">
-            {(!isLoading && category?.name) ?? 'Todos os produtos'}
+            {(!isFetching && category?.name) ?? 'Todos os produtos'}
           </h2>
 
           <div className="flex items-center justify-end">
@@ -112,18 +112,19 @@ export function Content() {
               'grid-cols-1 gap-4': gridView === 'rows2',
             })}
           >
-            {products?.map((product) => {
-              const { id } = product
+            {!isFetching &&
+              products?.map((product) => {
+                const { id } = product
 
-              return <ProductCard key={id} data={product} gridView={gridView} />
-            })}
-
-            {isLoading &&
-              Array.from({ length: 12 }).map((_, index) => {
-                return <ProductCardSkeleton key={index} />
+                return (
+                  <ProductCard key={id} data={product} gridView={gridView} />
+                )
               })}
 
-            {!isLoading && products?.length === 0 && (
+            {isFetching &&
+              products?.map(({ id }) => <ProductCardSkeleton key={id} />)}
+
+            {!isFetching && products?.length === 0 && (
               <div className="col-span-full flex flex-col items-center justify-center py-12 text-center">
                 <p className="text-muted-foreground mb-2 text-lg">
                   Nenhum produto encontrado

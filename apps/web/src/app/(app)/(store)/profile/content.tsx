@@ -8,7 +8,7 @@ import { useGetOrders } from '@/hooks/query/order/get'
 import { Order } from './order'
 
 export function Content() {
-  const { data: orders, isLoading } = useGetOrders({
+  const { data: orders } = useGetOrders({
     params: {
       page: 1,
       perPage: 10,
@@ -30,22 +30,23 @@ export function Content() {
       </aside>
       <div className="col-span-3">
         <Tabs.Content value="pedidos" className="space-y-4">
-          {orders?.data.map((order) => {
-            const { id } = order
+          {!orders?.__mock &&
+            orders?.data.map((order) => {
+              const { id } = order
 
-            return <Order key={id} data={order} />
-          })}
+              return <Order key={id} data={order} />
+            })}
+
+          {orders?.__mock &&
+            orders?.data.map(({ id }) => (
+              <Skeleton key={id} className="h-[13rem] w-full" />
+            ))}
 
           {orders?.data.length === 0 && (
             <span className="text-muted-foreground text-sm">
               Nenhum pedido encontrado
             </span>
           )}
-
-          {isLoading &&
-            Array.from({ length: 4 }).map((_, index) => (
-              <Skeleton key={index} className="h-[13rem] w-full" />
-            ))}
         </Tabs.Content>
       </div>
     </Tabs.Root>

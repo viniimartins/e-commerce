@@ -1,4 +1,4 @@
-import { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import type { ReactNode } from 'react'
 
@@ -9,8 +9,8 @@ import { Header } from '../../components/header'
 
 export const metadata: Metadata = {
   title: {
-    template: `Obra Vista | %s`,
-    default: 'Obra Vista',
+    template: 'Univinte | %s',
+    default: 'Login',
   },
 }
 

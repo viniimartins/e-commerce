@@ -11,7 +11,7 @@ import { ProductCardSkeleton } from '../_components/product-card/skeleton'
 export function Content() {
   const { addToCart } = useCart()
 
-  const { data: products, queryKey, isLoading } = useGetWishlist({ params: {} })
+  const { data: products, queryKey } = useGetWishlist({ params: {} })
 
   const { mutate: removeAll } = useRemoveAllWishlist({ queryKey })
 
@@ -44,14 +44,15 @@ export function Content() {
       )}
 
       <div className="grid w-full grid-cols-4 gap-4">
-        {products?.data.map(({ product }) => {
-          const { id } = product
+        {!products?.__mock &&
+          products?.data.map(({ product }) => {
+            const { id } = product
 
-          return <ProductCard variant="wishlist" key={id} data={product} />
-        })}
+            return <ProductCard variant="wishlist" key={id} data={product} />
+          })}
 
-        {isLoading &&
-          Array.from({ length: 4 }).map((_, index) => {
+        {products?.__mock &&
+          products?.data.map((_, index) => {
             return <ProductCardSkeleton key={index} />
           })}
       </div>

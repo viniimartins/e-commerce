@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IOrder } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { OrderMock } from '@/shared/mock/order'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 import { useGetSession } from '../session/get'
@@ -34,6 +35,7 @@ export function useGetOrders({ params }: Props) {
     queryKey,
     queryFn: () => get(params),
     enabled: isAuthenticated,
+    initialData: OrderMock,
   })
 
   const { isError } = query

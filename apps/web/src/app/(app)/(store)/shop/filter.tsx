@@ -33,7 +33,7 @@ export function Filter() {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    isLoading,
+    isFetching: isFetchingCategories,
   } = useGetInfiniteCategories()
 
   useInfiniteScrollObserver({
@@ -98,32 +98,33 @@ export function Filter() {
               Todas categorias
             </span>
 
-            {categories?.map((category, index) => {
-              const { id, name } = category
+            {!isFetchingCategories &&
+              categories?.map((category, index) => {
+                const { id, name } = category
 
-              const lastIndex = index === categories.length - 1
+                const lastIndex = index === categories.length - 1
 
-              return (
-                <Fragment key={id}>
-                  <span
-                    data-active={categoryActiveId === id}
-                    onClick={() => handleCategoryClick(id)}
-                    className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
-                  >
-                    {name}
-                  </span>
+                return (
+                  <Fragment key={id}>
+                    <span
+                      data-active={categoryActiveId === id}
+                      onClick={() => handleCategoryClick(id)}
+                      className="text-muted-foreground data-[active=true]:text-foreground hover:text-foreground text-sm font-medium hover:cursor-pointer hover:underline"
+                    >
+                      {name}
+                    </span>
 
-                  {lastIndex && (
-                    <div ref={loadMoreRef} className="h-1 w-full" />
-                  )}
-                </Fragment>
-              )
-            })}
-
-            {isLoading &&
-              Array.from({ length: 12 }).map((_, index) => {
-                return <Skeleton key={index} className="h-4 w-full" />
+                    {lastIndex && (
+                      <div ref={loadMoreRef} className="h-1 w-full" />
+                    )}
+                  </Fragment>
+                )
               })}
+
+            {isFetchingCategories &&
+              categories?.map(({ id }) => (
+                <Skeleton key={id} className="h-4 w-full" />
+              ))}
           </div>
         </ScrollArea>
       </div>

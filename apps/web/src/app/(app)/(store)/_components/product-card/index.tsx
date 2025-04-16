@@ -78,7 +78,7 @@ export function ProductCard(props: Props) {
     <>
       <Link href={`/shop/${id}`}>
         {gridView === 'grid3x3' && (
-          <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
+          <Card className="bg-background relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center border bg-neutral-100 p-0">
               {isNew && (
                 <Badge className="absolute top-4 left-4 z-30 h-8 font-semibold">
@@ -192,7 +192,7 @@ export function ProductCard(props: Props) {
         )}
 
         {gridView === 'grid2x2' && (
-          <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
+          <Card className="bg-background relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent className="flex flex-row px-0">
               <div
                 onClick={handleOpenDialog}
@@ -260,7 +260,7 @@ export function ProductCard(props: Props) {
         )}
 
         {gridView === 'columns2' && (
-          <Card className="relative w-full cursor-pointer gap-0 space-y-3 rounded-none border-none py-0 shadow-none">
+          <Card className="bg-background relative w-full cursor-pointer gap-0 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent
               onClick={handleOpenDialog}
               className="group dark:bg-muted-foreground/10 relative h-[18rem] w-full cursor-pointer border bg-neutral-100 p-0"
@@ -327,7 +327,7 @@ export function ProductCard(props: Props) {
         )}
 
         {gridView === 'rows2' && (
-          <Card className="relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
+          <Card className="bg-background relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
             <CardContent className="flex flex-row px-0">
               <div
                 onClick={handleOpenDialog}

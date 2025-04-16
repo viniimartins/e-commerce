@@ -35,7 +35,7 @@ import { ProductCardSkeleton } from './_components/product-card/skeleton'
 export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
 
-  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
+  const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     page: 1,
     perPage: 50,
   })
@@ -167,24 +167,23 @@ export function Content() {
           className="w-full"
         >
           <CarouselContent>
-            {products?.data.map((product) => {
-              const { id } = product
+            {!isFetchingProducts &&
+              products?.data.map((product) => {
+                const { id } = product
 
-              return (
-                <CarouselItem key={id} className="basis-1/4">
-                  <ProductCard data={product} />
-                </CarouselItem>
-              )
-            })}
-
-            {isLoadingProducts &&
-              Array.from({ length: 4 }).map((_, index) => {
                 return (
-                  <CarouselItem key={index} className="basis-1/4">
-                    <ProductCardSkeleton />
+                  <CarouselItem key={id} className="basis-1/4">
+                    <ProductCard data={product} />
                   </CarouselItem>
                 )
               })}
+
+            {isFetchingProducts &&
+              products?.data.map(({ id }) => (
+                <CarouselItem key={id} className="basis-1/4">
+                  <ProductCardSkeleton />
+                </CarouselItem>
+              ))}
           </CarouselContent>
         </Carousel>
       </section>

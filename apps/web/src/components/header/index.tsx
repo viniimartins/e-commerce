@@ -193,13 +193,15 @@ export function Header() {
               onOpenAutoFocus={(e) => e.preventDefault()}
             >
               <Card className="border-none pr-0">
-                <CardHeader className="px-0">
-                  <CardTitle>Resultados da busca</CardTitle>
-                  <CardDescription>
-                    {products?.data.length} produtos encontrados
-                  </CardDescription>
-                </CardHeader>
-                {products && (
+                {!products?.__mock && (
+                  <CardHeader className="px-0">
+                    <CardTitle>Resultados da busca</CardTitle>
+                    <CardDescription>
+                      {products?.data.length} produtos encontrados
+                    </CardDescription>
+                  </CardHeader>
+                )}
+                {!products.__mock && (
                   <ScrollArea
                     className={cn('h-56', {
                       'h-auto': products && products?.data.length <= 4,
@@ -247,8 +249,8 @@ export function Header() {
                   </ScrollArea>
                 )}
 
-                {!products && (
-                  <div className="flex items-center pl-4">
+                {(products?.data.length === 0 || products?.__mock) && (
+                  <div className="flex items-center py-4 pl-4">
                     <p className="text-muted-foreground">
                       Nenhum produto encontrado
                     </p>

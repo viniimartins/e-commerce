@@ -58,9 +58,9 @@ export function BannerCarousel() {
                 )}
               </div>
 
-              <CarouselPrevious className="left-10" />
+              <CarouselPrevious className="left-10 rounded-none" />
 
-              <CarouselNext className="right-10" />
+              <CarouselNext className="right-10 rounded-none" />
             </Card>
           </CarouselItem>
         ))}

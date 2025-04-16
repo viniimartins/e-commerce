@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { ProductsMock } from '@/shared/mock/product'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -41,6 +42,10 @@ export function useGetInfiniteProducts(params: Params) {
       return data.pages.flatMap((page) => page.data)
     },
     enabled: params.viewProducts,
+    initialData: {
+      pages: [ProductsMock],
+      pageParams: [1],
+    },
   })
 
   const { isError } = query

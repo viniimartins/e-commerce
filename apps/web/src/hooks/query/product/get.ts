@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IProduct } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { ProductsMock } from '@/shared/mock/product'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
@@ -32,6 +33,7 @@ export function useGetProducts(params: Params) {
     queryKey,
     queryFn: () => get(params),
     enabled: isEnabled,
+    initialData: ProductsMock,
   })
 
   const { isError } = query

@@ -36,7 +36,7 @@ export function Content({ product }: Props) {
   const { cart, addToCart, incrementCartQuantity, decrementCartQuantity } =
     useCart()
 
-  const { data: products, isLoading: isLoadingProducts } = useGetProducts({
+  const { data: products } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
     page: 1,
@@ -80,14 +80,6 @@ export function Content({ product }: Props) {
       <section className="flex grid-cols-5 gap-8">
         <div className="col-span-3 flex gap-4">
           <div className="flex flex-col gap-4">
-            {!product &&
-              Array.from({ length: 3 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="dark:bg-muted-foreground/10 relative flex w-44 flex-1 items-center justify-center border bg-neutral-100 p-0"
-                />
-              ))}
-
             {product?.productImage.slice(1).map(({ image }) => {
               const { id, url } = image
 
@@ -254,19 +246,22 @@ export function Content({ product }: Props) {
       <Separator className="my-10" />
 
       <section className="flex flex-col gap-12">
-        <span className="text-primary text-3xl font-medium">
-          Mais de {product?.category.name}
-        </span>
+        {productsWithoutCurrent?.length > 0 && (
+          <span className="text-primary text-3xl font-medium">
+            Mais de {product?.category.name}
+          </span>
+        )}
 
         <div className="grid grid-cols-4 gap-4">
-          {productsWithoutCurrent?.map((product) => {
-            const { id } = product
+          {!products?.__mock &&
+            productsWithoutCurrent?.map((product) => {
+              const { id } = product
 
-            return <ProductCard key={id} data={product} />
-          })}
+              return <ProductCard key={id} data={product} />
+            })}
 
-          {isLoadingProducts &&
-            Array.from({ length: 4 }).map((_, index) => {
+          {products?.__mock &&
+            products?.data.map((_, index) => {
               return <ProductCardSkeleton key={index} />
             })}
         </div>

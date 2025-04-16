@@ -4,6 +4,7 @@ import { toast } from 'sonner'
 
 import type { IWishlist } from '@/app/(app)/types'
 import { api } from '@/service/api'
+import { WishlistMock } from '@/shared/mock/wishlist'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 import { useGetSession } from '../session/get'
@@ -34,6 +35,7 @@ export function useGetWishlist({ params }: Props) {
     queryKey,
     queryFn: () => get(params),
     enabled: isAuthenticated,
+    initialData: WishlistMock,
   })
 
   const { isError } = query
