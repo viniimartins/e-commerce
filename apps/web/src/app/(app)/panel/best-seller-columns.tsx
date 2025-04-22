@@ -44,7 +44,7 @@ export function getBestSellerProductsColumns({
       cell: ({ row }) => {
         return (
           <TableCell isLoading={isLoading} >
-            {formatPrice(Number(row.original.product.price) / 100)}
+            {formatPrice(row.original.product.price)}
           </TableCell>
         )
       },

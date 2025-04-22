@@ -14,6 +14,7 @@ export async function getSession(): Promise<ISession> {
     headers: {
       Authorization: `Bearer ${token}`,
     },
+    cache: 'force-cache',
   })
 
   return { data, isAuthenticated: !!data, token }

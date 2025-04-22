@@ -3,6 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 export function createProduct(app: FastifyInstance) {
@@ -12,6 +13,7 @@ export function createProduct(app: FastifyInstance) {
     .post(
       '/product',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Product'],
           summary: 'Create a product',
@@ -31,8 +33,6 @@ export function createProduct(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const {
           name,
           description,

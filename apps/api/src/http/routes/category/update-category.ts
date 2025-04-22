@@ -3,6 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -14,6 +15,7 @@ export async function updateCategory(app: FastifyInstance) {
     .put(
       '/category/:id',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Category'],
           summary: 'Update category',
@@ -36,8 +38,6 @@ export async function updateCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const { id } = request.params
 
         const { name } = request.body

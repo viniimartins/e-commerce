@@ -484,7 +484,7 @@ export function Content(props: Props) {
 
                             <div className="absolute top-5 right-5">
                               <Button
-                                variant="secondary"
+                                variant="outline"
                                 className="rounded-full"
                                 size="icon"
                                 onClick={(event) => {

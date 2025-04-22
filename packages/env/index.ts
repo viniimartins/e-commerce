@@ -6,7 +6,6 @@ export const env = createEnv({
     PORT: z.coerce.number().default(3333),
     DATABASE_URL: z.string().url(),
 
-    NEXTAUTH_SECRET: z.string(),
     JWT_SECRET: z.string(),
     GITHUB_OAUTH_CLIENT_ID: z.string(),
     GITHUB_OAUTH_CLIENT_SECRET: z.string(),
@@ -21,7 +20,6 @@ export const env = createEnv({
     NEXT_PUBLIC_API_URL: z.string().url(),
   },
   runtimeEnv: {
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     PORT: process.env.SERVER_PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     GITHUB_OAUTH_CLIENT_ID: process.env.GITHUB_OAUTH_CLIENT_ID,

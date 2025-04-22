@@ -3,6 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 export async function createCategory(app: FastifyInstance) {
@@ -12,6 +13,7 @@ export async function createCategory(app: FastifyInstance) {
     .post(
       '/category',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Category'],
           summary: 'Create category',
@@ -28,8 +30,6 @@ export async function createCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const { name } = request.body
 
         const category = await prisma.category.create({

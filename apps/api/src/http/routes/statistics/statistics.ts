@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 export function getStatistics(app: FastifyInstance) {
@@ -13,6 +14,7 @@ export function getStatistics(app: FastifyInstance) {
     .get(
       '/statistics',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Statistics'],
           summary: 'Get statistics',
@@ -26,8 +28,6 @@ export function getStatistics(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const totalOrders = await prisma.order.count()
 
         const totalUsers = await prisma.user.count()

@@ -6,6 +6,7 @@ import sharp from 'sharp'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 import { removeBg } from '@/lib/remove-bg'
 
@@ -16,6 +17,7 @@ export function uploadImage(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().post(
     '/image',
     {
+      onRequest: [verifyUserRole('ADMIN')],
       schema: {
         tags: ['Upload'],
         summary: 'Upload an image',
@@ -31,8 +33,6 @@ export function uploadImage(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      await request.ensureAdmin()
-
       const file = await request.file()
 
       if (!file) {

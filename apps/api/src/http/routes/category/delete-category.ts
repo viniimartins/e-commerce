@@ -3,6 +3,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -14,6 +15,7 @@ export async function deleteCategory(app: FastifyInstance) {
     .delete(
       '/category/:idCategory',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Category'],
           summary: 'Delete category',
@@ -30,8 +32,6 @@ export async function deleteCategory(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const { idCategory } = request.params
 
         const category = await prisma.category.findUnique({

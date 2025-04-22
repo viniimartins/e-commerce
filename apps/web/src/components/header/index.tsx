@@ -69,22 +69,21 @@ const searchInputs = z.object({
 type ISearchInput = z.infer<typeof searchInputs>
 
 export function Header() {
+  const loadMoreRef = useRef<HTMLDivElement>(null)
+
   const pathname = usePathname()
+
+  const { cart, removeAllProducts } = useCart()
+
+  const { actions, isOpen } = useModal()
+  const { setTheme, theme } = useTheme()
+  const { register, watch } = useForm<ISearchInput>()
 
   const {
     data: profile,
     isLoading: isLoadingProfile,
     isAuthenticated,
   } = useGetSession()
-
-  const { actions, isOpen } = useModal()
-
-  const loadMoreRef = useRef<HTMLDivElement>(null)
-
-  const { cart, removeAllProducts } = useCart()
-  const { setTheme, theme } = useTheme()
-
-  const { register, watch } = useForm<ISearchInput>()
 
   const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     name: watch('search'),
@@ -97,6 +96,8 @@ export function Header() {
     isFetchingNextPage,
   } = useGetInfiniteCategories()
 
+  const { data: wishlist } = useGetWishlist({ params: {} })
+
   useInfiniteScrollObserver({
     targetRef: loadMoreRef,
     hasNextPage,
@@ -104,8 +105,6 @@ export function Header() {
     fetchNextPage,
     isActive: true,
   })
-
-  const { data: wishlist } = useGetWishlist({ params: {} })
 
   const isPageLoginAndNotAuthenticated =
     pathname === '/login' && !isAuthenticated

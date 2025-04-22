@@ -5,6 +5,7 @@ import path from 'path'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
@@ -14,6 +15,7 @@ export function removeImage(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().delete(
     '/image/:idImage?',
     {
+      onRequest: [verifyUserRole('ADMIN')],
       schema: {
         tags: ['Upload'],
         summary: 'Remove an image (by ID or URL)',
@@ -32,8 +34,6 @@ export function removeImage(app: FastifyInstance) {
       },
     },
     async (request, reply) => {
-      await request.ensureAdmin()
-
       const { idImage } = request.params
       const { url } = request.body
 

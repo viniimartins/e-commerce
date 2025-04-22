@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 export function getBestSellerProduct(app: FastifyInstance) {
@@ -13,6 +14,7 @@ export function getBestSellerProduct(app: FastifyInstance) {
     .get(
       '/product/best-seller',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Products'],
           summary: 'Get the best seller product',
@@ -59,8 +61,6 @@ export function getBestSellerProduct(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const { page, perPage } = request.query
 
         const groupedSales = await prisma.orderProduct.groupBy({

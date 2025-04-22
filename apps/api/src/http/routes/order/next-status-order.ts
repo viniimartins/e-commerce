@@ -4,6 +4,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 import z from 'zod'
 
 import { auth } from '@/http/middlewares/auth'
+import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 import { advanceOrderStatus } from '@/utils/advanceOrderStatus'
 
@@ -16,6 +17,7 @@ export function nextStatusOrder(app: FastifyInstance) {
     .post(
       '/order/:orderId/next-status',
       {
+        onRequest: [verifyUserRole('ADMIN')],
         schema: {
           tags: ['Order'],
           summary: 'Next status order',
@@ -34,8 +36,6 @@ export function nextStatusOrder(app: FastifyInstance) {
         },
       },
       async (request, reply) => {
-        await request.ensureAdmin()
-
         const { orderId } = request.params
 
         const order = await prisma.order.findUnique({

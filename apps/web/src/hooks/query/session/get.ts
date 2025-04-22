@@ -22,6 +22,7 @@ export function useGetSession(): ISession {
     queryKey,
     queryFn: get,
     enabled: !!token,
+    staleTime: Infinity,
   })
 
   useEffect(() => {
