@@ -13,7 +13,7 @@ export function getAllOrders(app: FastifyInstance) {
     '/order/all',
     {
       preHandler: verifyJWT,
-      onRequest: [verifyUserRole('ADMIN')],
+      onRequest: [verifyJWT, verifyUserRole('ADMIN')],
       schema: {
         tags: ['Order'],
         summary: 'Get all orders',

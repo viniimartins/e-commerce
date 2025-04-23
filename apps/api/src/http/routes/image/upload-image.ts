@@ -5,7 +5,7 @@ import path from 'path'
 import sharp from 'sharp'
 import z from 'zod'
 
-import { auth } from '@/http/middlewares/auth'
+import { verifyJWT } from '@/http/middlewares/verify-jwt'
 import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 import { removeBg } from '@/lib/remove-bg'
@@ -13,11 +13,10 @@ import { removeBg } from '@/lib/remove-bg'
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export function uploadImage(app: FastifyInstance) {
-  app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().post(
     '/image',
     {
-      onRequest: [verifyUserRole('ADMIN')],
+      onRequest: [verifyJWT, verifyUserRole('ADMIN')],
       schema: {
         tags: ['Upload'],
         summary: 'Upload an image',

@@ -4,18 +4,17 @@ import fs from 'fs'
 import path from 'path'
 import z from 'zod'
 
-import { auth } from '@/http/middlewares/auth'
+import { verifyJWT } from '@/http/middlewares/verify-jwt'
 import { verifyUserRole } from '@/http/middlewares/verify-user-role'
 import { prisma } from '@/lib/prisma'
 
 import { BadRequestError } from '../_errors/bad-request-error'
 
 export function removeImage(app: FastifyInstance) {
-  app.register(auth)
   app.withTypeProvider<ZodTypeProvider>().delete(
     '/image/:idImage?',
     {
-      onRequest: [verifyUserRole('ADMIN')],
+      onRequest: [verifyJWT, verifyUserRole('ADMIN')],
       schema: {
         tags: ['Upload'],
         summary: 'Remove an image (by ID or URL)',
