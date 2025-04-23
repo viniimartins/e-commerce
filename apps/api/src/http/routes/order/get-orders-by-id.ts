@@ -16,7 +16,6 @@ export function getOrdersById(app: FastifyInstance) {
     {
       preHandler: verifyJWT,
       onRequest: [verifyJWT, verifyUserRole('ADMIN')],
-
       schema: {
         tags: ['Order'],
         summary: 'Get user orders',

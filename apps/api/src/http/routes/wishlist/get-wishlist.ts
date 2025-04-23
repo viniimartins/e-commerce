@@ -10,8 +10,8 @@ export function getWishlist(app: FastifyInstance) {
   app.withTypeProvider<ZodTypeProvider>().get(
     '/wishlist',
     {
+      preHandler: verifyJWT,
       schema: {
-        preHandler: verifyJWT,
         tags: ['Wishlist'],
         summary: 'Get user wishlist',
         security: [{ bearerAuth: [] }],
@@ -58,7 +58,7 @@ export function getWishlist(app: FastifyInstance) {
     async (request, reply) => {
       const { page, perPage } = request.query
 
-      const userId = await request.user.sub
+      const userId = request.user.sub
 
       const [wishlist, total] = await Promise.all([
         prisma.wishlist.findMany({
