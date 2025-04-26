@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 
+import { getSession } from '@/auth/session-client'
 import { AppSidebar } from '@/components/sidebar'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
-import { getSession } from '@/service/session'
 
 import { Role } from '../types'
 
@@ -20,7 +20,7 @@ export default async function AdminLayout({
 }: {
   children: ReactNode
 }) {
-  const { data: session } = await getSession()
+  const session = await getSession()
 
   if (session?.role !== Role.ADMIN) {
     redirect('/')

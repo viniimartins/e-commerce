@@ -5,7 +5,6 @@ import { toast } from 'sonner'
 
 import type { IProfile } from '@/app/(app)/types'
 import { api } from '@/service/api'
-import type { ISession } from '@/types/session'
 
 async function get() {
   const { data } = await api.get<IProfile>('/profile')
@@ -13,17 +12,19 @@ async function get() {
   return data
 }
 
-export function useGetSession(): ISession {
-  const queryKey = ['get-session']
+export function useGetProfile() {
+  const queryKey = ['get-profile']
 
   const token = getCookie('token')
 
-  const { data, isLoading, isError } = useQuery({
+  const query = useQuery({
     queryKey,
     queryFn: get,
     enabled: !!token,
     staleTime: Infinity,
   })
+
+  const { isError } = query
 
   useEffect(() => {
     if (isError) {
@@ -31,5 +32,5 @@ export function useGetSession(): ISession {
     }
   }, [isError])
 
-  return { data, isLoading, queryKey, isAuthenticated: !!data, token }
+  return { ...query, queryKey }
 }

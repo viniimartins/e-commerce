@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import * as React from 'react'
 
+import { getSession } from '@/auth/session-client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
@@ -26,12 +27,11 @@ import {
   SidebarRail,
   useSidebar,
 } from '@/components/ui/sidebar'
-import { useGetSession } from '@/hooks/query/session/get'
 import { panel } from '@/shared/sidebar'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
-  const { data: profile } = useGetSession()
+  const session = getSession()
 
   const { isMobile } = useSidebar()
 
@@ -74,16 +74,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                 >
                   <Avatar className="h-8 w-8 rounded-lg">
-                    <AvatarImage src={profile?.avatarUrl} alt={profile?.name} />
+                    <AvatarImage src={session?.avatarUrl} alt={session?.name} />
                     <AvatarFallback className="rounded-lg">
-                      {profile?.name?.charAt(0)}
+                      {session?.name?.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
                   <div className="grid flex-1 text-left text-sm leading-tight">
                     <span className="truncate font-semibold">
-                      {profile?.name}
+                      {session?.name}
                     </span>
-                    <span className="truncate text-xs">{profile?.email}</span>
+                    <span className="truncate text-xs">{session?.email}</span>
                   </div>
                   <ChevronsUpDown className="ml-auto size-4" />
                 </SidebarMenuButton>
@@ -98,18 +98,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                   <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                     <Avatar className="h-8 w-8 rounded-lg">
                       <AvatarImage
-                        src={profile?.avatarUrl}
-                        alt={profile?.name}
+                        src={session?.avatarUrl}
+                        alt={session?.name}
                       />
                       <AvatarFallback className="rounded-lg">
-                        {profile?.name?.charAt(0)}
+                        {session?.name?.charAt(0)}
                       </AvatarFallback>
                     </Avatar>
                     <div className="grid flex-1 text-left text-sm leading-tight">
                       <span className="truncate font-semibold">
-                        {profile?.name}
+                        {session?.name}
                       </span>
-                      <span className="truncate text-xs">{profile?.email}</span>
+                      <span className="truncate text-xs">{session?.email}</span>
                     </div>
                   </div>
                 </DropdownMenuLabel>

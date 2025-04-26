@@ -1,3 +1,4 @@
+import { getSession } from '@/auth/session-server'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -6,12 +7,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
-import { getSession } from '@/service/session'
 
 import { Content } from './content'
 
 export default async function Profile() {
-  const { data: session } = await getSession()
+  const session = await getSession()
 
   return (
     <>

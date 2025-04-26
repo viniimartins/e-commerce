@@ -21,6 +21,7 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Role } from '@/app/(app)/types'
+import { getSession } from '@/auth/session-client'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -31,7 +32,6 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useGetInfiniteCategories } from '@/hooks/query/category/get-infinite'
 import { useGetProducts } from '@/hooks/query/product/get'
-import { useGetSession } from '@/hooks/query/session/get'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
@@ -60,7 +60,6 @@ import {
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { ScrollArea } from '../ui/scroll-area'
 import { Separator } from '../ui/separator'
-import { Skeleton } from '../ui/skeleton'
 
 const searchInputs = z.object({
   search: z.string(),
@@ -72,18 +71,13 @@ export function Header() {
   const loadMoreRef = useRef<HTMLDivElement>(null)
 
   const pathname = usePathname()
+  const session = getSession()
 
   const { cart, removeAllProducts } = useCart()
 
   const { actions, isOpen } = useModal()
   const { setTheme, theme } = useTheme()
   const { register, watch } = useForm<ISearchInput>()
-
-  const {
-    data: profile,
-    isLoading: isLoadingProfile,
-    isAuthenticated,
-  } = useGetSession()
 
   const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     name: watch('search'),
@@ -106,8 +100,7 @@ export function Header() {
     isActive: true,
   })
 
-  const isPageLoginAndNotAuthenticated =
-    pathname === '/login' && !isAuthenticated
+  const isPageLoginAndNotAuthenticated = pathname === '/login' && !session
 
   return (
     <header className="bg-background fixed top-0 z-50 flex h-20 w-full items-center justify-center border-b p-6">
@@ -259,18 +252,16 @@ export function Header() {
             </PopoverContent>
           </Popover>
 
-          {isAuthenticated && (
-            <Link href="/wishlist">
-              <Button size="icon" variant="ghost">
-                <Heart
-                  className={cn(
-                    'h-[1.2rem] w-[1.2rem] transition-all',
-                    wishlist && wishlist.data.length > 0 && 'fill-current',
-                  )}
-                />
-              </Button>
-            </Link>
-          )}
+          <Link href="/wishlist">
+            <Button size="icon" variant="ghost">
+              <Heart
+                className={cn(
+                  'h-[1.2rem] w-[1.2rem] transition-all',
+                  wishlist && wishlist.data.length > 0 && 'fill-current',
+                )}
+              />
+            </Button>
+          </Link>
 
           {isPageLoginAndNotAuthenticated ? (
             <Link href="/cart" target="_top">
@@ -308,21 +299,21 @@ export function Header() {
               align="center"
               className="flex w-72 flex-col gap-1 py-2"
             >
-              {profile && (
+              {session && (
                 <div className="flex flex-col items-center space-y-2">
                   <Button
                     variant="secondary"
                     size="icon"
                     className="h-14 w-14 rounded-full"
                   >
-                    {profile?.avatarUrl && (
+                    {session?.avatarUrl && (
                       <Avatar className="h-full w-full">
                         <AvatarImage
-                          src={profile.avatarUrl}
-                          alt={`Avatar ${profile.name}`}
+                          src={session.avatarUrl}
+                          alt={`Avatar ${session.name}`}
                         />
                         <AvatarFallback>
-                          {profile.name?.slice(0, 2)}
+                          {session.name?.slice(0, 2)}
                         </AvatarFallback>
                       </Avatar>
                     )}
@@ -330,28 +321,21 @@ export function Header() {
                     <span className="sr-only">Toggle user menu</span>
                   </Button>
                   <div className="flex w-full flex-col items-center gap-1 pb-2">
-                    {profile && (
+                    {session && (
                       <>
                         <span className="text-base font-medium">
-                          {profile?.name}
+                          {session?.name}
                         </span>
                         <span className="text-muted-foreground text-sm">
-                          {profile?.email}
+                          {session?.email}
                         </span>
                       </>
-                    )}
-
-                    {isLoadingProfile && (
-                      <div className="flex w-full flex-col gap-1 px-10">
-                        <Skeleton className="h-4 w-full rounded-full" />
-                        <Skeleton className="mt-1 h-3.5 w-full rounded-full" />
-                      </div>
                     )}
                   </div>
                 </div>
               )}
 
-              {profile && (
+              {session && (
                 <>
                   <DropdownMenuSeparator />
 
@@ -369,7 +353,7 @@ export function Header() {
                 </>
               )}
 
-              {profile?.role === Role.ADMIN && (
+              {session?.role === Role.ADMIN && (
                 <>
                   <DropdownMenuItem asChild>
                     <Link href="/panel" className="px-0! py-0!">
@@ -397,7 +381,7 @@ export function Header() {
                 </Button>
               </DropdownMenuItem>
 
-              {profile && (
+              {session && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild
@@ -415,7 +399,7 @@ export function Header() {
                 </DropdownMenuItem>
               )}
 
-              {!profile && (
+              {!session && (
                 <DropdownMenuItem
                   className="flex items-center gap-2 font-normal"
                   asChild

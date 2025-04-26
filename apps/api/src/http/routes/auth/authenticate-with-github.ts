@@ -126,6 +126,9 @@ export async function authenticateWithGithub(app: FastifyInstance) {
       const token = await reply.jwtSign(
         {
           sub: user.id,
+          name: user.name,
+          email: user.email,
+          avatarUrl: user.avatarUrl,
           role: user.role,
         },
         {

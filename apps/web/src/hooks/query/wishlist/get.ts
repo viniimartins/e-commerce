@@ -3,11 +3,10 @@ import { useEffect } from 'react'
 import { toast } from 'sonner'
 
 import type { IWishlist } from '@/app/(app)/types'
+import { getSession } from '@/auth/session-client'
 import { api } from '@/service/api'
 import { WishlistMock } from '@/shared/mock/wishlist'
 import type { PaginatedResponse } from '@/types/paginated-response'
-
-import { useGetSession } from '../session/get'
 
 interface Params {
   page?: number
@@ -29,13 +28,13 @@ async function get(params: Params) {
 export function useGetWishlist({ params }: Props) {
   const queryKey = ['get-wishlist', params]
 
-  const { isAuthenticated } = useGetSession()
+  const session = getSession()
 
   const query = useQuery({
     queryKey,
     queryFn: () => get(params),
     placeholderData: WishlistMock,
-    enabled: isAuthenticated,
+    enabled: !!session,
   })
 
   const { isError } = query
