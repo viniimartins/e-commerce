@@ -1,9 +1,11 @@
-import { getCookie } from 'cookies-next'
+import { useGetCookie } from 'cookies-next'
 import { jwtDecode } from 'jwt-decode'
 
 import type { IUser } from '@/app/(app)/types'
 
 export function getSession() {
+  const getCookie = useGetCookie()
+
   const token = getCookie('token')
 
   if (!token) return null

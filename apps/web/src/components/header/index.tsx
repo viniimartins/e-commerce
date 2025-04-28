@@ -252,16 +252,18 @@ export function Header() {
             </PopoverContent>
           </Popover>
 
-          <Link href="/wishlist">
-            <Button size="icon" variant="ghost">
-              <Heart
-                className={cn(
-                  'h-[1.2rem] w-[1.2rem] transition-all',
-                  wishlist && wishlist.data.length > 0 && 'fill-current',
-                )}
-              />
-            </Button>
-          </Link>
+          {session && (
+            <Link href="/wishlist">
+              <Button size="icon" variant="ghost">
+                <Heart
+                  className={cn(
+                    'h-[1.2rem] w-[1.2rem] transition-all',
+                    wishlist && wishlist.data.length > 0 && 'fill-current',
+                  )}
+                />
+              </Button>
+            </Link>
+          )}
 
           {isPageLoginAndNotAuthenticated ? (
             <Link href="/cart" target="_top">
