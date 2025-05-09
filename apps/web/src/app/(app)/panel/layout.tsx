@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 import type { ReactNode } from 'react'
 
-import { getSession } from '@/auth/session-client'
+import { getSession } from '@/auth/session-server'
 import { AppSidebar } from '@/components/sidebar'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
 

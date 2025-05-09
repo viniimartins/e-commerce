@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 
 import { OrderStatusLabels, Role } from '@/app/(app)/types'
-import { getSession } from '@/auth/session-client'
+import { getSession } from '@/auth/session-server'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -45,7 +45,7 @@ export default async function OrderPage({ params }: Params) {
 
   const order = await fetchOrderData(orderId)
 
-  if (order.userId !== session?.id || session?.role !== Role.ADMIN) {
+  if (order.userId !== session?.sub || session?.role !== Role.ADMIN) {
     notFound()
   }
 

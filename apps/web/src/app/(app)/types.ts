@@ -11,6 +11,7 @@ export enum Role {
 
 export interface IUser {
   id: string
+  sub: string
   name: string
   email: string
   avatarUrl?: string
