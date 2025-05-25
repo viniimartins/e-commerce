@@ -4,7 +4,7 @@ import { ZodError } from 'zod'
 
 type FastifyErrorHandler = FastifyInstance['errorHandler']
 
-export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
+const errorHandler: FastifyErrorHandler = (error, request, reply) => {
   console.log(error)
 
   if (error instanceof ZodError) {
@@ -16,3 +16,5 @@ export const errorHandler: FastifyErrorHandler = (error, request, reply) => {
 
   throw new InternalServerError()
 }
+
+export { errorHandler }

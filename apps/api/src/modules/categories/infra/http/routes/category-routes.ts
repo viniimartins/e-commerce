@@ -1,4 +1,4 @@
-import { requiredAuthenticationUserRole } from '@middlewares/required-authentication-user-role'
+import { permission } from '@middlewares/permission'
 import { UpdateCategoryController } from '@modules/categories/infra/http//controllers/update-category-controller'
 import { CreateCategoryController } from '@modules/categories/infra/http/controllers/create-category-controller'
 import { DeleteCategoryController } from '@modules/categories/infra/http/controllers/delete-category-controller'
@@ -8,7 +8,7 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 const routes = (app: FastifyInstance) => {
-  app.addHook('onRequest', requiredAuthenticationUserRole('ADMIN'))
+  app.addHook('onRequest', permission('ADMIN'))
 
   app.withTypeProvider<ZodTypeProvider>().post(
     CreateCategoryController.route,
