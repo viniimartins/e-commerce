@@ -18,6 +18,7 @@ export const env = createEnv({
   client: {},
   shared: {
     NEXT_PUBLIC_API_URL: z.string().url(),
+    NEXT_PUBLIC_APP_URL: z.string().url(),
   },
   runtimeEnv: {
     PORT: process.env.SERVER_PORT,
@@ -31,6 +32,7 @@ export const env = createEnv({
     ABACATE_API_KEY: process.env.ABACATE_API_KEY,
     ABACATE_WEBHOOK_SECRET: process.env.ABACATE_WEBHOOK_SECRET,
     REMOVE_BG_API_KEY: process.env.REMOVE_BG_API_KEY,
+    NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
   },
   emptyStringAsUndefined: true,
 })

@@ -1,4 +1,6 @@
 export function normalizeSlug(slug: string[]) {
+  console.log(slug)
+
   const isEditing = slug.includes('edit')
 
   const uuidRegex = /[a-fA-F0-9-]{36}/

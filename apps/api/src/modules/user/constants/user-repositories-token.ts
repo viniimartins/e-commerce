@@ -1,0 +1,11 @@
+const CREATE_USER_REPOSITORY_TOKEN = Symbol('CreateUserRepository')
+
+const FIND_USER_BY_EMAIL_REPOSITORY_TOKEN = Symbol('FindUserByEmailRepository')
+
+const FIND_USER_BY_ID_REPOSITORY_TOKEN = Symbol('FindUserByIdRepository')
+
+export {
+  CREATE_USER_REPOSITORY_TOKEN,
+  FIND_USER_BY_EMAIL_REPOSITORY_TOKEN,
+  FIND_USER_BY_ID_REPOSITORY_TOKEN,
+}

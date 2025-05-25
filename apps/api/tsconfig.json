@@ -1,10 +1,34 @@
 {
   "extends": "@e-commerce/tsconfig/node.json",
-  "include": ["src/**/*", "src/@types/*.d.ts"],
+  "include": [
+    "src/**/*",
+  ],
+  "rootDirs": [
+    "src",
+  ],
   "compilerOptions": {
-    "baseUrl": ".",
+    "baseUrl": "src",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@common/*": [
+        "common/*"
+      ],
+      "@middlewares/*": [
+        "middlewares/*"
+      ],
+      "@infra/*": [
+        "infra/*"
+      ],
+      "@container/*": [
+        "container/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
     }
   }
 }

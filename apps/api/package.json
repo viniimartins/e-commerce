@@ -2,14 +2,14 @@
   "name": "@e-commerce/api",
   "version": "1.0.0",
   "scripts": {
-    "dev": "pnpm env:load tsx watch src/http/server.ts",
+    "dev": "pnpm env:load tsx watch src/infra/http/server.ts",
     "db:migrate": "pnpm env:load prisma migrate dev",
     "db:studio": "pnpm env:load prisma studio",
     "env:load": "dotenv -e ../../.env --",
     "db:seed": "pnpm env:load prisma db seed",
     "db:reset": "pnpm env:load prisma migrate reset",
     "build": "tsup",
-    "start": "node dist/http/server.js",
+    "start": "node dist/infra/http/server.js",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "prisma": "^6.5.0",
     "sharp": "^0.34.1",
     "tsup": "^8.4.0",
+    "tsyringe": "^4.10.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {
@@ -45,7 +46,7 @@
   "prettier": "@e-commerce/prettier",
   "eslintConfig": {
     "extends": [
-      "@e-commerce/eslint-config/next"
+      "@e-commerce/eslint-config/node"
     ]
   }
 }
