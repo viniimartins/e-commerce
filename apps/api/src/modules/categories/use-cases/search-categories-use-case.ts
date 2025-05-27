@@ -17,10 +17,12 @@ class SearchCategoriesUseCase implements ISearchCategoriesUseCase {
   async execute(
     params: ISearchCategories.Request,
   ): Promise<ISearchCategories.Response> {
+    const { pageIndex, search, perPage } = params
+
     const result = await this.searchCategoriesRepository.search({
-      pageIndex: params.pageIndex,
-      perPage: params.perPage,
-      search: params.search,
+      pageIndex,
+      perPage,
+      search,
     })
 
     return {

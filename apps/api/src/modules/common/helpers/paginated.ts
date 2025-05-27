@@ -3,6 +3,8 @@ namespace Paginated {
     pageIndex: number
     perPage: number
     search?: string
+    maxPrice?: string
+    minPrice?: string
   }
 
   export type Response<T> = {

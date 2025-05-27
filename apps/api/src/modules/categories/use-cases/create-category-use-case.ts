@@ -1,11 +1,10 @@
 import { CREATE_CATEGORY_REPOSITORY_TOKEN } from '@modules/categories/constants'
-import type { ICreateCategoryRepository } from '@modules/categories/repositories/create-category-repository'
-import { inject, injectable } from 'tsyringe'
-
 import type {
   ICreateCategory,
   ICreateCategoryUseCase,
-} from '../domain/use-cases'
+} from '@modules/categories/domain/use-cases'
+import type { ICreateCategoryRepository } from '@modules/categories/repositories/create-category-repository'
+import { inject, injectable } from 'tsyringe'
 
 @injectable()
 class CreateCategoryUseCase implements ICreateCategoryUseCase {

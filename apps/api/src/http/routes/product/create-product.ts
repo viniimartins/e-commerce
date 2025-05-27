@@ -11,7 +11,6 @@ export function createProduct(app: FastifyInstance) {
     '/product',
     {
       onRequest: [verifyJWT, verifyUserRole('ADMIN')],
-
       schema: {
         tags: ['Product'],
         summary: 'Create a product',
