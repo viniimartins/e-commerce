@@ -10,7 +10,7 @@
     "db:reset": "pnpm env:load prisma migrate reset",
     "build": "tsup",
     "start": "node dist/infra/http/server.js",
-    "lint": "eslint src/**/*.ts"
+    "lint": "eslint src --ext .ts,.tsx --fix"
   },
   "dependencies": {
     "@e-commerce/env": "workspace:*",

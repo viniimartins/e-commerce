@@ -1,0 +1,11 @@
+const UPLOAD_FILE_REPOSITORY_TOKEN = Symbol('UploadFileRepository')
+
+const DELETE_FILE_REPOSITORY_TOKEN = Symbol('DeleteFileRepository')
+
+const FIND_FILE_BY_ID_REPOSITORY_TOKEN = Symbol('FindFileByIdRepository')
+
+export {
+  UPLOAD_FILE_REPOSITORY_TOKEN,
+  DELETE_FILE_REPOSITORY_TOKEN,
+  FIND_FILE_BY_ID_REPOSITORY_TOKEN,
+}
