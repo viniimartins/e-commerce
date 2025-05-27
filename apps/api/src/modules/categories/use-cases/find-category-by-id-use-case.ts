@@ -18,8 +18,10 @@ class FindCategoryByIdUseCase implements IFindCategoryByIdUseCase {
   async execute(
     params: IFindCategoryById.Request,
   ): Promise<IFindCategoryById.Response> {
+    const { categoryId } = params
+
     const foundCategory = await this.findCategoryByIdRepository.findById({
-      categoryId: params.categoryId,
+      categoryId,
     })
 
     if (!foundCategory) {

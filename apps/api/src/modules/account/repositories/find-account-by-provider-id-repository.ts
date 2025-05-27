@@ -1,11 +1,7 @@
-import type {
-  AccountProvider,
-  IAccountEntity,
-} from '@modules/account/domain/entities/account-entity'
+import type { IAccountEntity } from '@modules/account/domain/entities/account-entity'
 
 namespace IFindAccountByProviderId {
   export type Params = {
-    provider: AccountProvider
     userId: string
   }
 

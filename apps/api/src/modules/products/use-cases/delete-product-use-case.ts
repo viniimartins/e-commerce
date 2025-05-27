@@ -26,8 +26,10 @@ class DeleteProductUseCase implements IDeleteProductUseCase {
   async execute(
     params: IDeleteProduct.Request,
   ): Promise<IDeleteProduct.Response> {
+    const { productId } = params
+
     const product = await this.findProductByIdRepository.findById({
-      productId: params.productId,
+      productId,
     })
 
     if (!product) {
@@ -35,7 +37,7 @@ class DeleteProductUseCase implements IDeleteProductUseCase {
     }
 
     await this.deleteProductRepository.delete({
-      productId: params.productId,
+      productId,
     })
   }
 }

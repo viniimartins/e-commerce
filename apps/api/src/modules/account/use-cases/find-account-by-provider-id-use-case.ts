@@ -16,14 +16,14 @@ class FindAccountByProviderIdUseCase
     private readonly findAccountByProviderIdRepository: IFindAccountByProviderIdRepository,
   ) { }
 
-
-
   async execute(
     params: IFindAccountByProviderId.Request,
   ): Promise<IFindAccountByProviderId.Response> {
+    const { userId } = params
+
     const foundAccount =
       await this.findAccountByProviderIdRepository.findByProviderAccountId({
-        providerAccountId: params.id,
+        userId,
       })
 
     if (!foundAccount) {

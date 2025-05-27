@@ -18,8 +18,10 @@ class FindProductByIdUseCase implements IFindProductByIdUseCase {
   async execute(
     params: IFindProductById.Request,
   ): Promise<IFindProductById.Response> {
+    const { productId } = params
+
     const foundProduct = await this.findProductByIdRepository.findById({
-      productId: params.productId,
+      productId,
     })
 
     if (!foundProduct) {

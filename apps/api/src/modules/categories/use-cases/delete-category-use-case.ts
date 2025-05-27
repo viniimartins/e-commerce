@@ -26,8 +26,10 @@ class DeleteCategoryUseCase implements IDeleteCategoryUseCase {
   async execute(
     params: IDeleteCategory.Request,
   ): Promise<IDeleteCategory.Response> {
+    const { categoryId } = params
+
     const category = await this.findCategoryByIdRepository.findById({
-      categoryId: params.categoryId,
+      categoryId,
     })
 
     if (!category) {
@@ -35,7 +37,7 @@ class DeleteCategoryUseCase implements IDeleteCategoryUseCase {
     }
 
     await this.deleteCategoryRepository.delete({
-      categoryId: params.categoryId,
+      categoryId,
     })
   }
 }

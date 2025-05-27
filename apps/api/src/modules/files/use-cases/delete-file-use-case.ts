@@ -25,8 +25,10 @@ class DeleteFileUseCase implements IDeleteFileUseCase {
   ) { }
 
   async execute(params: IDeleteFile.Request): Promise<IDeleteFile.Response> {
+    const { fileId } = params
+
     const file = await this.findFileByIdRepository.findById({
-      fileId: params.fileId,
+      fileId,
     })
 
     if (!file) {
@@ -34,7 +36,7 @@ class DeleteFileUseCase implements IDeleteFileUseCase {
     }
 
     await this.deleteFileRepository.delete({
-      fileId: params.fileId,
+      fileId,
     })
   }
 }

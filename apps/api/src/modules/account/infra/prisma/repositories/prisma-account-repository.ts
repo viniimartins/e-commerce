@@ -22,13 +22,12 @@ class PrismaAccountRepository
   }
 
   async findByProviderAccountId({
-    provider,
     userId,
   }: IFindAccountByProviderId.Params): Promise<IFindAccountByProviderId.Response> {
     const account = await prisma.account.findUnique({
       where: {
         provider_userId: {
-          provider,
+          provider: 'GITHUB',
           userId,
         },
       },

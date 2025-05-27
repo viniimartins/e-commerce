@@ -1,7 +1,7 @@
 import type { IAccountEntity } from '@modules/account/domain/entities/account-entity'
 
 namespace IFindAccountByProviderId {
-  export type Request = { id: string }
+  export type Request = { userId: string }
 
   export type Response = IAccountEntity | null
 }
