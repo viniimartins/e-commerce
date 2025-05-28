@@ -3,7 +3,7 @@ import { FIND_CATEGORY_BY_ID_REPOSITORY_TOKEN } from '@modules/categories/consta
 import type {
   IFindCategoryById,
   IFindCategoryByIdUseCase,
-} from '@modules/categories/domain/use-cases/find-category-by-id-use-case'
+} from '@modules/categories/domain/use-cases'
 import type { IFindCategoryByIdRepository } from '@modules/categories/repositories'
 import { inject, injectable } from 'tsyringe'
 

@@ -3,7 +3,7 @@ import { CREATE_USER_REPOSITORY_TOKEN } from '@modules/user/constants'
 import type {
   ICreateUser,
   ICreateUserUseCase,
-} from '@modules/user/domain/use-cases/create-user-use-case'
+} from '@modules/user/domain/use-cases'
 import type { ICreateUserRepository } from '@modules/user/repositories'
 import { inject, injectable } from 'tsyringe'
 

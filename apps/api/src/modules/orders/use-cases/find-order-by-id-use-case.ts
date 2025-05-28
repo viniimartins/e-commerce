@@ -3,7 +3,7 @@ import { FIND_ORDER_BY_ID_REPOSITORY_TOKEN } from '@modules/orders/constants'
 import type {
   IFindOrderById,
   IFindOrderByIdUseCase,
-} from '@modules/orders/domain/use-cases/find-order-by-id-use-case'
+} from '@modules/orders/domain/use-cases'
 import type { IFindOrderByIdRepository } from '@modules/orders/repositories'
 import { inject, injectable } from 'tsyringe'
 

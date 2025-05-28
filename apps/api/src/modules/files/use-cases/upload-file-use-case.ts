@@ -2,8 +2,10 @@ import { NotFoundError } from '@common/errors'
 import { env } from '@e-commerce/env'
 import { RemoveBgService } from '@infra/services/remove-bg-service'
 import { UPLOAD_FILE_REPOSITORY_TOKEN } from '@modules/files/constants'
-import type { IUploadFileUseCase } from '@modules/files/domain/use-cases'
-import type { IUploadFile } from '@modules/files/domain/use-cases/upload-file-use-case'
+import type {
+  IUploadFile,
+  IUploadFileUseCase,
+} from '@modules/files/domain/use-cases'
 import type { IUploadFileRepository } from '@modules/files/repositories'
 import path from 'path'
 import sharp from 'sharp'

@@ -2,7 +2,7 @@ import { SEARCH_WISHLISTS_REPOSITORY_TOKEN } from '@modules/wishlists/constants'
 import type {
   ISearchWishlists,
   ISearchWishlistsUseCase,
-} from '@modules/wishlists/domain/use-cases/search-wishlists-use-case'
+} from '@modules/wishlists/domain/use-cases'
 import type { ISearchWishlistsRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 

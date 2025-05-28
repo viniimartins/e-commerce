@@ -12,7 +12,7 @@ import type { ICreateAccountRepository, IFindAccountByProviderIdRepository } fro
 import type {
   IAuthenticateGithub,
   IAuthenticateGithubUseCase,
-} from '@modules/auth/domain/use-cases/authenticate-github-use-case'
+} from '@modules/auth/domain/use-cases'
 import {
   CREATE_USER_REPOSITORY_TOKEN,
   FIND_USER_BY_EMAIL_REPOSITORY_TOKEN,

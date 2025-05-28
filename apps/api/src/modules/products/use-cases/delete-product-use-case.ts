@@ -6,7 +6,7 @@ import {
 import type {
   IDeleteProduct,
   IDeleteProductUseCase,
-} from '@modules/products/domain/use-cases/delete-product-use-case'
+} from '@modules/products/domain/use-cases'
 import type {
   IDeleteProductRepository,
   IFindProductByIdRepository,

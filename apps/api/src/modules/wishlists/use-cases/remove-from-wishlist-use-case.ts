@@ -2,7 +2,7 @@ import { REMOVE_FROM_WISHLIST_REPOSITORY_TOKEN } from '@modules/wishlists/consta
 import type {
   IRemoveFromWishlist,
   IRemoveFromWishlistUseCase,
-} from '@modules/wishlists/domain/use-cases/remove-from-wishlist-use-case'
+} from '@modules/wishlists/domain/use-cases'
 import type { IRemoveFromWishlistRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 

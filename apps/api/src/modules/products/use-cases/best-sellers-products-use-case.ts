@@ -2,7 +2,7 @@ import { BEST_SELLERS_PRODUCTS_REPOSITORY_TOKEN } from '@modules/products/consta
 import type {
   IBestSellersProducts,
   IBestSellersProductsUseCase,
-} from '@modules/products/domain/use-cases/best-sellers-products-use-case'
+} from '@modules/products/domain/use-cases'
 import type { IBestSellersProductsRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 

@@ -6,7 +6,7 @@ import {
 import type {
   IDeleteFile,
   IDeleteFileUseCase,
-} from '@modules/files/domain/use-cases/delete-file-use-case'
+} from '@modules/files/domain/use-cases'
 import type {
   IDeleteFileRepository,
   IFindFileByIdRepository,

@@ -3,7 +3,7 @@ import { FIND_USER_BY_EMAIL_REPOSITORY_TOKEN } from '@modules/user/constants'
 import type {
   IFindUserByEmail,
   IFindUserByEmailUseCase,
-} from '@modules/user/domain/use-cases/find-user-by-email-use-case'
+} from '@modules/user/domain/use-cases'
 import type { IFindUserByEmailRepository } from '@modules/user/repositories'
 import { inject, injectable } from 'tsyringe'
 

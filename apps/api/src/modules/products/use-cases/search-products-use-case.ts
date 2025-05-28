@@ -2,7 +2,7 @@ import { SEARCH_PRODUCTS_REPOSITORY_TOKEN } from '@modules/products/constants'
 import type {
   ISearchProducts,
   ISearchProductsUseCase,
-} from '@modules/products/domain/use-cases/search-products-use-case'
+} from '@modules/products/domain/use-cases'
 import type { ISearchProductsRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 

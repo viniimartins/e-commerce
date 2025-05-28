@@ -3,7 +3,7 @@ import { FIND_USER_BY_ID_REPOSITORY_TOKEN } from '@modules/user/constants'
 import type {
   IFindUserById,
   IFindUserByIdUseCase,
-} from '@modules/user/domain/use-cases/find-user-by-id-use-case'
+} from '@modules/user/domain/use-cases'
 import type { IFindUserByIdRepository } from '@modules/user/repositories'
 import { inject, injectable } from 'tsyringe'
 

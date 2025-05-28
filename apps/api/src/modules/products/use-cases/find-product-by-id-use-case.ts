@@ -3,7 +3,7 @@ import { FIND_PRODUCT_BY_ID_REPOSITORY_TOKEN } from '@modules/products/constants
 import type {
   IFindProductById,
   IFindProductByIdUseCase,
-} from '@modules/products/domain/use-cases/find-product-by-id-use-case'
+} from '@modules/products/domain/use-cases'
 import type { IFindProductByIdRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 

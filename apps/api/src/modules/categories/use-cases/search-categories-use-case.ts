@@ -2,7 +2,7 @@ import { SEARCH_CATEGORIES_REPOSITORY_TOKEN } from '@modules/categories/constant
 import type {
   ISearchCategories,
   ISearchCategoriesUseCase,
-} from '@modules/categories/domain/use-cases/search-categories-use-case'
+} from '@modules/categories/domain/use-cases'
 import type { ISearchCategoriesRepository } from '@modules/categories/repositories'
 import { inject, injectable } from 'tsyringe'
 

@@ -6,7 +6,7 @@ import {
 import type {
   IDeleteCategory,
   IDeleteCategoryUseCase,
-} from '@modules/categories/domain/use-cases/delete-category-use-case'
+} from '@modules/categories/domain/use-cases'
 import type {
   IDeleteCategoryRepository,
   IFindCategoryByIdRepository,

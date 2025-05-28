@@ -2,7 +2,7 @@ import { CLEAR_WISHLIST_REPOSITORY_TOKEN } from '@modules/wishlists/constants'
 import type {
   IClearWishlist,
   IClearWishlistUseCase,
-} from '@modules/wishlists/domain/use-cases/clear-wishlist-use-case'
+} from '@modules/wishlists/domain/use-cases'
 import type { IClearWishlistRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 
