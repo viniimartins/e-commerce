@@ -2,6 +2,7 @@ import { authenticateRoutes } from '@modules/auth/infra/http/routes/authenticate
 import { categoriesRoutes } from '@modules/categories/infra/http/routes/category-routes'
 import { ordersRoutes } from '@modules/orders/infra/http/routes/category-routes'
 import { productsRoutes } from '@modules/products/infra/http/routes/product-routes'
+import { statisticsRoutes } from '@modules/statistics/infra/http/routes/statistics-routes'
 import { wishlistsRoutes } from '@modules/wishlists/infra/http/routes/wishlist-routes'
 import type { FastifyInstance } from 'fastify'
 
@@ -19,6 +20,10 @@ const routes = (app: FastifyInstance) => {
   })
 
   app.register(wishlistsRoutes, {
+    prefix: '/wishlist',
+  })
+
+  app.register(statisticsRoutes, {
     prefix: '/wishlist',
   })
 
