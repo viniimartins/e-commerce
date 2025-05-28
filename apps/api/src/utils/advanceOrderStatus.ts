@@ -1,6 +1,5 @@
+import { BadRequestError } from '@common/errors'
 import { OrderStatus } from '@prisma/client'
-
-import { BadRequestError } from '@/http/routes/_errors/bad-request-error'
 
 export function advanceOrderStatus(currentStatus: OrderStatus) {
   const statusOrder = {
