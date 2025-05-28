@@ -3,6 +3,7 @@ import { categoriesRoutes } from '@modules/categories/infra/http/routes/category
 import { ordersRoutes } from '@modules/orders/infra/http/routes/category-routes'
 import { productsRoutes } from '@modules/products/infra/http/routes/product-routes'
 import { statisticsRoutes } from '@modules/statistics/infra/http/routes/statistics-routes'
+import { usersRoutes } from '@modules/users/infra/http/routes/user-routes'
 import { wishlistsRoutes } from '@modules/wishlists/infra/http/routes/wishlist-routes'
 import type { FastifyInstance } from 'fastify'
 
@@ -25,6 +26,10 @@ const routes = (app: FastifyInstance) => {
 
   app.register(statisticsRoutes, {
     prefix: '/statistic',
+  })
+
+  app.register(usersRoutes, {
+    prefix: '/user',
   })
 
   app.register(authenticateRoutes, {

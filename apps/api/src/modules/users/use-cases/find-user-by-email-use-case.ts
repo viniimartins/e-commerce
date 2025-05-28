@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { FIND_USER_BY_EMAIL_REPOSITORY_TOKEN } from '@modules/user/constants'
+import { FIND_USER_BY_EMAIL_REPOSITORY_TOKEN } from '@modules/users/constants'
 import type {
   IFindUserByEmail,
   IFindUserByEmailUseCase,
-} from '@modules/user/domain/use-cases'
-import type { IFindUserByEmailRepository } from '@modules/user/repositories'
+} from '@modules/users/domain/use-cases'
+import type { IFindUserByEmailRepository } from '@modules/users/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

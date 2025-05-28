@@ -16,8 +16,8 @@ import type {
 import {
   CREATE_USER_REPOSITORY_TOKEN,
   FIND_USER_BY_EMAIL_REPOSITORY_TOKEN,
-} from '@modules/user/constants'
-import type { ICreateUserRepository, IFindUserByEmailRepository } from '@modules/user/repositories'
+} from '@modules/users/constants'
+import type { ICreateUserRepository, IFindUserByEmailRepository } from '@modules/users/repositories'
 import { Role } from '@prisma/client'
 import { inject, injectable } from 'tsyringe'
 

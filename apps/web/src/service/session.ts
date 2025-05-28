@@ -9,7 +9,7 @@ export async function get(): Promise<IProfile | null> {
 
   const token = cookieStore.get('token')?.value
 
-  const profile = await apiServer<IProfile>(`/profile`, {
+  const profile = await apiServer<IProfile>(`/user/me`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },

@@ -1,6 +1,6 @@
 import '@modules/accounts/container/index'
 import '@modules/categories/container/index'
-import '@modules/user/container/index'
+import '@modules/users/container/index'
 import '@modules/files/container/index'
 import '@modules/products/container/index'
 import '@modules/wishlists/container/index'

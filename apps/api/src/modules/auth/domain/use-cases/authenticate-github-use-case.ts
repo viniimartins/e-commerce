@@ -1,4 +1,4 @@
-import type { IUserEntity } from '@modules/user/domain/entities/user-entity'
+import type { IUserEntity } from '@modules/users/domain/entities/user-entity'
 
 namespace IAuthenticateGithub {
   export type Request = {

@@ -1,4 +1,4 @@
-import { IUserEntity } from 'modules/user/domain/entities/user-entity'
+import { IUserEntity } from '@modules/users/domain/entities/user-entity'
 
 namespace IFindUserByEmail {
   export type Params = { email: string }

@@ -7,7 +7,7 @@ import type { IProfile } from '@/app/(app)/types'
 import { api } from '@/service/api'
 
 async function get() {
-  const { data } = await api.get<IProfile>('/profile')
+  const { data } = await api.get<IProfile>('/user/me')
 
   return data
 }

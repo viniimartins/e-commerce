@@ -1,7 +1,7 @@
-import type { IUserEntity } from '@modules/user/domain/entities/user-entity'
+import type { IUserEntity } from '@modules/users/domain/entities/user-entity'
 
 namespace IFindUserById {
-  export type Request = { id: string }
+  export type Request = { userId: string }
 
   export type Response = IUserEntity | null
 }

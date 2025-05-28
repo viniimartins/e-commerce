@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { FIND_USER_BY_ID_REPOSITORY_TOKEN } from '@modules/user/constants'
+import { FIND_USER_BY_ID_REPOSITORY_TOKEN } from '@modules/users/constants'
 import type {
   IFindUserById,
   IFindUserByIdUseCase,
-} from '@modules/user/domain/use-cases'
-import type { IFindUserByIdRepository } from '@modules/user/repositories'
+} from '@modules/users/domain/use-cases'
+import type { IFindUserByIdRepository } from '@modules/users/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
@@ -17,6 +17,7 @@ class FindUserByIdUseCase implements IFindUserByIdUseCase {
   async execute(
     params: IFindUserById.Request,
   ): Promise<IFindUserById.Response> {
+
     const foundUser = await this.findUserByIdRepository.findById(params)
 
     return foundUser

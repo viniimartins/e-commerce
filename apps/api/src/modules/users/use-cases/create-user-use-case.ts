@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { CREATE_USER_REPOSITORY_TOKEN } from '@modules/user/constants'
+import { CREATE_USER_REPOSITORY_TOKEN } from '@modules/users/constants'
 import type {
   ICreateUser,
   ICreateUserUseCase,
-} from '@modules/user/domain/use-cases'
-import type { ICreateUserRepository } from '@modules/user/repositories'
+} from '@modules/users/domain/use-cases'
+import type { ICreateUserRepository } from '@modules/users/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
