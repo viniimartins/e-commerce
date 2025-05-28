@@ -7,18 +7,10 @@ const nextConfig: NextConfig = {
         hostname: 'avatars.githubusercontent.com',
       },
       {
-        hostname: 'picsum.photos',
-      },
-      {
-        hostname: 'loremflickr.com',
-      },
-      {
-        hostname: 'via.placeholder.com',
-      },
-      {
         hostname: 'localhost',
         port: '3333',
         protocol: 'http',
+        pathname: '/images/**',
       },
     ],
   },

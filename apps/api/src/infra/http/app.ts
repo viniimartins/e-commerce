@@ -59,7 +59,8 @@ app.register(fastifyCors, {
 })
 
 app.register(fastifyStatic, {
-  root: path.join(__dirname, '..', '..', 'images'),
+  root: path.join(__dirname, '..', '..', '..', 'images'),
+
   prefix: '/images/',
 })
 

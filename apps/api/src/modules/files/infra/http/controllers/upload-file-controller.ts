@@ -23,7 +23,7 @@ class UploadFileController {
     const uploadFileUseCase = container.resolve(UploadFileUseCase)
     const upload = await uploadFileUseCase.execute({ file })
 
-    return reply.status(201).send(upload.id)
+    return reply.status(201).send({ id: upload.id })
   }
 }
 

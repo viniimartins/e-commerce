@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 import { prisma } from '@lib/prisma'
 import type {
-  IBestSellerProducts,
-  IBestSellerProductsRepository,
+  IBestSellersProducts,
+  IBestSellersProductsRepository,
   ICreateProduct,
   ICreateProductRepository,
   IDeleteProduct,
@@ -22,18 +22,20 @@ class PrismaProductRepository
   IFindProductByIdRepository,
   IUpdateProductRepository,
   ISearchProductsRepository,
-  IBestSellerProductsRepository {
+  IBestSellersProductsRepository {
   async create({
     ...data
   }: ICreateProduct.Params): Promise<ICreateProduct.Response> {
+    const { productImages, ...rest } = data
+
     const product = await prisma.product.create({
       data: {
-        ...data,
+        ...rest,
         productImage: {
-          create: data.productImages.map((image) => ({
-            imageId: image,
-          })),
-        },
+          create: productImages.map(image => ({
+            imageId: image
+          }))
+        }
       },
     })
 
@@ -152,7 +154,7 @@ class PrismaProductRepository
   async bestSellers({
     pageIndex,
     perPage,
-  }: IBestSellerProducts.Params): Promise<IBestSellerProducts.Response> {
+  }: IBestSellersProducts.Params): Promise<IBestSellersProducts.Response> {
     const groupedSales = await prisma.orderProduct.groupBy({
       by: ['productId'],
       _sum: { quantity: true },
