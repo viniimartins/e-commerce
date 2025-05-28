@@ -8,8 +8,7 @@ import {
   GITHUB_OAUTH_SERVICE_TOKEN,
 } from '@modules/account/constants'
 import { AccountProvider } from '@modules/account/domain/entities/account-entity'
-import type { ICreateAccountRepository } from '@modules/account/repositories/create-account-repository'
-import type { IFindAccountByProviderIdRepository } from '@modules/account/repositories/find-account-by-provider-id-repository'
+import type { ICreateAccountRepository, IFindAccountByProviderIdRepository } from '@modules/account/repositories'
 import type {
   IAuthenticateGithub,
   IAuthenticateGithubUseCase,
@@ -18,8 +17,7 @@ import {
   CREATE_USER_REPOSITORY_TOKEN,
   FIND_USER_BY_EMAIL_REPOSITORY_TOKEN,
 } from '@modules/user/constants'
-import type { ICreateUserRepository } from '@modules/user/repositories/create-user-repository'
-import type { IFindUserByEmailRepository } from '@modules/user/repositories/find-user-by-email-repository'
+import type { ICreateUserRepository, IFindUserByEmailRepository } from '@modules/user/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
@@ -73,7 +71,6 @@ class AuthenticateGithubUseCase implements IAuthenticateGithubUseCase {
     let account =
       await this.findAccountByProviderAccountIdRepository.findByProviderAccountId(
         {
-          provider: AccountProvider.GITHUB,
           userId: user.id,
         },
       )

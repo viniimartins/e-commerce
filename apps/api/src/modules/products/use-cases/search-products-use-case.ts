@@ -3,7 +3,7 @@ import type {
   ISearchProducts,
   ISearchProductsUseCase,
 } from '@modules/products/domain/use-cases/search-products-use-case'
-import type { ISearchProductsRepository } from '@modules/products/repositories/search-products-repository'
+import type { ISearchProductsRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

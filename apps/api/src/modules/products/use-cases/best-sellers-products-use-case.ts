@@ -3,7 +3,7 @@ import type {
   IBestSellersProducts,
   IBestSellersProductsUseCase,
 } from '@modules/products/domain/use-cases/best-sellers-products-use-case'
-import type { IBestSellersProductsRepository } from '@modules/products/repositories/best-sellers-products-repository'
+import type { IBestSellersProductsRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

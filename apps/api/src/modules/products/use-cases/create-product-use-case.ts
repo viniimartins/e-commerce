@@ -3,7 +3,7 @@ import type {
   ICreateProduct,
   ICreateProductUseCase,
 } from '@modules/products/domain/use-cases'
-import type { ICreateProductRepository } from '@modules/products/repositories/create-product-repository'
+import type { ICreateProductRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

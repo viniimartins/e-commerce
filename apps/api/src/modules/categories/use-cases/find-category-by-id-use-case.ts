@@ -4,7 +4,7 @@ import type {
   IFindCategoryById,
   IFindCategoryByIdUseCase,
 } from '@modules/categories/domain/use-cases/find-category-by-id-use-case'
-import type { IFindCategoryByIdRepository } from '@modules/categories/repositories/find-category-by-id-repository'
+import type { IFindCategoryByIdRepository } from '@modules/categories/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

@@ -3,7 +3,7 @@ import type {
   IAddToWishlist,
   IAddToWishlistUseCase,
 } from '@modules/wishlists/domain/use-cases'
-import type { IAddToWishlistRepository } from '@modules/wishlists/repositories/add-to-wishlist-repository'
+import type { IAddToWishlistRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

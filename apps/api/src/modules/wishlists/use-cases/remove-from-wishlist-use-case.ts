@@ -3,7 +3,7 @@ import type {
   IRemoveFromWishlist,
   IRemoveFromWishlistUseCase,
 } from '@modules/wishlists/domain/use-cases/remove-from-wishlist-use-case'
-import type { IRemoveFromWishlistRepository } from '@modules/wishlists/repositories/remove-from-wishlist-repository'
+import type { IRemoveFromWishlistRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

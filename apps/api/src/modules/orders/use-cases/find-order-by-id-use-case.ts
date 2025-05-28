@@ -4,7 +4,7 @@ import type {
   IFindOrderById,
   IFindOrderByIdUseCase,
 } from '@modules/orders/domain/use-cases/find-order-by-id-use-case'
-import type { IFindOrderByIdRepository } from '@modules/orders/repositories/find-order-by-id-repository'
+import type { IFindOrderByIdRepository } from '@modules/orders/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

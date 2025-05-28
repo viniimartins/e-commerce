@@ -3,7 +3,7 @@ import type {
   ISearchWishlists,
   ISearchWishlistsUseCase,
 } from '@modules/wishlists/domain/use-cases/search-wishlists-use-case'
-import type { ISearchWishlistsRepository } from '@modules/wishlists/repositories/search-wishlists-repository'
+import type { ISearchWishlistsRepository } from '@modules/wishlists/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

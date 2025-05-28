@@ -4,7 +4,7 @@ import type {
   IFindProductById,
   IFindProductByIdUseCase,
 } from '@modules/products/domain/use-cases/find-product-by-id-use-case'
-import type { IFindProductByIdRepository } from '@modules/products/repositories/find-product-by-id-repository'
+import type { IFindProductByIdRepository } from '@modules/products/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

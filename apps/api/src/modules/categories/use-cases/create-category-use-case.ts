@@ -3,7 +3,7 @@ import type {
   ICreateCategory,
   ICreateCategoryUseCase,
 } from '@modules/categories/domain/use-cases'
-import type { ICreateCategoryRepository } from '@modules/categories/repositories/create-category-repository'
+import type { ICreateCategoryRepository } from '@modules/categories/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
