@@ -37,7 +37,7 @@ interface BillingResponse {
 }
 
 async function create({ billing }: Params) {
-  const { data } = await api.post<BillingResponse>('/checkout/billing', billing)
+  const { data } = await api.post<BillingResponse>('/billing', billing)
 
   return data
 }

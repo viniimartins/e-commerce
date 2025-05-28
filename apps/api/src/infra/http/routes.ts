@@ -1,9 +1,10 @@
 import { authenticateRoutes } from '@modules/auth/infra/http/routes/authenticate-routes'
+import { billingRoutes } from '@modules/billings/infra/http/routes/billing-routes'
 import { categoriesRoutes } from '@modules/categories/infra/http/routes/category-routes'
 import { ordersRoutes } from '@modules/orders/infra/http/routes/category-routes'
 import { productsRoutes } from '@modules/products/infra/http/routes/product-routes'
 import { statisticsRoutes } from '@modules/statistics/infra/http/routes/statistics-routes'
-import { usersRoutes } from '@modules/users/infra/http/routes/user-routes'
+import { userRoutes } from '@modules/users/infra/http/routes/user-routes'
 import { wishlistsRoutes } from '@modules/wishlists/infra/http/routes/wishlist-routes'
 import type { FastifyInstance } from 'fastify'
 
@@ -28,8 +29,12 @@ const routes = (app: FastifyInstance) => {
     prefix: '/statistic',
   })
 
-  app.register(usersRoutes, {
+  app.register(userRoutes, {
     prefix: '/user',
+  })
+
+  app.register(billingRoutes, {
+    prefix: '/billing',
   })
 
   app.register(authenticateRoutes, {

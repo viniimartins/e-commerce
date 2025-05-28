@@ -39,4 +39,4 @@ const routes = (app: FastifyInstance) => {
   )
 }
 
-export { routes as usersRoutes }
+export { routes as userRoutes }
