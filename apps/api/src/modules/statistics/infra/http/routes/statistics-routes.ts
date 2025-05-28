@@ -1,9 +1,8 @@
 import { permission } from '@middlewares/permission'
 import { requiredAuthentication } from '@middlewares/required-authentication'
+import { StatisticsController } from '@modules/statistics/infra/http/controllers/statistics-controller'
 import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
-
-import { StatisticsController } from '../controllers/statistics-controller'
 
 const routes = (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().get(

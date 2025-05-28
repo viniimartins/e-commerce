@@ -1,6 +1,5 @@
+import type { ICategoryEntity } from '@modules/categories/domain/entities/category-entity'
 import type { Paginated } from '@modules/common/helpers/paginated'
-
-import type { ICategoryEntity } from '../domain/entities/category-entity'
 
 namespace ISearchCategories {
   export type Params = Paginated.Params
