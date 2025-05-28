@@ -18,7 +18,7 @@ class CreateBillingController {
             name: z.string(),
             description: z.string(),
             quantity: z.number(),
-            price: z.string().transform((value) => Math.floor(Number(value))),
+            price: z.preprocess((val) => Math.floor(Number(val)), z.number()),
           }),
         ),
         address: z.object({
