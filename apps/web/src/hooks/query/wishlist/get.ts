@@ -9,7 +9,7 @@ import { WishlistMock } from '@/shared/mock/wishlist'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
 }
 

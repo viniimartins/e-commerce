@@ -6,7 +6,7 @@ import type { IStatistics } from '@/app/(app)/types'
 import { api } from '@/service/api'
 
 async function get() {
-  const { data } = await api.get<IStatistics>('/statistics')
+  const { data } = await api.get<IStatistics>('/statistic')
 
   return data
 }

@@ -7,7 +7,7 @@ import { api } from '@/service/api'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
   userId?: string | null
   viewOrders?: boolean
@@ -29,7 +29,7 @@ export function useGetInfiniteOrdersById(params: Params) {
 
   const query = useInfiniteQuery({
     queryKey,
-    queryFn: ({ pageParam }) => get({ ...params, page: pageParam }),
+    queryFn: ({ pageParam }) => get({ ...params, pageIndex: pageParam }),
     getNextPageParam: (lastResult) => {
       const { pageIndex, totalPages } = lastResult.meta
 

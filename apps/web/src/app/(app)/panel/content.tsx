@@ -66,13 +66,13 @@ export function Content() {
 
   const { data: bestSellerProducts, isFetching: isFetchingBestSellerProducts } =
     useGetBestSellerProducts({
-      page: bestSellerProductsPageIndex,
+      pageIndex: bestSellerProductsPageIndex,
       perPage: bestSellerProductsPerPage,
     })
 
   const { data: orders, isFetching: isFetchingOrders } = useGetAllOrders({
     params: {
-      page: ordersPageIndex,
+      pageIndex: ordersPageIndex,
       perPage: ordersPerPage,
     },
   })

@@ -1,5 +1,5 @@
-import '@modules/account/container/index'
-import '@modules/category/container/index'
+import '@modules/accounts/container/index'
+import '@modules/categories/container/index'
 import '@modules/user/container/index'
 import '@modules/files/container/index'
 import '@modules/products/container/index'

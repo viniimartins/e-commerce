@@ -8,7 +8,7 @@ import { ProductsMock } from '@/shared/mock/product'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
   categoryId?: string
   minPrice?: number

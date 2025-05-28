@@ -8,7 +8,7 @@ import { BestSellerMock } from '@/shared/mock/best-seller'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
 }
 

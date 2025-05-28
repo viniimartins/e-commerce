@@ -13,7 +13,7 @@ interface Params {
 }
 
 async function post({ order }: Params) {
-  const { data } = await api.post(`/order/${order.id}/next-status`)
+  const { data } = await api.put(`/order/${order.id}/next-status`)
 
   return data
 }

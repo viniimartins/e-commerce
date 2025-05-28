@@ -16,7 +16,7 @@ const routes = (app: FastifyInstance) => {
   })
 
   app.register(ordersRoutes, {
-    prefix: '/orders',
+    prefix: '/order',
   })
 
   app.register(wishlistsRoutes, {
@@ -24,7 +24,7 @@ const routes = (app: FastifyInstance) => {
   })
 
   app.register(statisticsRoutes, {
-    prefix: '/wishlist',
+    prefix: '/statistic',
   })
 
   app.register(authenticateRoutes, {

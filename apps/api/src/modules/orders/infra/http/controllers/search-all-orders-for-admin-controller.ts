@@ -1,4 +1,4 @@
-import { SearchCategoriesUseCase } from '@modules/categories/use-cases/search-categories-use-case'
+import { SearchAllOrdersForAdminUseCase } from '@modules/orders/use-cases/search-all-orders-for-admin-use-case'
 import { OrderBilling, OrderStatus } from '@prisma/client'
 import { Decimal } from '@prisma/client/runtime/library'
 import type { FastifyReply, FastifyRequest } from 'fastify'
@@ -84,8 +84,10 @@ class SearchAllOrdersForAdminController {
         ),
     }
 
-    const searchCategoriesUseCase = container.resolve(SearchCategoriesUseCase)
-    const found = await searchCategoriesUseCase.execute({
+    const searchAllOrdersForAdminUseCase = container.resolve(
+      SearchAllOrdersForAdminUseCase,
+    )
+    const found = await searchAllOrdersForAdminUseCase.execute({
       pageIndex,
       perPage,
     })

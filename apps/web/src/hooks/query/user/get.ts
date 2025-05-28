@@ -8,7 +8,7 @@ import { UsersMock } from '@/shared/mock/user'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
 }
 

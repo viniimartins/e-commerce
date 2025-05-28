@@ -36,7 +36,7 @@ export function Content() {
   const [apiBestSelling, setApiBestSelling] = useState<CarouselApi>()
 
   const { data: products, isFetching: isFetchingProducts } = useGetProducts({
-    page: 1,
+    pageIndex: 1,
     perPage: 50,
   })
 

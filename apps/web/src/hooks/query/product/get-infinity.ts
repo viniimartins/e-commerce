@@ -8,7 +8,7 @@ import { ProductsMock } from '@/shared/mock/product'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
   categoryId?: string | null
   viewProducts?: boolean
@@ -29,7 +29,7 @@ export function useGetInfiniteProducts(params: Params) {
 
   const query = useInfiniteQuery({
     queryKey,
-    queryFn: ({ pageParam }) => get({ ...params, page: pageParam }),
+    queryFn: ({ pageParam }) => get({ ...params, pageIndex: pageParam }),
     getNextPageParam: (lastResult) => {
       const { pageIndex, totalPages } = lastResult.meta
 

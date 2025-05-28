@@ -1,11 +1,11 @@
 /* eslint-disable prettier/prettier */
 import { NotFoundError } from '@common/errors'
-import { FIND_ACCOUNT_BY_PROVIDER_ID_REPOSITORY_TOKEN } from '@modules/account/constants'
+import { FIND_ACCOUNT_BY_PROVIDER_ID_REPOSITORY_TOKEN } from '@modules/accounts/constants'
 import type {
   IFindAccountByProviderId,
   IFindAccountByProviderIdUseCase,
-} from '@modules/account/domain/use-cases'
-import type { IFindAccountByProviderIdRepository } from '@modules/account/repositories'
+} from '@modules/accounts/domain/use-cases'
+import type { IFindAccountByProviderIdRepository } from '@modules/accounts/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

@@ -11,7 +11,7 @@ interface SignInWithGithubResponse {
 export async function signInWithGithub({
   code,
 }: SignInWithGithubRequest): Promise<SignInWithGithubResponse> {
-  const { data } = await api.post<SignInWithGithubResponse>('sessions/github', {
+  const { data } = await api.post<SignInWithGithubResponse>('auth/github', {
     code,
   })
 

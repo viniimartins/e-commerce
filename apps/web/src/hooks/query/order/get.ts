@@ -8,7 +8,7 @@ import { OrderMock } from '@/shared/mock/order'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
 }
 

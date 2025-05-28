@@ -73,6 +73,7 @@ const routes = (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().get(
     SearchOrdersForUserController.route,
     {
+      onRequest: [requiredAuthentication],
       schema: {
         tags: ['Orders'],
         summary: 'Search orders for user',

@@ -84,7 +84,7 @@ const routes = (app: FastifyInstance) => {
     UpdateProductController.handle,
   )
 
-  app.withTypeProvider<ZodTypeProvider>().put(
+  app.withTypeProvider<ZodTypeProvider>().get(
     BestSellersProductsController.route,
     {
       onRequest: [requiredAuthentication, permission('ADMIN')],
@@ -97,7 +97,7 @@ const routes = (app: FastifyInstance) => {
         response: BestSellersProductsController.validator.response,
       },
     },
-    UpdateProductController.handle,
+    BestSellersProductsController.handle,
   )
 }
 

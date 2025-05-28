@@ -6,9 +6,9 @@ import {
   CREATE_ACCOUNT_REPOSITORY_TOKEN,
   FIND_ACCOUNT_BY_PROVIDER_ID_REPOSITORY_TOKEN,
   GITHUB_OAUTH_SERVICE_TOKEN,
-} from '@modules/account/constants'
-import { AccountProvider } from '@modules/account/domain/entities/account-entity'
-import type { ICreateAccountRepository, IFindAccountByProviderIdRepository } from '@modules/account/repositories'
+} from '@modules/accounts/constants'
+import { AccountProvider } from '@modules/accounts/domain/entities/account-entity'
+import type { ICreateAccountRepository, IFindAccountByProviderIdRepository } from '@modules/accounts/repositories'
 import type {
   IAuthenticateGithub,
   IAuthenticateGithubUseCase,
@@ -18,6 +18,7 @@ import {
   FIND_USER_BY_EMAIL_REPOSITORY_TOKEN,
 } from '@modules/user/constants'
 import type { ICreateUserRepository, IFindUserByEmailRepository } from '@modules/user/repositories'
+import { Role } from '@prisma/client'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()
@@ -65,6 +66,7 @@ class AuthenticateGithubUseCase implements IAuthenticateGithubUseCase {
         name,
         email,
         avatarUrl,
+        role: Role.USER
       })
     }
 

@@ -1,10 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { CREATE_ACCOUNT_REPOSITORY_TOKEN } from '@modules/account/constants'
+import { CREATE_ACCOUNT_REPOSITORY_TOKEN } from '@modules/accounts/constants'
 import type {
   ICreateAccount,
   ICreateAccountUseCase,
-} from '@modules/account/domain/use-cases'
-import type { ICreateAccountRepository } from '@modules/account/repositories'
+} from '@modules/accounts/domain/use-cases'
+import type { ICreateAccountRepository } from '@modules/accounts/repositories'
 import { inject, injectable } from 'tsyringe'
 
 @injectable()

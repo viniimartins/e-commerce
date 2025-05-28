@@ -23,6 +23,7 @@ export function getBestSellerProductsColumns({
       accessorKey: 'product.name',
       header: () => <TableHead>Nome</TableHead>,
       cell: ({ row }) => {
+
         return (
           <TableCell isLoading={isLoading} className='flex items-center gap-2'>
             <Avatar className="relative h-10 w-10 rounded-full">

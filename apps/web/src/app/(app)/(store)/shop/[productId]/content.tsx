@@ -39,7 +39,7 @@ export function Content({ product }: Props) {
   const { data: products, isFetching: isFetchingProducts } = useGetProducts({
     categoryId: product?.category.id,
     perPage: 4,
-    page: 1,
+    pageIndex: 1,
   })
 
   const { data: wishlist } = useGetWishlist({ params: {} })

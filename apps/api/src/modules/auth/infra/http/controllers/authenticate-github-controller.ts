@@ -31,7 +31,7 @@ class AuthenticateGithubController {
       AuthenticateGithubUseCase,
     )
 
-    const { id, email, name, avatarUrl } =
+    const { id, email, name, avatarUrl, role } =
       await authenticateGithubUseCase.execute({
         code,
       })
@@ -42,6 +42,7 @@ class AuthenticateGithubController {
         name,
         email,
         avatarUrl,
+        role,
       },
       {
         sign: {

@@ -1,4 +1,5 @@
 import { permission } from '@middlewares/permission'
+import { requiredAuthentication } from '@middlewares/required-authentication'
 import { UpdateCategoryController } from '@modules/categories/infra/http//controllers/update-category-controller'
 import { CreateCategoryController } from '@modules/categories/infra/http/controllers/create-category-controller'
 import { DeleteCategoryController } from '@modules/categories/infra/http/controllers/delete-category-controller'
@@ -8,12 +9,11 @@ import type { FastifyInstance } from 'fastify'
 import type { ZodTypeProvider } from 'fastify-type-provider-zod'
 
 const routes = (app: FastifyInstance) => {
-  app.addHook('onRequest', permission('ADMIN'))
-
   app.withTypeProvider<ZodTypeProvider>().post(
     CreateCategoryController.route,
     {
       schema: {
+        onRequest: [requiredAuthentication, permission('ADMIN')],
         tags: ['Categories'],
         summary: 'Create a new category',
         security: [{ bearerAuth: [] }],
@@ -42,6 +42,7 @@ const routes = (app: FastifyInstance) => {
     DeleteCategoryController.route,
     {
       schema: {
+        onRequest: [requiredAuthentication, permission('ADMIN')],
         tags: ['Categories'],
         summary: 'Delete a category by id',
         security: [{ bearerAuth: [] }],
@@ -70,6 +71,7 @@ const routes = (app: FastifyInstance) => {
     UpdateCategoryController.route,
     {
       schema: {
+        onRequest: [requiredAuthentication, permission('ADMIN')],
         tags: ['Categories'],
         summary: 'Update a category',
         security: [{ bearerAuth: [] }],

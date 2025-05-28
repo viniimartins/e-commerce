@@ -8,7 +8,7 @@ import { CategoryMock } from '@/shared/mock/category'
 import { PaginatedResponse } from '@/types/paginated-response'
 
 interface Params {
-  page?: number
+  pageIndex?: number
   perPage?: number
 }
 

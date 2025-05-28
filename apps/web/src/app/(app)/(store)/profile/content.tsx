@@ -10,7 +10,7 @@ import { Order } from './order'
 export function Content() {
   const { data: orders, isFetching: isFetchingOrders } = useGetOrders({
     params: {
-      page: 1,
+      pageIndex: 1,
       perPage: 10,
     },
   })

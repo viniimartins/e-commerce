@@ -1,4 +1,4 @@
-import type { IAccountEntity } from '@modules/account/domain/entities/account-entity'
+import type { IAccountEntity } from '@modules/accounts/domain/entities/account-entity'
 
 namespace IFindAccountByProviderId {
   export type Params = {

@@ -46,11 +46,11 @@ export function Content() {
 
   const {
     data: orders,
-    isLoading: isLoadingOrders,
+    isFetching: isFetchingOrders,
     queryKey,
   } = useGetAllOrders({
     params: {
-      page: pageIndex,
+      pageIndex,
       perPage,
     },
   })
@@ -84,7 +84,7 @@ export function Content() {
         <CardContent className="h-full">
           <DataTable
             columns={getColumns({
-              isLoading: isLoadingOrders,
+              isLoading: isFetchingOrders,
               viewOrdersModalActions,
               handleNextStatusOrder,
             })}
@@ -115,46 +115,48 @@ export function Content() {
                 : 'h-auto',
             )}
           >
-            {viewOrdersModalTarget?.products?.map(({ product }, index) => {
-              const lastIndex =
-                viewOrdersModalTarget?.products.length === index + 1
+            {viewOrdersModalTarget?.products?.map(
+              ({ product, quantity }, index) => {
+                const lastIndex =
+                  viewOrdersModalTarget?.products.length === index + 1
 
-              const { id, name, price, productImage, quantity } = product
+                const { id, name, price, productImage } = product
 
-              return (
-                <Fragment key={id}>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
-                        <Image
-                          src={productImage[0].image.url}
-                          alt="product"
-                          fill
-                          quality={100}
-                          priority
-                          className="object-cover p-1"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
+                return (
+                  <Fragment key={id}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
+                          <Image
+                            src={productImage[0].image.url}
+                            alt="product"
+                            fill
+                            quality={100}
+                            priority
+                            className="object-cover p-1"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
+                        </div>
+
+                        <div className="flex h-full flex-col justify-between">
+                          <span className="text-base font-medium">{name}</span>
+
+                          <span className="text-muted-foreground text-sm">
+                            {quantity} un.
+                          </span>
+                        </div>
                       </div>
 
-                      <div className="flex h-full flex-col justify-between">
-                        <span className="text-base font-medium">{name}</span>
-
-                        <span className="text-muted-foreground text-sm">
-                          {quantity} un.
-                        </span>
-                      </div>
+                      <span className="text-sm font-medium">
+                        {formatPrice(price)}
+                      </span>
                     </div>
 
-                    <span className="text-sm font-medium">
-                      {formatPrice(price)}
-                    </span>
-                  </div>
-
-                  {!lastIndex && <Separator className="my-2" />}
-                </Fragment>
-              )
-            })}
+                    {!lastIndex && <Separator className="my-2" />}
+                  </Fragment>
+                )
+              },
+            )}
           </ScrollArea>
         </DialogContent>
       </Dialog>
