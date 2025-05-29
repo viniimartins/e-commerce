@@ -19,7 +19,11 @@ import path from 'path'
 
 import { routes } from './routes'
 
-export const app = fastify()
+export const app = fastify({
+  logger: {
+    level: 'error',
+  },
+})
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)

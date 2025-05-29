@@ -19,8 +19,12 @@ export const env = createEnv({
   shared: {
     NEXT_PUBLIC_API_URL: z.string().url(),
     NEXT_PUBLIC_APP_URL: z.string().url(),
+    NODE_ENV: z
+      .enum(['development', 'production', 'test'])
+      .default('development'),
   },
   runtimeEnv: {
+    NODE_ENV: process.env.NODE_ENV,
     PORT: process.env.SERVER_PORT,
     DATABASE_URL: process.env.DATABASE_URL,
     GITHUB_OAUTH_CLIENT_ID: process.env.GITHUB_OAUTH_CLIENT_ID,
