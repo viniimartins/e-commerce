@@ -79,7 +79,7 @@ export function Content() {
           <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
             <div className="z-20 flex flex-col gap-4">
               <div className="flex flex-col items-start justify-start gap-2">
-                <span className="text-2xl font-medium">Living Room</span>
+                <span className="text-2xl font-medium">Sala de estar</span>
                 <Link href="/shop">
                   <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
                     Comprar agora
@@ -104,7 +104,7 @@ export function Content() {
             <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8">
               <div className="z-20 flex flex-col justify-end gap-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-2xl font-medium">Kitchen</span>
+                  <span className="text-2xl font-medium">Cozinha</span>
                   <Link href="/shop">
                     <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
                       Comprar agora
@@ -128,7 +128,7 @@ export function Content() {
             <div className="dark:bg-muted-foreground/10 flex h-[17rem] w-full justify-between border bg-neutral-100 p-8">
               <div className="z-20 flex flex-col justify-end gap-4">
                 <div className="flex flex-col gap-2">
-                  <span className="text-2xl font-medium">Bedroom</span>
+                  <span className="text-2xl font-medium">Quarto</span>
                   <Link href="/shop">
                     <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
                       Comprar agora
