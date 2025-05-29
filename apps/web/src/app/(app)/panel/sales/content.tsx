@@ -126,7 +126,7 @@ export function Content() {
                   <Fragment key={id}>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-4">
-                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[3.5rem] w-[3.5rem] items-center justify-center border bg-neutral-100 p-0">
+                        <div className="dark:bg-muted-foreground/10 relative mb-1 flex h-[4rem] w-[4rem] items-center justify-center border bg-neutral-100 p-0">
                           <Image
                             src={productImage[0].image.url}
                             alt="product"
@@ -139,7 +139,9 @@ export function Content() {
                         </div>
 
                         <div className="flex h-full flex-col justify-between">
-                          <span className="text-base font-medium">{name}</span>
+                          <span className="t max-w-[21rem] text-base font-medium">
+                            {name}
+                          </span>
 
                           <span className="text-muted-foreground text-sm">
                             {quantity} un.

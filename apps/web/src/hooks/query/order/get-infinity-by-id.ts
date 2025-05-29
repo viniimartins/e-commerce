@@ -14,8 +14,10 @@ interface Params {
 }
 
 async function get(params: Params) {
+  const { userId } = params
+
   const { data } = await api.get<PaginatedResponse<IOrder>>(
-    `/user/${params.userId}/order`,
+    `/order/user/${userId}/orders`,
     {
       params,
     },

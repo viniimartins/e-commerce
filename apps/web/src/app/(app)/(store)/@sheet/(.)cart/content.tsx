@@ -29,7 +29,7 @@ export function Content() {
 
           return (
             <div key={id} className="flex gap-4 border-b pt-4 pb-6">
-              <div className="dark:bg-muted-foreground/10 relative flex h-30 w-30 items-center justify-center border bg-neutral-100">
+              <div className="dark:bg-muted-foreground/10 relative flex h-34 w-34 items-center justify-center border bg-neutral-100">
                 <Image
                   src={productImage[0].image.url}
                   alt={name}
@@ -40,13 +40,13 @@ export function Content() {
                 />
               </div>
 
-              <div className="flex w-full flex-col justify-between">
+              <div className="flex w-full flex-col justify-between gap-2">
                 <div className="flex items-center justify-between">
-                  <h4 className="text-xl font-semibold">{name}</h4>
-                  <span className="text-lg font-medium">
-                    {formatPrice(price)}
-                  </span>
+                  <h4 className="line-clamp-2 text-xl font-semibold">{name}</h4>
                 </div>
+                <span className="text-lg font-medium">
+                  {formatPrice(price)}
+                </span>
                 <div className="flex items-center justify-between">
                   <Counter
                     value={cartQuantity}
