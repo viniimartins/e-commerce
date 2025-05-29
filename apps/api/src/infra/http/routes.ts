@@ -6,6 +6,7 @@ import { ordersRoutes } from '@modules/orders/infra/http/routes/category-routes'
 import { productsRoutes } from '@modules/products/infra/http/routes/product-routes'
 import { statisticsRoutes } from '@modules/statistics/infra/http/routes/statistics-routes'
 import { userRoutes } from '@modules/users/infra/http/routes/user-routes'
+import { webhookAbacatePayRoutes } from '@modules/webhooks/abacatepay/infra/http/routes/statistics-routes'
 import { wishlistsRoutes } from '@modules/wishlists/infra/http/routes/wishlist-routes'
 import type { FastifyInstance } from 'fastify'
 
@@ -40,6 +41,10 @@ const routes = (app: FastifyInstance) => {
 
   app.register(fileRoutes, {
     prefix: '/image',
+  })
+
+  app.register(webhookAbacatePayRoutes, {
+    prefix: '/acabatepay',
   })
 
   app.register(authenticateRoutes, {
