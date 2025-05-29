@@ -7,7 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import { TableCell, TableHead } from '@/components/ui/table'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 import type { IBestSellerProduct } from '../types'
 

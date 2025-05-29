@@ -23,7 +23,7 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useCart } from '@/providers/cart-provider'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 export function Content() {
   const { cart, subTotal, total, removeToCart, handleQuantityChange } =

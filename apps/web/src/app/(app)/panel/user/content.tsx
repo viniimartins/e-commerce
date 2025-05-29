@@ -34,8 +34,9 @@ import { useInfiniteScrollObserver } from '@/hooks/use-infinite-scroll-observer'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import type { TableParams } from '@/types/paginated-response'
-import { formatDateShort } from '@/utils/formatDate'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatDateLong, formatDateShort } from '@/utils/format-date'
+import { formatPrice } from '@/utils/format-price'
+import { randomDateFromToday } from '@/utils/random-date-from-today'
 
 import { type IUserWithOrders } from '../../types'
 import { DataTable } from '../_components/table'
@@ -199,7 +200,7 @@ export function Content() {
                                     </span>
 
                                     <span className="text-muted-foreground text-sm font-medium">
-                                      Entrega até 24/12/2024
+                                      {formatDateLong(randomDateFromToday())}
                                     </span>
                                     <span className="text-sm">
                                       {quantity} un. R$ {formatPrice(price)}

@@ -27,7 +27,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { useModal } from '@/hooks/use-modal'
 import { useCart } from '@/providers/cart-provider'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 interface Props {
   data: IProduct

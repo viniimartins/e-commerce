@@ -32,7 +32,7 @@ import { useGetProfile } from '@/hooks/query/profile/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 const formSchema = z.object({
   fullName: z

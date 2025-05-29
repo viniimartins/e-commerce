@@ -24,7 +24,7 @@ import { useGetAllOrders } from '@/hooks/query/order/get-all'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import type { TableParams } from '@/types/paginated-response'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 import { type IOrderWithUser } from '../../types'
 import { DataTable } from '../_components/table'

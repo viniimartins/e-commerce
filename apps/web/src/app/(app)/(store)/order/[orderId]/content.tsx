@@ -28,8 +28,8 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
-import { formatDateLong, formatDateShort } from '@/utils/formatDate'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatDateLong, formatDateShort } from '@/utils/format-date'
+import { formatPrice } from '@/utils/format-price'
 
 import { Stepper } from './stepper'
 

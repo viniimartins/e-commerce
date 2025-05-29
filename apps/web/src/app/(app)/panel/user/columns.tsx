@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { TableCell, TableHead } from '@/components/ui/table'
 import type { ModalActions } from '@/types/modal'
-import { formatDateLong } from '@/utils/formatDate'
+import { formatDateLong } from '@/utils/format-date'
 
 import type { IUserWithOrders } from '../../types'
 

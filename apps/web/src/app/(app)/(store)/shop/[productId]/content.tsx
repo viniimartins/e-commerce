@@ -24,7 +24,7 @@ import { useGetProducts } from '@/hooks/query/product/get'
 import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 import { ProductCard } from '../product-card'
 

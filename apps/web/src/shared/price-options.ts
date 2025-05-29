@@ -1,4 +1,4 @@
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 export interface PriceOption {
   id: string

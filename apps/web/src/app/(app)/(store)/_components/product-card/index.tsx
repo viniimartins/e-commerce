@@ -31,7 +31,7 @@ import { useGetWishlist } from '@/hooks/query/wishlist/get'
 import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 interface Props {
   data: IProduct

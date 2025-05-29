@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/carousel'
 import { Separator } from '@/components/ui/separator'
 import { useGetProducts } from '@/hooks/query/product/get'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 import { BannerCarousel } from './_components/banner-carousel'
 import { CarouselControls } from './_components/controls-carousel'

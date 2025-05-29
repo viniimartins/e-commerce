@@ -13,8 +13,9 @@ import {
 } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
-import { formatDateLong } from '@/utils/formatDate'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatDateLong } from '@/utils/format-date'
+import { formatPrice } from '@/utils/format-price'
+import { randomDateFromToday } from '@/utils/random-date-from-today'
 
 interface Props {
   data: IOrder
@@ -91,7 +92,7 @@ export function Order({ data }: Props) {
                 </span>
 
                 <span className="text-muted-foreground text-sm font-medium">
-                  Entrega até 24/12/2024
+                  {formatDateLong(randomDateFromToday())}
                 </span>
                 <span className="text-sm">
                   {quantity} un. R$ {formatPrice(price)}

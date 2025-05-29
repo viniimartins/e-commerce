@@ -38,7 +38,7 @@ import { useModal } from '@/hooks/use-modal'
 import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { options } from '@/shared/pages'
-import { formatPrice } from '@/utils/formatPrice'
+import { formatPrice } from '@/utils/format-price'
 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
 import {

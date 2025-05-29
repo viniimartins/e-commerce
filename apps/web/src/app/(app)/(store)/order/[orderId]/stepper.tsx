@@ -6,7 +6,7 @@ import {
   OrderStatusLabels,
 } from '@/app/(app)/types'
 import { cn } from '@/lib/utils'
-import { formatDateLong } from '@/utils/formatDate'
+import { formatDateLong } from '@/utils/format-date'
 
 interface Props {
   status: IOrderStatus[]
