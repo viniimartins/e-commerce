@@ -4,12 +4,18 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: 'https',
         hostname: 'avatars.githubusercontent.com',
       },
       {
+        protocol: 'http',
         hostname: 'localhost',
         port: '3333',
-        protocol: 'http',
+        pathname: '/images/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'e-commerce-univinte.onrender.com',
         pathname: '/images/**',
       },
     ],
