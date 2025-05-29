@@ -90,7 +90,7 @@ class CreateBillingController {
           customer,
           products,
           returnUrl: `${env.NEXT_PUBLIC_APP_URL}/profile`,
-          completionUrl: 'http://localhost:3000',
+          completionUrl: `${env.NEXT_PUBLIC_APP_URL}`,
         }),
       },
     )
