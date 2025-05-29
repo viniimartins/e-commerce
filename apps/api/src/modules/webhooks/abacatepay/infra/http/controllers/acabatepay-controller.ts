@@ -7,7 +7,7 @@ import { advanceOrderStatus } from 'utils/advanceOrderStatus'
 import { z } from 'zod'
 
 class WebhookAcabatepayController {
-  static route = ''
+  static route = '/abacatepay'
 
   static validator = {
     request: {
