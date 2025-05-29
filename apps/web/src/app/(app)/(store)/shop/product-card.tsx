@@ -446,7 +446,7 @@ export function ProductCard(props: Props) {
             <DialogHeader className="flex flex-1 flex-col gap-3">
               <DialogTitle className="text-2xl font-bold">{name}</DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <ScrollArea className="h-96">
+              <ScrollArea className="h-90">
                 <DialogDescription className="text-muted-foreground text-base">
                   {description}
                 </DialogDescription>

@@ -76,18 +76,25 @@ class PrismaProductRepository
   }
 
   async update({
+    productImages,
     productId,
-    ...data
+    categoryId,
+    ...rest
   }: IUpdateProduct.Params): Promise<IUpdateProduct.Response> {
     const product = await prisma.product.update({
       where: { id: productId },
       data: {
-        ...data,
+        ...rest,
         productImage: {
-          create: data.productImages.map((image) => ({
-            imageId: image,
-          })),
+          create: productImages.map(image => ({
+            imageId: image
+          }))
         },
+        category: {
+          connect: {
+            id: categoryId
+          }
+        }
       },
     })
 

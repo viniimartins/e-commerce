@@ -1,7 +1,9 @@
 import { LoaderCircle } from 'lucide-react'
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import { Suspense } from 'react'
 
+import shopage from '@/assets/shop/shopage.jpeg'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -22,10 +24,12 @@ export default function CategoryPage() {
     <>
       <section className="bg-muted-foreground/10 relative h-96">
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-          <h1 className="text-4xl font-medium">Shop Page</h1>
-          <p className="text-muted-foreground text-base">
-            Let’s design the place you always imagined.
-          </p>
+          <Image
+            src={shopage}
+            alt="Banner shop"
+            fill
+            className="object-cover"
+          />
         </div>
       </section>
 

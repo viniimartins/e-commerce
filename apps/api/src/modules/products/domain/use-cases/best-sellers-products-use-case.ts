@@ -5,7 +5,7 @@ namespace IBestSellersProducts {
   export type Request = Paginated.Params
 
   export type ProductWithTotalSold = {
-    product: IProductEntity
+    product: IProductEntity | undefined
     totalSold: number
   }
 
