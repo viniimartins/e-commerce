@@ -54,7 +54,7 @@ export function Content() {
     isFetching: isFetchingProducts,
     queryKey,
   } = useGetProducts({
-    page: pageIndex,
+    pageIndex,
     perPage,
   })
   const { mutateAsync: deleteProduct } = useDeleteProduct({ queryKey })

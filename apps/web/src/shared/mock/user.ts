@@ -2,6 +2,7 @@ import { type IUserWithOrders, Role } from '@/app/(app)/types'
 import type { PaginatedResponse } from '@/types/paginated-response'
 
 export const mock: IUserWithOrders = {
+  sub: '1',
   id: '1',
   name: 'Produto',
   email: 'produto@produto.com',
@@ -16,6 +17,7 @@ export const mock: IUserWithOrders = {
 const content = Array.from({ length: 10 }, (_, index) => ({
   ...mock,
   id: `${index + 1}`,
+  sub: `${index + 1}`,
 }))
 
 export const UsersMock: PaginatedResponse<IUserWithOrders> = {

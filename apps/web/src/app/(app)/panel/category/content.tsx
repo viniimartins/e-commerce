@@ -114,7 +114,7 @@ export function Content() {
     data: categories,
     isFetching: isFetchingCategories,
     queryKey,
-  } = useGetCategories({ page: pageIndex, perPage })
+  } = useGetCategories({ pageIndex, perPage })
 
   const {
     data: products,

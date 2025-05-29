@@ -17,6 +17,7 @@ export const mock: IOrderWithUser = {
   products: [],
   createdAt: new Date(),
   user: {
+    sub: '1',
     id: '1',
     name: 'John Doe',
     email: 'john.doe@example.com',
@@ -29,6 +30,7 @@ export const mock: IOrderWithUser = {
 const content = Array.from({ length: 10 }, (_, index) => ({
   ...mock,
   id: `${index + 1}`,
+  sub: `${index + 1}`,
 }))
 
 export const OrderWithUserMock: PaginatedResponse<IOrderWithUser> = {

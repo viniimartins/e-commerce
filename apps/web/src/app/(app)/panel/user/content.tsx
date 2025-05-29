@@ -58,7 +58,7 @@ export function Content() {
   } = useModal<IUserWithOrders>()
 
   const { data: users, isFetching: isFetchingUsers } = useGetUsers({
-    page: pageIndex,
+    pageIndex,
     perPage,
   })
 

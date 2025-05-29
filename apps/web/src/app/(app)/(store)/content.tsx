@@ -14,8 +14,8 @@ import { useState } from 'react'
 
 import bedroom from '@/assets/homepage/bedroom.png'
 import ecommerce from '@/assets/homepage/ecommerce.jpg'
-import kitchen from '@/assets/homepage/kitchen.png'
 import livingRoom from '@/assets/homepage/living-room.png'
+import kitchen from '@/assets/homepage/toaster.png'
 import { ProductCardSkeleton } from '@/components/skeletons/product-card'
 import { Button } from '@/components/ui/button'
 import {
