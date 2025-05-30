@@ -172,3 +172,11 @@
     }
   }
 }
+
+@custom-variant desktop (@media (max-width: 1460px));
+@custom-variant medium-desktop (@media (max-width: 1340px));
+@custom-variant low-desktop (@media (max-width: 1260px));
+@custom-variant tablet (@media (max-width: 1024px));
+@custom-variant mobile (@media (max-width: 768px));
+@custom-variant low-mobile (@media (max-width: 425px));
+@custom-variant min-tablet (@media (min-width: 992px));

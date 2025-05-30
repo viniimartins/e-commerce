@@ -150,17 +150,16 @@ export function ProductCard(props: Props) {
       </Link>
 
       <Dialog open={isOpen} onOpenChange={actions.close}>
-        <DialogContent className="grid max-h-[70vh]! max-w-[50vw]! grid-cols-5 gap-6">
-          <div className="dark:bg-muted-foreground/10 relative col-span-3 h-full border bg-neutral-100">
+        <DialogContent className="low-desktop:grid-cols-1 low-desktop:max-w-[90vw] low-desktop:max-h-[80vh] low-desktop:gap-4 grid max-h-[70vh] !max-w-[50vw] grid-cols-5 gap-6">
+          <div className="dark:bg-muted-foreground/10 low-desktop:col-span-full low-desktop:h-[20rem] mobile:h-[15rem] relative col-span-3 h-full border bg-neutral-100">
             <Carousel>
               <CarouselContent>
-                {productImage?.map(({ image }) => {
+                {productImage?.map(({ image }, index) => {
                   const { url } = image
-
                   return (
                     <CarouselItem
-                      key={id}
-                      className="relative h-[35rem] w-full"
+                      key={index}
+                      className="low-desktop:h-[20rem] mobile:h-[15rem] relative h-[35rem] w-full"
                     >
                       <Image
                         src={url}
@@ -179,16 +178,19 @@ export function ProductCard(props: Props) {
             </Carousel>
           </div>
 
-          <div className="col-span-2 flex flex-col gap-6">
+          <div className="low-desktop:col-span-full col-span-2 flex flex-col gap-6">
             <DialogHeader className="flex flex-1 flex-col gap-3">
-              <DialogTitle className="text-2xl font-bold">{name}</DialogTitle>
+              <DialogTitle className="line-clamp-2 text-2xl font-bold">
+                {name}
+              </DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <ScrollArea className="h-96">
+              <ScrollArea className="low-desktop:h-48 mobile:h-40 h-96">
                 <DialogDescription className="text-muted-foreground text-base">
                   {description}
                 </DialogDescription>
               </ScrollArea>
             </DialogHeader>
+
             <Separator />
 
             <div className="flex justify-between gap-4">
@@ -201,10 +203,8 @@ export function ProductCard(props: Props) {
                 className="flex-1"
               >
                 <ShoppingCart />
-                {isProductInCart && 'Produto adicionado ao carrinho'}
-
+                {isProductInCart && 'Item no carrinho'}
                 {!isProductInCart && !isProductIsAvailable && 'Sem estoque'}
-
                 {!isProductInCart &&
                   isProductIsAvailable &&
                   'Adicionar ao carrinho'}
