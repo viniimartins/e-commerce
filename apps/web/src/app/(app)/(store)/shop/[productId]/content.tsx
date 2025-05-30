@@ -98,6 +98,7 @@ export function Content({ product }: Props) {
                         priority
                         className="object-cover p-2"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
                       />
                     </DialogTrigger>
                     <DialogContent className="max-h-[70vh]! w-[50vw]! max-w-[55vw]! p-0">
@@ -112,6 +113,7 @@ export function Content({ product }: Props) {
                           fill
                           quality={100}
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          unoptimized
                         />
                       </div>
                     </DialogContent>
@@ -132,6 +134,7 @@ export function Content({ product }: Props) {
                     priority
                     className="object-cover p-2"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    unoptimized
                   />
                 </DialogTrigger>
                 <DialogContent className="max-h-[70vh]! w-[50vw]! max-w-[55vw]! p-0">
@@ -146,6 +149,7 @@ export function Content({ product }: Props) {
                       fill
                       quality={100}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      unoptimized
                     />
                   </div>
                 </DialogContent>

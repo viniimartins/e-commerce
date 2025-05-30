@@ -74,6 +74,7 @@ export function ProductCard(props: Props) {
               priority
               className="object-cover p-2"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              unoptimized
             />
             ]
             <div className="absolute top-4 right-4 flex cursor-pointer flex-col gap-2">
@@ -168,6 +169,7 @@ export function ProductCard(props: Props) {
                         quality={100}
                         className="absolute object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
                       />
                     </CarouselItem>
                   )

@@ -480,6 +480,7 @@ export function Content(props: Props) {
                               className="p-2"
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                               onClick={() => actions.open()}
+                              unoptimized
                             />
 
                             <div className="absolute top-5 right-5">
@@ -520,6 +521,7 @@ export function Content(props: Props) {
                                 priority
                                 src={image.url}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                unoptimized
                               />
                             </div>
 
@@ -664,6 +666,7 @@ export function Content(props: Props) {
                         quality={100}
                         className="absolute object-cover"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        unoptimized
                       />
                       <div className="absolute right-4 bottom-10 flex flex-col gap-1">
                         <Button

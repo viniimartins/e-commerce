@@ -65,6 +65,7 @@ export function Content() {
                     fill
                     className="object-cover"
                     alt="Image cart small"
+                    unoptimized
                   />
                 </div>
                 <p className="text-sm">{product.name}</p>

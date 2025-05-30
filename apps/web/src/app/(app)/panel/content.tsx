@@ -222,6 +222,7 @@ export function Content() {
                           priority
                           className="object-cover p-1"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          unoptimized
                         />
                       </div>
 

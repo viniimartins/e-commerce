@@ -52,6 +52,7 @@ export function BannerCarousel() {
                 fill
                 className="object-cover"
                 priority={index === 0}
+                unoptimized
               />
 
               <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2">
