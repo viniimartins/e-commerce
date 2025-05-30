@@ -44,7 +44,7 @@ export function Content() {
     <>
       <BannerCarousel />
 
-      <section className="my-4 grid grid-cols-2 gap-4">
+      <section className="my-4 flex flex-col gap-4 sm:grid sm:grid-cols-2 sm:gap-4">
         <span className="text-primary font-poppins text-6xl font-medium">
           Achou<span className="text-muted-foreground">.</span> Levou
           <span className="text-muted-foreground">/</span>
@@ -75,7 +75,7 @@ export function Content() {
       </section>
 
       <section className="my-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="mobile:hidden grid grid-cols-2 gap-4">
           <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
             <div className="z-20 flex flex-col gap-4">
               <div className="flex flex-col items-start justify-start gap-2">
@@ -151,6 +151,82 @@ export function Content() {
             </div>
           </div>
         </div>
+
+        <div className="mobile:grid hidden grid-cols-1 gap-4">
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
+            <div className="z-20 flex flex-col gap-4">
+              <div className="flex flex-col items-start justify-start gap-2">
+                <span className="text-2xl font-medium">Sala de estar</span>
+                <Link href="/shop">
+                  <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
+                    Comprar agora
+                    <ArrowRight className="size-4 transition-all group-hover:translate-x-1" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center justify-center">
+              <Image
+                src={livingRoom}
+                alt="Living Room"
+                width={350}
+                height={300}
+                quality={100}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </div>
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
+            <div className="z-20 flex flex-col gap-4">
+              <div className="flex flex-col items-start justify-start gap-2">
+                <span className="text-2xl font-medium">Sala de estar</span>
+                <Link href="/shop">
+                  <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
+                    Comprar agora
+                    <ArrowRight className="size-4 transition-all group-hover:translate-x-1" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center justify-center">
+              <Image
+                src={livingRoom}
+                alt="Living Room"
+                width={350}
+                height={300}
+                quality={100}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </div>
+
+          <div className="dark:bg-muted-foreground/10 col-span-1 flex h-[35rem] w-full flex-col border bg-neutral-100 p-8">
+            <div className="z-20 flex flex-col gap-4">
+              <div className="flex flex-col items-start justify-start gap-2">
+                <span className="text-2xl font-medium">Sala de estar</span>
+                <Link href="/shop">
+                  <button className="group border-primary hover:border-primary/90 flex cursor-pointer items-center gap-2 border-b py-2 text-sm">
+                    Comprar agora
+                    <ArrowRight className="size-4 transition-all group-hover:translate-x-1" />
+                  </button>
+                </Link>
+              </div>
+            </div>
+            <div className="flex flex-1 items-center justify-center">
+              <Image
+                src={livingRoom}
+                alt="Living Room"
+                width={350}
+                height={300}
+                quality={100}
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
+          </div>
+        </div>
       </section>
 
       <section className="my-4 space-y-12">
@@ -172,7 +248,10 @@ export function Content() {
                 const { id } = product
 
                 return (
-                  <CarouselItem key={id} className="basis-1/4">
+                  <CarouselItem
+                    key={id}
+                    className="mobile:basis-1/1 tablet:basis-1/3 basis-1/4"
+                  >
                     <ProductCard data={product} />
                   </CarouselItem>
                 )
@@ -180,7 +259,10 @@ export function Content() {
 
             {isFetchingProducts &&
               products?.data.map(({ id }) => (
-                <CarouselItem key={id} className="basis-1/4">
+                <CarouselItem
+                  key={id}
+                  className="mobile:basis-1/1 tablet:basis-1/3 basis-1/4"
+                >
                   <ProductCardSkeleton />
                 </CarouselItem>
               ))}
@@ -191,8 +273,8 @@ export function Content() {
       <Separator />
 
       <section className="my-4">
-        <div className="grid grid-cols-4 gap-4">
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
+        <div className="mobile:grid-cols-1 grid grid-cols-4 gap-4">
+          <div className="dark:bg-muted-foreground/10 mobile:items-center col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Truck className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Frete grátis
@@ -202,7 +284,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
+          <div className="dark:bg-muted-foreground/10 mobile:items-center col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Banknote className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Dinheiro de volta
@@ -212,7 +294,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
+          <div className="dark:bg-muted-foreground/10 mobile:items-center col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <LockKeyhole className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">Pagamento</span>
             <span className="text-muted-foreground text-sm">
@@ -226,7 +308,7 @@ export function Content() {
             </span>
           </div>
 
-          <div className="dark:bg-muted-foreground/10 col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
+          <div className="dark:bg-muted-foreground/10 mobile:items-center col-span-1 flex w-full flex-col items-start justify-center gap-2 border bg-neutral-100 p-6">
             <Phone className="text-primary size-8" />
             <span className="text-primary text-xl font-medium">
               Suporte 24/7
@@ -239,7 +321,7 @@ export function Content() {
       </section>
 
       <section className="my-4">
-        <div className="grid grid-cols-2">
+        <div className="mobile:grid-cols-1 grid grid-cols-2">
           <div className="relative col-span-1 h-[30rem] w-full">
             <Image
               src={ecommerce}

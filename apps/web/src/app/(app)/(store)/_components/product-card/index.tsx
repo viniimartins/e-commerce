@@ -60,7 +60,7 @@ export function ProductCard(props: Props) {
     <>
       <Link href={`/shop/${id}`}>
         <Card className="bg-background relative w-full cursor-pointer gap-2 space-y-3 rounded-none border-none py-0 shadow-none">
-          <CardContent className="group dark:bg-muted-foreground/10 relative mb-1 flex h-[15rem] items-center justify-center border bg-neutral-100 p-0">
+          <CardContent className="group dark:bg-muted-foreground/10 mobile:h-[25rem] relative mb-1 flex h-[15rem] items-center justify-center border bg-neutral-100 p-0">
             {isNew && (
               <Badge className="absolute top-4 left-4 z-30 h-8 font-semibold">
                 NOVO
