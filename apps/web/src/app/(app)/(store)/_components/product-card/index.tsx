@@ -152,7 +152,7 @@ export function ProductCard(props: Props) {
 
       <Dialog open={isOpen} onOpenChange={actions.close}>
         <DialogContent className="low-desktop:grid-cols-1 low-desktop:max-w-[90vw] low-desktop:max-h-[80vh] low-desktop:gap-4 grid max-h-[70vh] !max-w-[50vw] grid-cols-5 gap-6">
-          <div className="dark:bg-muted-foreground/10 low-desktop:col-span-full low-desktop:h-[20rem] mobile:h-[15rem] relative col-span-3 h-full border bg-neutral-100">
+          <div className="dark:bg-muted-foreground/10 low-desktop:col-span-full low-desktop:h-[25rem] medium-desktop:h-[20rem] mobile:h-[15rem] relative col-span-3 h-full border bg-neutral-100">
             <Carousel>
               <CarouselContent>
                 {productImage?.map(({ image }, index) => {
@@ -160,7 +160,7 @@ export function ProductCard(props: Props) {
                   return (
                     <CarouselItem
                       key={index}
-                      className="low-desktop:h-[20rem] mobile:h-[15rem] relative h-[35rem] w-full"
+                      className="low-desktop:h-[20rem] mobile:h-[10rem] medium-desktop:h-[25rem] relative h-[24rem] w-full "
                     >
                       <Image
                         src={url}
@@ -186,7 +186,7 @@ export function ProductCard(props: Props) {
                 {name}
               </DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <ScrollArea className="low-desktop:h-48 mobile:h-40 h-96">
+              <ScrollArea className="h-auto" >
                 <DialogDescription className="text-muted-foreground text-base">
                   {description}
                 </DialogDescription>
@@ -224,7 +224,7 @@ export function ProductCard(props: Props) {
             </div>
           </div>
         </DialogContent>
-      </Dialog>
+      </Dialog >
     </>
   )
 }
