@@ -82,7 +82,9 @@ model Product {
   name        String
   description String
   price       Decimal
-  quantity    Int
+  costPrice   Decimal
+
+  quantity Int
 
   category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String   @map("category_id")

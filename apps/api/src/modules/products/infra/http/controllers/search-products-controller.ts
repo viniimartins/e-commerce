@@ -35,6 +35,7 @@ class SearchProductsController {
             name: z.string(),
             description: z.string(),
             price: z.instanceof(Decimal),
+            costPrice: z.instanceof(Decimal),
             quantity: z.number(),
             createdAt: z.date(),
             category: z.object({

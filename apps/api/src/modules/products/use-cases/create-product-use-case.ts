@@ -1,3 +1,4 @@
+import { BadRequestError } from '@common/errors'
 import { CREATE_PRODUCT_REPOSITORY_TOKEN } from '@modules/products/constants'
 import type {
   ICreateProduct,
@@ -17,6 +18,12 @@ class CreateProductUseCase implements ICreateProductUseCase {
   async execute(
     data: ICreateProduct.Request,
   ): Promise<ICreateProduct.Response> {
+    if (data.costPrice > data.price) {
+      throw new BadRequestError(
+        'Cost price cannot be greater than selling price',
+      )
+    }
+
     const createdProduct = await this.createProductRepository.create(data)
 
     return createdProduct

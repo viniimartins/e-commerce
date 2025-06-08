@@ -5,6 +5,7 @@ interface IProductEntity extends IBaseEntity {
   name: string
   description: string
   price: Decimal | string
+  costPrice: Decimal | string
   quantity: number
 }
 
