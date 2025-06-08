@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import * as React from 'react'
+import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
 
 import {
   Card,
@@ -9,15 +9,15 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart'
 
-export const description = "An interactive bar chart"
+export const description = 'An interactive bar chart'
 
 interface ICharts {
   date: string
@@ -30,8 +30,8 @@ interface Props {
 
 const chartConfig = {
   sales: {
-    label: "Vendas",
-    color: "var(--chart-1)",
+    label: 'Vendas',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig
 
@@ -40,7 +40,7 @@ export function Sales(props: Props) {
 
   const total = React.useMemo(
     () => data.reduce((acc, curr) => acc + curr.sales, 0),
-    [data]
+    [data],
   )
 
   return (
@@ -48,14 +48,10 @@ export function Sales(props: Props) {
       <CardHeader className="flex flex-col items-stretch border-b !p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 pt-4 pb-3 sm:!py-0">
           <CardTitle>Vendas</CardTitle>
-          <CardDescription>
-            Vendas por dia nos últimos 3 meses
-          </CardDescription>
+          <CardDescription>Vendas por dia nos últimos 3 meses</CardDescription>
         </div>
         <div className="flex">
-          <div
-            className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-          >
+          <div className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
             <span className="text-muted-foreground text-xs">
               {chartConfig.sales.label}
             </span>
@@ -87,9 +83,9 @@ export function Sales(props: Props) {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
+                return date.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
                 })
               }}
             />
@@ -99,10 +95,10 @@ export function Sales(props: Props) {
                   className="w-[150px]"
                   nameKey="sales"
                   labelFormatter={(value) => {
-                    return new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
-                      year: "numeric",
+                    return new Date(value).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
+                      year: 'numeric',
                     })
                   }}
                 />

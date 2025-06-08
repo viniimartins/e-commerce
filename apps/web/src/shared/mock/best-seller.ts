@@ -7,6 +7,7 @@ export const mock: IBestSellerProduct = {
     name: 'Produto',
     description: 'Descrição',
     price: '100',
+    costPrice: '80',
     quantity: 10,
     productImage: [
       {

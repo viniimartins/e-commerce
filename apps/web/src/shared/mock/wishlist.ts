@@ -6,6 +6,7 @@ export const mock: IWishlist = {
     id: '1',
     name: 'Produto',
     price: '100',
+    costPrice: '80',
     description: 'Descrição',
     quantity: 10,
     productImage: [

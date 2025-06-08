@@ -1,7 +1,7 @@
-"use client"
+'use client'
 
-import * as React from "react"
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts"
+import * as React from 'react'
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from 'recharts'
 
 import {
   Card,
@@ -9,7 +9,7 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import {
   ChartConfig,
   ChartContainer,
@@ -17,7 +17,7 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from '@/components/ui/chart'
 
 interface ICharts {
   date: string
@@ -31,19 +31,19 @@ interface Props {
 
 const chartConfig = {
   revenue: {
-    label: "Faturamento",
-    color: "var(--chart-1)",
+    label: 'Faturamento',
+    color: 'var(--chart-1)',
   },
   profit: {
-    label: "Lucro",
-    color: "var(--chart-2)",
+    label: 'Lucro',
+    color: 'var(--chart-2)',
   },
 } satisfies ChartConfig
 
 function formatMoney(value: number) {
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
   }).format(Number(value / 100))
 }
 
@@ -54,8 +54,8 @@ export function Revenue(props: Props) {
   const totalProfit = data.reduce((acc, item) => acc + item.profit, 0)
 
   const tooltipFormatter = (value: number, name: string) => {
-    if (name === "revenue") return [`${formatMoney(value)}`, " Faturamento"]
-    if (name === "profit") return [`${formatMoney(value)}`, " Lucro"]
+    if (name === 'revenue') return [`${formatMoney(value)}`, ' Faturamento']
+    if (name === 'profit') return [`${formatMoney(value)}`, ' Lucro']
 
     return [value, name]
   }
@@ -68,9 +68,7 @@ export function Revenue(props: Props) {
           <CardDescription>Receita por dia nos últimos 30 dias</CardDescription>
         </div>
         <div className="flex">
-          <div
-            className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-          >
+          <div className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
             <span className="text-muted-foreground text-xs">
               {chartConfig.revenue.label}
             </span>
@@ -78,9 +76,7 @@ export function Revenue(props: Props) {
               {formatMoney(totalRevenue)}
             </span>
           </div>
-          <div
-            className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6"
-          >
+          <div className="relative z-30 flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left sm:border-t-0 sm:border-l sm:px-8 sm:py-6">
             <span className="text-muted-foreground text-xs">
               {chartConfig.profit.label}
             </span>
@@ -132,9 +128,9 @@ export function Revenue(props: Props) {
               minTickGap={32}
               tickFormatter={(value) => {
                 const date = new Date(value)
-                return date.toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
+                return date.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: 'numeric',
                 })
               }}
             />
@@ -151,9 +147,9 @@ export function Revenue(props: Props) {
               content={
                 <ChartTooltipContent
                   labelFormatter={(value) =>
-                    new Date(value).toLocaleDateString("en-US", {
-                      month: "short",
-                      day: "numeric",
+                    new Date(value).toLocaleDateString('en-US', {
+                      month: 'short',
+                      day: 'numeric',
                     })
                   }
                   indicator="dot"

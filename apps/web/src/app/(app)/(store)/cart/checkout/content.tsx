@@ -219,7 +219,6 @@ export function Content() {
     }
   }, [profile])
 
-
   return (
     <section className="flex flex-col gap-8">
       <Form {...form}>

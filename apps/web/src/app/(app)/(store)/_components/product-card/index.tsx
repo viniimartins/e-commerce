@@ -160,7 +160,7 @@ export function ProductCard(props: Props) {
                   return (
                     <CarouselItem
                       key={index}
-                      className="low-desktop:h-[20rem] mobile:h-[10rem] medium-desktop:h-[25rem] relative h-[24rem] w-full "
+                      className="low-desktop:h-[20rem] mobile:h-[10rem] medium-desktop:h-[25rem] relative h-[24rem] w-full"
                     >
                       <Image
                         src={url}
@@ -186,7 +186,7 @@ export function ProductCard(props: Props) {
                 {name}
               </DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <ScrollArea className="h-auto" >
+              <ScrollArea className="h-auto">
                 <DialogDescription className="text-muted-foreground text-base">
                   {description}
                 </DialogDescription>
@@ -224,7 +224,7 @@ export function ProductCard(props: Props) {
             </div>
           </div>
         </DialogContent>
-      </Dialog >
+      </Dialog>
     </>
   )
 }
