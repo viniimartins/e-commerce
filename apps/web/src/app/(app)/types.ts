@@ -140,4 +140,19 @@ export interface IStatistics {
   totalOrders: number
   totalUsers: number
   totalRevenue: string
+  totalProfit: string
+  dailySales: {
+    date: string
+    sales: number
+  }[]
+  dailyMoney: {
+    date: string
+    profit: number
+    revenue: number
+  }[]
+  topProducts: {
+    productId: string
+    name: string
+    quantitySold: number
+  }[]
 }

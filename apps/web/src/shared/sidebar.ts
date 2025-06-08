@@ -2,6 +2,7 @@ import {
   BoxesIcon,
   LayoutDashboardIcon,
   Package,
+  PieChart,
   ShoppingCart,
   Users,
 } from 'lucide-react'
@@ -16,6 +17,11 @@ export const panel = [
     title: 'Vendas',
     url: '/panel/sales',
     icon: ShoppingCart,
+  },
+  {
+    title: 'Estatísticas',
+    url: '/panel/insights',
+    icon: PieChart,
   },
   {
     title: 'Categorias',

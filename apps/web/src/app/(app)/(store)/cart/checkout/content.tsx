@@ -5,7 +5,7 @@ import { cpf } from 'cpf-cnpj-validator'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { MaskedInput, withMask } from 'react-maskara'
 import z from 'zod'
 
@@ -204,13 +204,21 @@ export function Content() {
   useEffect(() => {
     if (profile?.name || profile?.email || profile?.customer) {
       reset({
-        fullName: profile?.name,
-        cpf: profile?.customer?.taxId,
-        email: profile?.email,
-        phoneNumber: profile?.customer?.cellphone,
+        fullName: profile?.name ?? '',
+        cpf: profile?.customer?.taxId ?? '',
+        email: profile?.email ?? '',
+        phoneNumber: profile?.customer?.cellphone ?? '',
+        cep: '',
+        streetAddress: '',
+        number: '',
+        complement: '',
+        neighborhood: '',
+        city: '',
+        state: '',
       })
     }
   }, [profile])
+
 
   return (
     <section className="flex flex-col gap-8">
@@ -245,17 +253,15 @@ export function Content() {
                 )}
               />
 
-              <FormField
-                control={form.control}
+              <Controller
                 name="cpf"
-                render={() => (
+                control={form.control}
+                render={({ field }) => (
                   <FormItem>
                     <FormLabel>CPF</FormLabel>
                     <FormControl>
                       <Input
-                        {...withMask(form.register('cpf'), {
-                          mask: '999.999.999-99',
-                        })}
+                        {...withMask(field, { mask: '999.999.999-99' })}
                         placeholder="000.000.000-00"
                         disabled={!!profile?.customer?.taxId}
                       />
@@ -325,7 +331,7 @@ export function Content() {
                         mask="99999-999"
                         placeholder="00000-000"
                         {...form.register('cep')}
-                        onChange={(e) => {
+                        onChange={(e: { target: { value: string } }) => {
                           handleCepChange(e.target.value)
                         }}
                       />

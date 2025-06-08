@@ -13,7 +13,7 @@ interface Params {
   categoryId?: string
   minPrice?: number
   maxPrice?: number
-  name?: string
+  search?: string
 }
 
 async function get(params: Params) {

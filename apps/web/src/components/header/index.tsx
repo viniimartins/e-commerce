@@ -80,7 +80,7 @@ export function Header() {
   const { register, watch } = useForm<ISearchInput>()
 
   const { data: products, isFetching: isFetchingProducts } = useGetProducts({
-    name: watch('search'),
+    search: watch('search'),
   })
 
   const {

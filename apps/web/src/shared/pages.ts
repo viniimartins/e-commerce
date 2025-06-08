@@ -9,9 +9,4 @@ export const options = [
     url: '/shop',
     pathname: '/shop',
   },
-  {
-    title: 'Contato',
-    url: '/contact',
-    pathname: '/contact',
-  },
 ]

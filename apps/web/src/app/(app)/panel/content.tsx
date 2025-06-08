@@ -99,13 +99,23 @@ export function Content() {
 
   return (
     <>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Card className="rounded-none">
           <CardHeader className="relative">
             <CardDescription>Total de receita</CardDescription>
             <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
               {!isLoading &&
                 formatPrice(Number(statistics?.totalRevenue) / 100)}
+              {isLoading && <Skeleton className="h-9 w-50" />}
+            </CardTitle>
+          </CardHeader>
+        </Card>
+
+        <Card className="rounded-none">
+          <CardHeader className="relative">
+            <CardDescription>Total de lucro</CardDescription>
+            <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
+              {!isLoading && formatPrice(Number(statistics?.totalProfit) / 100)}
               {isLoading && <Skeleton className="h-9 w-50" />}
             </CardTitle>
           </CardHeader>
