@@ -50,6 +50,7 @@ export interface IProduct {
   id: string
   name: string
   price: string
+  costPrice: string
   description: string
   quantity: number
   createdAt: Date

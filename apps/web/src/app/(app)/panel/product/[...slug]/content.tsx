@@ -76,19 +76,56 @@ const baseProductSchema = z.object({
   name: z.string().min(1, { message: 'O nome é obrigatório' }),
   description: z.string().min(1, { message: 'A descrição é obrigatória' }),
   price: z.string().min(1, { message: 'O preço é obrigatório' }),
+  costPrice: z.string().min(1, { message: 'O preço de custo é obrigatório' }),
   quantity: z.string().min(1, { message: 'A quantidade é obrigatória' }),
   categoryId: z.string().min(1, { message: 'A categoria é obrigatória' }),
 })
 
-const formProductSchema = baseProductSchema.extend({
-  productImages: z
-    .array(z.instanceof(File))
-    .min(1, 'Envie pelo menos uma imagem'),
-})
+const formProductSchema = baseProductSchema
+  .extend({
+    productImages: z
+      .array(z.instanceof(File))
+      .min(1, 'Envie pelo menos uma imagem'),
+  })
+  .refine(
+    (data) => {
+      // Remove non-numeric chars and convert to number
+      const price = Number(data.price.replace(/[^\d,]/g, '').replace(',', '.'))
+      const costPrice = Number(
+        data.costPrice.replace(/[^\d,]/g, '').replace(',', '.'),
+      )
+      if (!isNaN(price) && !isNaN(costPrice)) {
+        return costPrice <= price
+      }
+      return true
+    },
+    {
+      message: 'O preço de custo não pode ser maior que o preço de venda',
+      path: ['costPrice'],
+    },
+  )
 
-const formEditProductSchema = baseProductSchema.extend({
-  productImages: z.array(z.instanceof(File)).optional(),
-})
+const formEditProductSchema = baseProductSchema
+  .extend({
+    productImages: z.array(z.instanceof(File)).optional(),
+  })
+  .refine(
+    (data) => {
+      // Remove non-numeric chars and convert to number
+      const price = Number(data.price.replace(/[^\d,]/g, '').replace(',', '.'))
+      const costPrice = Number(
+        data.costPrice.replace(/[^\d,]/g, '').replace(',', '.'),
+      )
+      if (!isNaN(price) && !isNaN(costPrice)) {
+        return costPrice <= price
+      }
+      return true
+    },
+    {
+      message: 'O preço de custo não pode ser maior que o preço de venda',
+      path: ['costPrice'],
+    },
+  )
 
 type FormProductSchema = z.infer<typeof baseProductSchema> & {
   productImages?: File[]
@@ -144,12 +181,14 @@ export function Content(props: Props) {
 
   const form = useForm<FormProductSchema>({
     resolver: zodResolver(
-      isEditing ? formEditProductSchema : formProductSchema,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (isEditing ? formEditProductSchema : formProductSchema) as any,
     ),
     defaultValues: {
       name: '',
       description: '',
       price: '',
+      costPrice: '',
       quantity: '',
       categoryId: '',
       productImages: [],
@@ -183,6 +222,7 @@ export function Content(props: Props) {
           product: {
             ...restProduct,
             price: normalizedPrice(restProduct.price),
+            costPrice: normalizedPrice(restProduct.costPrice),
             quantity: Number(restProduct.quantity),
             productImages: productImagesIds,
           },
@@ -216,6 +256,7 @@ export function Content(props: Props) {
             ...restProduct,
             id: product.id,
             price: normalizedPrice(restProduct.price),
+            costPrice: normalizedPrice(restProduct.costPrice),
             quantity: Number(restProduct.quantity),
             productImages: productImagesIds,
           },
@@ -392,7 +433,7 @@ export function Content(props: Props) {
 
                 <Card className="gap-3 rounded-none">
                   <CardHeader>
-                    <CardTitle>Estoque e Preço</CardTitle>
+                    <CardTitle>Estoque e Preços</CardTitle>
                     <CardDescription className="hidden" />
                   </CardHeader>
 
@@ -402,6 +443,7 @@ export function Content(props: Props) {
                         <TableRow>
                           <TableHead>Estoque</TableHead>
                           <TableHead>Preço</TableHead>
+                          <TableHead>Preço de custo</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
@@ -412,7 +454,6 @@ export function Content(props: Props) {
                               name="quantity"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Estoque</FormLabel>
                                   <FormControl>
                                     <Input
                                       id="stock-1"
@@ -432,7 +473,30 @@ export function Content(props: Props) {
                               name="price"
                               render={({ field }) => (
                                 <FormItem>
-                                  <FormLabel>Preço</FormLabel>
+                                  <FormControl>
+                                    <NumericFormat
+                                      {...field}
+                                      thousandSeparator="."
+                                      decimalSeparator=","
+                                      prefix="R$ "
+                                      placeholder="R$ 0,00"
+                                      decimalScale={2}
+                                      fixedDecimalScale
+                                      allowNegative={false}
+                                      customInput={Input}
+                                    />
+                                  </FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </TableCell>
+                          <TableCell>
+                            <FormField
+                              control={form.control}
+                              name="costPrice"
+                              render={({ field }) => (
+                                <FormItem>
                                   <FormControl>
                                     <NumericFormat
                                       {...field}

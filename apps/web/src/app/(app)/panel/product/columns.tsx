@@ -80,6 +80,17 @@ export function getColumns({
       },
     },
     {
+      accessorKey: 'costPrice',
+      header: () => <TableHead>Preço de Custo</TableHead>,
+      cell: ({ row }) => {
+        return (
+          <TableCell isLoading={isLoading}>
+            {formatPrice(row.original.costPrice)}
+          </TableCell>
+        )
+      },
+    },
+    {
       accessorKey: 'quantity',
       header: () => <TableHead>Quantidade</TableHead>,
       cell: ({ row }) => (
