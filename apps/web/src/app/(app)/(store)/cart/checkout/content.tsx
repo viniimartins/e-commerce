@@ -33,6 +33,7 @@ import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
 import { formatPrice } from '@/utils/format-price'
+import { InputMask } from '@/components/input-mask'
 
 const formSchema = z.object({
   fullName: z
@@ -94,6 +95,7 @@ export function Content() {
   })
 
   const { reset } = form
+
 
   async function handleCepChange(cep: string) {
     const cepValue = cep.replace(/\D/g, '')
@@ -252,15 +254,16 @@ export function Content() {
                 )}
               />
 
-              <Controller
+              <FormField
                 name="cpf"
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>CPF</FormLabel>
                     <FormControl>
-                      <Input
-                        {...withMask(field, { mask: '999.999.999-99' })}
+                      <InputMask
+                        {...field}
+                        mask="999.999.999-99"
                         placeholder="000.000.000-00"
                         disabled={!!profile?.customer?.taxId}
                       />
@@ -321,15 +324,10 @@ export function Content() {
                   <FormItem>
                     <FormLabel>CEP</FormLabel>
                     <FormControl>
-                      <MaskedInput
-                        className={cn(
-                          'file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm',
-                          'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
-                          'aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
-                        )}
+                      <InputMask
+                        {...form.register('cep')}
                         mask="99999-999"
                         placeholder="00000-000"
-                        {...form.register('cep')}
                         onChange={(e: { target: { value: string } }) => {
                           handleCepChange(e.target.value)
                         }}
