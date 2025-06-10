@@ -5,10 +5,11 @@ import { cpf } from 'cpf-cnpj-validator'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
-import { Controller, useForm } from 'react-hook-form'
-import { MaskedInput, withMask } from 'react-maskara'
+import { useForm } from 'react-hook-form'
+import { withMask } from 'react-maskara'
 import z from 'zod'
 
+import { InputMask } from '@/components/input-mask'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -29,11 +30,9 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { useCreateBilling } from '@/hooks/mutation/billing/create'
 import { useGetProfile } from '@/hooks/query/profile/get'
-import { cn } from '@/lib/utils'
 import { useCart } from '@/providers/cart-provider'
 import { getAddress } from '@/service/cep'
 import { formatPrice } from '@/utils/format-price'
-import { InputMask } from '@/components/input-mask'
 
 const formSchema = z.object({
   fullName: z
@@ -95,7 +94,6 @@ export function Content() {
   })
 
   const { reset } = form
-
 
   async function handleCepChange(cep: string) {
     const cepValue = cep.replace(/\D/g, '')

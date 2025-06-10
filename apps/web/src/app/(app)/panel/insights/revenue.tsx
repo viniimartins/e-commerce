@@ -31,7 +31,7 @@ interface Props {
 
 const chartConfig = {
   revenue: {
-    label: 'Faturamento',
+    label: 'Receita',
     color: 'var(--chart-1)',
   },
   profit: {
@@ -54,7 +54,7 @@ export function Revenue(props: Props) {
   const totalProfit = data.reduce((acc, item) => acc + item.profit, 0)
 
   const tooltipFormatter = (value: number, name: string) => {
-    if (name === 'revenue') return [`${formatMoney(value)}`, ' Faturamento']
+    if (name === 'revenue') return [`${formatMoney(value)}`, ' Receita']
     if (name === 'profit') return [`${formatMoney(value)}`, ' Lucro']
 
     return [value, name]

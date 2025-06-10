@@ -155,4 +155,8 @@ export interface IStatistics {
     name: string
     quantitySold: number
   }[]
+  monthlyUsers: {
+    month: string
+    users: number
+  }[]
 }

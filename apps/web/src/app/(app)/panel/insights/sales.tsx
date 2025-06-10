@@ -69,10 +69,9 @@ export function Sales(props: Props) {
           <BarChart
             accessibilityLayer
             data={data}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ left: 12, right: 12 }}
+            barGap={4}
+            barCategoryGap="10%"
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -104,7 +103,7 @@ export function Sales(props: Props) {
                 />
               }
             />
-            <Bar dataKey="sales" fill={chartConfig.sales.color} />
+            <Bar dataKey="sales" fill={chartConfig.sales.color} barSize={24} />
           </BarChart>
         </ChartContainer>
       </CardContent>

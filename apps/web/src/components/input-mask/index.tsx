@@ -1,8 +1,9 @@
 'use client'
 
-import { cn } from '@/lib/utils'
 import type { InputHTMLAttributes } from 'react'
 import { MaskedInput } from 'react-maskara'
+
+import { cn } from '@/lib/utils'
 
 type MaskedInputBaseProps = {
   mask: string
