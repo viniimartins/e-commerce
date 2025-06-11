@@ -17,12 +17,16 @@ class SearchProductsUseCase implements ISearchProductsUseCase {
   async execute(
     params: ISearchProducts.Request,
   ): Promise<ISearchProducts.Response> {
-    const { pageIndex, perPage, search } = params
+    const { pageIndex, perPage, search, categoryId, maxPrice, minPrice } =
+      params
 
     const result = await this.searchProductsRepository.search({
       pageIndex,
       perPage,
       search,
+      categoryId,
+      maxPrice,
+      minPrice,
     })
 
     return {

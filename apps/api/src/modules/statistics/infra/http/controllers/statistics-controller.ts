@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { prisma } from '@lib/prisma'
 import type { FastifyReply, FastifyRequest } from 'fastify'
 import { z } from 'zod'
@@ -45,6 +46,7 @@ class StatisticsController {
     const revenueAggregate = await prisma.order.aggregate({
       _sum: { total: true },
     })
+
     const totalRevenue = revenueAggregate._sum.total?.toNumber() ?? 0
 
     const orderProductsAll = await prisma.orderProduct.findMany({
@@ -58,8 +60,8 @@ class StatisticsController {
       (acc, { quantity, product }) =>
         acc +
         (product.price.toNumber() - product.costPrice.toNumber()) *
-          quantity *
-          100,
+        quantity *
+        100,
       0,
     )
 
@@ -151,8 +153,8 @@ class StatisticsController {
         acc[date] =
           (acc[date] ?? 0) +
           (product.price.toNumber() - product.costPrice.toNumber()) *
-            quantity *
-            100
+          quantity *
+          100
         return acc
       },
       {},

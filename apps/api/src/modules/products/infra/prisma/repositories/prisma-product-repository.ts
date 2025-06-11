@@ -109,6 +109,9 @@ class PrismaProductRepository
     minPrice,
     categoryId
   }: ISearchProducts.Params): Promise<ISearchProducts.Response> {
+
+    console.log(categoryId)
+
     const [products, total] = await Promise.all([
       prisma.product.findMany({
         where: {
