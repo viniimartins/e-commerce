@@ -186,8 +186,8 @@ export function ProductCard(props: Props) {
                 {name}
               </DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
-              <ScrollArea className="h-auto">
-                <DialogDescription className="text-muted-foreground text-base">
+              <ScrollArea className="h-auto max-h-50">
+                <DialogDescription className="text-muted-foreground text-base truncate">
                   {description}
                 </DialogDescription>
               </ScrollArea>
