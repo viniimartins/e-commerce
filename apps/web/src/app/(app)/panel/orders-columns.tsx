@@ -37,7 +37,7 @@ export function getOrdersColumns({
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <span>{row.original.user.name}</span>
+            <span>{row.original.user.name ?? row.original.user.email}</span>
           </TableCell>
         )
       },
