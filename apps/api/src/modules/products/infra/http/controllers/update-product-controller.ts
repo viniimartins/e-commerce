@@ -15,6 +15,7 @@ class UpdateProductController {
         name: z.string(),
         description: z.string(),
         price: z.string(),
+        costPrice: z.string(),
         categoryId: z.string(),
         quantity: z.number(),
         productImages: z.array(z.string()),

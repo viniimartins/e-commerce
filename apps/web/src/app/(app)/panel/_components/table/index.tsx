@@ -89,7 +89,7 @@ export function DataTable<TData, TValue>({
       {meta && (
         <div className="mt-auto flex items-center justify-between px-4">
           <div className="hidden flex-1 text-sm text-muted-foreground lg:flex">
-            Mostrando {meta.perPage * meta.pageIndex} de {meta.total} resultados
+            Mostrando {data.length} de {meta.total} resultados
           </div>
           <div className="flex w-full items-center gap-8 lg:w-fit">
             <div className="hidden items-center gap-2 lg:flex">

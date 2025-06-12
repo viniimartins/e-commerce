@@ -268,9 +268,9 @@ export function Content(props: Props) {
             }
 
             router.push('/panel/product')
+
             setProductImages([])
             setDeletedLocalImage([])
-            reset()
           },
           onError: () => {
             for (const imageId of productImagesIds) {
@@ -330,6 +330,7 @@ export function Content(props: Props) {
         name: product.name,
         description: product.description,
         price: String(product.price),
+        costPrice: String(product.costPrice),
         quantity: String(product.quantity),
         categoryId: product.category.id,
         productImages: [],
@@ -344,7 +345,7 @@ export function Content(props: Props) {
 
       setProductImages(imagesFromAPI)
     }
-  }, [isEditing, product])
+  }, [isEditing, product?.id])
 
   return (
     <>
