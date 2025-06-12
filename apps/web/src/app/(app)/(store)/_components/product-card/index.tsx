@@ -187,12 +187,11 @@ export function ProductCard(props: Props) {
               </DialogTitle>
               <span className="text-xl font-medium">{formatPrice(price)}</span>
               <ScrollArea className="h-auto max-h-50">
-                <DialogDescription className="text-muted-foreground text-base truncate">
+                <DialogDescription className="text-muted-foreground truncate text-base">
                   {description}
                 </DialogDescription>
               </ScrollArea>
             </DialogHeader>
-
             <Separator />
 
             <div className="flex justify-between gap-4">
