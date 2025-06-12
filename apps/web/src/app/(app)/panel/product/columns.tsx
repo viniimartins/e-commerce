@@ -52,7 +52,7 @@ export function getColumns({
       accessorKey: 'name',
       header: () => <TableHead>Nome</TableHead>,
       cell: ({ row }) => (
-        <TableCell isLoading={isLoading}>{row.original.name}</TableCell>
+        <TableCell isLoading={isLoading} className="truncate w-48">{row.original.name}</TableCell>
       ),
     },
     {
@@ -75,17 +75,6 @@ export function getColumns({
         return (
           <TableCell isLoading={isLoading}>
             {formatPrice(row.original.price)}
-          </TableCell>
-        )
-      },
-    },
-    {
-      accessorKey: 'costPrice',
-      header: () => <TableHead>Preço de Custo</TableHead>,
-      cell: ({ row }) => {
-        return (
-          <TableCell isLoading={isLoading}>
-            {formatPrice(row.original.costPrice)}
           </TableCell>
         )
       },
