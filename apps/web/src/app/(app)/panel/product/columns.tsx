@@ -52,7 +52,11 @@ export function getColumns({
       accessorKey: 'name',
       header: () => <TableHead>Nome</TableHead>,
       cell: ({ row }) => (
-        <TableCell isLoading={isLoading} className="truncate w-48">{row.original.name}</TableCell>
+        <TableCell isLoading={isLoading}>
+          <div className="w-full max-w-48 truncate">
+            <span>{row.original.name}</span>
+          </div>
+        </TableCell>
       ),
     },
     {
